@@ -1,6 +1,5 @@
 /**
  * @author - Charles Grady, James Shelton, Nicholas Bryant, Vinoth Kumar Manickavasagam
- *
  */
 package com.cannapaceus.grader;
 
@@ -35,4 +34,6 @@ public class Main {
             connected = dbs.initConnection(user, pass);
         }
     }
+
+    
 }
