@@ -1,6 +1,7 @@
 package com.cannapaceus.grader;
 
 import java.sql.*;
+import java.util.Scanner;
 
 class DBService {
     private String conString = "jdbc:h2:~/IGP;";
@@ -9,6 +10,24 @@ class DBService {
     private Statement stm = null;
     private ResultSet rs = null;
     private ResultSetMetaData rsmd = null;
+
+    public void loginDB() {
+        String user;
+        String pass;
+
+
+        boolean connected = false;
+
+        while (!connected) {
+            Scanner reader = new Scanner(System.in);
+            System.out.print("Enter database username: ");
+            user = reader.next();
+            System.out.print("Enter database password: ");
+            pass = reader.next();
+
+            connected = initConnection(user, pass);
+        }
+    }
 
     boolean initConnection(String username, String password) {
         try {
