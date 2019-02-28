@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="350c2610-105d-4968-9982-e9e87f1ea91b" name="Default Changelist" comment="Category and statistics are blank classes atm.&#10;&#10;Assignment, grade and student are almost done. Need to be reviewed.&#10;&#10;Can't determine if we need to retrieve references of the student&#10;and assignment that a grade has a reference to.">
-      <change afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,17 +25,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="85" column="4" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="4" />
+            <state relative-caret-position="482">
+              <caret line="51" column="41" selection-start-line="51" selection-start-column="41" selection-end-line="51" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;method#Student#0;class#Student#0" />
-                <element signature="method#Student#0;class#Student#0" />
                 <element signature="docComment;method#Student#1;class#Student#0" />
-                <element signature="method#Student#1;class#Student#0" />
                 <element signature="method#getGrades#0;class#Student#0" />
                 <element signature="method#getFirstMIName#0;class#Student#0" />
                 <element signature="method#getStudentID#0;class#Student#0" />
@@ -57,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+            <state relative-caret-position="587">
+              <caret line="145" selection-start-line="145" selection-end-line="145" />
               <folding>
                 <element signature="docComment;method#Grade#0;class#Grade#0" />
                 <element signature="method#Grade#0;class#Grade#0" />
@@ -85,12 +81,49 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/DBService.java">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+            <state relative-caret-position="505">
+              <caret line="31" column="54" lean-forward="true" selection-start-line="31" selection-start-column="54" selection-end-line="31" selection-end-column="54" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="477">
+              <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="docComment;method#Assignment#0;class#Assignment#0" />
+                <element signature="method#Assignment#0;class#Assignment#0" />
+                <element signature="docComment;method#Assignment#1;class#Assignment#0" />
+                <element signature="method#Assignment#1;class#Assignment#0" />
+                <element signature="docComment;method#addGrade#0;class#Assignment#0" />
+                <element signature="docComment;method#setAssignmentName#0;class#Assignment#0" />
+                <element signature="docComment;method#setDueDate#0;class#Assignment#0" />
+                <element signature="docComment;method#setAssignedDate#0;class#Assignment#0" />
+                <element signature="docComment;method#setMaxScore#0;class#Assignment#0" />
+                <element signature="docComment;method#setCategory#0;class#Assignment#0" />
+                <element signature="docComment;method#setWeight#0;class#Assignment#0" />
+                <element signature="docComment;method#setDroppedAssignment#0;class#Assignment#0" />
+                <element signature="docComment;method#getAssignmentName#0;class#Assignment#0" />
+                <element signature="method#getAssignmentName#0;class#Assignment#0" />
+                <element signature="docComment;method#getGrades#0;class#Assignment#0" />
+                <element signature="method#getGrades#0;class#Assignment#0" />
+                <element signature="docComment;method#getDueDate#0;class#Assignment#0" />
+                <element signature="method#getDueDate#0;class#Assignment#0" />
+                <element signature="docComment;method#getAssignedDate#0;class#Assignment#0" />
+                <element signature="method#getAssignedDate#0;class#Assignment#0" />
+                <element signature="docComment;method#getMaxScore#0;class#Assignment#0" />
+                <element signature="docComment;method#getCategory#0;class#Assignment#0" />
+                <element signature="method#getCategory#0;class#Assignment#0" />
+                <element signature="docComment;method#getWeight#0;class#Assignment#0" />
+                <element signature="docComment;method#getDroppedAssignment#0;class#Assignment#0" />
               </folding>
             </state>
           </provider>
@@ -109,7 +142,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="StudentClasses" />
       </map>
     </option>
   </component>
@@ -117,18 +150,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/HelloWorld.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
     <option name="width" value="1696" />
     <option name="height" value="1026" />
   </component>
@@ -149,6 +181,11 @@
             <path>
               <item name="java-application" type="b2602c69:ProjectViewProjectNode" />
               <item name="java-application" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="java-application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java-application" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -164,7 +201,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551229445892" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551314135122" />
     <property name="last_opened_file_path" value="D:/Vinoth/College/UAH/2018 - Fall/CS_470_proj2" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
@@ -215,6 +252,9 @@
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.HelloWorld" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.HelloWorld" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -243,25 +283,24 @@
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25488997" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25794622" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" visible="true" weight="0.32922733" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25106382" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25083986" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32907802" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="right" id="Maven" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32922733" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -270,6 +309,7 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info anchor="right" id="Maven" order="8" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2555012" />
@@ -300,6 +340,32 @@
       <window_info anchor="right" id="Maven Projects" order="8" />
     </layout-to-restore>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Assignment is still just a blank class file.&#10;&#10;Grade and Student are almost done.&#10;Need to make sure references are properly handled and comment." />
     <MESSAGE value="Category and statistics are blank classes atm.&#10;&#10;Assignment, grade and student are almost done. Need to be reviewed.&#10;&#10;Can't determine if we need to retrieve references of the student&#10;and assignment that a grade has a reference to." />
@@ -308,13 +374,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/HelloWorld" />
     <entry file="file://$PROJECT_DIR$/src/HelloWorld.java" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/idea64.exe.vmoptions">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HelloWorld/HelloWorld.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -338,10 +397,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="145" selection-start-line="145" selection-end-line="145" />
+          <folding>
+            <element signature="docComment;method#Grade#0;class#Grade#0" />
+            <element signature="method#Grade#0;class#Grade#0" />
+            <element signature="docComment;method#setGrade#0;class#Grade#0" />
+            <element signature="docComment;method#setOverdue#0;class#Grade#0" />
+            <element signature="docComment;method#setMissing#0;class#Grade#0" />
+            <element signature="docComment;method#setDropped#0;class#Grade#0" />
+            <element signature="docComment;method#setSubmitted#0;class#Grade#0" />
+            <element signature="docComment;method#getGrade#0;class#Grade#0" />
+            <element signature="docComment;method#getOverdue#0;class#Grade#0" />
+            <element signature="docComment;method#getMissing#0;class#Grade#0" />
+            <element signature="docComment;method#getDropped#0;class#Grade#0" />
+            <element signature="docComment;method#getSubmitted#0;class#Grade#0" />
+            <element signature="docComment;method#getStudentCopy#0;class#Grade#0" />
+            <element signature="method#getStudentCopy#0;class#Grade#0" />
+            <element signature="docComment;method#getAssignmentCopy#0;class#Grade#0" />
+            <element signature="method#getAssignmentCopy#0;class#Grade#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="31" column="54" lean-forward="true" selection-start-line="31" selection-start-column="54" selection-end-line="31" selection-end-column="54" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="120" selection-start-line="120" selection-end-line="120" />
+        <state relative-caret-position="477">
+          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#Assignment#0;class#Assignment#0" />
@@ -373,70 +484,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="85" column="4" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="4" />
+        <state relative-caret-position="482">
+          <caret line="51" column="41" selection-start-line="51" selection-start-column="41" selection-end-line="51" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#Student#0;class#Student#0" />
-            <element signature="method#Student#0;class#Student#0" />
             <element signature="docComment;method#Student#1;class#Student#0" />
-            <element signature="method#Student#1;class#Student#0" />
             <element signature="method#getGrades#0;class#Student#0" />
             <element signature="method#getFirstMIName#0;class#Student#0" />
             <element signature="method#getStudentID#0;class#Student#0" />
             <element signature="method#getLastName#0;class#Student#0" />
             <element signature="method#getStudentEmail#0;class#Student#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-          <folding>
-            <element signature="docComment;method#Grade#0;class#Grade#0" />
-            <element signature="method#Grade#0;class#Grade#0" />
-            <element signature="docComment;method#setGrade#0;class#Grade#0" />
-            <element signature="docComment;method#setOverdue#0;class#Grade#0" />
-            <element signature="docComment;method#setMissing#0;class#Grade#0" />
-            <element signature="docComment;method#setDropped#0;class#Grade#0" />
-            <element signature="docComment;method#setSubmitted#0;class#Grade#0" />
-            <element signature="docComment;method#getGrade#0;class#Grade#0" />
-            <element signature="docComment;method#getOverdue#0;class#Grade#0" />
-            <element signature="docComment;method#getMissing#0;class#Grade#0" />
-            <element signature="docComment;method#getDropped#0;class#Grade#0" />
-            <element signature="docComment;method#getSubmitted#0;class#Grade#0" />
-            <element signature="docComment;method#getStudentCopy#0;class#Grade#0" />
-            <element signature="method#getStudentCopy#0;class#Grade#0" />
-            <element signature="docComment;method#getAssignmentCopy#0;class#Grade#0" />
-            <element signature="method#getAssignmentCopy#0;class#Grade#0" />
           </folding>
         </state>
       </provider>

@@ -41,6 +41,7 @@ public class Assignment {
      */
     public Assignment(String sAssignmentName, Date dtDueDate, Date dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, float fWeight)
     {
+        this.lGrades = new ArrayList<Grade>();
         this.sAssignmentName = sAssignmentName;
         this.dtDueDate = dtDueDate;
         this.dtAssignedDate = dtAssignedDate;
@@ -57,6 +58,7 @@ public class Assignment {
      */
     public Assignment(Assignment aAssignment)
     {
+        this.lGrades = new ArrayList<Grade>();
         this.setAssignmentName(aAssignment.getAssignmentName());
         aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
         this.setAssignedDate(aAssignment.getAssignedDate());

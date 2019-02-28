@@ -35,6 +35,7 @@ public class Student {
         this.sLastName = sLastName;
         this.sStudentID = sStudentID;
         this.sEmail = sStudentEmail;
+        this.lGrades = new ArrayList<>();
     }
 
     /**
@@ -48,6 +49,7 @@ public class Student {
         this.sFirstMIName = stuStudent.getFirstMIName();
         this.sStudentID = stuStudent.getStudentID();
         this.sEmail = stuStudent.getStudentEmail();
+        this.lGrades = new ArrayList<>();
     }
 
     //Setter functions
