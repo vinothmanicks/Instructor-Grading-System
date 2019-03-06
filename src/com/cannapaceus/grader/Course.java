@@ -5,9 +5,9 @@ import java.util.Collections;
 
 public class Course {
 
-    private String sCourseName; // Course name
-    private String sCourseID; // Course ID
-    private String sDepartment; // Optional
+    private String sCourseName = null; // Course name
+    private String sCourseID = null; // Course ID
+    private String sDepartment = null; // Optional
 
     private ArrayList<Student> lStudents; // List of student objects
     private ArrayList<Assignment> lAssignments; // List of assignment objects
@@ -17,7 +17,7 @@ public class Course {
     private boolean bArchived; // Archived flag
     private Statistics stCourseStats; // Course statistics struct
 
-    public void Course(String sCourseName, String sCourseID, String sDepartment) { // Class constructor
+    public Course(String sCourseName, String sCourseID, String sDepartment) { // Class constructor
         this.setCourseName(sCourseName);
         this.setCourseID(sCourseID);
         this.setDepartment(sDepartment); // Optional
@@ -30,48 +30,53 @@ public class Course {
         this.stCourseStats = null;
     }
 
-    private void addStudent(Student newStudent) { // Add a student to a course
+    public void addStudent(Student newStudent) { // Add a student to a course
         new Student(newStudent);
         this.lStudents.add(newStudent);
-        //Collections.sort(lStudents, Student.getLastName().CASE_INSENSITIVE_ORDER); //Error
+        Collections.sort(this.lStudents);
     }
 
-    private void addAssignment(Assignment newAssignment) { // Add an assignment to a course
+    public void addAssignment(Assignment newAssignment) { // Add an assignment to a course
         new Assignment(newAssignment);
         this.lAssignments.add(newAssignment);
     }
 
-    private void addCategory(Category newCategory) { // Add a grading category to a course
+    public void addCategory(Category newCategory) { // Add a grading category to a course
         new Category(newCategory);
         this.lCategories.add(newCategory);
     }
 
-    private void addGrade(Grade newGrade) { // Add a student's grade to a course
+    public void addGrade(Grade newGrade) { // Add a student's grade to a course
         new Grade(newGrade.getGrade(), newGrade.getStudentCopy(), newGrade.getAssignmentCopy());
         this.lGrades.add(newGrade);
     }
 
-    private void removeStudent(Student targetStudent) // Remove a student from a course
+    public void removeStudent(Student targetStudent) // Remove a student from a course
     {
         this.lStudents.remove(targetStudent);
     }
 
-    private void removeAssignment(Assignment targetAssignment) // Remove an assignment from a course
+    public void removeAssignment(Assignment targetAssignment) // Remove an assignment from a course
     {
         this.lAssignments.remove(targetAssignment);
     }
 
-    private void removeCategory(Category targetCategory) // Remove a grading category from a course
+    public void removeCategory(Category targetCategory) // Remove a grading category from a course
     {
         this.lCategories.add(targetCategory);
     }
 
-    private void removeGrade(Grade targetGrade) // Remove a student's grade from a course
+    public void removeGrade(Grade targetGrade) // Remove a student's grade from a course
     {
         this.lGrades.remove(targetGrade);
     }
 
-    private void calculateStats(){}
+    public void Archive()
+    {
+        this.bArchived = true;
+    }
+
+    public void calculateStats(){}
 
     // private Assignment generateAssignment(String sCourseName, )
     // Honors requirement
@@ -93,6 +98,22 @@ public class Course {
     {
         String sDepartmentCopy = this.sDepartment;
         return sDepartmentCopy;
+    }
+
+    public ArrayList<Student> getlStudents() {
+        return lStudents;
+    }
+
+    public ArrayList<Assignment> getlAssignments() {
+        return lAssignments;
+    }
+
+    public ArrayList<Category> getlCategories() {
+        return lCategories;
+    }
+
+    public ArrayList<Grade> getlGrades() {
+        return lGrades;
     }
 
     // Set functions
