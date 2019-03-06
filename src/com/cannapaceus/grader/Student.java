@@ -4,7 +4,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public class Student implements Comparable<Student>{
 
     //String to hold the student's last name
     private String sLastName;
@@ -107,5 +107,9 @@ public class Student {
     {
         String sEmailCopy = new String(this.sEmail);
         return new String(sEmailCopy);
+    }
+    
+    public int compareTo(Student anotherStudent) {
+        return this.getLastName().compareToIgnoreCase(anotherStudent.getLastName());
     }
 }
