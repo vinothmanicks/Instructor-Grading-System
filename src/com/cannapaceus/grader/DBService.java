@@ -1,7 +1,8 @@
 package com.cannapaceus.grader;
 
 import java.sql.*;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 class DBService {
     private String conString = "jdbc:h2:~/IGP;";
@@ -193,15 +194,13 @@ class DBService {
             stm.setBoolean(8, false);
             stm.setLong(9, lTermID);
 
-            if (stm.execute()) {
-                rs = stm.getGeneratedKeys();
-                rs.next();
-                courseToStore.setDBID(rs.getLong(1));
+            stm.executeUpdate();
 
-                retValue = true;
-            } else {
-                retValue = false;
-            }
+            rs = stm.getGeneratedKeys();
+            rs.next();
+            courseToStore.setDBID(rs.getLong(1));
+
+            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -252,15 +251,13 @@ class DBService {
             stm.setFloat(2, 0);     //TODO: stm.setFloat(2, categoryToStore.getWeight());
             stm.setLong(3, lCourseID);
 
-            if (stm.execute()) {
-                rs = stm.getGeneratedKeys();
-                rs.next();
-                categoryToStore.setDBID(rs.getLong(1));
+            stm.executeUpdate();
 
-                retValue = true;
-            } else {
-                retValue = false;
-            }
+            rs = stm.getGeneratedKeys();
+            rs.next();
+            categoryToStore.setDBID(rs.getLong(1));
+
+            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -318,8 +315,8 @@ class DBService {
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stm.setString(1, assignmentToStore.getAssignmentName());
-            stm.setDate(2, (Date) assignmentToStore.getDueDate());
-            stm.setDate(3, (Date) assignmentToStore.getAssignedDate());
+            stm.setDate(2, java.sql.Date.valueOf(assignmentToStore.getDueDate()));
+            stm.setDate(3, java.sql.Date.valueOf(assignmentToStore.getAssignedDate()));
             stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, assignmentToStore.getStatistics().getMean());
             stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, assignmentToStore.getStatistics().getMedian());
             stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, assignmentToStore.getStatistics().getMode());
@@ -330,15 +327,13 @@ class DBService {
             stm.setLong(11, lCategoryID);
             stm.setLong(12, lCourseID);
 
-            if (stm.execute()) {
-                rs = stm.getGeneratedKeys();
-                rs.next();
-                assignmentToStore.setDBID(rs.getLong(1));
+            stm.executeUpdate();
 
-                retValue = true;
-            } else {
-                retValue = false;
-            }
+            rs = stm.getGeneratedKeys();
+            rs.next();
+            assignmentToStore.setDBID(rs.getLong(1));
+
+            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -378,7 +373,7 @@ class DBService {
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO STUDENTS" +
-                    "(SFIRSTMINAME, SLASTNAME, SSTUDENTID, SEMAL, FAVERAGE, ICOURSE)" +
+                    "(SFIRSTMINAME, SLASTNAME, SSTUDENTID, SEMAIL, FAVERAGE, ICOURSE)" +
                     "VALUES" +
                     "(?, ?, ?, ?, ?, ?)";
 
@@ -392,15 +387,13 @@ class DBService {
             stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, studentToStore.getAverage());
             stm.setLong(6, lCourseID);
 
-            if (stm.execute()) {
-                rs = stm.getGeneratedKeys();
-                rs.next();
-                studentToStore.setDBID(rs.getLong(1));
+            stm.executeUpdate();
 
-                retValue = true;
-            } else {
-                retValue = false;
-            }
+            rs = stm.getGeneratedKeys();
+            rs.next();
+            studentToStore.setDBID(rs.getLong(1));
+
+            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -470,15 +463,13 @@ class DBService {
             stm.setLong(7, lStudentID);
             stm.setLong(8, lCourseID);
 
-            if (stm.execute()) {
-                rs = stm.getGeneratedKeys();
-                rs.next();
-                gradeToStore.setDBID(rs.getLong(1));
+            stm.executeUpdate();
 
-                retValue = true;
-            } else {
-                retValue = false;
-            }
+            rs = stm.getGeneratedKeys();
+            rs.next();
+            gradeToStore.setDBID(rs.getLong(1));
+
+            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();

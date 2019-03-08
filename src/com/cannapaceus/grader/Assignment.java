@@ -1,6 +1,7 @@
 package com.cannapaceus.grader;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,8 +14,8 @@ public class Assignment {
     private String sAssignmentName;
 
     //Date objects to hold the due date and assigned date of the assignment for reference.
-    private Date dtDueDate;
-    private Date dtAssignedDate;
+    private LocalDate dtDueDate;
+    private LocalDate dtAssignedDate;
 
     //boolean to denote if an instructor wants to drop the assignment for the whole class. This is different from the grade bDropped variable
     private boolean bDropped;
@@ -42,7 +43,7 @@ public class Assignment {
      * @param catCategory Category the assignment is created under
      * @param fWeight Float if manually overriding the category weight
      */
-    public Assignment(String sAssignmentName, Date dtDueDate, Date dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, float fWeight)
+    public Assignment(String sAssignmentName, LocalDate dtDueDate, LocalDate dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, float fWeight)
     {
         this.lGrades = new ArrayList<Grade>();
         this.sAssignmentName = sAssignmentName;
@@ -103,7 +104,7 @@ public class Assignment {
      * Setter for the assignment's due date
      * @param dtDueDate
      */
-    public void setDueDate(Date dtDueDate)
+    public void setDueDate(LocalDate dtDueDate)
     {
         this.dtDueDate = dtDueDate;
     }
@@ -112,7 +113,7 @@ public class Assignment {
      * Setter for the assignment's due date
      * @param dtAssignedDate
      */
-    public void setAssignedDate(Date dtAssignedDate)
+    public void setAssignedDate(LocalDate dtAssignedDate)
     {
         this.dtAssignedDate = dtAssignedDate;
     }
@@ -186,21 +187,18 @@ public class Assignment {
      * Getter for the assignment due date
      * @return
      */
-    public Date getDueDate()
+    public LocalDate getDueDate()
     {
-        //Apparently getTime() is needed to make a copy of a date. Go figure.
-        Date dtDueDateCopy = new Date(this.dtDueDate.getTime());
-        return dtDueDateCopy;
+        return this.dtDueDate;
     }
 
     /**
      * Getter for a copy of the assignment's assigned date
      * @return
      */
-    public Date getAssignedDate()
+    public LocalDate getAssignedDate()
     {
-        Date dtAssignedDateCopy = new Date(this.dtAssignedDate.getTime());
-        return dtAssignedDateCopy;
+        return this.dtAssignedDate;
     }
 
     /**
