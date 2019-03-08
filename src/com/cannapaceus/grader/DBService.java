@@ -496,4 +496,115 @@ class DBService {
     }
 
     //TODO: boolean StoreQuestion(Question questionToStore, lCourseID)
+
+    Course retrieveCourseData(long lCourseID) {
+        Course retValue = null;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //Get the course with the ID passed in
+            String sql = "SELECT TOP 1 FROM COURSES" +
+                    "WHERE COURSES.COURSEID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setLong(1, lCourseID);
+
+            rs = stm.executeQuery();
+            if (rs != null && rs.next()) {
+                retValue = new Course(rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4));
+
+                retValue.setDBID(rs.getLong(1));
+
+
+                //Get categories for the course
+                sql = "SELECT * FROM CATEGORIES" +
+                        "WHERE CATEGORIES.ICOURSE = ?";
+
+                stm = con.prepareStatement(sql);
+
+                stm.setLong(1, lCourseID);
+
+                rs = stm.executeQuery();
+
+                if (rs != null) {
+                    while(rs.next()) {
+                        Category temp = new Category(rs.getString(2), rs.getFloat(3));
+                        temp.setDBID(rs.getLong(1));
+
+                        retValue.addCategory(temp);
+                    }
+                }
+
+                //Get Assignments for the course
+
+                sql = "SELECT * FROM ASSIGNMENTS" +
+                        "WHERE ASSIGNMENTS.ICOURSE = ?";
+
+                stm = con.prepareStatement(sql);
+
+                stm.setLong(1, lCourseID);
+
+                rs = stm.executeQuery();
+
+                if (rs != null) {
+                    while(rs.next()) {
+                        Assignment temp = new Assignment(rs.getString(2),
+                                rs.getDate(3).toLocalDate(),
+                                rs.getDate(4).toLocalDate(),
+                                rs.getBoolean(9),
+                                rs.getFloat(10),
+                                null,
+                                rs.getFloat(11));
+
+                        Statistics tempStats = new Statistics(); //TODO: set mean, median, mode for the statistics
+
+                        //Set the assignment's category to the appropriate category in the course's list
+                        long tempCatID = rs.getLong(12);
+
+                        temp.setDBID(rs.getLong(1));
+
+                        for (Category cat : retValue.getlCategories()) {
+                            if(cat.getDBID() == tempCatID) {
+                                temp.setCategory(cat);
+                                break;
+                            }
+                        }
+
+                        retValue.addAssignment(temp);
+                    }
+                }
+
+                //TODO: retrieve students from database
+                //TODO: retrieve grades from the database
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
 }
