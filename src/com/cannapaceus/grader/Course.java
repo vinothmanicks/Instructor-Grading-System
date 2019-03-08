@@ -5,6 +5,9 @@ import java.util.Collections;
 
 public class Course {
 
+    //Long to hold the course's ID from the database
+    private long lDBID = 0;
+
     private String sCourseName = null; // Course name
     private String sCourseID = null; // Course ID
     private String sDepartment = null; // Optional
@@ -82,6 +85,14 @@ public class Course {
     // Honors requirement
 
     // Get functions
+    /**
+     * Getter for a copy of the course's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
+    }
+
     public String getCourseName()
     {
         String sCourseNameCopy = this.sCourseName;
@@ -117,6 +128,14 @@ public class Course {
     }
 
     // Set functions
+    /**
+     * Setter for the course's ID from the database
+     * @param lDBID ID of the course from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
+
     public void setCourseName(String CourseName)
     {
         this.sCourseName = CourseName;

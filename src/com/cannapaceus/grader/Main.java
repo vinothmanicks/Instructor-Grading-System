@@ -19,6 +19,7 @@ public class Main {
         DBService db = new DBService();
         db.loginDB();
 */
+        Course coTest = new Course("Prob and Stats", "MA 385", "Mathematics");
         Student stuBobby = new Student("BobbyJ","Miller","00451J","bjm0001@UAH.EDU");
         Category catBlank = new Category(null);
         Date dueDateMondaiIchi = new Date(20022019);

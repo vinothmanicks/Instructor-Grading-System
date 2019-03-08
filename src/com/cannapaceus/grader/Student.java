@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Student implements Comparable<Student>{
 
+    //Long to hold the ID of the assignment from the database
+    private long lDBID = 0;
+
     //String to hold the student's last name
     private String sLastName;
 
@@ -58,6 +61,14 @@ public class Student implements Comparable<Student>{
         lGrades.add(grade);
     }
 
+    /**
+     * Setter for the student's ID from the database
+     * @param lDBID ID of the student from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
+
     public void setFirstMIName(String sFirstMIName)
     {
         this.sFirstMIName = sFirstMIName;
@@ -83,6 +94,14 @@ public class Student implements Comparable<Student>{
     {
         ArrayList<Grade> lGradeCopies = new ArrayList<>(lGrades);
         return lGradeCopies;
+    }
+
+    /**
+     * Getter for a copy of the student's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
     }
 
     public String getFirstMIName()

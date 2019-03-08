@@ -6,6 +6,9 @@ import java.util.Date;
 
 public class Assignment {
 
+    //Long to hold the ID of the assignment from the database
+    private long lDBID = 0;
+
     //String to hold the name of the assignment
     private String sAssignmentName;
 
@@ -70,7 +73,6 @@ public class Assignment {
     }
 
     //Setter functions
-
     /**
      * Function to add a grade to this assignment's list of grades
      * @param grade Grade that is associated with an assignment and student
@@ -78,6 +80,14 @@ public class Assignment {
     public void addGrade(Grade grade)
     {
         this.lGrades.add(grade);
+    }
+
+    /**
+     * Setter for the assignment's ID from the database
+     * @param lDBID ID of the assignment from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
     }
 
     /**
@@ -144,6 +154,13 @@ public class Assignment {
     }
 
     //Getter functions
+    /**
+     * Getter for a copy of the assignment's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
+    }
 
     /**
      * Getter for a copy of the assignment's name
