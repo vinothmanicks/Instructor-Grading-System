@@ -1,5 +1,6 @@
 package com.cannapaceus.grader;
 
+import java.awt.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -581,8 +582,71 @@ class DBService {
                     }
                 }
 
-                //TODO: retrieve students from database
-                //TODO: retrieve grades from the database
+                //Get categories for the course
+                sql = "SELECT * FROM STUDENTS" +
+                        "WHERE STUDENTS.ICOURSE = ?";
+
+                stm = con.prepareStatement(sql);
+
+                stm.setLong(1, lCourseID);
+
+                rs = stm.executeQuery();
+
+                if (rs != null) {
+                    while(rs.next()) {
+                        Student temp = new Student(rs.getString(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getString(5));
+
+                        temp.setDBID(rs.getLong(1));
+
+                        retValue.addStudent(temp);
+                    }
+                }
+
+                //Get Assignments for the course
+
+                sql = "SELECT * FROM GRADES" +
+                        "WHERE GRADES.ICOURSE = ?";
+
+                stm = con.prepareStatement(sql);
+
+                stm.setLong(1, lCourseID);
+
+                rs = stm.executeQuery();
+
+                if (rs != null) {
+                    while(rs.next()) {
+
+                        //Set the grade's student and assignment to the appropriate student and assignment in the course's list
+                        long tempStuID = rs.getLong(7);
+                        long tempAssignID = rs.getLong(8);
+
+                        Student tempStu = null;
+                        Assignment tempAssign = null;
+
+                        for (Student stu : retValue.getlStudents()) {
+                            if(stu.getDBID() == tempStuID) {
+                                tempStu = stu;
+                                break;
+                            }
+                        }
+
+                        for (Assignment assign : retValue.getlAssignments()) {
+                            if(assign.getDBID() == tempAssignID) {
+                                tempAssign = assign;
+                                break;
+                            }
+                        }
+
+                        Grade temp = new Grade(rs.getFloat(2), tempStu, tempAssign);
+
+                        temp.setDBID(rs.getLong(1));
+
+                        retValue.addGrade(temp);
+                    }
+                }
             }
 
         } catch (Exception e) {
