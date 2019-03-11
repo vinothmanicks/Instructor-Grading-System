@@ -34,11 +34,13 @@ public class Question {
         this.qtQuestionType = queQuestion.getQuestionType();
     }
 
-    public void editQuestion(String sQuestion /*TODO: Question Type and stats*/, ArrayList<String> lAnswers, ArrayList<String> lCourseNames )
+    public void editQuestion(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames, QuestionType qtQuestionType, QuestionStats stQuestionStats)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
         this.lCourseNames = new ArrayList<>(lCourseNames);
+        this.stQuestionStats = new QuestionStats(stQuestionStats);
+        this.qtQuestionType = qtQuestionType;
     }
     public void setQuestion(String sQuestion)
     {
