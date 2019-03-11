@@ -13,7 +13,7 @@ public class Question {
     //structs QuestionType qtQuestionType;
     //structs Statistics stQuestionStats;
 
-    public Question(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames,)
+    public Question(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
@@ -39,7 +39,7 @@ public class Question {
         this.sQuestion = sQuestion;
     }
 
-    public void setQuestionType()
+    /*public void setQuestionType()
     {
         //Get that questionType defined
     }
@@ -47,7 +47,7 @@ public class Question {
     public void setQuestionStats()
     {
         //Get that question stats defined
-    }
+    }*/
 
     public void setAnwsers(ArrayList<String> lAnswers)
     {

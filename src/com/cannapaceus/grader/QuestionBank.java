@@ -9,8 +9,39 @@ public class QuestionBank {
         return ourInstance;
     }
 
-    ArrayList<Question> lQuestions;
+    private ArrayList<Question> lQuestions;
 
     private QuestionBank() {
     }
+
+    public void addQuestion(Question qQuestion)
+    {
+        lQuestions.add(qQuestion);
+    }
+
+    public ArrayList<Question> getQuestionList()
+    {
+        return new ArrayList<>(this.lQuestions);
+    }
+
+    public ArrayList<Question> getQuestionList(String sCourseName)
+    {
+        ArrayList<Question> toReturn = new ArrayList<>();
+        for (Question que:lQuestions)
+        {
+            ArrayList<String> lCourses = que.getCourses();
+            for (String searchCourseName:lCourses) {
+                if(searchCourseName == sCourseName)
+                {
+                    toReturn.add(que);
+                }
+            }
+        }
+
+        return toReturn;
+    }
+    /*public ArrayList<Question> getQuestionList(TypeOfQuestion What)
+    {
+
+    }*/
 }
