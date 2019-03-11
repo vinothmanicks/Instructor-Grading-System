@@ -10,14 +10,19 @@ public class Question {
     private ArrayList<String> lAnswers;
     //List of courses names that use this question.
     private ArrayList<String> lCourseNames;
-    //structs QuestionType qtQuestionType;
-    //structs Statistics stQuestionStats;
+    //Enum to sub for lack of structs
+    //TODO: Figure out the best way to do this
+    private QuestionType qtQuestionType;
+    //TODO determine if we're going to use a separate class
+    private QuestionStats stQuestionStats;
 
-    public Question(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames)
+    public Question(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames, QuestionStats stQuestionStats,QuestionType qtQuestionType)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
         this.lCourseNames = new ArrayList<>(lCourseNames);
+        this.stQuestionStats = new QuestionStats(stQuestionStats);
+        this.qtQuestionType = qtQuestionType;
     }
 
     public Question(Question queQuestion)
@@ -25,6 +30,8 @@ public class Question {
         this.sQuestion = queQuestion.getQuestion();
         this.lAnswers = queQuestion.getAnswers();
         this.lCourseNames = queQuestion.getCourses();
+        this.stQuestionStats = queQuestion.getQuestionStats();
+        this.qtQuestionType = queQuestion.getQuestionType();
     }
 
     public void editQuestion(String sQuestion /*TODO: Question Type and stats*/, ArrayList<String> lAnswers, ArrayList<String> lCourseNames )
@@ -33,21 +40,20 @@ public class Question {
         this.lAnswers = new ArrayList<>(lAnswers);
         this.lCourseNames = new ArrayList<>(lCourseNames);
     }
-
     public void setQuestion(String sQuestion)
     {
         this.sQuestion = sQuestion;
     }
 
-    /*public void setQuestionType()
+    public void setQuestionType(QuestionType qtQuestionType)
     {
-        //Get that questionType defined
+        this.qtQuestionType = qtQuestionType;
     }
 
-    public void setQuestionStats()
+    public void setQuestionStats(QuestionStats stQuestionStats)
     {
-        //Get that question stats defined
-    }*/
+        this.stQuestionStats = stQuestionStats;
+    }
 
     public void setAnwsers(ArrayList<String> lAnswers)
     {
@@ -64,15 +70,15 @@ public class Question {
         return new String(this.sQuestion);
     }
 
-    /*public String getQuestionType()
+    public QuestionType getQuestionType()
     {
-        return
+        return this.qtQuestionType;
     }
 
-    public String getQuestionStats()
+    public QuestionStats getQuestionStats()
     {
-
-    }*/
+        return new QuestionStats(stQuestionStats);
+    }
 
     public ArrayList<String> getAnswers()
     {
