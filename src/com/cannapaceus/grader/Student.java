@@ -21,6 +21,9 @@ public class Student implements Comparable<Student>{
     //List to hold all course grades
     private ArrayList<Grade> lGrades;
 
+    //Grade class containing student's average grade for the course
+    private float fAverageGrade;
+
     /**
      * <h1>Student Constructor</h1>
      * Constructor for the student class that takes individual variable inputs.
@@ -78,6 +81,19 @@ public class Student implements Comparable<Student>{
         this.sEmail = sStudentEmail;
     }
 
+    public void setAverageGrade(ArrayList<Grade> lGrades) {
+        float temp = 0;
+        float average = 0;
+        float count = 0;
+        for (int a = 0; a < lGrades.size(); a++) {
+            temp = lGrades.get(a).getGrade() * lGrades.get(a).getAssignmentCopy().getWeight();
+            average += temp;
+            count++;
+        }
+        average = average / count;
+        this.fAverageGrade = average;
+    }
+
     //Getter functions
     public ArrayList<Grade> getGrades()
     {
@@ -108,7 +124,13 @@ public class Student implements Comparable<Student>{
         String sEmailCopy = new String(this.sEmail);
         return new String(sEmailCopy);
     }
-    
+
+    public float getAverageGrade()
+    {
+        float fAverageCopy = this.fAverageGrade;
+        return fAverageCopy;
+    }
+
     public int compareTo(Student anotherStudent) {
         return this.getLastName().compareToIgnoreCase(anotherStudent.getLastName());
     }
