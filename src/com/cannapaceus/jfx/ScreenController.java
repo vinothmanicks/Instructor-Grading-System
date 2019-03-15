@@ -1,5 +1,6 @@
 package com.cannapaceus.jfx;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
@@ -9,7 +10,8 @@ public class ScreenController {
     private static ScreenController instance = null;
 
     private HashMap<String, Pane> screenMap = new HashMap<>();
-    private Scene main;
+    private Scene scMain;
+    private Pane pnMain;
 
     public static ScreenController getInstance() {
         if (instance == null) {
@@ -21,8 +23,16 @@ public class ScreenController {
 
     private ScreenController() { }
 
-    public void setMain(Scene main) {
-        this.main = main;
+    public void setScene(Scene sc) {
+        this.scMain = sc;
+    }
+
+    public void setRoot(Pane pn) {
+        this.scMain.setRoot(pn);
+    }
+
+    public void setPane(Pane pn) {
+        this.pnMain= pn;
     }
 
     protected void addScreen(String name, Pane pane){
@@ -34,6 +44,7 @@ public class ScreenController {
     }
 
     protected void activate(String name){
-        main.setRoot( screenMap.get(name) );
+        pnMain.getChildren().clear();
+        pnMain.getChildren().add(screenMap.get(name));
     }
 }

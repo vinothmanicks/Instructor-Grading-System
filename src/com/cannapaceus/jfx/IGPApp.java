@@ -27,19 +27,16 @@ public class IGPApp extends Application {
             Parent root = loader.load(fxmlStream);
 
             // Create the Scene
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 800, 800);
             // Set the Scene to the Stage
             primaryStage.setScene(scene);
             // Set the Title to the Stage
-            primaryStage.setTitle("A simple FXML Example");
+            primaryStage.setTitle("Instructor Grading Program");
             // Display the Stage
             primaryStage.show();
 
             ScreenController sc = ScreenController.getInstance();
-            sc.setMain(scene);
-            sc.addScreen("Login", FXMLLoader.load(getClass().getResource("../jfxml/LoginView.fxml")));
-            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
-            sc.activate("Login");
+            sc.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -21,7 +21,7 @@
             -fx-border-color: blue;
         </style>
         <children>
-            <Button text="Switch to Login" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
+            <Label text="Terms View Here" alignment="CENTER_LEFT"/>
         </children>
     </VBox>
 </AnchorPane>
