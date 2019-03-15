@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.LoginController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox fx:id="vbLogin">
+        <style>
+            -fx-padding: 10;
+            -fx-border-style: solid inside;
+            -fx-border-width: 2;
+            -fx-border-insets: 5;
+            -fx-border-radius: 5;
+            -fx-border-color: blue;
+        </style>
+        <children>
+            <Label fx:id="lblUsername" alignment="CENTER_LEFT" cache="true" cacheHint="SCALE" prefHeight="30.0" prefWidth="200.0" text="Username:" textAlignment="LEFT" />
+            <TextField fx:id="inUsername" alignment="CENTER_RIGHT" prefWidth="100.0" />
+            <Label fx:id="lblPassword" alignment="CENTER_LEFT" cache="true" cacheHint="SCALE" prefHeight="30.0" prefWidth="200.0" text="Password:" textAlignment="LEFT" />
+            <TextField fx:id="inPassword" alignment="CENTER_RIGHT" prefWidth="100.0" />
+            <Button text="Login" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
+        </children>
+    </VBox>
+</AnchorPane>

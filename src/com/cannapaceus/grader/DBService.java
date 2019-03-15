@@ -5,26 +5,32 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 
-class DBService {
+public class DBService {
+    private static DBService instance = null;
+
     private String conString = "jdbc:h2:~/IGP;";
 
     private String user;
     private String pass;
 
-    public void loginDB() {
+    public static DBService getInstance() {
+        if (instance == null)
+            instance = new DBService();
 
+        return instance;
+    }
 
+    private DBService() { };
+
+    public boolean loginDB(String username, String password) {
         boolean connected = false;
 
-        while (!connected) {
-            Scanner reader = new Scanner(System.in);
-            System.out.print("Enter database username: ");
-            user = reader.next();
-            System.out.print("Enter database password: ");
-            pass = reader.next();
+        user = username;
+        pass = password;
 
-            connected = initConnection();
-        }
+        connected = initConnection();
+
+        return connected;
     }
 
     private boolean initConnection() {

@@ -17,8 +17,19 @@ public class Main {
         // Do not remove below print statement
         System.out.println("Instructor Grading Program");
 
-        DBService db = new DBService();
-        db.loginDB();
+        DBService db = DBService.getInstance();
+
+        String user;
+        String pass;
+
+        do {
+            Scanner reader = new Scanner(System.in);
+            System.out.print("Enter database username: ");
+            user = reader.next();
+            System.out.print("Enter database password: ");
+            pass = reader.next();
+        } while (db.loginDB(user, pass));
+
 
         Term teTest = new Term(2019, eSeason.FALL);
         System.out.println(db.storeTerm(teTest));
