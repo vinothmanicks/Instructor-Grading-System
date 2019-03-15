@@ -20,13 +20,13 @@ public class Main {
         DBService db = new DBService();
         db.loginDB();
 
-        Term teTest = new Term(Season.Fall, 2019, false);
+        Term teTest = new Term(2019, eSeason.FALL);
         System.out.println(db.storeTerm(teTest));
 
         Course coTest = new Course("Prob and Stats", "MA 385", "Mathematics");
         System.out.println(db.StoreCourse(coTest, teTest.getDBID()));
 
-        Category catBlank = new Category(null);
+        Category catBlank = new Category("Homework", 0.15f);
         System.out.println(db.StoreCategory(catBlank, coTest.getDBID()));
 
         Student stuBobby = new Student("BobbyJ","Miller","00451J","bjm0001@UAH.EDU");

@@ -184,7 +184,7 @@ class DBService {
 
             stm.setString(1, termToStore.getSeason().toString());
             stm.setInt(2, termToStore.getYear());
-            stm.setBoolean(3, termToStore.getArchived());
+            stm.setBoolean(3, termToStore.getArchivedStatus());
 
             stm.executeUpdate();
 
@@ -231,9 +231,9 @@ class DBService {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "INSERT INTO COURSES" +
-                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM)" +
-                    "VALUES" +
+            String sql = "INSERT INTO COURSES " +
+                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM) " +
+                    "VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             con = DriverManager.getConnection(conString, user, pass);
@@ -294,16 +294,16 @@ class DBService {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "INSERT INTO CATEGORIES" +
-                    "(SCATEGORYNAME, FWEIGHT, ICOURSE)" +
-                    "VALUES" +
+            String sql = "INSERT INTO CATEGORIES " +
+                    "(SCATEGORYNAME, FWEIGHT, ICOURSE) " +
+                    "VALUES " +
                     "(?, ?, ?)";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stm.setString(1, null); //TODO: stm.setString(1, categoryToStore.getCategoryName());
-            stm.setFloat(2, 0);     //TODO: stm.setFloat(2, categoryToStore.getWeight());
+            stm.setString(1, categoryToStore.getName());
+            stm.setFloat(2, categoryToStore.getWeight());
             stm.setLong(3, lCourseID);
 
             stm.executeUpdate();
@@ -571,9 +571,7 @@ class DBService {
 
             if (rs != null) {
                 while (rs.next()) {
-                    Term temp = new Term(Season.values()[rs.getShort(2)],
-                            rs.getInt(3),
-                            rs.getBoolean(4));
+                    Term temp = new Term(rs.getInt(3), eSeason.values()[rs.getShort(2)]);
 
                     temp.setDBID(rs.getLong(1));
 
@@ -686,27 +684,30 @@ class DBService {
 
                 if (rs != null) {
                     while(rs.next()) {
+                        //Set the assignment's category to the appropriate category in the course's list
+                        long tempCatID = rs.getLong(12);
+                        Category tempCat = null;
+
+                        for (Category cat : retValue.getlCategories()) {
+                            if(cat.getDBID() == tempCatID) {
+                                tempCat = cat;
+                                break;
+                            }
+                        }
+
                         Assignment temp = new Assignment(rs.getString(2),
                                 rs.getDate(3).toLocalDate(),
                                 rs.getDate(4).toLocalDate(),
                                 rs.getBoolean(9),
                                 rs.getFloat(10),
-                                null,
+                                tempCat,
                                 rs.getFloat(11));
 
                         Statistics tempStats = new Statistics(); //TODO: set mean, median, mode for the statistics
 
-                        //Set the assignment's category to the appropriate category in the course's list
-                        long tempCatID = rs.getLong(12);
-
                         temp.setDBID(rs.getLong(1));
 
-                        for (Category cat : retValue.getlCategories()) {
-                            if(cat.getDBID() == tempCatID) {
-                                temp.setCategory(cat);
-                                break;
-                            }
-                        }
+
 
                         retValue.addAssignment(temp);
                     }

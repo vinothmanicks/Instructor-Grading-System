@@ -21,6 +21,7 @@ public class Category {
 
     public Category(Category catCategory)
     {
+        this.lDBID = catCategory.getDBID();
         this.sCategoryName = catCategory.getName();
         this.fCategoryWeight = catCategory.getWeight();
         this.lCatAssignments = new ArrayList<>(catCategory.getAssignments());

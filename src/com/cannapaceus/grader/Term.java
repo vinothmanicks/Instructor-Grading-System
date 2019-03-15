@@ -3,12 +3,12 @@ package com.cannapaceus.grader;
 
 import java.util.ArrayList;
 
+enum eSeason {WINTER,SPRING,SUMMER,FALL}
+
 public class Term {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
-
-    private enum eSeason {WINTER,SPRING,SUMMER,FALL}
     eSeason sCourseSeason;
     private ArrayList<Course> lCourses;
     private int iYear;
