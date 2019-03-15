@@ -1,80 +1,35 @@
 package com.cannapaceus.grader;
 
-import java.util.*;
 
-enum Season {
-    Winter, Spring, Summer, Fall
-};  //Term season
+import java.util.ArrayList;
 
 public class Term {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
 
-    private Season eSeason;
-
-    private int iYear;  //Term year
-
-    private boolean bArchived;  //Is the Term archived?
-
+    private enum eSeason {WINTER,SPRING,SUMMER,FALL}
+    eSeason sCourseSeason;
     private ArrayList<Course> lCourses;
+    private int iYear;
+    private boolean bArchived;
 
-    Term(Season eSeason, int iYear, boolean bArchived) {
-        this.eSeason = eSeason;
+    public Term(int iYear, eSeason sCourseSeason)
+    {
         this.iYear = iYear;
-        this.bArchived = bArchived;
-        this.lCourses = new ArrayList<>();
+        this.sCourseSeason = sCourseSeason;
+        lCourses = new ArrayList<>();
+        bArchived = false;
     }
 
-    Term(Term newTerm) {
-        this.eSeason = newTerm.getSeason();
-        this.iYear = newTerm.getYear();
-        this.bArchived = newTerm.getArchived();
-        this.lCourses = new ArrayList<>();
+    public Term(Term tTerm)
+    {
+        this.iYear = tTerm.getYear();
+        this.sCourseSeason = tTerm.getSeason();
+        this.bArchived = tTerm.getArchivedStatus();
+        this.lCourses = new ArrayList<>(tTerm.getCourses());
     }
 
-    //Setter methods
-    /**
-     * Setter for the term's ID from the database
-     * @param lDBID ID of the term from the database
-     */
-    public void setDBID(long lDBID) {
-        this.lDBID = lDBID;
-    }
-
-    /**
-     * Setter for the term's season
-     * @param eSeason new season of the term
-     */
-    public void setSeason(Season eSeason) {
-        this.eSeason = eSeason;
-    }
-
-    /**
-     * Setter for the term's year
-     * @param iYear new year of the term
-     */
-    public void setYear(int iYear) {
-        this.iYear = iYear;
-    }
-
-    /**
-     * Setter for the term's archived boolean
-     * @param bArchived new archived boolean of the term
-     */
-    public void setArchived(boolean bArchived) {
-        this.bArchived = bArchived;
-    }
-
-    /**
-     * Method to add a course to the term's list of courses
-     * @param newCourse new course to add
-     */
-    public void addCourse(Course newCourse) {
-        this.lCourses.add(newCourse);
-    }
-
-    //Getter methods
     /**
      * Getter for a copy of the term's ID from the database
      * @return
@@ -83,36 +38,56 @@ public class Term {
         return lDBID;
     }
 
-    /**
-     * Getter for a copy of the term's season
-     * @return
-     */
-    public Season getSeason() {
-        return this.eSeason;
+    public eSeason getSeason()
+    {
+        return this.sCourseSeason;
     }
 
-    /**
-     * Getter for a copy of the term's year
-     * @return
-     */
-    public int getYear() {
+    public int getYear()
+    {
         return this.iYear;
     }
 
-    /**
-     * Getter for a copy of the term's archived boolean
-     * @return
-     */
-    public boolean getArchived() {
-        return bArchived;
+    public boolean getArchivedStatus()
+    {
+        return this.bArchived;
+    }
+
+    public ArrayList<Course> getCourses()
+    {
+        return new ArrayList<>(lCourses);
     }
 
     /**
-     * Getter for a copy of the term's list of courses
-     * @return
+     * Setter for the term's ID from the database
+     * @param lDBID ID of the term from the database
      */
-    public ArrayList<Course> getCourses() {
-        ArrayList<Course> lCoursesCopy = new ArrayList<>(this.lCourses);
-        return lCoursesCopy;
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
+
+    public void setCourseSeason(eSeason sCourseSeason)
+    {
+        this.sCourseSeason = sCourseSeason;
+    }
+
+    public void setYear(int iYear)
+    {
+        this.iYear = iYear;
+    }
+
+    public void archiveTerm()
+    {
+        this.bArchived = true;
+    }
+
+    public void addCourse(Course coCourse)
+    {
+        lCourses.add(coCourse);
+    }
+
+    public void removeCourse(Course coCourse)
+    {
+        lCourses.remove(coCourse);
     }
 }
