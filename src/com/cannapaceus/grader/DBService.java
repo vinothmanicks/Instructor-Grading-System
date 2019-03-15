@@ -167,7 +167,7 @@ class DBService {
      * @param termToStore
      * @return true if the term was stored successfully
      */
-    boolean StoreTerm(Term termToStore) {
+    boolean storeTerm(Term termToStore) {
         boolean retValue = false;
 
         Connection con = null;
@@ -577,7 +577,7 @@ class DBService {
 
                     temp.setDBID(rs.getLong(1));
 
-                    sql = "SELECT * FROM COURSES" +
+                    sql = "SELECT * FROM COURSES " +
                             "WHERE COURSES.ITERM = ?";
 
                     stm = con.prepareStatement(sql);
@@ -596,6 +596,8 @@ class DBService {
                             temp.addCourse(tempCourse);
                         }
                     }
+
+                    retValue.add(temp);
                 }
             }
         } catch(Exception e) {
@@ -635,7 +637,7 @@ class DBService {
 
         try {
             //Get the course with the ID passed in
-            String sql = "SELECT TOP 1 FROM COURSES" +
+            String sql = "SELECT TOP(1) * FROM COURSES " +
                     "WHERE COURSES.COURSEID = ?";
 
             con = DriverManager.getConnection(conString, user, pass);
@@ -653,7 +655,7 @@ class DBService {
 
 
                 //Get categories for the course
-                sql = "SELECT * FROM CATEGORIES" +
+                sql = "SELECT * FROM CATEGORIES " +
                         "WHERE CATEGORIES.ICOURSE = ?";
 
                 stm = con.prepareStatement(sql);
@@ -673,7 +675,7 @@ class DBService {
 
                 //Get Assignments for the course
 
-                sql = "SELECT * FROM ASSIGNMENTS" +
+                sql = "SELECT * FROM ASSIGNMENTS " +
                         "WHERE ASSIGNMENTS.ICOURSE = ?";
 
                 stm = con.prepareStatement(sql);
@@ -711,7 +713,7 @@ class DBService {
                 }
 
                 //Get categories for the course
-                sql = "SELECT * FROM STUDENTS" +
+                sql = "SELECT * FROM STUDENTS " +
                         "WHERE STUDENTS.ICOURSE = ?";
 
                 stm = con.prepareStatement(sql);
@@ -735,7 +737,7 @@ class DBService {
 
                 //Get Assignments for the course
 
-                sql = "SELECT * FROM GRADES" +
+                sql = "SELECT * FROM GRADES " +
                         "WHERE GRADES.ICOURSE = ?";
 
                 stm = con.prepareStatement(sql);
@@ -772,6 +774,8 @@ class DBService {
 
                         temp.setDBID(rs.getLong(1));
 
+                        tempStu.addGrade(temp);
+                        tempAssign.addGrade(temp);
                         retValue.addGrade(temp);
                     }
                 }

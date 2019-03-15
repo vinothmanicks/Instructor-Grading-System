@@ -48,6 +48,7 @@ public class Student implements Comparable<Student>{
      */
     public Student(Student stuStudent)
     {
+        this.lDBID = stuStudent.getDBID();
         this.sLastName = stuStudent.getLastName();
         this.sFirstMIName = stuStudent.getFirstMIName();
         this.sStudentID = stuStudent.getStudentID();

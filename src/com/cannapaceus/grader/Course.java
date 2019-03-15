@@ -50,7 +50,6 @@ public class Course {
     }
 
     public void addGrade(Grade newGrade) { // Add a student's grade to a course
-        new Grade(newGrade.getGrade(), newGrade.getStudentCopy(), newGrade.getAssignmentCopy());
         this.lGrades.add(newGrade);
     }
 

@@ -62,6 +62,7 @@ public class Assignment {
      */
     public Assignment(Assignment aAssignment)
     {
+        this.setDBID(aAssignment.getDBID());
         this.lGrades = new ArrayList<Grade>();
         this.setAssignmentName(aAssignment.getAssignmentName());
         aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
