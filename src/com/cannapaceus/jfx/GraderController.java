@@ -2,8 +2,6 @@ package com.cannapaceus.jfx;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.layout.Pane;
 
 public class GraderController {
@@ -20,6 +18,7 @@ public class GraderController {
 
         try {
             sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
             sc.activate("Terms");
         } catch (Exception e) {
 

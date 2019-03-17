@@ -8,10 +8,10 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.TermsController"
+            fx:controller="com.cannapaceus.jfx.CourseController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <VBox fx:id="vbTerms">
+    <VBox fx:id="vbCourses">
         <style>
             -fx-padding: 10;
             -fx-border-style: solid inside;
@@ -21,8 +21,8 @@
             -fx-border-color: blue;
         </style>
         <children>
-            <Label text="Terms View Here" alignment="CENTER_LEFT"/>
-            <Button text="Go to Course" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
+            <Label text="Course View Here" alignment="CENTER_LEFT"/>
+            <Button text="Go to Terms" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
         </children>
     </VBox>
 </AnchorPane>

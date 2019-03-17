@@ -3,7 +3,7 @@ package com.cannapaceus.jfx;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class TermsController {
+public class CourseController {
     ScreenController sc = null;
 
     @FXML
@@ -13,6 +13,6 @@ public class TermsController {
     }
 
     public void handleSubmitButtonAction(ActionEvent actionEvent) {
-        sc.activate("Course");
+        sc.activate("Terms");
     }
 }
