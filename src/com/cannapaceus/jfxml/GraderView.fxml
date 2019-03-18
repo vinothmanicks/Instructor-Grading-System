@@ -6,16 +6,73 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.GraderController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <BorderPane fx:id="bpGraderView">
+    <BorderPane fx:id="bpGraderView" VBox.vgrow="ALWAYS">
         <left>
-            <VBox>
-                <Label text="Something Here"/>
-                <Label text="Something else Here"/>
+            <VBox alignment="CENTER" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
+                <children>
+                    <JFXButton prefHeight="38.0"
+                               prefWidth="80.0"
+                               text="Home"
+                               buttonType="RAISED"
+                               focusTraversable="false">
+
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+
+                    </JFXButton>
+
+                    <JFXButton prefHeight="38.0"
+                               prefWidth="80.0"
+                               text="QBank"
+                               buttonType="RAISED"
+                               focusTraversable="false" >
+
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+
+                    </JFXButton>
+
+                    <JFXButton prefHeight="38.0"
+                               prefWidth="80.0"
+                               text="Settings"
+                               buttonType="RAISED"
+                               focusTraversable="false" >
+
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+
+                    </JFXButton>
+
+                    <JFXButton prefHeight="38.0"
+                               prefWidth="80.0"
+                               text="Help"
+                               buttonType="RAISED"
+                               focusTraversable="false" >
+
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+
+                    </JFXButton>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" top="5.0" />
+                </padding>
             </VBox>
         </left>
         <center>
