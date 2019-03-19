@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.TermsController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox fx:id="vbTerms">
+        <style>
+            -fx-padding: 10;
+            -fx-border-style: solid inside;
+            -fx-border-width: 2;
+            -fx-border-insets: 5;
+            -fx-border-radius: 5;
+            -fx-border-color: blue;
+        </style>
+        <children>
+            <Label text="Terms View Here" alignment="CENTER_LEFT"/>
+            <Button text="Go to Course" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
+        </children>
+    </VBox>
+</AnchorPane>
