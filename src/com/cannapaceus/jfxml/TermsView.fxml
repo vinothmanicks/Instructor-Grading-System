@@ -1,28 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.*?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.TermsController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.cannapaceus.jfx.TermsController">
 
-    <VBox fx:id="vbTerms">
-        <style>
-            -fx-padding: 10;
-            -fx-border-style: solid inside;
-            -fx-border-width: 2;
-            -fx-border-insets: 5;
-            -fx-border-radius: 5;
-            -fx-border-color: blue;
-        </style>
-        <children>
-            <Label text="Terms View Here" alignment="CENTER_LEFT"/>
-            <Button text="Go to Course" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
-        </children>
-    </VBox>
+    <ScrollPane fitToWidth="true"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0">
+
+        <VBox fx:id="vbTerms"
+              fillWidth="true"
+              spacing="10"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-background-color: white;
+                -fx-padding: 10, 20, 10, 20;
+            </style>
+            <padding>
+                <Insets bottom="5.0" top="5.0" />
+            </padding>
+            <children>
+                <HBox fillHeight="false">
+                    <JFXButton alignment="CENTER" buttonType="RAISED" text="Add Term">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                        </graphic>
+                        <style>
+                            -fx-background-color: #4CAF50;
+                            -fx-text-fill: white;
+                        </style>
+                    </JFXButton>
+                    <Pane  HBox.hgrow="ALWAYS"/>
+                    <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" text="Go to Course" onAction="#handleSubmitButtonAction">
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+                    </JFXButton>
+                </HBox>
+
+                <!--<JFXListView fx:id="lvTerms">-->
+
+                <!--</JFXListView>-->
+            </children>
+        </VBox>
+    </ScrollPane>
 </AnchorPane>

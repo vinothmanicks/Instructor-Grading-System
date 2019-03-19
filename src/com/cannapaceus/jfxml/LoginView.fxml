@@ -10,6 +10,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 
 <?import com.jfoenix.controls.JFXPasswordField?>
+<?import javafx.scene.effect.DropShadow?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.LoginController"
@@ -33,6 +34,14 @@
                     </style>
                 </JFXButton>
             </children>
+
+            <style>
+                -fx-padding: 10,10,10,10;
+                -fx-background-color: white;
+            </style>
+            <effect>
+                <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+            </effect>
         </VBox>
     </center>
 </BorderPane>

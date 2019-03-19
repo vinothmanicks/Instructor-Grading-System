@@ -27,11 +27,15 @@ public class IGPApp extends Application {
             Parent root = loader.load(fxmlStream);
 
             // Create the Scene
-            Scene scene = new Scene(root, 800, 800);
+            Scene scene = new Scene(root, 800, 600);
+            scene.getStylesheets().add(getClass().getResource("../jfxml/IGP.css").toExternalForm());
             // Set the Scene to the Stage
             primaryStage.setScene(scene);
             // Set the Title to the Stage
             primaryStage.setTitle("Instructor Grading Program");
+
+            primaryStage.setMinWidth(800);
+            primaryStage.setMinHeight(600);
             // Display the Stage
             primaryStage.show();
 

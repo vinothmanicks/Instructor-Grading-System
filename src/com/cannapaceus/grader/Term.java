@@ -1,9 +1,6 @@
 package com.cannapaceus.grader;
 
-
 import java.util.ArrayList;
-
-enum eSeason {WINTER,SPRING,SUMMER,FALL}
 
 public class Term {
 

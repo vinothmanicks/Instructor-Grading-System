@@ -35,21 +35,21 @@ public class Main {
         System.out.println(db.storeTerm(teTest));
 
         Course coTest = new Course("Prob and Stats", "MA 385", "Mathematics");
-        System.out.println(db.StoreCourse(coTest, teTest.getDBID()));
+        System.out.println(db.storeCourse(coTest, teTest.getDBID()));
 
         Category catBlank = new Category("Homework", 0.15f);
-        System.out.println(db.StoreCategory(catBlank, coTest.getDBID()));
+        System.out.println(db.storeCategory(catBlank, coTest.getDBID()));
 
         Student stuBobby = new Student("BobbyJ","Miller","00451J","bjm0001@UAH.EDU");
-        System.out.println(db.StoreStudent(stuBobby, coTest.getDBID()));
+        System.out.println(db.storeStudent(stuBobby, coTest.getDBID()));
 
         LocalDate dueDateMondaiIchi = LocalDate.of(2019, 02, 20);
         LocalDate assignedDateMondaiIchi = LocalDate.of(2019, 02, 27);
         Assignment aAssignment = new Assignment("Mondai-ichi",dueDateMondaiIchi,assignedDateMondaiIchi,false,100,catBlank,0.30f);
-        System.out.println(db.StoreAssignment(aAssignment, coTest.getDBID()));
+        System.out.println(db.storeAssignment(aAssignment, coTest.getDBID()));
 
         Grade gBobbyAssGrade = new Grade(20,stuBobby,aAssignment);
-        System.out.println(db.StoreGrade(gBobbyAssGrade, coTest.getDBID()));
+        System.out.println(db.storeGrade(gBobbyAssGrade, coTest.getDBID()));
 
         aAssignment.addGrade(gBobbyAssGrade);
         stuBobby.addGrade(gBobbyAssGrade);
