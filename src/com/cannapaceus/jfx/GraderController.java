@@ -1,8 +1,10 @@
 package com.cannapaceus.jfx;
 
+import com.jfoenix.controls.JFXDrawer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class GraderController {
     ScreenController sc = null;

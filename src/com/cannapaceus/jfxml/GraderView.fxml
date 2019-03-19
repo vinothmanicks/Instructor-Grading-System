@@ -9,14 +9,18 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.GraderController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.cannapaceus.jfx.GraderController">
 
-    <BorderPane fx:id="bpGraderView" VBox.vgrow="ALWAYS">
+    <BorderPane fx:id="bpGraderView" VBox.vgrow="ALWAYS" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <left>
-            <VBox alignment="CENTER" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+
+                <style>
+                    -fx-background-color: #0077C8;
+                </style>
                 <children>
                     <JFXButton prefHeight="38.0"
                                prefWidth="80.0"
@@ -25,8 +29,8 @@
                                focusTraversable="false">
 
                         <style>
-                            -fx-background-color: #0077C8;
-                            -fx-text-fill: white;
+                            -fx-background-color: white;
+                            -fx-text-fill: black;
                         </style>
 
                     </JFXButton>
@@ -38,8 +42,8 @@
                                focusTraversable="false" >
 
                         <style>
-                            -fx-background-color: #0077C8;
-                            -fx-text-fill: white;
+                            -fx-background-color: white;
+                            -fx-text-fill: black;
                         </style>
 
                     </JFXButton>
@@ -51,8 +55,8 @@
                                focusTraversable="false" >
 
                         <style>
-                            -fx-background-color: #0077C8;
-                            -fx-text-fill: white;
+                            -fx-background-color: white;
+                            -fx-text-fill: black;
                         </style>
 
                     </JFXButton>
@@ -64,8 +68,8 @@
                                focusTraversable="false" >
 
                         <style>
-                            -fx-background-color: #0077C8;
-                            -fx-text-fill: white;
+                            -fx-background-color: white;
+                            -fx-text-fill: black;
                         </style>
 
                     </JFXButton>
