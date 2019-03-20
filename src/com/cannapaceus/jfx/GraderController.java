@@ -19,10 +19,9 @@ public class GraderController {
 
         try {
             sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
             sc.activate("Terms");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

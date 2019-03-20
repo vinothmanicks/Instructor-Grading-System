@@ -44,12 +44,6 @@
                         </style>
                     </JFXButton>
                     <Pane  HBox.hgrow="ALWAYS"/>
-                    <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" text="Go to Course" onAction="#handleSubmitButtonAction">
-                        <style>
-                            -fx-background-color: #0077C8;
-                            -fx-text-fill: white;
-                        </style>
-                    </JFXButton>
                 </HBox>
 
                 <!--<JFXListView fx:id="lvTerms">-->

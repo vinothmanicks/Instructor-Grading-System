@@ -52,7 +52,7 @@ public class Term {
 
     public ArrayList<Course> getCourses()
     {
-        return new ArrayList<>(lCourses);
+        return lCourses;
     }
 
     /**

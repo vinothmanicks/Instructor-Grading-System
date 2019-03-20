@@ -13,15 +13,9 @@
 
     <VBox fx:id="vbCourses">
         <style>
-            -fx-padding: 10;
-            -fx-border-style: solid inside;
-            -fx-border-width: 2;
-            -fx-border-insets: 5;
-            -fx-border-radius: 5;
-            -fx-border-color: blue;
         </style>
         <children>
-            <Label text="Course View Here" alignment="CENTER_LEFT"/>
+            <Label fx:id="lblCourseName" alignment="CENTER_LEFT"/>
             <Button text="Go to Terms" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction"/>
         </children>
     </VBox>

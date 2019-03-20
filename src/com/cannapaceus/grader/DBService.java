@@ -810,4 +810,74 @@ public class DBService {
 
         return retValue;
     }
+
+    public ArrayList<Term> retrieveModel() {
+        ArrayList<Term> retValue = new ArrayList<>();
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ResultSet rsc = null;
+
+        try {
+            //Get the course with the ID passed in
+            String sql = "SELECT * FROM TERMS";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Term temp = new Term(rs.getInt(3), eSeason.values()[rs.getShort(2)]);
+
+                    temp.setDBID(rs.getLong(1));
+
+                    sql = "SELECT * FROM COURSES " +
+                            "WHERE COURSES.ITERM = ?";
+
+                    stm = con.prepareStatement(sql);
+                    stm.setLong(1, temp.getDBID());
+
+                    rsc = stm.executeQuery();
+
+                    if (rsc != null) {
+                        while(rsc.next()) {
+                            Course tempCourse = retrieveCourseData(rsc.getLong(1));
+
+                            temp.addCourse(tempCourse);
+                        }
+                    }
+
+                    retValue.add(temp);
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (rsc != null) {
+                try {
+                    rsc.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
 }

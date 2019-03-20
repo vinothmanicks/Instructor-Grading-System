@@ -1,37 +1,35 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.DBService;
+import com.cannapaceus.grader.Model;
 import com.cannapaceus.grader.Term;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
-import javax.swing.*;
+import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TermsController {
     ScreenController sc = null;
-    DBService db = null;
+    Model md = null;
 
     ArrayList<Term> lTerms;
+
+    HashMap<String, Course> hmCourse;
+    HashMap<String, Term> hmTerm;
 
     @FXML
     private VBox vbTerms;
@@ -40,15 +38,29 @@ public class TermsController {
     private void initialize()
     {
         sc = ScreenController.getInstance();
-        db = DBService.getInstance();
+        md = Model.getInstance();
 
-        lTerms = db.retrieveTerms();
+        lTerms = md.getTerms();
+
+        hmCourse = new HashMap<>();
+        hmTerm = new HashMap<>();
 
         createTermList();
     }
 
-    public void handleSubmitButtonAction(ActionEvent actionEvent) {
-        sc.activate("Course");
+    public void handleSubmitButtonAction(MouseEvent event) {
+        Term targetTerm = hmTerm.get(((Node) event.getSource()).getParent().getParent().getId());
+        Course targetCourse = hmCourse.get(((Node) event.getSource()).getId());
+
+        md.setSelectedTerm(targetTerm);
+        md.setSelectedCourse(targetCourse);
+
+        try {
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.activate("Course");
+        } catch (Exception e) {
+
+        }
     }
 
     private void createTermList() {
@@ -116,10 +128,18 @@ public class TermsController {
                 courseDelete.setRipplerFill(Color.LIGHTGREY);
                 courseDelete.setButtonType(JFXButton.ButtonType.FLAT);
 
+                hbCourse.setId("" + c.getDBID());
+                hmCourse.put("" + c.getDBID(), c);
+
+                hbCourse.setOnMouseClicked((event -> handleSubmitButtonAction(event)));
+
                 hbCourse.getChildren().addAll(lblCourseName, lblCourseDept, spanPane, courseDelete);
                 hbCourse.setHgrow(spanPane, Priority.ALWAYS);
                 vbCourses.getChildren().add(hbCourse);
             }
+
+            tempVB.setId("" + t.getDBID());
+            hmTerm.put("" + t.getDBID(), t);
 
             tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete, tempExpand);
             tempHB.setHgrow(tempPane, Priority.ALWAYS);
