@@ -173,7 +173,7 @@ public class DBService {
      * @param termToStore
      * @return true if the term was stored successfully
      */
-    boolean storeTerm(Term termToStore) {
+    public boolean storeTerm(Term termToStore) {
         boolean retValue = false;
 
         Connection con = null;
@@ -230,7 +230,7 @@ public class DBService {
      * @param lTermID ID of the term that the course belongs to
      * @return true if the course was stored successfully
      */
-    boolean StoreCourse(Course courseToStore, long lTermID) {
+    public boolean storeCourse(Course courseToStore, long lTermID) {
         boolean retValue = false;
 
         Connection con = null;
@@ -293,7 +293,7 @@ public class DBService {
      * @param lCourseID ID of the course that the category belongs to
      * @return true if the category was stored successfully
      */
-    boolean StoreCategory(Category categoryToStore, long lCourseID) {
+    public boolean storeCategory(Category categoryToStore, long lCourseID) {
         boolean retValue = false;
 
         Connection con = null;
@@ -350,7 +350,7 @@ public class DBService {
      * @param lCourseID ID of the course that the assignment belongs to
      * @return true if the assignment was stored successfully
      */
-    boolean StoreAssignment(Assignment assignmentToStore, long lCourseID) {
+    public boolean storeAssignment(Assignment assignmentToStore, long lCourseID) {
         boolean retValue = false;
 
         Connection con = null;
@@ -426,7 +426,7 @@ public class DBService {
      * @param lCourseID ID of the course that the student belongs to
      * @return true if the student was stored successfully
      */
-    boolean StoreStudent(Student studentToStore, long lCourseID) {
+    public boolean storeStudent(Student studentToStore, long lCourseID) {
         boolean retValue = false;
 
         Connection con = null;
@@ -486,7 +486,7 @@ public class DBService {
      * @param lCourseID ID of the course that the grade belongs to
      * @return true if the grade was stored successfully
      */
-    boolean StoreGrade(Grade gradeToStore, long lCourseID) {
+    public boolean storeGrade(Grade gradeToStore, long lCourseID) {
         boolean retValue = false;
 
         Connection con = null;
@@ -558,7 +558,7 @@ public class DBService {
 
     //TODO: boolean StoreQuestion(Question questionToStore, lCourseID)
 
-    ArrayList<Term> retrieveTerms() {
+    public ArrayList<Term> retrieveTerms() {
         ArrayList<Term> retValue = new ArrayList<>();
 
         Connection con = null;
@@ -632,7 +632,7 @@ public class DBService {
         return retValue;
     }
 
-    Course retrieveCourseData(long lCourseID) {
+    public Course retrieveCourseData(long lCourseID) {
         Course retValue = null;
 
         Connection con = null;
@@ -794,6 +794,76 @@ public class DBService {
             if (rs != null) {
                 try {
                     rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    public ArrayList<Term> retrieveModel() {
+        ArrayList<Term> retValue = new ArrayList<>();
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ResultSet rsc = null;
+
+        try {
+            //Get the course with the ID passed in
+            String sql = "SELECT * FROM TERMS";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Term temp = new Term(rs.getInt(3), eSeason.values()[rs.getShort(2)]);
+
+                    temp.setDBID(rs.getLong(1));
+
+                    sql = "SELECT * FROM COURSES " +
+                            "WHERE COURSES.ITERM = ?";
+
+                    stm = con.prepareStatement(sql);
+                    stm.setLong(1, temp.getDBID());
+
+                    rsc = stm.executeQuery();
+
+                    if (rsc != null) {
+                        while(rsc.next()) {
+                            Course tempCourse = retrieveCourseData(rsc.getLong(1));
+
+                            temp.addCourse(tempCourse);
+                        }
+                    }
+
+                    retValue.add(temp);
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (rsc != null) {
+                try {
+                    rsc.close();
                 } catch (SQLException e) { /* ignored */}
             }
             if (stm != null) {

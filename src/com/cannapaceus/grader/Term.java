@@ -1,9 +1,6 @@
 package com.cannapaceus.grader;
 
-
 import java.util.ArrayList;
-
-enum eSeason {WINTER,SPRING,SUMMER,FALL}
 
 public class Term {
 
@@ -55,7 +52,7 @@ public class Term {
 
     public ArrayList<Course> getCourses()
     {
-        return new ArrayList<>(lCourses);
+        return lCourses;
     }
 
     /**

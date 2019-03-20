@@ -10,11 +10,21 @@
 <?import javafx.geometry.Insets?>
 
 <?import com.jfoenix.controls.JFXDrawer?>
+<?import javafx.scene.effect.DropShadow?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.GraderController">
 
-    <BorderPane fx:id="bpGraderView" VBox.vgrow="ALWAYS" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <style>
+        -fx-background-color: white;
+    </style>
+
+    <BorderPane fx:id="bpGraderView"
+                VBox.vgrow="ALWAYS"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0">
         <left>
             <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
 
@@ -80,7 +90,6 @@
             </VBox>
         </left>
         <center>
-            <Pane fx:id="pnContent"/>
         </center>
     </BorderPane>
 </AnchorPane>
