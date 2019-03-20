@@ -34,7 +34,7 @@
             </padding>
             <children>
                 <HBox fillHeight="false">
-                    <JFXButton alignment="CENTER" buttonType="RAISED" text="Add Term">
+                    <JFXButton buttonType="RAISED" text="Add Term">
                         <graphic>
                             <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                         </graphic>
