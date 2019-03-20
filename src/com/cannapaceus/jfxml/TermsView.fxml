@@ -7,15 +7,23 @@
 <?import de.jensd.fx.glyphs.*?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.effect.DropShadow?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.TermsController">
+            fx:controller="com.cannapaceus.jfx.TermsController"
+            AnchorPane.topAnchor="0.0"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0">
 
     <ScrollPane fitToWidth="true"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0">
+        <style>
+            -fx-padding: 10, 10, 10, 10;
+        </style>
 
         <VBox fx:id="vbTerms"
               fillWidth="true"
@@ -24,16 +32,20 @@
               AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0">
-
             <style>
+                -fx-padding: 10, 10, 10, 10;
                 -fx-background-color: white;
-                -fx-padding: 10, 20, 10, 20;
             </style>
+            <effect>
+                <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+            </effect>
             <padding>
                 <Insets bottom="5.0" top="5.0" />
             </padding>
             <children>
-                <HBox fillHeight="false">
+                <HBox fillHeight="false" alignment="CENTER_LEFT">
+                    <Label text="Terms"/>
+                    <Pane  HBox.hgrow="ALWAYS"/>
                     <JFXButton buttonType="RAISED" text="Add Term">
                         <graphic>
                             <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
@@ -43,7 +55,6 @@
                             -fx-text-fill: white;
                         </style>
                     </JFXButton>
-                    <Pane  HBox.hgrow="ALWAYS"/>
                 </HBox>
 
                 <!--<JFXListView fx:id="lvTerms">-->

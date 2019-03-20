@@ -178,7 +178,7 @@ public class TermsController {
             }
         }
 
-        p.getChildren().addAll(tempCollapse);
+        p.getChildren().add(tempCollapse);
     }
 
     private void collapse(ActionEvent e) {
@@ -195,13 +195,13 @@ public class TermsController {
         tempFA.setGlyphSize(20);
         tempFA.setGlyphStyle("-fx-fill: grey;");
 
-        JFXButton tempCollapse = new JFXButton("");
-        tempCollapse.setAlignment(Pos.BASELINE_CENTER);
-        tempCollapse.setGraphic(tempFA);
-        tempCollapse.setStyle("-fx-cursor: hand;");
-        tempCollapse.setRipplerFill(Color.WHITE);
-        tempCollapse.setButtonType(JFXButton.ButtonType.FLAT);
-        tempCollapse.setOnAction((event -> expand(event)));
+        JFXButton tempExpand = new JFXButton("");
+        tempExpand.setAlignment(Pos.BASELINE_CENTER);
+        tempExpand.setGraphic(tempFA);
+        tempExpand.setStyle("-fx-cursor: hand;");
+        tempExpand.setRipplerFill(Color.WHITE);
+        tempExpand.setButtonType(JFXButton.ButtonType.FLAT);
+        tempExpand.setOnAction((event -> expand(event)));
 
         for (Node n : vbTerm.getChildren()) {
             if (n instanceof VBox) {
@@ -210,6 +210,6 @@ public class TermsController {
             }
         }
 
-        p.getChildren().add(tempCollapse);
+        p.getChildren().add(tempExpand);
     }
 }
