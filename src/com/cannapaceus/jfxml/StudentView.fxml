@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
-<?import de.jensd.fx.glyphs.*?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.effect.DropShadow?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.TermsController"
+            fx:controller="com.cannapaceus.jfx.StudentController"
             AnchorPane.topAnchor="0.0"
             AnchorPane.bottomAnchor="0.0"
             AnchorPane.leftAnchor="0.0"
@@ -21,46 +21,33 @@
                 AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0">
-        <style>
-            -fx-padding: 10, 10, 10, 10;
-        </style>
 
-        <VBox fx:id="vbTerms"
+        <VBox fx:id="vbStudent"
               fillWidth="true"
               spacing="10"
               AnchorPane.topAnchor="0.0"
               AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0">
+
             <style>
                 -fx-padding: 10, 10, 10, 10;
-                -fx-background-color: white;
             </style>
-            <effect>
-                <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
-            </effect>
-            <padding>
-                <Insets bottom="5.0" top="5.0" />
-            </padding>
             <children>
-                <HBox fillHeight="false" alignment="CENTER_LEFT">
-                    <Label text="Terms"/>
-                    <Pane  HBox.hgrow="ALWAYS"/>
-                    <JFXButton buttonType="RAISED" text="Add Term">
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <JFXButton buttonType="RAISED" text="Back" onAction="#backClick">
                         <graphic>
-                            <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                         </graphic>
                         <style>
-                            -fx-background-color: #4CAF50;
+                            -fx-background-color: #0077C8;
                             -fx-text-fill: white;
                         </style>
                     </JFXButton>
+                    <Label fx:id="lblStudentName"/>
                 </HBox>
-
-                <!--<JFXListView fx:id="lvTerms">-->
-
-                <!--</JFXListView>-->
             </children>
         </VBox>
     </ScrollPane>
+
 </AnchorPane>
