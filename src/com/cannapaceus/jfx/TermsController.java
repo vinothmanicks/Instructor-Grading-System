@@ -48,7 +48,7 @@ public class TermsController {
         createTermList();
     }
 
-    public void handleSubmitButtonAction(MouseEvent event) {
+    public void courseClick(MouseEvent event) {
         Term targetTerm = hmTerm.get(((Node) event.getSource()).getParent().getParent().getId());
         Course targetCourse = hmCourse.get(((Node) event.getSource()).getId());
 
@@ -59,7 +59,7 @@ public class TermsController {
             sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -131,7 +131,7 @@ public class TermsController {
                 hbCourse.setId("" + c.getDBID());
                 hmCourse.put("" + c.getDBID(), c);
 
-                hbCourse.setOnMouseClicked((event -> handleSubmitButtonAction(event)));
+                hbCourse.setOnMouseClicked((event -> courseClick(event)));
 
                 hbCourse.getChildren().addAll(lblCourseName, lblCourseDept, spanPane, courseDelete);
                 hbCourse.setHgrow(spanPane, Priority.ALWAYS);

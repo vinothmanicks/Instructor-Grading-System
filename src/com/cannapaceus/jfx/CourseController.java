@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -15,11 +16,17 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import javafx.scene.input.MouseEvent;
+import java.util.HashMap;
+
 public class CourseController {
     ScreenController sc = null;
     Model md = null;
 
     Course selectedCourse;
+
+    HashMap<String, Student> hmStudent;
+    HashMap<String, Assignment> hmAssignment;
 
     @FXML
     private Label lblCourseName;
@@ -44,6 +51,9 @@ public class CourseController {
 
         selectedCourse = md.getSelectedCourse();
 
+        hmStudent = new HashMap<>();
+        hmAssignment = new HashMap<>();
+
         lblCourseName.setText(selectedCourse.getCourseName());
 
         createStudentList();
@@ -51,8 +61,34 @@ public class CourseController {
         createGradeList();
     }
 
-    public void handleSubmitButtonAction(ActionEvent actionEvent) {
+    public void backClick(ActionEvent actionEvent) {
         sc.activate("Terms");
+    }
+
+    private void studentClick(MouseEvent event) {
+        md.setSelectedStudent(hmStudent.get(((Node) event.getSource()).getId()));
+
+        try {
+            sc.addScreen("Student", FXMLLoader.load(getClass().getResource("../jfxml/StudentView.fxml")));
+            sc.activate("Student");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void assignmentClick(MouseEvent event) {
+        md.setSelectedAssignment(hmAssignment.get(((Node) event.getSource()).getId()));
+
+        try {
+            sc.addScreen("Student", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentView.fxml")));
+            sc.activate("Student");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void gradeClick(MouseEvent event) {
+        //Does nothing at the moment
     }
 
     private void createStudentList() {
@@ -82,6 +118,12 @@ public class CourseController {
 
             tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
             tempHB.setHgrow(tempPane, Priority.ALWAYS);
+
+            tempHB.setOnMouseClicked((event -> studentClick(event)));
+
+            tempHB.setId("" + s.getDBID());
+            hmStudent.put("" + s.getDBID(), s);
+
             vbStudents.getChildren().addAll(tempSep, tempHB);
         }
     }
@@ -113,6 +155,12 @@ public class CourseController {
 
             tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
             tempHB.setHgrow(tempPane, Priority.ALWAYS);
+
+            tempHB.setOnMouseClicked((event -> assignmentClick(event)));
+
+            tempHB.setId("" + a.getDBID());
+            hmAssignment.put("" + a.getDBID(), a);
+
             vbAssignments.getChildren().addAll(tempSep, tempHB);
         }
     }
@@ -147,6 +195,9 @@ public class CourseController {
 
             tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
             tempHB.setHgrow(tempPane, Priority.ALWAYS);
+
+            tempHB.setOnMouseClicked((event -> gradeClick(event)));
+
             vbGrades.getChildren().addAll(tempSep, tempHB);
         }
     }
