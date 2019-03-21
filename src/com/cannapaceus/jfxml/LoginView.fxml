@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import javafx.scene.effect.DropShadow?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.LoginController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <VBox fx:id="vbLogin" spacing="10" maxWidth="200" maxHeight="100" fillWidth="true">
+            <children>
+                <JFXTextField fx:id="inUsername"
+                              alignment="CENTER_LEFT"
+                              promptText="Username"/>
+
+                <JFXPasswordField fx:id="inPassword"
+                                  alignment="CENTER_LEFT"
+                                  promptText="Password" />
+
+                <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction" buttonType="RAISED">
+                    <style>
+                        -fx-background-color: #0077C8;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </children>
+
+            <style>
+                -fx-padding: 10,10,10,10;
+                -fx-background-color: white;
+            </style>
+            <effect>
+                <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+            </effect>
+        </VBox>
+    </center>
+</BorderPane>

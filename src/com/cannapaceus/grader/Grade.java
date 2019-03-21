@@ -2,6 +2,9 @@ package com.cannapaceus.grader;
 
 public class Grade {
 
+    //Long to hold the ID of the grade from the database
+    private long lDBID = 0;
+
     private Student stuStudent;
     private Assignment aAssignment;
     private float fGrade;
@@ -31,6 +34,14 @@ public class Grade {
     }
 
     //Setter functions
+    /**
+     * Setter for the grade's ID from the database
+     * @param lDBID ID of the grade from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
+
     /**
      * Setter for the Grade class's grade
      * @param fGrade Float of the desired grade for this instance
@@ -77,6 +88,13 @@ public class Grade {
     }
 
     //Getter functions
+    /**
+     * Getter for a copy of the grade's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
+    }
 
     /**
      * Getter for the Grade class's grade float
