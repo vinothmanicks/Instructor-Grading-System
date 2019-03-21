@@ -51,7 +51,7 @@
                 </JFXTextField>
             </HBox>
             <HBox fillHeight="false" spacing="10.0">
-                <JFXButton buttonType="FLAT" text="Save">
+                <JFXButton buttonType="FLAT" text="Save" onAction="#saveClick">
                     <style>
                         -fx-background-color: #4CAF50;
                         -fx-text-fill: white;

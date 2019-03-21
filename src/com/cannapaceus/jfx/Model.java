@@ -1,7 +1,6 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
-
 import java.util.ArrayList;
 
 public class Model {
@@ -15,6 +14,7 @@ public class Model {
 
     ArrayList<Object> updatedObjects = null;
     ArrayList<Object> newObjects = null;
+    ArrayList<Object> removedObjects = null;
 
     Term selectedTerm = null;
     Course selectedCourse = null;
@@ -36,8 +36,10 @@ public class Model {
     private void initModel() {
         lStoredModel = db.retrieveModel();
         lCurrentModel = db.retrieveModel();
+
         updatedObjects = new ArrayList<>();
         newObjects = new ArrayList<>();
+        removedObjects = new ArrayList<>();
     }
 
     public ArrayList<Term> getTerms() {
@@ -150,5 +152,17 @@ public class Model {
 
     public Assignment getSelectedAssignment() {
         return selectedAssignment;
+    }
+
+    public void commitChanges() {
+        db.storeNewObjects(newObjects, lCurrentModel);
+        db.updateObjects(updatedObjects);
+    }
+
+    public void revertChanges() {
+        lCurrentModel = new ArrayList<>(lStoredModel);
+        updatedObjects.clear();
+        newObjects.clear();
+        removedObjects.clear();
     }
 }

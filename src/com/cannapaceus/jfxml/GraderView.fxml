@@ -31,7 +31,7 @@
                     <JFXButton prefHeight="38.0"
                                prefWidth="80.0"
                                text="Home"
-                               buttonType="RAISED"
+                               buttonType="FLAT"
                                focusTraversable="false">
 
                         <style>
@@ -44,7 +44,7 @@
                     <JFXButton prefHeight="38.0"
                                prefWidth="80.0"
                                text="QBank"
-                               buttonType="RAISED"
+                               buttonType="FLAT"
                                focusTraversable="false" >
 
                         <style>
@@ -57,7 +57,7 @@
                     <JFXButton prefHeight="38.0"
                                prefWidth="80.0"
                                text="Settings"
-                               buttonType="RAISED"
+                               buttonType="FLAT"
                                focusTraversable="false" >
 
                         <style>
@@ -70,7 +70,7 @@
                     <JFXButton prefHeight="38.0"
                                prefWidth="80.0"
                                text="Help"
-                               buttonType="RAISED"
+                               buttonType="FLAT"
                                focusTraversable="false" >
 
                         <style>

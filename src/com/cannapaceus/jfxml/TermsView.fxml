@@ -5,9 +5,9 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import de.jensd.fx.glyphs.*?>
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.effect.DropShadow?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.TermsController"
@@ -41,7 +41,7 @@
                 <HBox fillHeight="false" alignment="CENTER_LEFT">
                     <Label text="Terms"/>
                     <Pane  HBox.hgrow="ALWAYS"/>
-                    <JFXButton buttonType="FLAT" text="Add Term" onAction="#addTerm">
+                    <JFXButton buttonType="FLAT" text="Add Term" onAction="#addTermClick">
                         <graphic>
                             <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                         </graphic>
@@ -51,10 +51,6 @@
                         </style>
                     </JFXButton>
                 </HBox>
-
-                <!--<JFXListView fx:id="lvTerms">-->
-
-                <!--</JFXListView>-->
             </children>
         </VBox>
     </ScrollPane>

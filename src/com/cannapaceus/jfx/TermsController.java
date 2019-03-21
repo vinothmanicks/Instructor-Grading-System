@@ -65,7 +65,7 @@ public class TermsController {
         }
     }
 
-    public void addTerm(ActionEvent event) {
+    public void addTermClick(ActionEvent event) {
         eSeason s;
         int m = LocalDateTime.now().getMonth().getValue();
         int y = LocalDateTime.now().getYear();
@@ -90,6 +90,23 @@ public class TermsController {
         try {
             sc.addScreen("TermForm", FXMLLoader.load(getClass().getResource("../jfxml/TermFormView.fxml")));
             sc.activate("TermForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addCourseClick(ActionEvent event) {
+        Term targetTerm = hmTerm.get(((Node) event.getSource()).getParent().getParent().getId());
+        Course targetCourse = new Course("", "", "");
+
+        md.setSelectedTerm(targetTerm);
+        md.addCourse(targetCourse);
+
+        md.setSelectedCourse(targetCourse);
+
+        try {
+            sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("../jfxml/CourseFormView.fxml")));
+            sc.activate("CourseForm");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,10 +155,27 @@ public class TermsController {
             vbCourses.setVisible(false);
             vbCourses.setManaged(false);
 
+            vbCourses.setSpacing(10.0);
+            vbCourses.setStyle("-fx-padding: 10,10,10,10;");
+
+            tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("PLUS");
+            tempFA.setGlyphSize(20);
+            tempFA.setGlyphStyle("-fx-fill: white;");
+
+            JFXButton tempAddCourse = new JFXButton("Add Course");
+            tempAddCourse.setAlignment(Pos.BASELINE_CENTER);
+            tempAddCourse.setGraphic(tempFA);
+            tempAddCourse.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+            tempAddCourse.setButtonType(JFXButton.ButtonType.FLAT);
+            tempAddCourse.setOnAction((event -> addCourseClick(event)));
+
+            vbCourses.getChildren().add(tempAddCourse);
+
             for (Course c : t.getCourses()) {
                 HBox hbCourse = new HBox();
                 hbCourse.setSpacing(10.0);
-                hbCourse.setStyle("-fx-padding: 10,10,10,10;");
+                hbCourse.setAlignment(Pos.CENTER_LEFT);
 
                 Label lblCourseName = new Label(c.getCourseName());
                 Label lblCourseDept = new Label(c.getDepartment());
