@@ -1,8 +1,8 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.Model;
 import com.cannapaceus.grader.Term;
+import com.cannapaceus.grader.eSeason;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -58,6 +60,36 @@ public class TermsController {
         try {
             sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
             sc.activate("Course");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addTerm(ActionEvent event) {
+        eSeason s;
+        int m = LocalDateTime.now().getMonth().getValue();
+        int y = LocalDateTime.now().getYear();
+
+        if (m < 2) {
+            s = eSeason.WINTER;
+        } else if (m < 5) {
+            s = eSeason.SPRING;
+        } else if (m < 8) {
+            s = eSeason.SUMMER;
+        } else if (m < 11) {
+            s = eSeason.FALL;
+        } else {
+            s = eSeason.WINTER;
+        }
+
+        Term t = new Term(y, s);
+
+        md.addTerm(t);
+        md.setSelectedTerm(t);
+
+        try {
+            sc.addScreen("TermForm", FXMLLoader.load(getClass().getResource("../jfxml/TermFormView.fxml")));
+            sc.activate("TermForm");
         } catch (Exception e) {
             e.printStackTrace();
         }

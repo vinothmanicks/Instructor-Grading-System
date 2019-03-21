@@ -1,6 +1,5 @@
 package com.cannapaceus.jfx;
 
-import com.cannapaceus.grader.Model;
 import com.cannapaceus.grader.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

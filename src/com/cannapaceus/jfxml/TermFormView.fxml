@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.effect.DropShadow?>
+<?import com.jfoenix.validation.IntegerValidator?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.TermFormController"
+            AnchorPane.topAnchor="0.0"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0">
+
+    <VBox fx:id="vbTerm"
+          fillWidth="true"
+          spacing="30.0"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <style>
+            -fx-padding: 20, 20, 20, 20;
+            -fx-background-color: white;
+        </style>
+        <children>
+            <HBox alignment="CENTER_LEFT">
+                <JFXComboBox fx:id="cbSeason" promptText="Season" labelFloat="true"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfYear" promptText="Year" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                        <IntegerValidator message="Integer Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </IntegerValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <HBox fillHeight="false" spacing="10.0">
+                <JFXButton buttonType="FLAT" text="Save">
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <JFXButton buttonType="FLAT" text="Cancel" onAction="#cancelClick">
+                    <style>
+                        -fx-background-color: lightgrey;
+                        -fx-text-fill: black;
+                    </style>
+                </JFXButton>
+                <Pane HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <!--<JFXListView fx:id="lvTerms">-->
+
+            <!--</JFXListView>-->
+        </children>
+    </VBox>
+
+</AnchorPane>

@@ -17,17 +17,19 @@
             prefHeight="400.0" prefWidth="600.0">
 
     <center>
-        <VBox fx:id="vbLogin" spacing="10" maxWidth="200" maxHeight="100" fillWidth="true">
+        <VBox fx:id="vbLogin" spacing="20" maxWidth="200" maxHeight="100" fillWidth="true">
             <children>
                 <JFXTextField fx:id="inUsername"
                               alignment="CENTER_LEFT"
-                              promptText="Username"/>
+                              promptText="Username"
+                              labelFloat="true"/>
 
                 <JFXPasswordField fx:id="inPassword"
                                   alignment="CENTER_LEFT"
-                                  promptText="Password" />
+                                  promptText="Password"
+                                  labelFloat="true"/>
 
-                <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction" buttonType="RAISED">
+                <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction" buttonType="FLAT">
                     <style>
                         -fx-background-color: #0077C8;
                         -fx-text-fill: white;
@@ -36,7 +38,7 @@
             </children>
 
             <style>
-                -fx-padding: 10,10,10,10;
+                -fx-padding: 20, 20, 20, 20;
                 -fx-background-color: white;
             </style>
             <effect>

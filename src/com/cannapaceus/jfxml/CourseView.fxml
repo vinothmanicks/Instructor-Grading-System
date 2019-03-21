@@ -23,6 +23,10 @@
                 AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0">
 
+        <style>
+            -fx-background-color: white;
+        </style>
+
         <VBox fx:id="vbCourse"
               fillWidth="true"
               spacing="10"
@@ -32,11 +36,11 @@
               AnchorPane.rightAnchor="0.0">
 
             <style>
-                -fx-padding: 10, 10, 10, 10;
+                -fx-padding: 20, 20, 20, 20;
             </style>
             <children>
                 <HBox spacing="10.0" alignment="CENTER_LEFT">
-                    <JFXButton buttonType="RAISED" text="Back" onAction="#backClick">
+                    <JFXButton buttonType="FLAT" text="Back" onAction="#backClick">
                         <graphic>
                             <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                         </graphic>
@@ -72,10 +76,10 @@
                     <VBox fx:id="vbStudents" spacing="10.0" visible="false" managed="false">
 
                         <style>
-                            -fx-padding: 10, 20, 10, 20;
+                            -fx-padding: 10, 10, 10, 10;
                         </style>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <JFXButton buttonType="RAISED" text="Add Student">
+                            <JFXButton buttonType="FLAT" text="Add Student">
                                 <graphic>
                                     <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                                 </graphic>
@@ -113,10 +117,10 @@
                     <VBox fx:id="vbAssignments" spacing="10.0" visible="false" managed="false">
 
                         <style>
-                            -fx-padding: 10, 20, 10, 20;
+                            -fx-padding: 10, 10, 10, 10;
                         </style>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <JFXButton buttonType="RAISED" text="Add Assignment">
+                            <JFXButton buttonType="FLAT" text="Add Assignment">
                                 <graphic>
                                     <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                                 </graphic>
@@ -154,10 +158,10 @@
                     <VBox fx:id="vbGrades" spacing="10.0" visible="false" managed="false">
 
                         <style>
-                            -fx-padding: 10, 20, 10, 20;
+                            -fx-padding: 10, 10, 10, 10;
                         </style>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <JFXButton buttonType="RAISED" text="Add Grade">
+                            <JFXButton buttonType="FLAT" text="Add Grade">
                                 <graphic>
                                     <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                                 </graphic>

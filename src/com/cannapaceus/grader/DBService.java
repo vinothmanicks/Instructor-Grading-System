@@ -1,8 +1,6 @@
 package com.cannapaceus.grader;
 
-import java.awt.*;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.*;
 
 public class DBService {
@@ -357,7 +355,7 @@ public class DBService {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        Category catCopy = assignmentToStore.getCategory();
+        Category catCopy = assignmentToStore.getCategoryCopy();
 
         long lCategoryID = 0;
 
@@ -879,5 +877,84 @@ public class DBService {
         }
 
         return retValue;
+    }
+
+    public void storeNewObjects(ArrayList<Object> lObjects, ArrayList<Term> lTerms) {
+        for (Term t : lTerms) {     //Traverse all terms and store every object in lObjects
+                                    //Need to traverse because the parent's DBID is needed
+            if (lObjects.contains(t)) {
+                storeTerm(t);
+            }
+            for (Course c : t.getCourses()) {
+                if (lObjects.contains(c)) {
+                    storeCourse(c, t.getDBID());
+                }
+                for (Student s : c.getlStudents()) {
+                    if (lObjects.contains(s)) {
+                        storeStudent(s, c.getDBID());
+                    }
+                }
+
+                for (Category cat : c.getlCategories()) {
+                    if (lObjects.contains(cat)) {
+                        storeCategory(cat, c.getDBID());
+                    }
+                }
+
+                for (Assignment a : c.getlAssignments()) {
+                    if (lObjects.contains(a)) {
+                        storeAssignment(a, c.getDBID());
+                    }
+                }
+
+                for (Grade g : c.getlGrades()) {
+                    if (lObjects.contains(g)) {
+                        storeGrade(g, c.getDBID());
+                    }
+                }
+            }
+        }
+    }
+
+    public void updateObjects(ArrayList<Object> lObjects) {
+        for (Object o : lObjects) {
+            if (o instanceof Term) {
+                updateTerm((Term) o);
+            } else if (o instanceof Course) {
+                updateCourse((Course) o);
+            } else if (o instanceof Category) {
+                updateCategory((Category) o);
+            } else if (o instanceof Student) {
+                updateStudent((Student) o);
+            } else if (o instanceof Assignment) {
+                updateAssignment((Assignment) o);
+            } else if (o instanceof Grade) {
+                updateGrade((Grade) o);
+            }
+        }
+    }
+
+    private void updateTerm(Term t) {
+
+    }
+
+    private void updateCourse(Course c) {
+
+    }
+
+    private void updateCategory(Category cat) {
+
+    }
+
+    private void updateStudent(Student s) {
+
+    }
+
+    private void updateAssignment(Assignment a) {
+
+    }
+
+    private void updateGrade(Grade g) {
+
     }
 }

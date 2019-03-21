@@ -1,9 +1,7 @@
 package com.cannapaceus.grader;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Assignment {
 
@@ -67,7 +65,7 @@ public class Assignment {
         this.setAssignmentName(aAssignment.getAssignmentName());
         aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
         this.setAssignedDate(aAssignment.getAssignedDate());
-        this.setCategory((aAssignment.getCategory()));
+        this.setCategory((aAssignment.getCategoryCopy()));
         this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
@@ -180,8 +178,7 @@ public class Assignment {
      */
     public ArrayList getGrades()
     {
-        ArrayList<Grade> lGradesCopy = new ArrayList<>(this.lGrades);
-        return lGradesCopy;
+        return lGrades;
     }
 
     /**
@@ -215,7 +212,7 @@ public class Assignment {
      * Getter for a copy of the assignment's category
      * @return
      */
-    public Category getCategory()
+    public Category getCategoryCopy()
     {
         Category catCategoryCopy = new Category(this.catCategory);
         return catCategoryCopy;
