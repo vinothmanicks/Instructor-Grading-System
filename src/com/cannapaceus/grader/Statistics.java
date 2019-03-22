@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Statistics {
 
+    private static int counter = 0;
     private float fMean;
     private float fMedian;
     private float fMode;
@@ -11,7 +12,7 @@ public class Statistics {
 
     public Statistics()
     {
-
+        counter++;
     }
     public Statistics(Statistics satStatistics)
     {
@@ -40,6 +41,14 @@ public class Statistics {
     {
         return this.fStandardDev;
     }
+
+    public void setMean(Float newMean) { this.fMean = newMean; }
+
+    public void setMedian(float newMedian) { this.fMedian = newMedian; }
+
+    public void setMode(float newMode) { this.fMode = newMode; }
+
+    public void setStandardDev(float newStandardDev) { this.fStandardDev = newStandardDev; }
 
     public void calculateMean(ArrayList<Grade> listOfGrades)
     {
@@ -91,5 +100,9 @@ public class Statistics {
 
         fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/listOfGrades.size()));
         this.fStandardDev = fCalculationValue;
+    }
+
+    public static int geNumOfInstances() {
+        return counter;
     }
 }
