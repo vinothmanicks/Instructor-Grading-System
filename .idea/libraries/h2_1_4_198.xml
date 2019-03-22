@@ -2,6 +2,8 @@
   <library name="h2-1.4.198">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/h2-1.4.198.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfoenix-8.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fontawesomefx-8.9.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
