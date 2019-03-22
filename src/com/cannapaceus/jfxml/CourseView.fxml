@@ -63,7 +63,16 @@
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
                         <Label text="Students"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                        <JFXButton fx:id="btnAddStudent" buttonType="FLAT" visible="false" managed="false" text="Add Student">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                        <JFXButton fx:id="expandStudent" buttonType="FLAT" ripplerFill="white" onAction="#expand">
                             <graphic>
                                 <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
                             </graphic>
@@ -79,15 +88,6 @@
                             -fx-padding: 10, 10, 10, 10;
                         </style>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <JFXButton buttonType="FLAT" text="Add Student">
-                                <graphic>
-                                    <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                                </graphic>
-                                <style>
-                                    -fx-background-color: #4CAF50;
-                                    -fx-text-fill: white;
-                                </style>
-                            </JFXButton>
                         </HBox>
 
                     </VBox>
@@ -104,7 +104,16 @@
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
                         <Label text="Assignments"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                        <JFXButton fx:id="btnAddAssignment" buttonType="FLAT" visible="false" managed="false" text="Add Assignment">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                        <JFXButton fx:id="expandAssignment" buttonType="FLAT" ripplerFill="white" onAction="#expand">
                             <graphic>
                                 <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
                             </graphic>
@@ -120,15 +129,6 @@
                             -fx-padding: 10, 10, 10, 10;
                         </style>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <JFXButton buttonType="FLAT" text="Add Assignment">
-                                <graphic>
-                                    <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                                </graphic>
-                                <style>
-                                    -fx-background-color: #4CAF50;
-                                    -fx-text-fill: white;
-                                </style>
-                            </JFXButton>
                         </HBox>
 
                     </VBox>
@@ -145,7 +145,16 @@
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
                         <Label text="Grades"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                        <JFXButton fx:id="btnAddGrade" buttonType="FLAT" visible="false" managed="false" text="Add Grade">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                        <JFXButton fx:id="expandGrade" buttonType="FLAT" ripplerFill="white" onAction="#expand">
                             <graphic>
                                 <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
                             </graphic>
@@ -161,15 +170,6 @@
                             -fx-padding: 10, 10, 10, 10;
                         </style>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
-                            <JFXButton buttonType="FLAT" text="Add Grade">
-                                <graphic>
-                                    <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                                </graphic>
-                                <style>
-                                    -fx-background-color: #4CAF50;
-                                    -fx-text-fill: white;
-                                </style>
-                            </JFXButton>
                         </HBox>
                     </VBox>
                 </VBox>

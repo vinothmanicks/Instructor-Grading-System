@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -58,6 +59,15 @@ public class TermsController {
 
             VBox tempVB = new VBox();
             tempVB.setSpacing(10.0);
+            tempVB.setStyle("-fx-padding: 10, 10, 10, 10; -fx-background-color: white;");
+
+            DropShadow ds = new DropShadow();
+            ds.setColor(Color.GREY);
+            ds.setOffsetX(4);
+            ds.setOffsetY(4);
+
+            tempVB.setEffect(ds);
+
             HBox tempHB = new HBox();
             tempHB.setAlignment(Pos.CENTER_LEFT);
 
@@ -125,8 +135,6 @@ public class TermsController {
             termAddCourse.setButtonType(JFXButton.ButtonType.FLAT);
             termAddCourse.setOnAction((event -> addCourseClick(event)));
 
-            vbCourses.getChildren().add(termAddCourse);
-
             for (Course c : t.getCourses()) {
                 HBox hbCourse = new HBox();
                 hbCourse.setSpacing(10.0);
@@ -168,17 +176,21 @@ public class TermsController {
 
                 hbCourse.setOnMouseClicked((event -> courseClick(event)));
 
-                hbCourse.getChildren().addAll(lblCourseName, courseEdit, courseSpanPane, courseDelete);
+                hbCourse.getChildren().addAll(lblCourseName, courseSpanPane, courseEdit, courseDelete);
                 hbCourse.setHgrow(courseSpanPane, Priority.ALWAYS);
-                vbCourses.getChildren().add(hbCourse);
+                vbCourses.getChildren().addAll(tempSep, hbCourse);
             }
+
+            tempSep = new Separator();
+
+            vbCourses.getChildren().addAll(tempSep, termAddCourse);
 
             tempVB.setId("" + t.getDBID());
             hmTerm.put("" + t.getDBID(), t);
 
-            tempHB.getChildren().addAll(termLabel, termEdit, termSpanPane, termDelete, termExpand);
+            tempHB.getChildren().addAll(termLabel, termSpanPane, termEdit, termDelete, termExpand);
             tempHB.setHgrow(termSpanPane, Priority.ALWAYS);
-            tempVB.getChildren().addAll(tempSep, tempHB, vbCourses);
+            tempVB.getChildren().addAll(tempHB, vbCourses);
 
             vbTerms.getChildren().addAll(tempVB);
         }
