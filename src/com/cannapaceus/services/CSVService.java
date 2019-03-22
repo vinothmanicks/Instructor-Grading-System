@@ -34,6 +34,16 @@ public class CSVService {
         }
     }
 
+    /*
+    public void ExportCSV() {
+        java.sql.ResultSet myResultSet = getResultSetFromSomewhere();
+        writer.writeAll(myResultSet, includeHeaders); //writer is instance of CSVWriter
+    }*/
+
+    public void ImportCSV() {
+
+    }
+
     public String Today() {
         String pattern = "yyyyMMdd_HHmmss";
 
