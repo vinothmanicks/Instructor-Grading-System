@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
+import java.util.Collections;
+
 public class TermFormController {
     ScreenController sc = null;
     Model md = null;
@@ -28,6 +30,8 @@ public class TermFormController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
+        sc.setBottomVisibility(false);
+
         selectedTerm = md.getSelectedTerm();
 
         ObservableList<String> list = FXCollections.observableArrayList("Winter", "Spring", "Summer", "Fall");
@@ -43,7 +47,9 @@ public class TermFormController {
     }
 
     public void cancelClick(ActionEvent event) {
-        md.removeTerm(selectedTerm);
+        if (selectedTerm.getDBID() == 0 && !md.getNewObjects().contains(selectedTerm)) {
+            md.removeTerm(selectedTerm);
+        }
 
         try {
             sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
@@ -54,16 +60,19 @@ public class TermFormController {
     }
 
     public void saveClick(ActionEvent event) {
+        if (!formValidate())
+            return;
+
         selectedTerm.setCourseSeason(eSeason.valueOf(cbSeason.getValue().toUpperCase()));
         selectedTerm.setYear(Integer.valueOf(tfYear.getText()));
 
-        if (selectedTerm.getDBID() == 0) {
+        if (selectedTerm.getDBID() == 0 && !md.getNewObjects().contains(selectedTerm)) {
             md.addNewObject(selectedTerm);
         } else {
-            md.updateObject(selectedTerm);
+            md.addUpdatedObject(selectedTerm);
         }
 
-        md.commitChanges();
+        Collections.sort(md.getTerms());
 
         try {
             sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
@@ -71,5 +80,12 @@ public class TermFormController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean formValidate() {
+        if (!tfYear.validate())
+            return false;
+
+        return true;
     }
 }

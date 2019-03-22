@@ -1,12 +1,13 @@
 package com.cannapaceus.jfx;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 public class GraderController {
     ScreenController sc = null;
+    Model md = null;
 
     @FXML
     private BorderPane bpGraderView;
@@ -15,6 +16,8 @@ public class GraderController {
     private void initialize()
     {
         sc = ScreenController.getInstance();
+        md = md.getInstance();
+
         sc.setPane(bpGraderView);
 
         try {
@@ -23,6 +26,14 @@ public class GraderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void commitClick(ActionEvent e) {
+        md.commitChanges();
+    }
+
+    public void revertClick(ActionEvent e) {
+        md.revertChanges();
     }
 
 }

@@ -20,6 +20,8 @@ public class AssignmentController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
+        sc.setBottomVisibility(true);
+
         selectedAssignment = md.getSelectedAssignment();
 
         lblAssignmentName.setText(selectedAssignment.getAssignmentName());

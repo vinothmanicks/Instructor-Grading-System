@@ -1,6 +1,6 @@
 package com.cannapaceus.grader;
 
-public class Grade {
+public class Grade implements Comparable<Grade> {
 
     //Long to hold the ID of the grade from the database
     private long lDBID = 0;
@@ -159,6 +159,15 @@ public class Grade {
     {
         Assignment aAssignmentCopy = new Assignment(aAssignment);
         return aAssignmentCopy;
+    }
+
+    public int compareTo(Grade g) {
+        int stuComp = this.getStudentCopy().compareTo(g.getStudentCopy());
+        if (stuComp != 0) {
+            return stuComp;
+        }
+
+        return this.getAssignmentCopy().compareTo(g.getAssignmentCopy());
     }
 
 

@@ -20,6 +20,8 @@ public class StudentController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
+        sc.setBottomVisibility(true);
+
         selectedStudent = md.getSelectedStudent();
 
         lblStudentName.setText(selectedStudent.getFirstMIName() + " " + selectedStudent.getLastName());

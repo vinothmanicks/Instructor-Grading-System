@@ -2,6 +2,7 @@ package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Model {
     DBService db = DBService.getInstance();
@@ -54,42 +55,75 @@ public class Model {
         return newObjects;
     }
 
-    public void updateObject(Object o) {
-        updatedObjects.add(o);
+    public ArrayList<Object> getRemovedObjects() {
+        return removedObjects;
     }
 
     public void addNewObject(Object o) {
         newObjects.add(o);
     }
 
-    public int getNumberOfChanges() {
-        return updatedObjects.size() + newObjects.size();
+    public void addUpdatedObject(Object o) {
+        if (!newObjects.contains(o))
+            updatedObjects.add(o);
+    }
+
+    public void addRemovedObject(Object o) {
+        if (!newObjects.remove(o)) {
+            removedObjects.add(o);
+        }
+
+        updatedObjects.remove(o);
+    }
+
+    public int getNewNum() {
+        return newObjects.size();
+    }
+
+    public int getUpdatedNum() {
+        return updatedObjects.size();
+    }
+
+    public int getRemovedNum() {
+        return removedObjects.size();
+    }
+
+    public int getNumChanges() {
+        return updatedObjects.size() + newObjects.size() + removedObjects.size();
     }
 
     public void addTerm(Term t) {
         lCurrentModel.add(t);
+        Collections.sort(lCurrentModel);
     }
 
     public void addCourse(Course c) {
-        selectedTerm.getCourses().add(c);
+        selectedTerm.addCourse(c);
+        Collections.sort(selectedTerm.getCourses());
     }
 
     public void addStudent(Student s) {
-        selectedCourse.getlStudents().add(s);
+        selectedCourse.addStudent(s);
+        Collections.sort(selectedCourse.getlStudents());
     }
 
-    public void addCategory(Category c) {
-        selectedCourse.getlCategories().add(c);
+    public void addCategory(Category cat) {
+        selectedCourse.addCategory(cat);
+        Collections.sort(selectedCourse.getlCategories());
     }
 
     public void addAssignment(Assignment a) {
-        selectedCourse.getlAssignments().add(a);
+        selectedCourse.addAssignment(a);
+        Collections.sort(selectedCourse.getlAssignments());
     }
 
     public void addGrade(Grade g) {
-        selectedCourse.getlGrades().add(g);
-        selectedStudent.getGrades().add(g);
-        selectedAssignment.getGrades().add(g);
+        selectedCourse.addGrade(g);
+        selectedStudent.addGrade(g);
+        selectedAssignment.addGrade(g);
+        Collections.sort(selectedCourse.getlGrades());
+        Collections.sort(selectedStudent.getGrades());
+        Collections.sort(selectedAssignment.getGrades());
     }
 
     public void removeTerm(Term t) {
@@ -104,8 +138,8 @@ public class Model {
         selectedCourse.getlStudents().remove(s);
     }
 
-    public void removeCategory(Category c) {
-        selectedCourse.getlCategories().remove(c);
+    public void removeCategory(Category cat) {
+        selectedCourse.getlCategories().remove(cat);
     }
 
     public void removeAssignment(Assignment a) {
@@ -157,6 +191,13 @@ public class Model {
     public void commitChanges() {
         db.storeNewObjects(newObjects, lCurrentModel);
         db.updateObjects(updatedObjects);
+        db.deleteObjects(removedObjects);
+
+        newObjects.clear();
+        updatedObjects.clear();
+        removedObjects.clear();
+
+        lStoredModel = new ArrayList<>(lCurrentModel);
     }
 
     public void revertChanges() {

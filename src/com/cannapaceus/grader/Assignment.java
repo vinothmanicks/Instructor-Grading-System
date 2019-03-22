@@ -3,7 +3,7 @@ package com.cannapaceus.grader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Assignment {
+public class Assignment implements Comparable<Assignment> {
 
     //Long to hold the ID of the assignment from the database
     private long lDBID = 0;
@@ -176,7 +176,7 @@ public class Assignment {
      * Getter for a copy of assignment's grade list
      * @return
      */
-    public ArrayList getGrades()
+    public ArrayList<Grade> getGrades()
     {
         return lGrades;
     }
@@ -234,5 +234,9 @@ public class Assignment {
     public boolean getDroppedAssignment()
     {
         return this.bDropped;
+    }
+
+    public int compareTo(Assignment a) {
+        return this.getAssignmentName().compareTo(a.getAssignmentName());
     }
 }

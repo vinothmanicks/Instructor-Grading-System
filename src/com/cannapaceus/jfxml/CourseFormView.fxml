@@ -14,15 +14,17 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import com.jfoenix.validation.IntegerValidator?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.TermFormController"
+            fx:controller="com.cannapaceus.jfx.CourseFormController"
             AnchorPane.topAnchor="0.0"
             AnchorPane.bottomAnchor="0.0"
             AnchorPane.leftAnchor="0.0"
             AnchorPane.rightAnchor="0.0">
 
-    <VBox fx:id="vbTerm"
+    <VBox fx:id="vbCourse"
           fillWidth="true"
           spacing="30.0"
           AnchorPane.topAnchor="0.0"
@@ -36,19 +38,34 @@
         </style>
         <children>
             <HBox alignment="CENTER_LEFT">
-                <JFXComboBox fx:id="cbSeason" promptText="Season" labelFloat="true"/>
-            </HBox>
-            <HBox alignment="CENTER_LEFT">
-                <JFXTextField fx:id="tfYear" promptText="Year" labelFloat="true">
+                <JFXTextField fx:id="tfCourseName" promptText="Name" prefWidth="200" labelFloat="true">
                     <validators>
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
-                        <IntegerValidator message="Integer Required">
-                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
-                        </IntegerValidator>
                     </validators>
                 </JFXTextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfCourseID" promptText="ID ex: CS 499" prefWidth="200" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfCourseDept" promptText="Department ex: Computer Science" prefWidth="200" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXCheckBox fx:id="cbArchived" text="Archived"/>
             </HBox>
             <Pane VBox.vgrow="ALWAYS"/>
             <HBox fillHeight="true" spacing="10.0">

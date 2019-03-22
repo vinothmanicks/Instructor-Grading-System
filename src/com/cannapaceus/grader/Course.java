@@ -3,7 +3,7 @@ package com.cannapaceus.grader;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Course {
+public class Course implements Comparable<Course> {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
@@ -148,5 +148,9 @@ public class Course {
     public void setDepartment(String Department)
     {
         this.sDepartment = Department;
+    }
+
+    public int compareTo(Course c) {
+        return this.getCourseName().compareTo(c.getCourseName());
     }
 }
