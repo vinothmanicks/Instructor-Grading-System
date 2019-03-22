@@ -32,6 +32,15 @@ public class CourseController {
     private Label lblCourseName;
 
     @FXML
+    private JFXButton btnAddStudent;
+
+    @FXML
+    private JFXButton btnAddAssignment;
+
+    @FXML
+    private JFXButton btnAddGrade;
+
+    @FXML
     private VBox vbCourse;
 
     @FXML
@@ -208,6 +217,26 @@ public class CourseController {
     private void expand(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
+        String s = "";
+
+        switch (t.getId()) {
+            case "expandStudent":
+                s = "collapseStudent";
+                btnAddStudent.setVisible(true);
+                btnAddStudent.setManaged(true);
+                break;
+            case "expandAssignment":
+                s = "collapseAssignment";
+                btnAddAssignment.setVisible(true);
+                btnAddAssignment.setManaged(true);
+                break;
+            case "expandGrade":
+                s = "collapseGrade";
+                btnAddGrade.setVisible(true);
+                btnAddGrade.setManaged(true);
+                break;
+        }
+
         HBox p = (HBox) t.getParent();
 
         VBox vbTerm = (VBox) p.getParent();
@@ -220,6 +249,7 @@ public class CourseController {
         tempFA.setGlyphStyle("-fx-fill: grey;");
 
         JFXButton tempCollapse = new JFXButton("");
+        tempCollapse.setId(s);
         tempCollapse.setAlignment(Pos.BASELINE_CENTER);
         tempCollapse.setGraphic(tempFA);
         tempCollapse.setStyle("-fx-cursor: hand;");
@@ -240,6 +270,26 @@ public class CourseController {
     private void collapse(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
+        String s = "";
+
+        switch (t.getId()) {
+            case "collapseStudent":
+                s = "expandStudent";
+                btnAddStudent.setVisible(false);
+                btnAddStudent.setManaged(false);
+                break;
+            case "collapseAssignment":
+                s = "expandAssignment";
+                btnAddAssignment.setVisible(false);
+                btnAddAssignment.setManaged(false);
+                break;
+            case "collapseGrade":
+                s = "expandGrade";
+                btnAddGrade.setVisible(false);
+                btnAddGrade.setManaged(false);
+                break;
+        }
+
         HBox p = (HBox) t.getParent();
 
         VBox vBox = (VBox) p.getParent();
@@ -252,6 +302,7 @@ public class CourseController {
         tempFA.setGlyphStyle("-fx-fill: grey;");
 
         JFXButton tempExpand = new JFXButton("");
+        tempExpand.setId(s);
         tempExpand.setAlignment(Pos.BASELINE_CENTER);
         tempExpand.setGraphic(tempFA);
         tempExpand.setStyle("-fx-cursor: hand;");
