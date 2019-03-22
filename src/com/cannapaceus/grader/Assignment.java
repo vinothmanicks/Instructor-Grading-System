@@ -1,11 +1,9 @@
 package com.cannapaceus.grader;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class Assignment {
+public class Assignment implements Comparable<Assignment> {
 
     //Long to hold the ID of the assignment from the database
     private long lDBID = 0;
@@ -67,7 +65,7 @@ public class Assignment {
         this.setAssignmentName(aAssignment.getAssignmentName());
         aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
         this.setAssignedDate(aAssignment.getAssignedDate());
-        this.setCategory((aAssignment.getCategory()));
+        this.setCategory((aAssignment.getCategoryCopy()));
         this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
@@ -178,10 +176,9 @@ public class Assignment {
      * Getter for a copy of assignment's grade list
      * @return
      */
-    public ArrayList getGrades()
+    public ArrayList<Grade> getGrades()
     {
-        ArrayList<Grade> lGradesCopy = new ArrayList<>(this.lGrades);
-        return lGradesCopy;
+        return lGrades;
     }
 
     /**
@@ -215,7 +212,7 @@ public class Assignment {
      * Getter for a copy of the assignment's category
      * @return
      */
-    public Category getCategory()
+    public Category getCategoryCopy()
     {
         Category catCategoryCopy = new Category(this.catCategory);
         return catCategoryCopy;
@@ -237,5 +234,9 @@ public class Assignment {
     public boolean getDroppedAssignment()
     {
         return this.bDropped;
+    }
+
+    public int compareTo(Assignment a) {
+        return this.getAssignmentName().compareTo(a.getAssignmentName());
     }
 }

@@ -49,6 +49,8 @@ public class CourseController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
+        sc.setBottomVisibility(true);
+
         selectedCourse = md.getSelectedCourse();
 
         hmStudent = new HashMap<>();

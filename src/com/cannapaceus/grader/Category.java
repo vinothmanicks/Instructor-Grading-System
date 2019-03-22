@@ -2,7 +2,7 @@ package com.cannapaceus.grader;
 
 import java.util.ArrayList;
 
-public class Category {
+public class Category implements Comparable<Category> {
     //Long to hold the ID of the category from the database
     private long lDBID = 0;
     //The name of the category
@@ -77,5 +77,9 @@ public class Category {
     public void setCategoryName(String categoryName)
     {
         sCategoryName = new String(categoryName);
+    }
+
+    public int compareTo(Category cat) {
+        return this.getName().compareTo(cat.getName());
     }
 }

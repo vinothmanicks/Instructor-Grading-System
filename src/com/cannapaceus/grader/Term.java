@@ -2,7 +2,7 @@ package com.cannapaceus.grader;
 
 import java.util.ArrayList;
 
-public class Term {
+public class Term implements Comparable<Term> {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
@@ -86,5 +86,13 @@ public class Term {
     public void removeCourse(Course coCourse)
     {
         lCourses.remove(coCourse);
+    }
+
+    public int compareTo(Term t) {
+        if (this.getYear() == t.getYear()) {
+            return Integer.compare(this.getSeason().getInt(), t.getSeason().getInt());
+        }
+
+        return Integer.compare(this.getYear(), t.getYear());
     }
 }

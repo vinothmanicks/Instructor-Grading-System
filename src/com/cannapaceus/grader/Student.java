@@ -93,8 +93,7 @@ public class Student implements Comparable<Student>{
     //Getter functions
     public ArrayList<Grade> getGrades()
     {
-        ArrayList<Grade> lGradeCopies = new ArrayList<>(lGrades);
-        return lGradeCopies;
+        return lGrades;
     }
 
     /**
