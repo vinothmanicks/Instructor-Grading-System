@@ -1,8 +1,6 @@
 package com.cannapaceus.grader;
 
-import java.awt.*;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.*;
 
 public class DBService {
@@ -174,7 +172,7 @@ public class DBService {
      * @return true if the term was stored successfully
      */
     public boolean storeTerm(Term termToStore) {
-        boolean retValue = false;
+        boolean retValue = true;
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -197,8 +195,6 @@ public class DBService {
             rs = stm.getGeneratedKeys();
             rs.next();
             termToStore.setDBID(rs.getLong(1));
-
-            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -231,7 +227,7 @@ public class DBService {
      * @return true if the course was stored successfully
      */
     public boolean storeCourse(Course courseToStore, long lTermID) {
-        boolean retValue = false;
+        boolean retValue = true;
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -260,8 +256,6 @@ public class DBService {
             rs = stm.getGeneratedKeys();
             rs.next();
             courseToStore.setDBID(rs.getLong(1));
-
-            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -294,7 +288,7 @@ public class DBService {
      * @return true if the category was stored successfully
      */
     public boolean storeCategory(Category categoryToStore, long lCourseID) {
-        boolean retValue = false;
+        boolean retValue = true;
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -317,8 +311,6 @@ public class DBService {
             rs = stm.getGeneratedKeys();
             rs.next();
             categoryToStore.setDBID(rs.getLong(1));
-
-            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -351,13 +343,13 @@ public class DBService {
      * @return true if the assignment was stored successfully
      */
     public boolean storeAssignment(Assignment assignmentToStore, long lCourseID) {
-        boolean retValue = false;
+        boolean retValue = true;
 
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        Category catCopy = assignmentToStore.getCategory();
+        Category catCopy = assignmentToStore.getCategoryCopy();
 
         long lCategoryID = 0;
 
@@ -394,8 +386,6 @@ public class DBService {
             rs.next();
             assignmentToStore.setDBID(rs.getLong(1));
 
-            retValue = true;
-
         } catch (Exception e) {
             e.printStackTrace();
             retValue = false;
@@ -427,7 +417,7 @@ public class DBService {
      * @return true if the student was stored successfully
      */
     public boolean storeStudent(Student studentToStore, long lCourseID) {
-        boolean retValue = false;
+        boolean retValue = true;
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -453,8 +443,6 @@ public class DBService {
             rs = stm.getGeneratedKeys();
             rs.next();
             studentToStore.setDBID(rs.getLong(1));
-
-            retValue = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -487,7 +475,7 @@ public class DBService {
      * @return true if the grade was stored successfully
      */
     public boolean storeGrade(Grade gradeToStore, long lCourseID) {
-        boolean retValue = false;
+        boolean retValue = true;
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -530,8 +518,6 @@ public class DBService {
             rs.next();
             gradeToStore.setDBID(rs.getLong(1));
 
-            retValue = true;
-
         } catch (Exception e) {
             e.printStackTrace();
             retValue = false;
@@ -558,6 +544,621 @@ public class DBService {
 
     //TODO: boolean StoreQuestion(Question questionToStore, lCourseID)
 
+    private boolean updateTerm(Term t) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE TERMS " +
+                    "SET ESEASON = ?, IYEAR = ?, BARCHIVED = ? " +
+                    "WHERE TERMID = ?";
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, t.getSeason().toString());
+            stm.setInt(2, t.getYear());
+            stm.setBoolean(3, t.getArchivedStatus());
+            stm.setLong(4, t.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean updateCourse(Course c) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE COURSES " +
+                    "SET SCOURSENAME = ?, SCOURSEID = ?, SCOURSEDEPT = ?, FMEAN = ?, " +
+                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ? " +
+                    "WHERE COURSEID = ? ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, c.getCourseName());
+            stm.setString(2, c.getCourseID());
+            stm.setString(3, c.getDepartment());
+            stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, courseToStore.getStatistics().getMean());
+            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, courseToStore.getStatistics().getMedian());
+            stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, courseToStore.getStatistics().getMode());
+            stm.setFloat(7, 0.0f);  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
+            stm.setBoolean(8, false);
+            stm.setLong(9, c.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean updateCategory(Category cat) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE CATEGORIES " +
+                    "SET SCATEGORYNAME = ?, FWEIGHT = ? " +
+                    "WHERE CATEGORYID = ? ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, cat.getName());
+            stm.setFloat(2, cat.getWeight());
+            stm.setLong(3, cat.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean updateStudent(Student s) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE STUDENTS" +
+                    "SET SFIRSTMINAME = ?, SLASTNAME = ?, SSTUDENTID = ?, SEMAIL = ?, FAVERAGE = ? " +
+                    "WHERE STUDENTID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, s.getFirstMIName());
+            stm.setString(2, s.getLastName());
+            stm.setString(3, s.getStudentID());
+            stm.setString(4, s.getStudentEmail());
+            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, studentToStore.getAverage());
+            stm.setLong(6, s.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean updateAssignment(Assignment a) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        Category catCopy = a.getCategoryCopy();
+
+        long lCategoryID = 0;
+
+        if (catCopy != null) {
+            lCategoryID = catCopy.getDBID();
+        }
+
+        try {
+            String sql = "UPDATE ASSIGNMENTS" +
+                    "SET SASSIGNMENTNAME = ?, DTDUEDATE = ?, DTASSIGNEDDATE = ?, FMEAN = ?, FMEDIAN = ?, " +
+                    "FMODE = ?, FSTDDEV = ?, BDROPPED = ?, FMAXSCORE = ?, FWEIGHT = ?, ICATEGORY = ? " +
+                    "WHERE ASSIGNMENTID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, a.getAssignmentName());
+            stm.setDate(2, java.sql.Date.valueOf(a.getDueDate()));
+            stm.setDate(3, java.sql.Date.valueOf(a.getAssignedDate()));
+            stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, assignmentToStore.getStatistics().getMean());
+            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, assignmentToStore.getStatistics().getMedian());
+            stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, assignmentToStore.getStatistics().getMode());
+            stm.setFloat(7, 0.0f);  //TODO: stm.setFloat(7, assignmentToStore.getStatistics().getStdDev());
+            stm.setBoolean(8, a.getDroppedAssignment());
+            stm.setFloat(9, a.getMaxScore());
+            stm.setFloat(10, a.getWeight());
+            stm.setLong(11, lCategoryID);
+            stm.setLong(12, a.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean updateGrade(Grade g) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        Assignment assignCopy = g.getAssignmentCopy();
+        Student stuCopy = g.getStudentCopy();
+
+        long lAssignmentID = 0;
+        long lStudentID = 0;
+
+        if (assignCopy != null) {
+            lAssignmentID = assignCopy.getDBID();
+        }
+        if (stuCopy != null) {
+            lStudentID = stuCopy.getDBID();
+        }
+
+        try {
+            String sql = "UPDATE GRADES" +
+                    "SET FGRADE = ?, BSUBMITTED = ?, BOVERDUE = ?, BMISSING = ?, " +
+                    "BDROPPED = ?, IASSIGNMENT = ?, ISTUDENT = ? " +
+                    "WHERE GRADEID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setFloat(1, g.getGrade());
+            stm.setBoolean(2, g.getSubmitted());
+            stm.setBoolean(3, g.getOverdue());
+            stm.setBoolean(4, g.getMissing());
+            stm.setBoolean(5, g.getDropped());
+            stm.setLong(6, lAssignmentID);
+            stm.setLong(7, lStudentID);
+            stm.setLong(8, g.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean deleteTerm(Term t) {
+        boolean retValue = true;
+
+        if (t.getDBID() == 0)
+            return true;
+
+        for (Course c : t.getCourses()) {
+            if (!deleteCourse(c))
+                retValue = false;
+        }
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "DELETE FROM TERMS " +
+                    "WHERE TERMID = ?";
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setLong(1, t.getDBID());
+
+            stm.executeUpdate();
+
+            t.setDBID(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean deleteCourse(Course c) {
+        boolean retValue = true;
+
+        if (c.getDBID() == 0)
+            return true;
+
+        for (Student s : c.getlStudents()) {
+            if (!deleteStudent(s))
+                retValue = false;
+        }
+
+        for (Category cat : c.getlCategories()) {
+            if (!deleteCategory(cat))
+                retValue = false;
+        }
+
+        for (Assignment a : c.getlAssignments()) {
+            if (!deleteAssignment(a))
+                retValue = false;
+        }
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE COURSES " +
+                    "SET SCOURSENAME = ?, SCOURSEID = ?, SCOURSEDEPT = ?, FMEAN = ?, " +
+                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ? " +
+                    "WHERE COURSEID = ? ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, c.getCourseName());
+            stm.setString(2, c.getCourseID());
+            stm.setString(3, c.getDepartment());
+            stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, courseToStore.getStatistics().getMean());
+            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, courseToStore.getStatistics().getMedian());
+            stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, courseToStore.getStatistics().getMode());
+            stm.setFloat(7, 0.0f);  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
+            stm.setBoolean(8, false);
+            stm.setLong(9, c.getDBID());
+
+            stm.executeUpdate();
+
+            c.setDBID(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean deleteCategory(Category cat) {
+        boolean retValue = true;
+
+        if (cat.getDBID() == 0)
+            return true;
+
+        for (Assignment a : cat.getAssignments()) {
+            if (!deleteAssignment(a))
+                retValue = false;
+        }
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE CATEGORIES " +
+                    "SET SCATEGORYNAME = ?, FWEIGHT = ? " +
+                    "WHERE CATEGORYID = ? ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, cat.getName());
+            stm.setFloat(2, cat.getWeight());
+            stm.setLong(3, cat.getDBID());
+
+            stm.executeUpdate();
+
+            cat.setDBID(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean deleteStudent(Student s) {
+        boolean retValue = true;
+
+        if (s.getDBID() == 0)
+            return true;
+
+        for (Grade g : s.getGrades()) {
+            if (!deleteGrade(g))
+                retValue = false;
+        }
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE STUDENTS" +
+                    "SET SFIRSTMINAME = ?, SLASTNAME = ?, SSTUDENTID = ?, SEMAIL = ?, FAVERAGE = ? " +
+                    "WHERE STUDENTID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stm.setString(1, s.getFirstMIName());
+            stm.setString(2, s.getLastName());
+            stm.setString(3, s.getStudentID());
+            stm.setString(4, s.getStudentEmail());
+            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, studentToStore.getAverage());
+            stm.setLong(6, s.getDBID());
+
+            stm.executeUpdate();
+
+            s.setDBID(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean deleteAssignment(Assignment a) {
+        boolean retValue = true;
+
+        if (a.getDBID() == 0)
+            return true;
+
+        for (Grade g : a.getGrades()) {
+            if (!deleteGrade(g))
+                retValue = false;
+        }
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        Category catCopy = a.getCategoryCopy();
+
+        long lCategoryID = 0;
+
+        if (catCopy != null) {
+            lCategoryID = catCopy.getDBID();
+        }
+
+        try {
+            String sql = "UPDATE ASSIGNMENTS" +
+                    "SET SASSIGNMENTNAME = ?, DTDUEDATE = ?, DTASSIGNEDDATE = ?, FMEAN = ?, FMEDIAN = ?, " +
+                    "FMODE = ?, FSTDDEV = ?, BDROPPED = ?, FMAXSCORE = ?, FWEIGHT = ?, ICATEGORY = ? " +
+                    "WHERE ASSIGNMENTID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stm.setString(1, a.getAssignmentName());
+            stm.setDate(2, java.sql.Date.valueOf(a.getDueDate()));
+            stm.setDate(3, java.sql.Date.valueOf(a.getAssignedDate()));
+            stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, assignmentToStore.getStatistics().getMean());
+            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, assignmentToStore.getStatistics().getMedian());
+            stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, assignmentToStore.getStatistics().getMode());
+            stm.setFloat(7, 0.0f);  //TODO: stm.setFloat(7, assignmentToStore.getStatistics().getStdDev());
+            stm.setBoolean(8, a.getDroppedAssignment());
+            stm.setFloat(9, a.getMaxScore());
+            stm.setFloat(10, a.getWeight());
+            stm.setLong(11, lCategoryID);
+            stm.setLong(12, a.getDBID());
+
+            stm.executeUpdate();
+
+            a.setDBID(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    private boolean deleteGrade(Grade g) {
+        boolean retValue = true;
+
+        if (g.getDBID() == 0)
+            return true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        Assignment assignCopy = g.getAssignmentCopy();
+        Student stuCopy = g.getStudentCopy();
+
+        long lAssignmentID = 0;
+        long lStudentID = 0;
+
+        if (assignCopy != null) {
+            lAssignmentID = assignCopy.getDBID();
+        }
+        if (stuCopy != null) {
+            lStudentID = stuCopy.getDBID();
+        }
+
+        try {
+            String sql = "UPDATE GRADES" +
+                    "SET FGRADE = ?, BSUBMITTED = ?, BOVERDUE = ?, BMISSING = ?, " +
+                    "BDROPPED = ?, IASSIGNMENT = ?, ISTUDENT = ? " +
+                    "WHERE GRADEID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stm.setFloat(1, g.getGrade());
+            stm.setBoolean(2, g.getSubmitted());
+            stm.setBoolean(3, g.getOverdue());
+            stm.setBoolean(4, g.getMissing());
+            stm.setBoolean(5, g.getDropped());
+            stm.setLong(6, lAssignmentID);
+            stm.setLong(7, lStudentID);
+            stm.setLong(8, g.getDBID());
+
+            stm.executeUpdate();
+
+            g.setDBID(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
     public ArrayList<Term> retrieveTerms() {
         ArrayList<Term> retValue = new ArrayList<>();
 
@@ -568,7 +1169,7 @@ public class DBService {
 
         try {
             //Get the course with the ID passed in
-            String sql = "SELECT * FROM TERMS";
+            String sql = "SELECT * FROM TERMS ORDER BY IYEAR, ESEASON";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql);
@@ -582,7 +1183,8 @@ public class DBService {
                     temp.setDBID(rs.getLong(1));
 
                     sql = "SELECT * FROM COURSES " +
-                            "WHERE COURSES.ITERM = ?";
+                            "WHERE COURSES.ITERM = ? " +
+                            "ORDER BY SCOURSENAME";
 
                     stm = con.prepareStatement(sql);
                     stm.setLong(1, temp.getDBID());
@@ -600,6 +1202,8 @@ public class DBService {
                             temp.addCourse(tempCourse);
                         }
                     }
+
+                    Collections.sort(temp.getCourses());
 
                     retValue.add(temp);
                 }
@@ -629,6 +1233,8 @@ public class DBService {
             }
         }
 
+        Collections.sort(retValue);
+
         return retValue;
     }
 
@@ -642,7 +1248,8 @@ public class DBService {
         try {
             //Get the course with the ID passed in
             String sql = "SELECT TOP(1) * FROM COURSES " +
-                    "WHERE COURSES.COURSEID = ?";
+                    "WHERE COURSES.COURSEID = ? " +
+                    "ORDER BY SCOURSENAME";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql);
@@ -660,7 +1267,8 @@ public class DBService {
 
                 //Get categories for the course
                 sql = "SELECT * FROM CATEGORIES " +
-                        "WHERE CATEGORIES.ICOURSE = ?";
+                        "WHERE CATEGORIES.ICOURSE = ? " +
+                        "ORDER BY SCATEGORYNAME";
 
                 stm = con.prepareStatement(sql);
 
@@ -680,7 +1288,8 @@ public class DBService {
                 //Get Assignments for the course
 
                 sql = "SELECT * FROM ASSIGNMENTS " +
-                        "WHERE ASSIGNMENTS.ICOURSE = ?";
+                        "WHERE ASSIGNMENTS.ICOURSE = ? " +
+                        "ORDER BY SASSIGNMENTNAME";
 
                 stm = con.prepareStatement(sql);
 
@@ -721,7 +1330,8 @@ public class DBService {
 
                 //Get categories for the course
                 sql = "SELECT * FROM STUDENTS " +
-                        "WHERE STUDENTS.ICOURSE = ?";
+                        "WHERE STUDENTS.ICOURSE = ? " +
+                        "ORDER BY SLASTNAME, SFIRSTMINAME";
 
                 stm = con.prepareStatement(sql);
 
@@ -745,7 +1355,10 @@ public class DBService {
                 //Get Assignments for the course
 
                 sql = "SELECT * FROM GRADES " +
-                        "WHERE GRADES.ICOURSE = ?";
+                        "WHERE GRADES.ICOURSE = ? " +
+                        "ORDER BY (SELECT TOP 1 SLASTNAME FROM STUDENTS WHERE STUDENTID = GRADES.ISTUDENT), " +
+                        "(SELECT TOP 1 SFIRSTMINAME FROM STUDENTS WHERE STUDENTID = GRADES.ISTUDENT), " +
+                        "(SELECT TOP 1 SASSIGNMENTNAME FROM ASSIGNMENTS WHERE ASSIGNMENTID = GRADES.IASSIGNMENT)";
 
                 stm = con.prepareStatement(sql);
 
@@ -821,7 +1434,7 @@ public class DBService {
 
         try {
             //Get the course with the ID passed in
-            String sql = "SELECT * FROM TERMS";
+            String sql = "SELECT * FROM TERMS ORDER BY IYEAR, ESEASON";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql);
@@ -835,7 +1448,8 @@ public class DBService {
                     temp.setDBID(rs.getLong(1));
 
                     sql = "SELECT * FROM COURSES " +
-                            "WHERE COURSES.ITERM = ?";
+                            "WHERE COURSES.ITERM = ? " +
+                            "ORDER BY SCOURSENAME";
 
                     stm = con.prepareStatement(sql);
                     stm.setLong(1, temp.getDBID());
@@ -879,5 +1493,78 @@ public class DBService {
         }
 
         return retValue;
+    }
+
+    public void storeNewObjects(ArrayList<Object> lObjects, ArrayList<Term> lTerms) {
+        for (Term t : lTerms) {     //Traverse all terms and store every object in lObjects
+                                    //Need to traverse because the parent's DBID is needed
+            if (lObjects.contains(t)) {
+                storeTerm(t);
+            }
+            for (Course c : t.getCourses()) {
+                if (lObjects.contains(c)) {
+                    storeCourse(c, t.getDBID());
+                }
+                for (Student s : c.getlStudents()) {
+                    if (lObjects.contains(s)) {
+                        storeStudent(s, c.getDBID());
+                    }
+                }
+
+                for (Category cat : c.getlCategories()) {
+                    if (lObjects.contains(cat)) {
+                        storeCategory(cat, c.getDBID());
+                    }
+                }
+
+                for (Assignment a : c.getlAssignments()) {
+                    if (lObjects.contains(a)) {
+                        storeAssignment(a, c.getDBID());
+                    }
+                }
+
+                for (Grade g : c.getlGrades()) {
+                    if (lObjects.contains(g)) {
+                        storeGrade(g, c.getDBID());
+                    }
+                }
+            }
+        }
+    }
+
+    public void updateObjects(ArrayList<Object> lObjects) {
+        for (Object o : lObjects) {
+            if (o instanceof Term) {
+                updateTerm((Term) o);
+            } else if (o instanceof Course) {
+                updateCourse((Course) o);
+            } else if (o instanceof Category) {
+                updateCategory((Category) o);
+            } else if (o instanceof Student) {
+                updateStudent((Student) o);
+            } else if (o instanceof Assignment) {
+                updateAssignment((Assignment) o);
+            } else if (o instanceof Grade) {
+                updateGrade((Grade) o);
+            }
+        }
+    }
+
+    public void deleteObjects(ArrayList<Object> lObjects) {
+        for (Object o : lObjects) {
+            if (o instanceof Term) {
+                deleteTerm((Term) o);
+            } else if (o instanceof Course) {
+                deleteCourse((Course) o);
+            } else if (o instanceof Category) {
+                deleteCategory((Category) o);
+            } else if (o instanceof Student) {
+                deleteStudent((Student) o);
+            } else if (o instanceof Assignment) {
+                deleteAssignment((Assignment) o);
+            } else if (o instanceof Grade) {
+                deleteGrade((Grade) o);
+            }
+        }
     }
 }

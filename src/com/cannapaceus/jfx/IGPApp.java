@@ -34,6 +34,8 @@ public class IGPApp extends Application {
             // Set the Title to the Stage
             primaryStage.setTitle("Instructor Grading Program");
 
+//            primaryStage.setMaximized(true); // Hurts my eyes, so I'll put it back in later if it's wanted
+
             primaryStage.setMinWidth(800);
             primaryStage.setMinHeight(600);
             // Display the Stage

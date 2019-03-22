@@ -11,12 +11,12 @@
 
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import javafx.scene.effect.DropShadow?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.GraderController">
 
-    <BorderPane fx:id="bpGraderView"
-                VBox.vgrow="ALWAYS"
+    <BorderPane VBox.vgrow="ALWAYS"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0"
@@ -28,54 +28,74 @@
                     -fx-background-color: #0077C8;
                 </style>
                 <children>
-                    <JFXButton prefHeight="38.0"
-                               prefWidth="80.0"
+                    <JFXButton prefWidth="80.0"
                                text="Home"
-                               buttonType="RAISED"
-                               focusTraversable="false">
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER">
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="HOME" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
 
                         <style>
                             -fx-background-color: white;
-                            -fx-text-fill: black;
+                            -fx-text-fill: #0077C8;
                         </style>
 
                     </JFXButton>
 
-                    <JFXButton prefHeight="38.0"
-                               prefWidth="80.0"
+                    <JFXButton prefWidth="80.0"
                                text="QBank"
-                               buttonType="RAISED"
-                               focusTraversable="false" >
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER" >
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="UNIVERSITY" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
 
                         <style>
                             -fx-background-color: white;
-                            -fx-text-fill: black;
+                            -fx-text-fill: #0077C8;
                         </style>
 
                     </JFXButton>
 
-                    <JFXButton prefHeight="38.0"
-                               prefWidth="80.0"
+                    <JFXButton prefWidth="80.0"
                                text="Settings"
-                               buttonType="RAISED"
-                               focusTraversable="false" >
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER" >
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="SLIDERS" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
 
                         <style>
                             -fx-background-color: white;
-                            -fx-text-fill: black;
+                            -fx-text-fill: #0077C8;
                         </style>
 
                     </JFXButton>
 
-                    <JFXButton prefHeight="38.0"
-                               prefWidth="80.0"
+                    <JFXButton prefWidth="80.0"
                                text="Help"
-                               buttonType="RAISED"
-                               focusTraversable="false" >
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER">
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="QUESTION" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
 
                         <style>
                             -fx-background-color: white;
-                            -fx-text-fill: black;
+                            -fx-text-fill: #0077C8;
                         </style>
 
                     </JFXButton>
@@ -86,6 +106,48 @@
             </VBox>
         </left>
         <center>
+            <BorderPane fx:id="bpGraderView"
+                        VBox.vgrow="ALWAYS"
+                        AnchorPane.topAnchor="0.0"
+                        AnchorPane.bottomAnchor="0.0"
+                        AnchorPane.leftAnchor="0.0"
+                        AnchorPane.rightAnchor="0.0">
+                <center>
+
+                </center>
+                <bottom>
+                    <VBox fillWidth="true">
+                        <Separator></Separator>
+                        <HBox spacing="20.0" alignment="CENTER_LEFT">
+                            <style>
+                                -fx-padding: 10,10,10,10;
+                                -fx-background-color: white;
+                            </style>
+                            <Label fx:id="lblChanges" text="Changes: "/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <JFXButton text="Commit Changes" onAction="#commitClick">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                </graphic>
+                                <style>
+                                    -fx-background-color: #4CAF50;
+                                    -fx-text-fill: white;
+                                </style>
+                            </JFXButton>
+                            <Separator orientation="VERTICAL"/>
+                            <JFXButton text="Revert Changes" onAction="#revertClick">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                </graphic>
+                                <style>
+                                    -fx-background-color: lightgrey;
+                                    -fx-text-fill: white;
+                                </style>
+                            </JFXButton>
+                        </HBox>
+                    </VBox>
+                </bottom>
+            </BorderPane>
         </center>
     </BorderPane>
 </AnchorPane>

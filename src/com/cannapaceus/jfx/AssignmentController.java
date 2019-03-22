@@ -1,7 +1,6 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.Assignment;
-import com.cannapaceus.grader.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,6 +19,8 @@ public class AssignmentController {
     {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
+
+        sc.setBottomVisibility(true);
 
         selectedAssignment = md.getSelectedAssignment();
 

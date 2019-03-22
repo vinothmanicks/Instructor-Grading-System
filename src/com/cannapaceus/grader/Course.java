@@ -3,7 +3,7 @@ package com.cannapaceus.grader;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Course {
+public class Course implements Comparable<Course> {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
@@ -12,13 +12,14 @@ public class Course {
     private String sCourseID = null; // Course ID
     private String sDepartment = null; // Optional
 
-    private ArrayList<Student> lStudents; // List of student objects
-    private ArrayList<Assignment> lAssignments; // List of assignment objects
-    private ArrayList<Category> lCategories; // List of category objects
-    private ArrayList<Grade> lGrades; // List of grade objects
+    private ArrayList<Student> lStudents; // List of students in a course
+    private ArrayList<Assignment> lAssignments; // List of assignments in a course
+    private ArrayList<Category> lCategories; // List of assignment categories
+    private ArrayList<Grade> lGrades; // List of all grades for the course
+    private ArrayList<Float> lAverageGrades; // List of student average grades for the course
 
     private boolean bArchived; // Archived flag
-    private Statistics stCourseStats; // Course statistics struct
+    private Statistics stCourseStats; // Course statistics object
 
     public Course(String sCourseName, String sCourseID, String sDepartment) { // Class constructor
         this.setCourseName(sCourseName);
@@ -28,9 +29,10 @@ public class Course {
         this.lAssignments = new ArrayList<Assignment>();
         this.lCategories = new ArrayList<Category>();
         this.lGrades = new ArrayList<Grade>();
+        this.lAverageGrades = new ArrayList<Float>();
 
         this.bArchived = false;
-        this.stCourseStats = null;
+        this.stCourseStats = new Statistics();
     }
 
     public void addStudent(Student newStudent) { // Add a student to a course
@@ -78,7 +80,64 @@ public class Course {
         this.bArchived = true;
     }
 
-    public void calculateStats(){}
+    public void PopulateAverages(ArrayList<Student> lStudents) // Populates or repopulates list of student average grades
+    {
+        this.lAverageGrades.clear();
+        for (int a = 0; a < lStudents.size(); a++) {
+            this.lAverageGrades.add(lStudents.get(a).getAverageGrade());
+        }
+    }
+
+    public void calculateStats()
+    {
+        float mean;
+        float median;
+        float mode;
+        float standardDev;
+
+        float tempSum = 0;
+        for (int a = 0; a < this.lAverageGrades.size(); a++) {
+            tempSum += this.lAverageGrades.get(a);
+        }
+        mean = tempSum / this.lAverageGrades.size();
+
+        int medianMarker = Math.round(this.lAverageGrades.size()/2);
+        median = this.lAverageGrades.get(medianMarker);
+
+        float maxValue = 0;
+        int maxCount = 0;
+
+        for (int i = 0; i < this.lAverageGrades.size(); ++i) {
+            int count = 0;
+            for (int j = 0; j < this.lAverageGrades.size(); ++j) {
+                if (this.lAverageGrades.get(j) == this.lAverageGrades.get(i)) ++count;
+            }
+            if (count > maxCount) {
+                maxCount = count;
+                maxValue = this.lAverageGrades.get(i);
+            }
+        }
+        mode = maxValue;
+
+        float fCalculationValue = 0;
+        for (Float fAverageGrade:this.lAverageGrades)
+        {
+            float theGrade = fAverageGrade;
+            fCalculationValue += Math.multiplyExact((long)(theGrade - median),(long)(theGrade - median));
+        }
+
+        fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/this.lAverageGrades.size()));
+        standardDev = fCalculationValue;
+
+        this.stCourseStats.setMean(mean);
+        //System.out.printf("%.1f\n", this.stCourseStats.getMean());
+        this.stCourseStats.setMedian(median);
+        //System.out.printf("%.1f\n", this.stCourseStats.getMedian());
+        this.stCourseStats.setMode(mode);
+        //System.out.printf("%.1f\n", this.stCourseStats.getMode());
+        this.stCourseStats.setStandardDev(standardDev);
+        //System.out.printf("%.3f\n", this.stCourseStats.getStandardDev());
+    }
 
     // private Assignment generateAssignment(String sCourseName, )
     // Honors requirement
@@ -148,5 +207,9 @@ public class Course {
     public void setDepartment(String Department)
     {
         this.sDepartment = Department;
+    }
+
+    public int compareTo(Course c) {
+        return this.getCourseName().compareTo(c.getCourseName());
     }
 }

@@ -30,7 +30,7 @@ public class LoginController {
             try {
                 sc.setRoot(FXMLLoader.load(getClass().getResource("../jfxml/GraderView.fxml")));
             } catch(Exception e) {
-
+                e.printStackTrace();
             }
         }
         else {

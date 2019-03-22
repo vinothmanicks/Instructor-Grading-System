@@ -1,15 +1,18 @@
 package com.cannapaceus.grader;
 
 public enum eSeason {
-    WINTER ("Winter"),
-    SPRING ("Spring"),
-    SUMMER ("Summer"),
-    FALL ("Fall");
+    WINTER ("Winter", 0),
+    SPRING ("Spring", 1),
+    SUMMER ("Summer", 2),
+    FALL ("Fall", 3);
 
     private final String name;
 
-    private eSeason(String s) {
+    private final int value;
+
+    private eSeason(String s, int i) {
         name = s;
+        value = i;
     }
 
     public boolean equalsName(String otherName) {
@@ -18,5 +21,9 @@ public enum eSeason {
 
     public String toString() {
         return this.name;
+    }
+
+    public int getInt() {
+        return this.value;
     }
 }

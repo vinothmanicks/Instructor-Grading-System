@@ -50,4 +50,9 @@ public class ScreenController {
 
         pnMain.setCenter(pane);
     }
+
+    public void setBottomVisibility(boolean b) {
+        pnMain.getBottom().setVisible(b);
+        pnMain.getBottom().setManaged(b);
+    }
 }
