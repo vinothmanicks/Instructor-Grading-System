@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class LoginController {
     ScreenController sc = null;
@@ -25,7 +27,17 @@ public class LoginController {
         sc = ScreenController.getInstance();
     }
 
-    public void handleSubmitButtonAction(ActionEvent actionEvent) {
+    public void handleEnterKey(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            login();
+        }
+    }
+
+    public void loginClick(ActionEvent actionEvent) {
+        login();
+    }
+
+    private void login() {
         if (db.loginDB(inUsername.getText(), inPassword.getText())){
             try {
                 sc.setRoot(FXMLLoader.load(getClass().getResource("../jfxml/GraderView.fxml")));

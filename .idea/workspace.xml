@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="350c2610-105d-4968-9982-e9e87f1ea91b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseFormView.fxml" afterDir="false" />
+    <list default="true" id="350c2610-105d-4968-9982-e9e87f1ea91b" name="Default Changelist" comment="Added click event handlers for student and assignment that currently do nothing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/DBService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/DBService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Term.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/eSeason.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/eSeason.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/AssignmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/AssignmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/GraderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/GraderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instructor-grading-program.iml" beforeDir="false" afterPath="$PROJECT_DIR$/instructor-grading-program.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/instructor-grading-program/HelloWorld/HelloWorld.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/ScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/ScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/StudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/GraderView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/GraderView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermFormView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermFormView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="346" lean-forward="true" selection-start-line="346" selection-end-line="346" />
+            <state relative-caret-position="238">
+              <caret line="267" column="36" selection-start-line="267" selection-start-column="36" selection-end-line="267" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,46 +31,32 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Term.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="method#Term#0;class#Term#0" />
-                <element signature="method#Term#1;class#Term#0" />
-                <element signature="e#899#900#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/TermFormController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="74" column="40" lean-forward="true" selection-start-line="74" selection-start-column="40" selection-end-line="74" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseFormView.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="41" column="32" lean-forward="true" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="57" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
+            </state>
+          </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseFormController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+            <state relative-caret-position="425">
+              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4182">
+              <caret line="265" selection-start-line="265" selection-end-line="265" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,118 +64,65 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/Model.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
-              <folding>
-                <element signature="e#4331#4332#0" expanded="true" />
-                <element signature="e#4366#4367#0" expanded="true" />
-                <element signature="e#4407#4408#0" expanded="true" />
-                <element signature="e#4444#4445#0" expanded="true" />
-                <element signature="e#4487#4488#0" expanded="true" />
-                <element signature="e#4525#4526#0" expanded="true" />
-                <element signature="e#4574#4575#0" expanded="true" />
-                <element signature="e#4615#4616#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="68">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseView.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+            <state relative-caret-position="2346">
+              <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="139" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/IGPApp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="docComment;method#Assignment#0;class#Assignment#0" />
-                <element signature="docComment;method#Assignment#1;class#Assignment#0" />
-                <element signature="docComment;method#addGrade#0;class#Assignment#0" />
-                <element signature="docComment;method#setDBID#0;class#Assignment#0" />
-                <element signature="docComment;method#setAssignmentName#0;class#Assignment#0" />
-                <element signature="docComment;method#setDueDate#0;class#Assignment#0" />
-                <element signature="docComment;method#setAssignedDate#0;class#Assignment#0" />
-                <element signature="docComment;method#setMaxScore#0;class#Assignment#0" />
-                <element signature="docComment;method#setCategory#0;class#Assignment#0" />
-                <element signature="docComment;method#setWeight#0;class#Assignment#0" />
-                <element signature="docComment;method#setDroppedAssignment#0;class#Assignment#0" />
-                <element signature="method#getAssignmentName#0;class#Assignment#0" />
-                <element signature="docComment;method#getGrades#0;class#Assignment#0" />
-                <element signature="docComment;method#getDueDate#0;class#Assignment#0" />
-                <element signature="docComment;method#getAssignedDate#0;class#Assignment#0" />
-                <element signature="docComment;method#getMaxScore#0;class#Assignment#0" />
-                <element signature="docComment;method#getWeight#0;class#Assignment#0" />
-                <element signature="docComment;method#getDroppedAssignment#0;class#Assignment#0" />
-                <element signature="e#6560#6561#0" expanded="true" />
-                <element signature="e#6640#6641#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/DBService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-954">
-              <caret line="1102" column="24" lean-forward="true" selection-start-line="1102" selection-start-column="24" selection-end-line="1102" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#loginDB#0;class#DBService#0" />
-                <element signature="method#initConnection#0;class#DBService#0" />
-                <element signature="method#databaseSetup#0;class#DBService#0" />
-                <element signature="docComment;method#storeTerm#0;class#DBService#0" />
-                <element signature="method#storeTerm#0;class#DBService#0" />
-                <element signature="docComment;method#storeCourse#0;class#DBService#0" />
-                <element signature="method#storeCourse#0;class#DBService#0" />
-                <element signature="docComment;method#storeCategory#0;class#DBService#0" />
-                <element signature="method#storeCategory#0;class#DBService#0" />
-                <element signature="docComment;method#storeAssignment#0;class#DBService#0" />
-                <element signature="method#storeAssignment#0;class#DBService#0" />
-                <element signature="docComment;method#storeStudent#0;class#DBService#0" />
-                <element signature="method#storeStudent#0;class#DBService#0" />
-                <element signature="docComment;method#storeGrade#0;class#DBService#0" />
-                <element signature="method#storeGrade#0;class#DBService#0" />
-                <element signature="method#updateTerm#0;class#DBService#0" />
-                <element signature="method#updateCourse#0;class#DBService#0" />
-                <element signature="method#updateCategory#0;class#DBService#0" />
-                <element signature="method#updateStudent#0;class#DBService#0" />
-                <element signature="method#updateAssignment#0;class#DBService#0" />
-                <element signature="method#updateGrade#0;class#DBService#0" />
-                <element signature="method#updateTerm#1;class#DBService#0" />
-                <element signature="method#deleteCourse#0;class#DBService#0" />
-                <element signature="method#deleteCategory#0;class#DBService#0" />
-                <element signature="method#deleteStudent#0;class#DBService#0" />
-                <element signature="method#updateAssignment#1;class#DBService#0" />
-                <element signature="method#retrieveTerms#0;class#DBService#0" />
-                <element signature="method#retrieveCourseData#0;class#DBService#0" />
-                <element signature="method#retrieveModel#0;class#DBService#0" />
-                <element signature="method#updateObjects#0;class#DBService#0" />
-                <element signature="method#removeObjects#0;class#DBService#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/GraderView.fxml">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermsView.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
-              <caret line="127" column="85" lean-forward="true" selection-start-line="127" selection-start-column="85" selection-end-line="127" selection-end-column="85" />
+              <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
             </state>
           </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/GraderController.java">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermFormView.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="595">
+              <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1564">
+              <caret line="123" selection-start-line="123" selection-end-line="123" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#732#733#0" expanded="true" />
-                <element signature="e#749#750#0" expanded="true" />
-                <element signature="e#813#814#0" expanded="true" />
-                <element signature="e#847#848#0" expanded="true" />
+                <element signature="method#getFirstMIName#0;class#Student#0" />
+                <element signature="method#getStudentID#0;class#Student#0" />
+                <element signature="method#getLastName#0;class#Student#0" />
+                <element signature="method#getStudentEmail#0;class#Student#0" />
               </folding>
             </state>
           </provider>
@@ -220,6 +138,8 @@
         <option value="JavaFXApplication" />
         <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -235,38 +155,26 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="Services" />
       </map>
     </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/HelloWorld.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionType.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionBank.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionStats.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Question.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/login.fxml" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/Login.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsView.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/terms.fxml" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/login.fxml" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginView.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/CoursesController.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/CoursesView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/Sidebar.fxml" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/Testing.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/ListViewDemo.java" />
-        <option value="$PROJECT_DIR$/../../Downloads/TreeViewDemo.java" />
+        <option value="$USER_HOME$/Downloads/TreeViewDemo.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/TreeViewDemo.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/scrollbar.css" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Model.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/AssignmentView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/StudentView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/IGP.css" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" />
@@ -284,32 +192,44 @@
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermFormView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseFormView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/GraderView.fxml" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/GraderController.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/DBService.java" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsController.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/AssignmentController.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/StudentController.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseView.fxml" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/AssignmentView.fxml" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/StudentView.fxml" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseController.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/services/PDFService.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/services/PasswordService.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/services/EmailServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/services/EmailService.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/services/CSVService.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/services/CSVServiceTest.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/Model.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermFormController.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseFormController.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsController.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="25" />
-    <option name="y" value="4" />
+    <option name="y" value="3" />
     <option name="width" value="1325" />
-    <option name="height" value="602" />
+    <option name="height" value="603" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -379,7 +299,116 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
+          <expand>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="grader" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="jfx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="jfxml" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="lib" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="grader" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="jfx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="java-application" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="instructor-grading-program" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="cannapaceus" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="jfxml" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -389,20 +418,29 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553237691944" />
-    <property name="last_opened_file_path" value="D:/Vinoth/College/UAH/2018 - Fall/CS_470_proj2" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/opencsv-4.5.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Users\Nick\Documents\CS 499 Repo\src\com\cannapaceus\jfx" />
-      <recent name="D:\Users\Nick\Documents\CS 499 Repo\src\com\cannapaceus\jfxml" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.cannapaceus.jfx" />
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.cannapaceus.services" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Users\Nick\Documents\CS 499 Repo\lib" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Users\Nick\Documents\CS 499 Repo\src\com\cannapaceus\jfx" />
+      <recent name="D:\Users\Nick\Documents\CS 499 Repo\src\com\cannapaceus\jfxml" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -457,9 +495,42 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CSVServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="instructor-grading-program" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cannapaceus.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cannapaceus.services" />
+      <option name="MAIN_CLASS_NAME" value="com.cannapaceus.services.CSVServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CSVServiceTest.today" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="instructor-grading-program" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cannapaceus.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cannapaceus.services" />
+      <option name="MAIN_CLASS_NAME" value="com.cannapaceus.services.CSVServiceTest" />
+      <option name="METHOD_NAME" value="today" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="Application.HelloWorld" />
       <item itemvalue="Application.IGPApp" />
+      <item itemvalue="JUnit.CSVServiceTest.today" />
+      <item itemvalue="JUnit.CSVServiceTest" />
+      <item itemvalue="Application.HelloWorld" />
       <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
@@ -468,7 +539,7 @@
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.HelloWorld" />
         <item itemvalue="Application.IGPApp" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.CSVServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -626,6 +697,38 @@
     <option name="localTasksCounter" value="21" />
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="EmailServiceTest_sendEmailTest - 2019.03.08 at 15h 35m 24s.xml">
+      <configuration name="EmailServiceTest.sendEmailTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EmailServiceTest_sendEmailTest - 2019.03.08 at 15h 42m 14s.xml">
+      <configuration name="EmailServiceTest.sendEmailTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EmailServiceTest_sendEmailTest - 2019.03.08 at 15h 45m 09s.xml">
+      <configuration name="EmailServiceTest.sendEmailTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EmailServiceTest_sendEmailTest - 2019.03.08 at 15h 59m 18s.xml">
+      <configuration name="EmailServiceTest.sendEmailTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVServiceTest_exportAsCSV - 2019.03.22 at 11h 05m 13s.xml">
+      <configuration name="CSVServiceTest.exportAsCSV" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVServiceTest_exportAsCSV - 2019.03.22 at 11h 05m 45s.xml">
+      <configuration name="CSVServiceTest.exportAsCSV" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVServiceTest_today - 2019.03.22 at 11h 05m 49s.xml">
+      <configuration name="CSVServiceTest.today" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVServiceTest_today - 2019.03.22 at 11h 06m 17s.xml">
+      <configuration name="CSVServiceTest.today" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVServiceTest_exportAsCSV - 2019.03.22 at 11h 06m 25s.xml">
+      <configuration name="CSVServiceTest.exportAsCSV" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVServiceTest - 2019.03.22 at 11h 07m 51s.xml">
+      <configuration name="CSVServiceTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -636,7 +739,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.5005417" side_tool="true" weight="0.25426438" />
@@ -645,19 +748,19 @@
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49945828" visible="true" weight="0.25692964" />
+      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49945828" visible="true" weight="0.28322148" />
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.32936078" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
-      <window_info anchor="bottom" x="-1427" y="384" width="977" height="471" id="Debug" order="4" type="WINDOWED" visible="true" weight="0.2708559" />
-      <window_info active="true" anchor="bottom" auto_hide="true" x="-1486" y="327" width="978" height="472" id="Run" order="5" sideWeight="0.5005417" type="WINDOWED" visible="true" weight="0.2990249" />
+      <window_info anchor="bottom" x="-1427" y="384" width="977" height="471" id="Debug" order="4" type="WINDOWED" weight="0.2708559" />
+      <window_info anchor="bottom" auto_hide="true" x="563" y="356" width="410" height="111" id="Run" maximized="true" order="5" sideWeight="0.5005417" type="WINDOWED" weight="0.2990249" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4989339" weight="0.32719395" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50159913" side_tool="true" weight="0.1971831" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49626866" weight="0.1971831" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49840087" weight="0.32827735" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49840087" visible="true" weight="0.32719547" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -668,6 +771,35 @@
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="right" id="Maven" order="8" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26979867" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25083986" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32907802" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32922733" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info anchor="right" id="Maven" order="8" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -760,12 +892,12 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/HelloWorld.java" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/idea64.exe.vmoptions" />
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grader.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/Date.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/function/Consumer.java" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-708">
+          <caret line="1551" column="12" lean-forward="true" selection-start-line="1551" selection-start-column="12" selection-end-line="1551" selection-end-column="12" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Question.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -774,26 +906,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HelloWorld/HelloWorld.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#91#92#0" expanded="true" />
-            <element signature="e#142#143#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HelloWorld/HelloWorld.java" />
     <entry file="file://$USER_HOME$/AppData/Local/Temp/7zOC85F2859/FXMLExample.java" />
-    <entry file="file://$PROJECT_DIR$/../JFX Testing/Test 1.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../JFX Testing/Test 1.fxml" />
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/Sidebar.fxml" />
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/ListViewDemo.java" />
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/TreeViewDemo.java" />
@@ -822,20 +937,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/AssignmentView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="50" column="17" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="50" selection-end-column="17" />
+        <state relative-caret-position="202">
+          <caret line="37" column="55" selection-start-line="37" selection-start-column="55" selection-end-line="37" selection-end-column="55" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/StudentView.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="22" column="45" lean-forward="true" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionBank.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -862,35 +969,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/IGP.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
           <caret line="47" column="49" lean-forward="true" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="36" column="76" selection-start-line="36" selection-start-column="76" selection-end-line="36" selection-end-column="76" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -904,137 +986,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/idea64.exe.vmoptions" />
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grader.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/Date.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/function/Consumer.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Statistics.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="128" column="5" lean-forward="true" selection-start-line="128" selection-start-column="5" selection-end-line="128" selection-end-column="5" />
+        <state relative-caret-position="1003">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1887">
+          <caret line="111" column="7" selection-start-line="111" selection-start-column="7" selection-end-line="111" selection-end-column="7" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;method#Student#0;class#Student#0" />
-            <element signature="docComment;method#Student#1;class#Student#0" />
-            <element signature="method#Student#1;class#Student#0" />
-            <element signature="docComment;method#setDBID#0;class#Student#0" />
-            <element signature="e#2601#2602#0" expanded="true" />
-            <element signature="e#2631#2632#0" expanded="true" />
-            <element signature="e#2754#2755#0" expanded="true" />
-            <element signature="e#2787#2788#0" expanded="true" />
-            <element signature="method#getFirstMIName#0;class#Student#0" />
-            <element signature="method#getStudentID#0;class#Student#0" />
-            <element signature="method#getLastName#0;class#Student#0" />
-            <element signature="method#getStudentEmail#0;class#Student#0" />
+            <element signature="method#getAssignmentCopy#0;class#Grade#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Course.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="763">
-          <caret line="153" column="65" selection-start-line="153" selection-start-column="65" selection-end-line="153" selection-end-column="65" />
-          <folding>
-            <element signature="e#3826#3827#0" expanded="true" />
-            <element signature="e#3860#3861#0" expanded="true" />
-            <element signature="e#4227#4228#0" expanded="true" />
-            <element signature="e#4269#4270#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2091">
+          <caret line="213" column="5" selection-start-line="213" selection-start-column="5" selection-end-line="213" selection-end-column="5" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Category.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-          <folding>
-            <element signature="e#2111#2112#0" expanded="true" />
-            <element signature="e#2137#2138#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="163" column="35" lean-forward="true" selection-start-line="163" selection-start-column="35" selection-end-line="163" selection-end-column="35" />
-          <folding>
-            <element signature="docComment;method#getGrade#0;class#Grade#0" />
-            <element signature="docComment;method#getOverdue#0;class#Grade#0" />
-            <element signature="docComment;method#getMissing#0;class#Grade#0" />
-            <element signature="docComment;method#getDropped#0;class#Grade#0" />
-            <element signature="docComment;method#getSubmitted#0;class#Grade#0" />
-            <element signature="docComment;method#getStudentCopy#0;class#Grade#0" />
-            <element signature="method#getStudentCopy#0;class#Grade#0" />
-            <element signature="docComment;method#getAssignmentCopy#0;class#Grade#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermsView.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="43" column="90" lean-forward="true" selection-start-line="43" selection-start-column="90" selection-end-line="46" selection-end-column="34" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="jar://$PROJECT_DIR$/lib/fontawesomefx-8.9.jar!/de/jensd/fx/glyphs/fontawesome/FontAwesomeIcon.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="443" column="20" lean-forward="true" selection-start-line="443" selection-start-column="20" selection-end-line="443" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/StudentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/AssignmentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="35" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseView.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermFormView.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="64" column="45" lean-forward="true" selection-end-line="79" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="49" column="33" lean-forward="true" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/IGPApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="661">
-          <caret line="45" column="31" lean-forward="true" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1057,20 +1041,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" column="44" lean-forward="true" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/GraderView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="127" column="85" lean-forward="true" selection-start-line="127" selection-start-column="85" selection-end-line="127" selection-end-column="85" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/GraderController.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1088,136 +1065,220 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Term.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="255">
+          <caret line="15" column="41" lean-forward="true" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/EmailService.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseFormView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/StudentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/TermFormController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="23" column="50" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/AssignmentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="30" selection-end-column="5" />
           <folding>
-            <element signature="method#Term#0;class#Term#0" />
-            <element signature="method#Term#1;class#Term#0" />
-            <element signature="e#899#900#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/PDFService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/PrinterService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/StudentView.fxml" />
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseFormController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/EmailServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="54" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="docComment;method#Assignment#0;class#Assignment#0" />
-            <element signature="docComment;method#Assignment#1;class#Assignment#0" />
-            <element signature="docComment;method#addGrade#0;class#Assignment#0" />
-            <element signature="docComment;method#setDBID#0;class#Assignment#0" />
-            <element signature="docComment;method#setAssignmentName#0;class#Assignment#0" />
-            <element signature="docComment;method#setDueDate#0;class#Assignment#0" />
-            <element signature="docComment;method#setAssignedDate#0;class#Assignment#0" />
-            <element signature="docComment;method#setMaxScore#0;class#Assignment#0" />
-            <element signature="docComment;method#setCategory#0;class#Assignment#0" />
-            <element signature="docComment;method#setWeight#0;class#Assignment#0" />
-            <element signature="docComment;method#setDroppedAssignment#0;class#Assignment#0" />
-            <element signature="method#getAssignmentName#0;class#Assignment#0" />
-            <element signature="docComment;method#getGrades#0;class#Assignment#0" />
-            <element signature="docComment;method#getDueDate#0;class#Assignment#0" />
-            <element signature="docComment;method#getAssignedDate#0;class#Assignment#0" />
-            <element signature="docComment;method#getMaxScore#0;class#Assignment#0" />
-            <element signature="docComment;method#getWeight#0;class#Assignment#0" />
-            <element signature="docComment;method#getDroppedAssignment#0;class#Assignment#0" />
-            <element signature="e#6560#6561#0" expanded="true" />
-            <element signature="e#6640#6641#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/CSVService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/PasswordService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/DBService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-954">
-          <caret line="1102" column="24" lean-forward="true" selection-start-line="1102" selection-start-column="24" selection-end-line="1102" selection-end-column="24" />
+        <state relative-caret-position="2720">
+          <caret line="161" column="21" selection-start-line="161" selection-start-column="21" selection-end-line="161" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#loginDB#0;class#DBService#0" />
-            <element signature="method#initConnection#0;class#DBService#0" />
-            <element signature="method#databaseSetup#0;class#DBService#0" />
-            <element signature="docComment;method#storeTerm#0;class#DBService#0" />
-            <element signature="method#storeTerm#0;class#DBService#0" />
-            <element signature="docComment;method#storeCourse#0;class#DBService#0" />
-            <element signature="method#storeCourse#0;class#DBService#0" />
-            <element signature="docComment;method#storeCategory#0;class#DBService#0" />
-            <element signature="method#storeCategory#0;class#DBService#0" />
-            <element signature="docComment;method#storeAssignment#0;class#DBService#0" />
-            <element signature="method#storeAssignment#0;class#DBService#0" />
-            <element signature="docComment;method#storeStudent#0;class#DBService#0" />
-            <element signature="method#storeStudent#0;class#DBService#0" />
-            <element signature="docComment;method#storeGrade#0;class#DBService#0" />
-            <element signature="method#storeGrade#0;class#DBService#0" />
-            <element signature="method#updateTerm#0;class#DBService#0" />
-            <element signature="method#updateCourse#0;class#DBService#0" />
-            <element signature="method#updateCategory#0;class#DBService#0" />
-            <element signature="method#updateStudent#0;class#DBService#0" />
-            <element signature="method#updateAssignment#0;class#DBService#0" />
-            <element signature="method#updateGrade#0;class#DBService#0" />
-            <element signature="method#updateTerm#1;class#DBService#0" />
-            <element signature="method#deleteCourse#0;class#DBService#0" />
-            <element signature="method#deleteCategory#0;class#DBService#0" />
-            <element signature="method#deleteStudent#0;class#DBService#0" />
-            <element signature="method#updateAssignment#1;class#DBService#0" />
-            <element signature="method#retrieveTerms#0;class#DBService#0" />
-            <element signature="method#retrieveCourseData#0;class#DBService#0" />
-            <element signature="method#retrieveModel#0;class#DBService#0" />
-            <element signature="method#updateObjects#0;class#DBService#0" />
-            <element signature="method#removeObjects#0;class#DBService#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseFormView.fxml">
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/services/CSVServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="41" column="32" lean-forward="true" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+        <state relative-caret-position="102">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/Model.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Assignment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+        <state relative-caret-position="2431">
+          <caret line="172" column="5" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
           <folding>
-            <element signature="e#4331#4332#0" expanded="true" />
-            <element signature="e#4366#4367#0" expanded="true" />
-            <element signature="e#4407#4408#0" expanded="true" />
-            <element signature="e#4444#4445#0" expanded="true" />
-            <element signature="e#4487#4488#0" expanded="true" />
-            <element signature="e#4525#4526#0" expanded="true" />
-            <element signature="e#4574#4575#0" expanded="true" />
-            <element signature="e#4615#4616#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/TermsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="346" lean-forward="true" selection-start-line="346" selection-end-line="346" />
+        <state relative-caret-position="238">
+          <caret line="267" column="36" selection-start-line="267" selection-start-column="36" selection-end-line="267" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/TermFormController.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="74" column="40" lean-forward="true" selection-start-line="74" selection-start-column="40" selection-end-line="74" selection-end-column="40" />
+        <state relative-caret-position="476">
+          <caret line="28" column="57" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4182">
+          <caret line="265" selection-start-line="265" selection-end-line="265" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/CourseFormController.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/Model.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2346">
+          <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="139" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/IGPApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermsView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermFormView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1564">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getFirstMIName#0;class#Student#0" />
+            <element signature="method#getStudentID#0;class#Student#0" />
+            <element signature="method#getLastName#0;class#Student#0" />
+            <element signature="method#getStudentEmail#0;class#Student#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1250,6 +1311,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
+          <last-edited>groovy-2.5.6</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1285,6 +1347,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>opencsv-4.5</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

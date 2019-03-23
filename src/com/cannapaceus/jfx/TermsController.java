@@ -190,6 +190,9 @@ public class TermsController {
 
             tempHB.getChildren().addAll(termLabel, termSpanPane, termEdit, termDelete, termExpand);
             tempHB.setHgrow(termSpanPane, Priority.ALWAYS);
+
+            tempHB.setOnMouseClicked((event) -> termExpand.fire());
+
             tempVB.getChildren().addAll(tempHB, vbCourses);
 
             vbTerms.getChildren().addAll(tempVB);
@@ -199,67 +202,28 @@ public class TermsController {
     private void expand(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
-        HBox p = (HBox) t.getParent();
+        boolean collapsed;
 
-        VBox vbTerm = (VBox) p.getParent();
+        FontAwesomeIconView tempFA = (FontAwesomeIconView) t.getGraphic();
 
-        p.getChildren().remove(t);
-
-        FontAwesomeIconView tempFA = new FontAwesomeIconView();
-        tempFA.setGlyphName("CHEVRON_DOWN");
-        tempFA.setGlyphSize(20);
-        tempFA.setGlyphStyle("-fx-fill: grey;");
-
-        JFXButton termCollapse = new JFXButton("");
-        termCollapse.setPrefWidth(40.0);
-        termCollapse.setAlignment(Pos.BASELINE_CENTER);
-        termCollapse.setGraphic(tempFA);
-        termCollapse.setStyle("-fx-cursor: hand;");
-        termCollapse.setRipplerFill(Color.WHITE);
-        termCollapse.setButtonType(JFXButton.ButtonType.FLAT);
-        termCollapse.setOnAction((event -> collapse(event)));
-
-        for (Node n : vbTerm.getChildren()) {
-            if (n instanceof VBox) {
-                n.setVisible(true);
-                n.setManaged(true);
-            }
-        }
-
-        p.getChildren().add(termCollapse);
-    }
-
-    private void collapse(ActionEvent e) {
-        JFXButton t = (JFXButton) e.getTarget();
+        collapsed = tempFA.getGlyphName() == "CHEVRON_RIGHT";
 
         HBox p = (HBox) t.getParent();
 
         VBox vbTerm = (VBox) p.getParent();
 
-        p.getChildren().remove(t);
-
-        FontAwesomeIconView tempFA = new FontAwesomeIconView();
-        tempFA.setGlyphName("CHEVRON_RIGHT");
-        tempFA.setGlyphSize(20);
-        tempFA.setGlyphStyle("-fx-fill: grey;");
-
-        JFXButton termExpand = new JFXButton("");
-        termExpand.setPrefWidth(40.0);
-        termExpand.setAlignment(Pos.BASELINE_CENTER);
-        termExpand.setGraphic(tempFA);
-        termExpand.setStyle("-fx-cursor: hand;");
-        termExpand.setRipplerFill(Color.WHITE);
-        termExpand.setButtonType(JFXButton.ButtonType.FLAT);
-        termExpand.setOnAction((event -> expand(event)));
+        if (collapsed) {
+            tempFA.setGlyphName("CHEVRON_DOWN");
+        } else {
+            tempFA.setGlyphName("CHEVRON_RIGHT");
+        }
 
         for (Node n : vbTerm.getChildren()) {
             if (n instanceof VBox) {
-                n.setVisible(false);
-                n.setManaged(false);
+                n.setVisible(collapsed);
+                n.setManaged(collapsed);
             }
         }
-
-        p.getChildren().add(termExpand);
     }
 
     public void courseClick(MouseEvent event) {
