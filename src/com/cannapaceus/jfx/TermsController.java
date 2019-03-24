@@ -55,8 +55,6 @@ public class TermsController {
 
     private void createTermList() {
         for (Term t : lTerms) {
-            Separator tempSep = new Separator();
-
             VBox tempVB = new VBox();
             tempVB.setSpacing(10.0);
             tempVB.setStyle("-fx-padding: 10, 10, 10, 10; -fx-background-color: white;");
@@ -135,7 +133,11 @@ public class TermsController {
             termAddCourse.setButtonType(JFXButton.ButtonType.FLAT);
             termAddCourse.setOnAction((event -> addCourseClick(event)));
 
+            Separator tempSep;
+
             for (Course c : t.getCourses()) {
+                tempSep = new Separator();
+
                 HBox hbCourse = new HBox();
                 hbCourse.setSpacing(10.0);
                 hbCourse.setAlignment(Pos.CENTER_LEFT);
