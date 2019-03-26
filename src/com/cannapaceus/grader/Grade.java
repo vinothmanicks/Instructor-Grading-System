@@ -27,10 +27,24 @@ public class Grade implements Comparable<Grade> {
         this.stuStudent = stuStudent;
         this.aAssignment = aAssignment;
 
-        bOverdue = false;
-        bMissing = false;
-        bDropped = false;
-        bSubmitted = false;
+        this.bOverdue = false;
+        this.bMissing = false;
+        this.bDropped = false;
+        this.bSubmitted = false;
+    }
+
+    /**
+     *
+     */
+    public Grade(Grade gGrade)
+    {
+        this.fGrade = gGrade.getGrade();
+        this.stuStudent = gGrade.getStudentReference();
+        this.aAssignment = gGrade.getAssignmentReference();
+        this.bOverdue = gGrade.getOverdue();
+        this.bMissing = gGrade.getMissing();
+        this.bDropped = gGrade.getDropped();
+        this.bSubmitted = gGrade.getSubmitted();
     }
 
     //Setter functions
@@ -177,21 +191,19 @@ public class Grade implements Comparable<Grade> {
      * Getter for a reference to the assignment this grade is for
      * @return Reference of the grade's assignment variable
      */
-    /*
     public Assignment getAssignmentReference()
     {
         return aAssignment;
     }
-    */
+
 
     /**
      * Getter for a reference to the the student this grade is for
      * @return Reference of the grade's student variable
      */
-    /*
     public Student getStudentReference()
     {
         return stuStudent;
     }
-    */
+
 }

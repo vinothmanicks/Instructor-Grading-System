@@ -9,18 +9,18 @@ public class Question {
     //Array of potential answers. If multiple choice, first answer in the list is the correct one.
     private ArrayList<String> lAnswers;
     //List of courses names that use this question.
-    private ArrayList<String> lCourseNames;
+    private String sCourseName;
     //Enum to sub for lack of structs
     //TODO: Figure out the best way to do this
     private QuestionType qtQuestionType;
     //TODO determine if we're going to use a separate class
     private QuestionStats stQuestionStats;
 
-    public Question(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames, QuestionStats stQuestionStats,QuestionType qtQuestionType)
+    public Question(String sQuestion, ArrayList<String> lAnswers, String sCourseName, QuestionStats stQuestionStats,QuestionType qtQuestionType)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
-        this.lCourseNames = new ArrayList<>(lCourseNames);
+        this.sCourseName = sCourseName;
         this.stQuestionStats = new QuestionStats(stQuestionStats);
         this.qtQuestionType = qtQuestionType;
     }
@@ -29,16 +29,16 @@ public class Question {
     {
         this.sQuestion = queQuestion.getQuestion();
         this.lAnswers = queQuestion.getAnswers();
-        this.lCourseNames = queQuestion.getCourses();
+        this.sCourseName = queQuestion.getCourse();
         this.stQuestionStats = queQuestion.getQuestionStats();
         this.qtQuestionType = queQuestion.getQuestionType();
     }
 
-    public void editQuestion(String sQuestion, ArrayList<String> lAnswers, ArrayList<String> lCourseNames, QuestionType qtQuestionType, QuestionStats stQuestionStats)
+    public void editQuestion(String sQuestion, ArrayList<String> lAnswers, String sCourseName, QuestionType qtQuestionType, QuestionStats stQuestionStats)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
-        this.lCourseNames = new ArrayList<>(lCourseNames);
+        this.sCourseName = new String(sCourseName);
         this.stQuestionStats = new QuestionStats(stQuestionStats);
         this.qtQuestionType = qtQuestionType;
     }
@@ -62,9 +62,9 @@ public class Question {
         this.lAnswers = new ArrayList<>(lAnswers);
     }
 
-    public void setCourses(ArrayList<String> lCourseNames)
+    public void setCourse(String lCourseName)
     {
-        this.lAnswers = new ArrayList<>(lCourseNames);
+        this.sCourseName = new String(lCourseName);
     }
 
     public String getQuestion()
@@ -87,8 +87,8 @@ public class Question {
         return new ArrayList<>(lAnswers);
     }
 
-    public ArrayList<String> getCourses()
+    public String getCourse()
     {
-        return new ArrayList<>(lCourseNames);
+        return this.sCourseName;
     }
 }
