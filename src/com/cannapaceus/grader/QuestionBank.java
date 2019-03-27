@@ -28,13 +28,11 @@ public class QuestionBank {
     public ArrayList<Question> getQuestionList(String sCourseName) {
         ArrayList<Question> toReturn = new ArrayList<>();
         for (Question que : lQuestions) {
-            ArrayList<String> lCourses = que.getCourses();
-            for (String searchCourseName : lCourses) {
-                if (searchCourseName == sCourseName) {
+            String sCourse = que.getCourse();
+                if (sCourse == sCourseName) {
                     toReturn.add(que);
                 }
             }
-        }
 
         return toReturn;
     }

@@ -16,6 +16,9 @@ public class Course implements Comparable<Course> {
     private ArrayList<Assignment> lAssignments; // List of assignments in a course
     private ArrayList<Category> lCategories; // List of assignment categories
     private ArrayList<Grade> lGrades; // List of all grades for the course
+    private ArrayList<Grade> lScaledGrades; //List of scaled grades, each corresponding to a student's final grade in a course
+    private float courseGradeScale; //Float to scale all grades by.
+
     private ArrayList<Float> lAverageGrades; // List of student average grades for the course
 
     private boolean bArchived; // Archived flag
@@ -139,6 +142,17 @@ public class Course implements Comparable<Course> {
         //System.out.printf("%.3f\n", this.stCourseStats.getStandardDev());
     }
 
+    public void scaleGrades(float fScaleBy)
+    {
+        lScaledGrades.clear();
+
+        for (Grade gGrade:lGrades)
+        {
+            Grade gNewGrade = new Grade(gGrade);
+            gNewGrade.setGrade(gNewGrade.getGrade()+fScaleBy);
+            lScaledGrades.add(gNewGrade);
+        }
+    }
     // private Assignment generateAssignment(String sCourseName, )
     // Honors requirement
 
@@ -184,6 +198,8 @@ public class Course implements Comparable<Course> {
     public ArrayList<Grade> getlGrades() {
         return lGrades;
     }
+
+    public ArrayList<Grade> getlScaledGrades(){return lScaledGrades;}
 
     // Set functions
     /**
