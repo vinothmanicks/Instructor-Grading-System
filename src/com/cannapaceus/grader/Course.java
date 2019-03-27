@@ -70,7 +70,7 @@ public class Course implements Comparable<Course> {
 
     public void removeCategory(Category targetCategory) // Remove a grading category from a course
     {
-        this.lCategories.add(targetCategory);
+        this.lCategories.remove(targetCategory);
     }
 
     public void removeGrade(Grade targetGrade) // Remove a student's grade from a course
