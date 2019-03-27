@@ -153,4 +153,38 @@ public class Student implements Comparable<Student>{
     public int compareTo(Student anotherStudent) {
         return this.getLastName().compareToIgnoreCase(anotherStudent.getLastName());
     }
+
+    /**
+     * Function to generate a report for a student based on their course grades provided assignments have been assigned.
+     * @return Report in the form of a string to print out.
+     */
+    public String GenerateStudentReport()
+    {
+        String sReport = new String( "Student name: " + this.sFirstMIName + " " + this.sLastName + "\n\n"+"Assignments:\n");
+
+        for (Grade gGrade:lGrades)
+        {
+            String sNextAssignment = new String(gGrade.getAssignmentCopy().getAssignmentName() + ":\t" + gGrade.getGrade() + "\n");
+            sReport = sReport + sNextAssignment;
+
+            if(gGrade.getMissing() != false)
+            {
+                String sMissingData = new String("-Missing\n");
+                sReport = sReport + sNextAssignment;
+            }
+            if(gGrade.getOverdue() != true)
+            {
+                String sOverdueData = new String("-Overdue\n");
+                sReport = sReport + sNextAssignment;
+            }
+            if(gGrade.getDropped() == true)
+            {
+                String sDroppedData = new String("-Dropped\n");
+                sReport = sReport + sNextAssignment;
+            }
+            sReport = sReport + "\n";
+        }
+
+        return sReport;
+    }
 }
