@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="350c2610-105d-4968-9982-e9e87f1ea91b" name="Default Changelist" comment="Course:&#10;-Added getlScaledGrades()&#10;-Added float gradeScale&#10;-Added scaleGrades()&#10;&#10;Grade:&#10;-Uncommented the getReferences&#10;-Created grade(grade) constructor">
+    <list default="true" id="350c2610-105d-4968-9982-e9e87f1ea91b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,18 +14,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
+        <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="790">
-              <caret line="187" column="23" lean-forward="true" selection-start-line="187" selection-start-column="23" selection-end-line="187" selection-end-column="23" />
+            <state relative-caret-position="284">
+              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;method#Student#0;class#Student#0" />
-                <element signature="docComment;method#Student#1;class#Student#0" />
-                <element signature="method#getFirstMIName#0;class#Student#0" />
-                <element signature="method#getStudentID#0;class#Student#0" />
-                <element signature="method#getLastName#0;class#Student#0" />
-                <element signature="method#getStudentEmail#0;class#Student#0" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -87,8 +80,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/Sidebar.fxml" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/Testing.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/ListViewDemo.java" />
         <option value="$USER_HOME$/Downloads/TreeViewDemo.java" />
@@ -100,7 +91,6 @@
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/IGP.css" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/LoginView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/CourseView.fxml" />
-        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfx/IGPApp.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/jfxml/TermsView.fxml" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/eSeason.java" />
@@ -138,14 +128,17 @@
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Grade.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" />
         <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionBank.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="14" />
-    <option name="y" value="93" />
-    <option name="width" value="1700" />
-    <option name="height" value="970" />
+    <option name="x" value="93" />
+    <option name="y" value="45" />
+    <option name="width" value="1750" />
+    <option name="height" value="992" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -209,7 +202,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553558888207" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553648584966" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -247,7 +240,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.IGPApp">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="IGPApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.cannapaceus.jfx.IGPApp" />
       <module name="instructor-grading-program" />
@@ -330,11 +323,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.IGPApp" />
         <item itemvalue="JUnit.CSVServiceTest" />
         <item itemvalue="JUnit.CSVServiceTest.exportAsCSV" />
         <item itemvalue="JUnit.CSVServiceTest.today" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -489,7 +482,21 @@
       <option name="project" value="LOCAL" />
       <updated>1553158820072</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added basic student report function to student class.">
+      <created>1553648128291</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1553648128291</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Fixed errors with question bank.">
+      <created>1553648400234</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1553648400234</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -543,19 +550,19 @@
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" sideWeight="0.49945828" visible="true" weight="0.15991472" />
+      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49945828" visible="true" weight="0.15991472" />
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4989339" weight="0.32936078" />
       <window_info anchor="bottom" id="Cvs" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="3" weight="0.4" />
       <window_info anchor="bottom" x="-1427" y="384" width="977" height="471" id="Debug" order="4" type="WINDOWED" weight="0.2708559" />
-      <window_info anchor="bottom" auto_hide="true" x="640" y="449" width="400" height="111" id="Run" order="5" sideWeight="0.5005417" type="WINDOWED" weight="0.2990249" />
+      <window_info active="true" anchor="bottom" auto_hide="true" x="1118" y="465" width="538" height="200" id="Run" order="5" sideWeight="0.5005417" type="WINDOWED" visible="true" weight="0.2990249" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4989339" weight="0.32719395" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5042787" side_tool="true" weight="0.20476706" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49626866" visible="true" weight="0.32719395" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50373137" side_tool="true" visible="true" weight="0.32719395" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49626866" weight="0.1971831" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49572128" weight="0.08286674" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4946695" weight="0.082340196" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -659,7 +666,9 @@
     <MESSAGE value="CourseView page added using TermsView as a reference" />
     <MESSAGE value="Added Basic form for adding terms and started working on a function for storing objects to the database from the model" />
     <MESSAGE value="Added Handlers for saving a new Term through the TermForm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Handlers for saving a new Term through the TermForm" />
+    <MESSAGE value="Added basic student report function to student class." />
+    <MESSAGE value="Fixed errors with question bank." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed errors with question bank." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -944,16 +953,6 @@
       </provider>
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/jfx/IGPApp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
@@ -1016,28 +1015,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionBank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
-          <folding>
-            <element signature="method#getQuestionList#1;class#QuestionBank#0" />
-            <element signature="method#getQuestionList#2;class#QuestionBank#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionStats.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Question.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="69" column="29" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1052,6 +1033,39 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="187" column="23" lean-forward="true" selection-start-line="187" selection-start-column="23" selection-end-line="187" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;method#Student#0;class#Student#0" />
+            <element signature="docComment;method#Student#1;class#Student#0" />
+            <element signature="method#getFirstMIName#0;class#Student#0" />
+            <element signature="method#getStudentID#0;class#Student#0" />
+            <element signature="method#getLastName#0;class#Student#0" />
+            <element signature="method#getStudentEmail#0;class#Student#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Question.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="69" column="29" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/QuestionBank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+          <folding>
+            <element signature="method#getQuestionList#2;class#QuestionBank#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1072,18 +1086,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Student.java">
+    <entry file="file://$PROJECT_DIR$/src/com/cannapaceus/grader/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="790">
-          <caret line="187" column="23" lean-forward="true" selection-start-line="187" selection-start-column="23" selection-end-line="187" selection-end-column="23" />
+        <state relative-caret-position="284">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;method#Student#0;class#Student#0" />
-            <element signature="docComment;method#Student#1;class#Student#0" />
-            <element signature="method#getFirstMIName#0;class#Student#0" />
-            <element signature="method#getStudentID#0;class#Student#0" />
-            <element signature="method#getLastName#0;class#Student#0" />
-            <element signature="method#getStudentEmail#0;class#Student#0" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
