@@ -68,7 +68,7 @@
                         <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                     </graphic>
                     <style>
-                        -fx-background-color: lightgrey;
+                        -fx-background-color: #e74c3c;
                         -fx-text-fill: white;
                     </style>
                 </JFXButton>

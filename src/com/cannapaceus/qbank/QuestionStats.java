@@ -1,4 +1,4 @@
-package com.cannapaceus.grader;
+package com.cannapaceus.qbank;
 
 public class QuestionStats {
 

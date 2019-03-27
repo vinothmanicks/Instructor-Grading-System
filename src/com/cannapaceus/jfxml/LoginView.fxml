@@ -22,14 +22,16 @@
                 <JFXTextField fx:id="inUsername"
                               alignment="CENTER_LEFT"
                               promptText="Username"
+                              onKeyPressed="#handleEnterKey"
                               labelFloat="true"/>
 
                 <JFXPasswordField fx:id="inPassword"
                                   alignment="CENTER_LEFT"
                                   promptText="Password"
+                                  onKeyPressed="#handleEnterKey"
                                   labelFloat="true"/>
 
-                <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#handleSubmitButtonAction" buttonType="FLAT">
+                <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#loginClick" buttonType="FLAT">
                     <style>
                         -fx-background-color: #0077C8;
                         -fx-text-fill: white;
