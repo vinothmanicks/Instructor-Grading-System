@@ -55,6 +55,8 @@ public class Main {
         aAssignment.addGrade(gBobbyAssGrade);
         stuBobby.addGrade(gBobbyAssGrade);
 
+        System.out.println(stuBobby.GenerateStudentReport());
+
         ArrayList<Term> lTerms;
         Course coTest2 = null;
 
