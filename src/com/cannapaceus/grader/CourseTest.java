@@ -7,8 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CourseTest {
 
+    private Course course;
+    private Student student;
+
     @BeforeEach
     void setUp() {
+        course = new Course("Test Course", "TC 000", "Test Department");
     }
 
     @Test
