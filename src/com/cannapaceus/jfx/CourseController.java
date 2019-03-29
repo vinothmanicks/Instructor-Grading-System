@@ -58,8 +58,6 @@ public class CourseController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(true);
-
         selectedCourse = md.getSelectedCourse();
 
         hmStudent = new HashMap<>();
@@ -318,5 +316,23 @@ public class CourseController {
         }
 
         p.getChildren().add(tempExpand);
+    }
+
+    public void commitClick(ActionEvent e) {
+        md.commitChanges();
+    }
+
+    public void revertClick(ActionEvent e) {
+        md.revertChanges();
+
+        vbStudents.getChildren().clear();
+        hmStudent.clear();
+
+        vbAssignments.getChildren().clear();
+        hmAssignment.clear();
+
+        vbGrades.getChildren().clear();
+
+        initialize();
     }
 }

@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,8 +43,6 @@ public class TermsController {
     {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
-
-        sc.setBottomVisibility(true);
 
         lTerms = md.getTerms();
 
@@ -344,5 +343,19 @@ public class TermsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void commitClick(ActionEvent e) {
+        md.commitChanges();
+    }
+
+    public void revertClick(ActionEvent e) {
+        md.revertChanges();
+
+        vbTerms.getChildren().clear();
+        hmTerm.clear();
+        hmCourse.clear();
+
+        initialize();
     }
 }

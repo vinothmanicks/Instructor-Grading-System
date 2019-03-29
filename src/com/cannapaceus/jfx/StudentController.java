@@ -20,8 +20,6 @@ public class StudentController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(true);
-
         selectedStudent = md.getSelectedStudent();
 
         lblStudentName.setText(selectedStudent.getFirstMIName() + " " + selectedStudent.getLastName());
@@ -29,5 +27,13 @@ public class StudentController {
 
     public void backClick(ActionEvent actionEvent) {
         sc.activate("Course");
+    }
+
+    public void commitClick(ActionEvent e) {
+        md.commitChanges();
+    }
+
+    public void revertClick(ActionEvent e) {
+        md.revertChanges();
     }
 }

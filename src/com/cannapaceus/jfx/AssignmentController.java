@@ -20,8 +20,6 @@ public class AssignmentController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(true);
-
         selectedAssignment = md.getSelectedAssignment();
 
         lblAssignmentName.setText(selectedAssignment.getAssignmentName());
@@ -29,5 +27,14 @@ public class AssignmentController {
 
     public void backClick(ActionEvent actionEvent) {
         sc.activate("Course");
+    }
+
+    public void commitClick(ActionEvent e) {
+        md.commitChanges();
+    }
+
+    public void revertClick(ActionEvent e) {
+        md.revertChanges();
+        initialize();
     }
 }
