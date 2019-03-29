@@ -937,8 +937,7 @@ public class DBService {
             return true;
 
         for (Assignment a : cat.getAssignments()) {
-            if (!deleteAssignment(a))
-                retValue = false;
+            a.setCategory(null);
         }
 
         Connection con = null;
@@ -1319,6 +1318,8 @@ public class DBService {
                                 rs.getFloat(11));
 
                         Statistics tempStats = new Statistics(); //TODO: set mean, median, mode for the statistics
+
+                        tempCat.addAssignment(temp);
 
                         temp.setDBID(rs.getLong(1));
 

@@ -17,6 +17,7 @@ public class Model {
 
     Term selectedTerm = null;
     Course selectedCourse = null;
+    Category selectedCategory = null;
     Student selectedStudent = null;
     Assignment selectedAssignment = null;
 
@@ -137,6 +138,9 @@ public class Model {
 
     public void removeCategory(Category cat) {
         selectedCourse.getlCategories().remove(cat);
+        for (Assignment a : cat.getAssignments()) {
+            a.setCategory(null);
+        }
     }
 
     public void removeAssignment(Assignment a) {
@@ -159,6 +163,11 @@ public class Model {
             selectedCourse = c;
     }
 
+    public void setSelectedCategory(Category cat) {
+        if (selectedCourse.getlCategories().contains(cat))
+            selectedCategory = cat;
+    }
+
     public void setSelectedStudent(Student s) {
         if (selectedCourse.getlStudents().contains(s))
             selectedStudent = s;
@@ -175,6 +184,10 @@ public class Model {
 
     public Course getSelectedCourse() {
         return selectedCourse;
+    }
+
+    public Category getSelectedCategory() {
+        return selectedCategory;
     }
 
     public Student getSelectedStudent() {
