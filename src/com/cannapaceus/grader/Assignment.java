@@ -150,6 +150,9 @@ public class Assignment implements Comparable<Assignment> {
      */
     public void setDroppedAssignment(boolean bDropped)
     {
+        for (Grade gGrade : lGrades) {
+            gGrade.setDropped(bDropped);
+        }
         this.bDropped = bDropped;
     }
 
