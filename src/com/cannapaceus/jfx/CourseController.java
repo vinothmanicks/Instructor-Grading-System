@@ -58,8 +58,6 @@ public class CourseController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(true);
-
         selectedCourse = md.getSelectedCourse();
 
         hmStudent = new HashMap<>();
@@ -267,7 +265,6 @@ public class CourseController {
         p.getChildren().add(tempCollapse);
     }
 
-    @FXML
     private void collapse(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
@@ -321,19 +318,21 @@ public class CourseController {
         p.getChildren().add(tempExpand);
     }
 
-    @FXML
-    private void addStudent(ActionEvent event)
-    {
-        Student s = new Student("","","","");
+    public void commitClick(ActionEvent e) {
+        md.commitChanges();
+    }
 
-        md.addStudent(s);
-        md.setSelectedStudent(s);
+    public void revertClick(ActionEvent e) {
+        md.revertChanges();
 
-        try {
-            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("../jfxml/StudentFormView.fxml")));
-            sc.activate("StudentForm");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        vbStudents.getChildren().clear();
+        hmStudent.clear();
+
+        vbAssignments.getChildren().clear();
+        hmAssignment.clear();
+
+        vbGrades.getChildren().clear();
+
+        initialize();
     }
 }
