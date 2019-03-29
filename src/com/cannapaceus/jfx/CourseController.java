@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class CourseController {
@@ -316,6 +318,39 @@ public class CourseController {
         }
 
         p.getChildren().add(tempExpand);
+    }
+
+    @FXML
+    private void addStudent(ActionEvent event) {
+        Student s = new Student("", "", "", "");
+
+        md.addStudent(s);
+        md.setSelectedStudent(s);
+
+        try {
+            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("../jfxml/StudentFormView.fxml")));
+            sc.activate("StudentForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void addAssignment(ActionEvent event)
+    {
+        LocalDate lo = LocalDate.now();
+        Category catUnassigned = new Category("Unassigned",100);
+        Assignment a = new Assignment("",lo,lo,false,100,catUnassigned,0);
+
+        md.addAssignment(a);
+        md.setSelectedAssignment(a);
+
+        try {
+            sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));
+            sc.activate("AssignmentForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void commitClick(ActionEvent e) {
