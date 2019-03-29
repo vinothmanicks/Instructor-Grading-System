@@ -9,8 +9,6 @@ public class Model {
 
     static Model instance = null;
 
-    ArrayList<Term> lStoredModel = null;
-
     ArrayList<Term> lCurrentModel = null;
 
     ArrayList<Object> updatedObjects = null;
@@ -35,7 +33,6 @@ public class Model {
     }
 
     private void initModel() {
-        lStoredModel = db.retrieveModel();
         lCurrentModel = db.retrieveModel();
 
         updatedObjects = new ArrayList<>();
@@ -196,12 +193,10 @@ public class Model {
         newObjects.clear();
         updatedObjects.clear();
         removedObjects.clear();
-
-        lStoredModel = new ArrayList<>(lCurrentModel);
     }
 
     public void revertChanges() {
-        lCurrentModel = new ArrayList<>(lStoredModel);
+        lCurrentModel = db.retrieveModel();
         updatedObjects.clear();
         newObjects.clear();
         removedObjects.clear();

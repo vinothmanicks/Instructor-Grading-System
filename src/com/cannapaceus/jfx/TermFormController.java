@@ -30,8 +30,6 @@ public class TermFormController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(false);
-
         selectedTerm = md.getSelectedTerm();
 
         ObservableList<String> list = FXCollections.observableArrayList("Winter", "Spring", "Summer", "Fall");

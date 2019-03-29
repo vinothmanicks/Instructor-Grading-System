@@ -9,7 +9,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.effect.DropShadow?>
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.CourseController"
             AnchorPane.topAnchor="0.0"
@@ -17,163 +17,191 @@
             AnchorPane.leftAnchor="0.0"
             AnchorPane.rightAnchor="0.0">
 
-    <ScrollPane fitToWidth="true"
-                AnchorPane.topAnchor="0.0"
-                AnchorPane.bottomAnchor="0.0"
-                AnchorPane.leftAnchor="0.0"
-                AnchorPane.rightAnchor="0.0">
-
-        <style>
-            -fx-background-color: white;
-        </style>
-
-        <VBox fx:id="vbCourse"
-              fillWidth="true"
-              spacing="10"
-              AnchorPane.topAnchor="0.0"
-              AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0">
+    <center>
+        <ScrollPane fitToWidth="true"
+                    AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
 
             <style>
-                -fx-padding: 20, 20, 20, 20;
+                -fx-background-color: white;
             </style>
-            <children>
-                <HBox spacing="10.0" alignment="CENTER_LEFT">
-                    <JFXButton buttonType="FLAT" text="Back" onAction="#backClick">
-                        <graphic>
-                            <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                        </graphic>
-                        <style>
-                            -fx-background-color: #0077C8;
-                            -fx-text-fill: white;
-                        </style>
-                    </JFXButton>
-                    <Label fx:id="lblCourseName"/>
-                </HBox>
 
-                <VBox>
-                    <style>
-                        -fx-padding: 10, 10, 10, 10;
-                        -fx-background-color: white;
-                    </style>
-                    <effect>
-                        <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
-                    </effect>
+            <VBox fx:id="vbCourse"
+                  fillWidth="true"
+                  spacing="10"
+                  AnchorPane.topAnchor="0.0"
+                  AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0">
+
+                <style>
+                    -fx-padding: 20, 20, 20, 20;
+                </style>
+                <children>
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        <Label text="Students"/>
-                        <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton fx:id="btnAddStudent" buttonType="FLAT" visible="false" managed="false" text="Add Student">
+                        <JFXButton buttonType="FLAT" text="Back" onAction="#backClick">
                             <graphic>
-                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                             </graphic>
                             <style>
-                                -fx-background-color: #4CAF50;
+                                -fx-background-color: #0077C8;
                                 -fx-text-fill: white;
                             </style>
                         </JFXButton>
-                        <JFXButton fx:id="expandStudent" buttonType="FLAT" ripplerFill="white" onAction="#expand">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
-                            </graphic>
-                            <style>
-                                -fx-cursor: hand;
-                            </style>
-                        </JFXButton>
+                        <Label fx:id="lblCourseName"/>
                     </HBox>
 
-                    <VBox fx:id="vbStudents" spacing="10.0" visible="false" managed="false">
-
+                    <VBox>
                         <style>
                             -fx-padding: 10, 10, 10, 10;
+                            -fx-background-color: white;
                         </style>
+                        <effect>
+                            <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+                        </effect>
                         <HBox spacing="10.0" alignment="CENTER_LEFT">
+                            <Label text="Students"/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <JFXButton fx:id="btnAddStudent" buttonType="FLAT" visible="false" managed="false" text="Add Student">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                </graphic>
+                                <style>
+                                    -fx-background-color: #4CAF50;
+                                    -fx-text-fill: white;
+                                </style>
+                            </JFXButton>
+                            <JFXButton fx:id="expandStudent" buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
+                                </graphic>
+                                <style>
+                                    -fx-cursor: hand;
+                                </style>
+                            </JFXButton>
                         </HBox>
 
-                    </VBox>
-                </VBox>
+                        <VBox fx:id="vbStudents" spacing="10.0" visible="false" managed="false">
 
-                <VBox>
+                            <style>
+                                -fx-padding: 10, 10, 10, 10;
+                            </style>
+
+                        </VBox>
+                    </VBox>
+
+                    <VBox>
+                        <style>
+                            -fx-padding: 10, 10, 10, 10;
+                            -fx-background-color: white;
+                        </style>
+                        <effect>
+                            <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+                        </effect>
+                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                            <Label text="Assignments"/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <JFXButton fx:id="btnAddAssignment" buttonType="FLAT" visible="false" managed="false" text="Add Assignment">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                </graphic>
+                                <style>
+                                    -fx-background-color: #4CAF50;
+                                    -fx-text-fill: white;
+                                </style>
+                            </JFXButton>
+                            <JFXButton fx:id="expandAssignment" buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
+                                </graphic>
+                                <style>
+                                    -fx-cursor: hand;
+                                </style>
+                            </JFXButton>
+                        </HBox>
+
+                        <VBox fx:id="vbAssignments" spacing="10.0" visible="false" managed="false">
+
+                            <style>
+                                -fx-padding: 10, 10, 10, 10;
+                            </style>
+
+                        </VBox>
+                    </VBox>
+
+                    <VBox>
+                        <style>
+                            -fx-padding: 10, 10, 10, 10;
+                            -fx-background-color: white;
+                        </style>
+                        <effect>
+                            <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+                        </effect>
+                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                            <Label text="Grades"/>
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <JFXButton fx:id="btnAddGrade" buttonType="FLAT" visible="false" managed="false" text="Add Grade">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                </graphic>
+                                <style>
+                                    -fx-background-color: #4CAF50;
+                                    -fx-text-fill: white;
+                                </style>
+                            </JFXButton>
+                            <JFXButton fx:id="expandGrade" buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
+                                </graphic>
+                                <style>
+                                    -fx-cursor: hand;
+                                </style>
+                            </JFXButton>
+                        </HBox>
+
+                        <VBox fx:id="vbGrades" spacing="10.0" visible="false" managed="false">
+
+                            <style>
+                                -fx-padding: 10, 10, 10, 10;
+                            </style>
+                        </VBox>
+                    </VBox>
+                </children>
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <Label fx:id="lblChanges" text="Changes: "/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton text="Commit Changes" onAction="#commitClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
                     <style>
-                        -fx-padding: 10, 10, 10, 10;
-                        -fx-background-color: white;
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
                     </style>
-                    <effect>
-                        <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
-                    </effect>
-                    <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        <Label text="Assignments"/>
-                        <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton fx:id="btnAddAssignment" buttonType="FLAT" visible="false" managed="false" text="Add Assignment">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                            </graphic>
-                            <style>
-                                -fx-background-color: #4CAF50;
-                                -fx-text-fill: white;
-                            </style>
-                        </JFXButton>
-                        <JFXButton fx:id="expandAssignment" buttonType="FLAT" ripplerFill="white" onAction="#expand">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
-                            </graphic>
-                            <style>
-                                -fx-cursor: hand;
-                            </style>
-                        </JFXButton>
-                    </HBox>
-
-                    <VBox fx:id="vbAssignments" spacing="10.0" visible="false" managed="false">
-
-                        <style>
-                            -fx-padding: 10, 10, 10, 10;
-                        </style>
-                        <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        </HBox>
-
-                    </VBox>
-                </VBox>
-
-                <VBox>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton text="Revert Changes" onAction="#revertClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
                     <style>
-                        -fx-padding: 10, 10, 10, 10;
-                        -fx-background-color: white;
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
                     </style>
-                    <effect>
-                        <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
-                    </effect>
-                    <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        <Label text="Grades"/>
-                        <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton fx:id="btnAddGrade" buttonType="FLAT" visible="false" managed="false" text="Add Grade">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                            </graphic>
-                            <style>
-                                -fx-background-color: #4CAF50;
-                                -fx-text-fill: white;
-                            </style>
-                        </JFXButton>
-                        <JFXButton fx:id="expandGrade" buttonType="FLAT" ripplerFill="white" onAction="#expand">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
-                            </graphic>
-                            <style>
-                                -fx-cursor: hand;
-                            </style>
-                        </JFXButton>
-                    </HBox>
-
-                    <VBox fx:id="vbGrades" spacing="10.0" visible="false" managed="false">
-
-                        <style>
-                            -fx-padding: 10, 10, 10, 10;
-                        </style>
-                        <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        </HBox>
-                    </VBox>
-                </VBox>
-            </children>
+                </JFXButton>
+            </HBox>
         </VBox>
-    </ScrollPane>
-</AnchorPane>
+    </bottom>
+</BorderPane>
