@@ -35,14 +35,9 @@ public class StudentFormController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(false);
+        sc = ScreenController.getInstance();
 
         selectedStudent = md.getSelectedStudent();
-
-       /*
-       Need to load a list of all the other student's in the course to prevent someone from having the same ID in one course.
-      */
-
     }
 
 
