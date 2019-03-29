@@ -1,5 +1,8 @@
 package com.cannapaceus.services;
 
+import com.cannapaceus.grader.Course;
+import com.cannapaceus.grader.Term;
+import com.cannapaceus.grader.eSeason;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,6 +21,14 @@ class CSVServiceTest {
 
         CSVService csvService = new CSVService();
         csvService.ExportCSV(data);
+    }
+
+    @Test
+    void exportCSVCourse() {
+        Course course = new Course("Test Course", "TC 000", "Test Department");
+
+        CSVService csvService = new CSVService();
+        csvService.ExportCSV(course, new Term(2019, eSeason.WINTER));
     }
 
     @Test
