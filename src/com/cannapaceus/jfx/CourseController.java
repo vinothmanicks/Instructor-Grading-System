@@ -318,6 +318,17 @@ public class CourseController {
         p.getChildren().add(tempExpand);
     }
 
+    @FXML
+    private void addStudent(ActionEvent event){
+
+    }
+
+    @FXML
+    private void addAssignment(ActionEvent event)
+    {
+
+    }
+
     public void commitClick(ActionEvent e) {
         md.commitChanges();
     }
