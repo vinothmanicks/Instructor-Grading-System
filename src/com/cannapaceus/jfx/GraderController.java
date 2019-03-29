@@ -28,12 +28,4 @@ public class GraderController {
         }
     }
 
-    public void commitClick(ActionEvent e) {
-        md.commitChanges();
-    }
-
-    public void revertClick(ActionEvent e) {
-        md.revertChanges();
-    }
-
 }

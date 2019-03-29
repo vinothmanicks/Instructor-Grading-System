@@ -8,7 +8,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.effect.DropShadow?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.TermsController"
             AnchorPane.topAnchor="0.0"
@@ -16,42 +16,79 @@
             AnchorPane.leftAnchor="0.0"
             AnchorPane.rightAnchor="0.0">
 
-    <ScrollPane fitToWidth="true"
-                AnchorPane.topAnchor="0.0"
-                AnchorPane.bottomAnchor="0.0"
-                AnchorPane.leftAnchor="0.0"
-                AnchorPane.rightAnchor="0.0">
+    <center>
+        <ScrollPane fitToWidth="true"
+                    AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
 
-        <style>
-            -fx-background-color: white;
-        </style>
-
-        <VBox fx:id="vbTerms"
-              fillWidth="true"
-              spacing="10"
-              AnchorPane.topAnchor="0.0"
-              AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0">
             <style>
-                -fx-padding: 20, 20, 20, 20;
                 -fx-background-color: white;
             </style>
-            <children>
-                <HBox fillHeight="false" alignment="CENTER_LEFT">
-                    <Label text="Terms"/>
-                    <Pane  HBox.hgrow="ALWAYS"/>
-                    <JFXButton buttonType="FLAT" text="Add Term" onAction="#addTermClick">
-                        <graphic>
-                            <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                        </graphic>
-                        <style>
-                            -fx-background-color: #4CAF50;
-                            -fx-text-fill: white;
-                        </style>
-                    </JFXButton>
-                </HBox>
-            </children>
+
+            <VBox fillWidth="true"
+                  spacing="10"
+                  AnchorPane.topAnchor="0.0"
+                  AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0">
+                <style>
+                    -fx-padding: 20, 20, 20, 20;
+                    -fx-background-color: white;
+                </style>
+                <children>
+                    <HBox fillHeight="false" alignment="CENTER_LEFT">
+                        <Label text="Terms"/>
+                        <Pane  HBox.hgrow="ALWAYS"/>
+                        <JFXButton buttonType="FLAT" text="Add Term" onAction="#addTermClick">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                    </HBox>
+                    <VBox fx:id="vbTerms"
+                          spacing="10">
+
+                    </VBox>
+                </children>
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <Label fx:id="lblChanges" text="Changes: "/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton text="Commit Changes" onAction="#commitClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton text="Revert Changes" onAction="#revertClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
         </VBox>
-    </ScrollPane>
-</AnchorPane>
+    </bottom>
+</BorderPane>

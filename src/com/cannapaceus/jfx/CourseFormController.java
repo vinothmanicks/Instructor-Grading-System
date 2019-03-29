@@ -30,8 +30,6 @@ public class CourseFormController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc.setBottomVisibility(false);
-
         selectedCourse = md.getSelectedCourse();
 
         tfCourseName.setText(selectedCourse.getCourseName());
