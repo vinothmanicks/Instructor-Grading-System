@@ -63,7 +63,7 @@
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
                         <Label text="Students"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton fx:id="btnAddStudent" buttonType="FLAT" visible="false" managed="false" text="Add Student">
+                        <JFXButton fx:id="btnAddStudent" buttonType="FLAT" visible="false" managed="false" text="Add Student" onAction="#addStudent">
                             <graphic>
                                 <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                             </graphic>

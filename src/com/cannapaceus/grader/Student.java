@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Student implements Comparable<Student>{
 
-    //Long to hold the ID of the assignment from the database
+    //Long to hold the ID of the student from the database
     private long lDBID = 0;
 
     //String to hold the student's last name
