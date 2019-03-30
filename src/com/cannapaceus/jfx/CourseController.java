@@ -6,10 +6,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -29,6 +32,7 @@ public class CourseController {
 
     HashMap<String, Student> hmStudent;
     HashMap<String, Assignment> hmAssignment;
+    HashMap<String, Category> hmCategory;
 
     @FXML
     private Label lblCourseName;
@@ -40,7 +44,13 @@ public class CourseController {
     private JFXButton btnAddAssignment;
 
     @FXML
-    private JFXButton btnAddGrade;
+    private JFXButton btnAddCategory;
+
+    @FXML
+    private JFXButton expandStudent;
+
+    @FXML
+    private JFXButton expandAssignment;
 
     @FXML
     private VBox vbCourse;
@@ -52,7 +62,13 @@ public class CourseController {
     private VBox vbAssignments;
 
     @FXML
-    private VBox vbGrades;
+    private VBox vbCats;
+
+    @FXML
+    private HBox hbStudents;
+
+    @FXML
+    private HBox hbAssignments;
 
     @FXML
     private void initialize()
@@ -64,12 +80,15 @@ public class CourseController {
 
         hmStudent = new HashMap<>();
         hmAssignment = new HashMap<>();
+        hmCategory = new HashMap<>();
 
         lblCourseName.setText(selectedCourse.getCourseName());
 
+        hbStudents.setOnMouseClicked((event) -> expandStudent.fire());
+        hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
+
         createStudentList();
         createAssignmentList();
-        createGradeList();
     }
 
     public void backClick(ActionEvent actionEvent) {
@@ -96,10 +115,6 @@ public class CourseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void gradeClick(MouseEvent event) {
-        //Does nothing at the moment
     }
 
     private void createStudentList() {
@@ -140,8 +155,137 @@ public class CourseController {
     }
 
     private void createAssignmentList() {
+        int numAssign = 0;
+
+        for (Category cat : selectedCourse.getlCategories()) {
+            Separator tempSep;
+
+            VBox catAssignmentVB = new VBox();
+            catAssignmentVB.setSpacing(10.0);
+            catAssignmentVB.setFillWidth(true);
+            catAssignmentVB.setStyle("-fx-background-color: white;");
+            catAssignmentVB.setPadding(new Insets(10, 10, 10, 30));
+
+            HBox catHB = new HBox();
+            catHB.setAlignment(Pos.CENTER_LEFT);
+
+            Label catLabel = new Label(cat.getName());
+            catLabel.setAlignment(Pos.CENTER_LEFT);
+
+            FontAwesomeIconView catFA = new FontAwesomeIconView();
+            catFA.setGlyphName("EDIT");
+            catFA.setGlyphSize(20);
+            catFA.setGlyphStyle("-fx-fill: grey;");
+
+            JFXButton catEdit = new JFXButton("");
+            catEdit.setAlignment(Pos.BASELINE_CENTER);
+            catEdit.setGraphic(catFA);
+            catEdit.setStyle("-fx-cursor: hand;");
+            catEdit.setRipplerFill(Color.WHITE);
+            catEdit.setButtonType(JFXButton.ButtonType.FLAT);
+            catEdit.setOnAction((event -> editCategoryClick(event)));
+
+            Pane catSpanPane = new Pane();
+
+            catFA = new FontAwesomeIconView();
+            catFA.setGlyphName("TRASH_ALT");
+            catFA.setGlyphSize(20);
+            catFA.setGlyphStyle("-fx-fill: grey;");
+
+            JFXButton catDelete = new JFXButton("");
+            catDelete.setAlignment(Pos.BASELINE_CENTER);
+            catDelete.setGraphic(catFA);
+            catDelete.setStyle("-fx-cursor: hand;");
+            catDelete.setRipplerFill(Color.WHITE);
+            catDelete.setButtonType(JFXButton.ButtonType.FLAT);
+            catDelete.setOnAction((event -> deleteCategoryClick(event)));
+
+            catHB.getChildren().addAll(catLabel, catSpanPane, catEdit, catDelete);
+            catHB.setHgrow(catSpanPane, Priority.ALWAYS);
+
+            for (Assignment a : cat.getAssignments()) {
+
+                HBox tempHB = new HBox();
+                tempHB.setSpacing(10.0);
+                tempHB.setAlignment(Pos.CENTER_LEFT);
+
+                Label tempLabel = new Label(a.getAssignmentName());
+                tempLabel.setAlignment(Pos.CENTER_LEFT);
+
+                Pane tempPane = new Pane();
+
+                FontAwesomeIconView tempFA = new FontAwesomeIconView();
+                tempFA.setGlyphName("TRASH_ALT");
+                tempFA.setGlyphSize(20);
+                tempFA.setGlyphStyle("-fx-fill: grey;");
+
+                JFXButton tempDelete = new JFXButton("");
+                tempDelete.setAlignment(Pos.BASELINE_CENTER);
+                tempDelete.setGraphic(tempFA);
+                tempDelete.setStyle("-fx-cursor: hand;");
+                tempDelete.setRipplerFill(Color.WHITE);
+                tempDelete.setButtonType(JFXButton.ButtonType.FLAT);
+
+                tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
+                tempHB.setHgrow(tempPane, Priority.ALWAYS);
+
+                tempHB.setOnMouseClicked((event -> assignmentClick(event)));
+
+                tempHB.setId("" + a.getDBID());
+                hmAssignment.put("" + a.getDBID(), a);
+
+                tempSep = new Separator();
+
+                catAssignmentVB.getChildren().addAll(tempSep, tempHB);
+                ++numAssign;
+            }
+
+            FontAwesomeIconView catAddIcon = new FontAwesomeIconView();
+            catAddIcon.setGlyphName("PLUS");
+            catAddIcon.setGlyphSize(20);
+            catAddIcon.setGlyphStyle("-fx-fill: white;");
+
+            JFXButton catAddAssignment = new JFXButton("Add Assignment");
+            catAddAssignment.setAlignment(Pos.BASELINE_CENTER);
+            catAddAssignment.setGraphic(catAddIcon);
+            catAddAssignment.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+            catAddAssignment.setButtonType(JFXButton.ButtonType.FLAT);
+            catAddAssignment.setOnAction((event -> addAssignment(event)));
+
+            tempSep = new Separator();
+
+            catAssignmentVB.getChildren().addAll(tempSep, catAddAssignment);
+
+            tempSep = new Separator();
+
+            catHB.setId("" + cat.getDBID());
+            hmCategory.put("" + cat.getDBID(), cat);
+
+            vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
+        }
+
+        Separator tempSep;
+
+        VBox catAssignmentVB = new VBox();
+        catAssignmentVB.setSpacing(10.0);
+        catAssignmentVB.setStyle("-fx-background-color: white;");
+        catAssignmentVB.setPadding(new Insets(10, 10, 10, 30));
+
+        HBox catHB = new HBox();
+        catHB.setAlignment(Pos.CENTER_LEFT);
+
+        Label catLabel = new Label("Uncategorized");
+        catLabel.setAlignment(Pos.CENTER_LEFT);
+
+        Pane catSpanPane = new Pane();
+
+        catHB.getChildren().addAll(catLabel, catSpanPane);
+        catHB.setHgrow(catSpanPane, Priority.ALWAYS);
+
         for (Assignment a : selectedCourse.getlAssignments()) {
-            Separator tempSep = new Separator();
+            if (a.getCategoryCopy() != null) {
+                continue;
+            }
 
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
@@ -172,50 +316,38 @@ public class CourseController {
             tempHB.setId("" + a.getDBID());
             hmAssignment.put("" + a.getDBID(), a);
 
-            vbAssignments.getChildren().addAll(tempSep, tempHB);
+            tempSep = new Separator();
+
+            catAssignmentVB.getChildren().addAll(tempSep, tempHB);
+            ++numAssign;
         }
-    }
 
-    private void createGradeList() {
-        for (Grade g : selectedCourse.getlGrades()) {
-            Separator tempSep = new Separator();
+        tempSep = new Separator();
 
-            HBox tempHB = new HBox();
-            tempHB.setSpacing(10.0);
-            tempHB.setAlignment(Pos.CENTER_LEFT);
+        FontAwesomeIconView catAddIcon = new FontAwesomeIconView();
+        catAddIcon.setGlyphName("PLUS");
+        catAddIcon.setGlyphSize(20);
+        catAddIcon.setGlyphStyle("-fx-fill: white;");
 
-            Label tempLabel = new Label(g.getStudentCopy().getFirstMIName() + " " +
-                    g.getStudentCopy().getLastName() + " : " +
-                    g.getAssignmentCopy().getAssignmentName());
+        JFXButton catAddAssignment = new JFXButton("Add Assignment");
+        catAddAssignment.setAlignment(Pos.BASELINE_CENTER);
+        catAddAssignment.setGraphic(catAddIcon);
+        catAddAssignment.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+        catAddAssignment.setButtonType(JFXButton.ButtonType.FLAT);
+        catAddAssignment.setOnAction((event -> addAssignment(event)));
 
-            tempLabel.setAlignment(Pos.CENTER_LEFT);
+        catAssignmentVB.getChildren().addAll(tempSep, catAddAssignment);
 
-            Pane tempPane = new Pane();
+        tempSep = new Separator();
 
-            FontAwesomeIconView tempFA = new FontAwesomeIconView();
-            tempFA.setGlyphName("TRASH_ALT");
-            tempFA.setGlyphSize(20);
-            tempFA.setGlyphStyle("-fx-fill: grey;");
-
-            JFXButton tempDelete = new JFXButton("");
-            tempDelete.setAlignment(Pos.BASELINE_CENTER);
-            tempDelete.setGraphic(tempFA);
-            tempDelete.setStyle("-fx-cursor: hand;");
-            tempDelete.setRipplerFill(Color.WHITE);
-            tempDelete.setButtonType(JFXButton.ButtonType.FLAT);
-
-            tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
-            tempHB.setHgrow(tempPane, Priority.ALWAYS);
-
-            tempHB.setOnMouseClicked((event -> gradeClick(event)));
-
-            vbGrades.getChildren().addAll(tempSep, tempHB);
-        }
+        vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
     }
 
     @FXML
     private void expand(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
+
+        HBox hbTemp = null;
 
         String s = "";
 
@@ -224,16 +356,13 @@ public class CourseController {
                 s = "collapseStudent";
                 btnAddStudent.setVisible(true);
                 btnAddStudent.setManaged(true);
+                hbTemp = hbStudents;
                 break;
             case "expandAssignment":
                 s = "collapseAssignment";
-                btnAddAssignment.setVisible(true);
-                btnAddAssignment.setManaged(true);
-                break;
-            case "expandGrade":
-                s = "collapseGrade";
-                btnAddGrade.setVisible(true);
-                btnAddGrade.setManaged(true);
+                btnAddCategory.setVisible(true);
+                btnAddCategory.setManaged(true);
+                hbTemp = hbAssignments;
                 break;
         }
 
@@ -257,6 +386,9 @@ public class CourseController {
         tempCollapse.setButtonType(JFXButton.ButtonType.FLAT);
         tempCollapse.setOnAction((event -> collapse(event)));
 
+        if (hbTemp != null)
+            hbTemp.setOnMouseClicked(event -> tempCollapse.fire());
+
         for (Node n : vbTerm.getChildren()) {
             if (n instanceof VBox) {
                 n.setVisible(true);
@@ -270,6 +402,8 @@ public class CourseController {
     private void collapse(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
+        HBox hbTemp = null;
+
         String s = "";
 
         switch (t.getId()) {
@@ -277,16 +411,13 @@ public class CourseController {
                 s = "expandStudent";
                 btnAddStudent.setVisible(false);
                 btnAddStudent.setManaged(false);
+                hbTemp = hbStudents;
                 break;
             case "collapseAssignment":
                 s = "expandAssignment";
-                btnAddAssignment.setVisible(false);
-                btnAddAssignment.setManaged(false);
-                break;
-            case "collapseGrade":
-                s = "expandGrade";
-                btnAddGrade.setVisible(false);
-                btnAddGrade.setManaged(false);
+                btnAddCategory.setVisible(false);
+                btnAddCategory.setManaged(false);
+                hbTemp = hbAssignments;
                 break;
         }
 
@@ -310,6 +441,9 @@ public class CourseController {
         tempExpand.setButtonType(JFXButton.ButtonType.FLAT);
         tempExpand.setOnAction((event -> expand(event)));
 
+        if (hbTemp != null)
+            hbTemp.setOnMouseClicked(event -> tempExpand.fire());
+
         for (Node n : vBox.getChildren()) {
             if (n instanceof VBox) {
                 n.setVisible(false);
@@ -318,6 +452,44 @@ public class CourseController {
         }
 
         p.getChildren().add(tempExpand);
+    }
+
+    private void deleteCategoryClick(ActionEvent event) {
+        Node ndCat = ((Node) event.getTarget()).getParent();
+
+        ndCat.setVisible(false);
+        ndCat.setManaged(false);
+
+        Category cat = hmCategory.get(ndCat.getId());
+
+        md.removeCategory(cat);
+        md.addRemovedObject(cat);
+
+        for (Assignment a : cat.getAssignments()) {
+            a.setCategory(null);
+        }
+
+        vbStudents.getChildren().clear();
+        vbAssignments.getChildren().clear();
+
+        hmStudent.clear();
+        hmAssignment.clear();
+        hmCategory.clear();
+
+        initialize();
+    }
+
+    private void editCategoryClick(ActionEvent event) {
+        Category targetCategory = hmCategory.get(((Node) event.getSource()).getParent().getId());
+
+        md.setSelectedCategory(targetCategory);
+
+        try {
+            sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("../jfxml/CategoryFormView.fxml")));
+            sc.activate("CategoryForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -365,8 +537,6 @@ public class CourseController {
 
         vbAssignments.getChildren().clear();
         hmAssignment.clear();
-
-        vbGrades.getChildren().clear();
 
         initialize();
     }
