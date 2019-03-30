@@ -250,7 +250,7 @@ public class CourseController {
             catAddAssignment.setGraphic(catAddIcon);
             catAddAssignment.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
             catAddAssignment.setButtonType(JFXButton.ButtonType.FLAT);
-            catAddAssignment.setOnAction((event -> addAssignmentClick(event)));
+            catAddAssignment.setOnAction((event -> addAssignment(event)));
 
             tempSep = new Separator();
 
@@ -274,7 +274,7 @@ public class CourseController {
         HBox catHB = new HBox();
         catHB.setAlignment(Pos.CENTER_LEFT);
 
-        Label catLabel = new Label("No Category");
+        Label catLabel = new Label("Uncategorized");
         catLabel.setAlignment(Pos.CENTER_LEFT);
 
         Pane catSpanPane = new Pane();
@@ -334,7 +334,7 @@ public class CourseController {
         catAddAssignment.setGraphic(catAddIcon);
         catAddAssignment.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
         catAddAssignment.setButtonType(JFXButton.ButtonType.FLAT);
-        catAddAssignment.setOnAction((event -> addAssignmentClick(event)));
+        catAddAssignment.setOnAction((event -> addAssignment(event)));
 
         catAssignmentVB.getChildren().addAll(tempSep, catAddAssignment);
 
@@ -490,10 +490,6 @@ public class CourseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void addAssignmentClick(ActionEvent event) {
-
     }
 
     @FXML
