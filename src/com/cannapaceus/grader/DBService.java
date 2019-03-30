@@ -889,23 +889,13 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
         try {
-            String sql = "UPDATE COURSES " +
-                    "SET SCOURSENAME = ?, SCOURSEID = ?, SCOURSEDEPT = ?, FMEAN = ?, " +
-                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ? " +
+            String sql = "DELETE FROM COURSES " +
                     "WHERE COURSEID = ? ";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql);
 
-            stm.setString(1, c.getCourseName());
-            stm.setString(2, c.getCourseID());
-            stm.setString(3, c.getDepartment());
-            stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, courseToStore.getStatistics().getMean());
-            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, courseToStore.getStatistics().getMedian());
-            stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, courseToStore.getStatistics().getMode());
-            stm.setFloat(7, 0.0f);  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
-            stm.setBoolean(8, false);
-            stm.setLong(9, c.getDBID());
+            stm.setLong(1, c.getDBID());
 
             stm.executeUpdate();
 
@@ -943,16 +933,13 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
         try {
-            String sql = "UPDATE CATEGORIES " +
-                    "SET SCATEGORYNAME = ?, FWEIGHT = ? " +
+            String sql = "DELETE FROM CATEGORIES " +
                     "WHERE CATEGORYID = ? ";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql);
 
-            stm.setString(1, cat.getName());
-            stm.setFloat(2, cat.getWeight());
-            stm.setLong(3, cat.getDBID());
+            stm.setLong(1, cat.getDBID());
 
             stm.executeUpdate();
 
@@ -991,19 +978,13 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
         try {
-            String sql = "UPDATE STUDENTS" +
-                    "SET SFIRSTMINAME = ?, SLASTNAME = ?, SSTUDENTID = ?, SEMAIL = ?, FAVERAGE = ? " +
+            String sql = "DELETE FROM STUDENTS" +
                     "WHERE STUDENTID = ?";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stm.setString(1, s.getFirstMIName());
-            stm.setString(2, s.getLastName());
-            stm.setString(3, s.getStudentID());
-            stm.setString(4, s.getStudentEmail());
-            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, studentToStore.getAverage());
-            stm.setLong(6, s.getDBID());
+            stm.setLong(1, s.getDBID());
 
             stm.executeUpdate();
 
@@ -1051,26 +1032,13 @@ public class DBService {
         }
 
         try {
-            String sql = "UPDATE ASSIGNMENTS" +
-                    "SET SASSIGNMENTNAME = ?, DTDUEDATE = ?, DTASSIGNEDDATE = ?, FMEAN = ?, FMEDIAN = ?, " +
-                    "FMODE = ?, FSTDDEV = ?, BDROPPED = ?, FMAXSCORE = ?, FWEIGHT = ?, ICATEGORY = ? " +
+            String sql = "DELETE FROM ASSIGNMENTS" +
                     "WHERE ASSIGNMENTID = ?";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stm.setString(1, a.getAssignmentName());
-            stm.setDate(2, java.sql.Date.valueOf(a.getDueDate()));
-            stm.setDate(3, java.sql.Date.valueOf(a.getAssignedDate()));
-            stm.setFloat(4, 0.0f);  //TODO: stm.setFloat(4, assignmentToStore.getStatistics().getMean());
-            stm.setFloat(5, 0.0f);  //TODO: stm.setFloat(5, assignmentToStore.getStatistics().getMedian());
-            stm.setFloat(6, 0.0f);  //TODO: stm.setFloat(6, assignmentToStore.getStatistics().getMode());
-            stm.setFloat(7, 0.0f);  //TODO: stm.setFloat(7, assignmentToStore.getStatistics().getStdDev());
-            stm.setBoolean(8, a.getDroppedAssignment());
-            stm.setFloat(9, a.getMaxScore());
-            stm.setFloat(10, a.getWeight());
-            stm.setLong(11, lCategoryID);
-            stm.setLong(12, a.getDBID());
+            stm.setLong(1, a.getDBID());
 
             stm.executeUpdate();
 
@@ -1118,22 +1086,13 @@ public class DBService {
         }
 
         try {
-            String sql = "UPDATE GRADES" +
-                    "SET FGRADE = ?, BSUBMITTED = ?, BOVERDUE = ?, BMISSING = ?, " +
-                    "BDROPPED = ?, IASSIGNMENT = ?, ISTUDENT = ? " +
+            String sql = "DELETE FROM GRADES" +
                     "WHERE GRADEID = ?";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stm.setFloat(1, g.getGrade());
-            stm.setBoolean(2, g.getSubmitted());
-            stm.setBoolean(3, g.getOverdue());
-            stm.setBoolean(4, g.getMissing());
-            stm.setBoolean(5, g.getDropped());
-            stm.setLong(6, lAssignmentID);
-            stm.setLong(7, lStudentID);
-            stm.setLong(8, g.getDBID());
+            stm.setLong(1, g.getDBID());
 
             stm.executeUpdate();
 
@@ -1319,7 +1278,9 @@ public class DBService {
 
                         Statistics tempStats = new Statistics(); //TODO: set mean, median, mode for the statistics
 
-                        tempCat.addAssignment(temp);
+                        if (tempCat != null) {
+                            tempCat.addAssignment(temp);
+                        }
 
                         temp.setDBID(rs.getLong(1));
 

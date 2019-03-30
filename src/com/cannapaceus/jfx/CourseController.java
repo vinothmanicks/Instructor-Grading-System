@@ -100,10 +100,6 @@ public class CourseController {
         }
     }
 
-    private void gradeClick(MouseEvent event) {
-        //Does nothing at the moment
-    }
-
     private void createStudentList() {
         for (Student s : selectedCourse.getlStudents()) {
             Separator tempSep = new Separator();
@@ -377,6 +373,10 @@ public class CourseController {
         }
 
         p.getChildren().add(tempCollapse);
+    }
+
+    public void expandStudents(ActionEvent e) {
+
     }
 
     private void collapse(ActionEvent e) {
