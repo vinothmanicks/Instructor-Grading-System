@@ -341,4 +341,12 @@ public class Model {
         newObjects.clear();
         removedObjects.clear();
     }
+
+    public boolean isChanged(Object o) {
+        return (updatedObjects.contains(o) || newObjects.contains(o));
+    }
+
+    public boolean isRemoved(Object o) {
+        return (removedObjects.contains(o));
+    }
 }

@@ -124,6 +124,11 @@ public class CourseController {
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
             tempHB.setAlignment(Pos.CENTER_LEFT);
+            if (md.isChanged(s)) {
+                tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                        "    -fx-border-insets: 5;\n" +
+                        "    -fx-border-width: 3;\n");
+            }
 
             Label tempLabel = new Label(s.getFirstMIName() + " " + s.getLastName());
             tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -168,6 +173,11 @@ public class CourseController {
 
             HBox catHB = new HBox();
             catHB.setAlignment(Pos.CENTER_LEFT);
+            if (md.isChanged(cat)) {
+                catHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                        "    -fx-border-insets: 5;\n" +
+                        "    -fx-border-width: 3;\n");
+            }
 
             Label catLabel = new Label(cat.getName());
             catLabel.setAlignment(Pos.CENTER_LEFT);
@@ -208,6 +218,11 @@ public class CourseController {
                 HBox tempHB = new HBox();
                 tempHB.setSpacing(10.0);
                 tempHB.setAlignment(Pos.CENTER_LEFT);
+                if (md.isChanged(a)) {
+                    tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                            "    -fx-border-insets: 5;\n" +
+                            "    -fx-border-width: 3;\n");
+                }
 
                 Label tempLabel = new Label(a.getAssignmentName());
                 tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -290,6 +305,11 @@ public class CourseController {
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
             tempHB.setAlignment(Pos.CENTER_LEFT);
+            if (md.isChanged(a)) {
+                tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                        "    -fx-border-insets: 5;\n" +
+                        "    -fx-border-width: 3;\n");
+            }
 
             Label tempLabel = new Label(a.getAssignmentName());
             tempLabel.setAlignment(Pos.CENTER_LEFT);
