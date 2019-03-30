@@ -45,6 +45,12 @@ public class CourseController {
     private JFXButton btnAddCategory;
 
     @FXML
+    private JFXButton expandStudent;
+
+    @FXML
+    private JFXButton expandAssignment;
+
+    @FXML
     private VBox vbCourse;
 
     @FXML
@@ -55,6 +61,12 @@ public class CourseController {
 
     @FXML
     private VBox vbCats;
+
+    @FXML
+    private HBox hbStudents;
+
+    @FXML
+    private HBox hbAssignments;
 
     @FXML
     private void initialize()
@@ -69,6 +81,9 @@ public class CourseController {
         hmCategory = new HashMap<>();
 
         lblCourseName.setText(selectedCourse.getCourseName());
+
+        hbStudents.setOnMouseClicked((event) -> expandStudent.fire());
+        hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
 
         createStudentList();
         createAssignmentList();
@@ -330,6 +345,8 @@ public class CourseController {
     private void expand(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
+        HBox hbTemp = null;
+
         String s = "";
 
         switch (t.getId()) {
@@ -337,11 +354,13 @@ public class CourseController {
                 s = "collapseStudent";
                 btnAddStudent.setVisible(true);
                 btnAddStudent.setManaged(true);
+                hbTemp = hbStudents;
                 break;
             case "expandAssignment":
                 s = "collapseAssignment";
                 btnAddCategory.setVisible(true);
                 btnAddCategory.setManaged(true);
+                hbTemp = hbAssignments;
                 break;
         }
 
@@ -365,6 +384,9 @@ public class CourseController {
         tempCollapse.setButtonType(JFXButton.ButtonType.FLAT);
         tempCollapse.setOnAction((event -> collapse(event)));
 
+        if (hbTemp != null)
+            hbTemp.setOnMouseClicked(event -> tempCollapse.fire());
+
         for (Node n : vbTerm.getChildren()) {
             if (n instanceof VBox) {
                 n.setVisible(true);
@@ -375,12 +397,10 @@ public class CourseController {
         p.getChildren().add(tempCollapse);
     }
 
-    public void expandStudents(ActionEvent e) {
-
-    }
-
     private void collapse(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
+
+        HBox hbTemp = null;
 
         String s = "";
 
@@ -389,11 +409,13 @@ public class CourseController {
                 s = "expandStudent";
                 btnAddStudent.setVisible(false);
                 btnAddStudent.setManaged(false);
+                hbTemp = hbStudents;
                 break;
             case "collapseAssignment":
                 s = "expandAssignment";
                 btnAddCategory.setVisible(false);
                 btnAddCategory.setManaged(false);
+                hbTemp = hbAssignments;
                 break;
         }
 
@@ -416,6 +438,9 @@ public class CourseController {
         tempExpand.setRipplerFill(Color.WHITE);
         tempExpand.setButtonType(JFXButton.ButtonType.FLAT);
         tempExpand.setOnAction((event -> expand(event)));
+
+        if (hbTemp != null)
+            hbTemp.setOnMouseClicked(event -> tempExpand.fire());
 
         for (Node n : vBox.getChildren()) {
             if (n instanceof VBox) {

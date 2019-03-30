@@ -61,7 +61,7 @@
                         <effect>
                             <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
                         </effect>
-                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <HBox fx:id="hbStudents" spacing="10.0" alignment="CENTER_LEFT">
                             <Label text="Students"/>
                             <Pane HBox.hgrow="ALWAYS"/>
                             <JFXButton fx:id="btnAddStudent" buttonType="FLAT" visible="false" managed="false" text="Add Student">
@@ -100,7 +100,7 @@
                         <effect>
                             <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
                         </effect>
-                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <HBox fx:id="hbAssignments" spacing="10.0" alignment="CENTER_LEFT">
                             <Label text="Assignments"/>
                             <Pane HBox.hgrow="ALWAYS"/>
                             <JFXButton fx:id="btnAddCategory" buttonType="FLAT" visible="false" managed="false" text="Add Category">
