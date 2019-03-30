@@ -28,4 +28,34 @@ public class GraderController {
         }
     }
 
+    public void homeClick(ActionEvent event) {
+        try {
+            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
+            sc.activate("Terms");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void qBankClick(ActionEvent event) {
+        try {
+            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("../jfxml/QBankView.fxml")));
+            sc.activate("QBank");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void settingsClick(ActionEvent event) {
+        try {
+            sc.addScreen("Settings", FXMLLoader.load(getClass().getResource("../jfxml/SettingsView.fxml")));
+            sc.activate("Settings");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void helpClick(ActionEvent event) {
+
+    }
 }
