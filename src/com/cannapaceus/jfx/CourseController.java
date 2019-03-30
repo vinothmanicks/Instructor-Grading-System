@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class CourseController {
@@ -539,5 +540,14 @@ public class CourseController {
         hmAssignment.clear();
 
         initialize();
+    }
+
+    public void openGradeBook(ActionEvent event) {
+        try {
+            sc.addScreen("GradeBook", FXMLLoader.load(getClass().getResource("../jfxml/GradeBookView.fxml")));
+            sc.activate("GradeBook");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

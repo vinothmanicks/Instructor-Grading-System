@@ -51,6 +51,16 @@
                             </style>
                         </JFXButton>
                         <Label fx:id="lblCourseName"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <JFXButton buttonType="FLAT" text="Grade Book" onAction="#openGradeBook">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="BOOK" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
                     </HBox>
 
                     <VBox>
