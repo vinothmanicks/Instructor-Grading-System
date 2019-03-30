@@ -2,8 +2,12 @@ package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
+import com.cannapaceus.grader.Grade;
+import com.cannapaceus.grader.Student;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -60,10 +65,15 @@ public class GradeBookController{
         table.setEditable(true);
 
         TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<Student, String>("firstMIName"));
         TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
+        TableColumn idCol = new TableColumn("Student ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<Student, String>("studentID"));
         TableColumn emailCol = new TableColumn("Email");
+        emailCol.setCellValueFactory(new PropertyValueFactory<Student, String>("studentEmail"));
 
-        table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
+        table.getColumns().addAll(firstNameCol, lastNameCol, idCol, emailCol);
 
         lAssignments = selectedCourse.getlAssignments();
 
@@ -72,23 +82,24 @@ public class GradeBookController{
         for(int i = 0; i < iLAssignmentSize; i++)
         {
             TableColumn assignmentColumn = new TableColumn(lAssignments.get(i).getAssignmentName());
+            //enableColumnEdit(assignmentColumn, cellFactory);
             table.getColumns().add(assignmentColumn);
         }
 
+        populateTable();
+
         VBox tempVB = new VBox();
-        tempVB.setSpacing(10.0);
-        tempVB.setStyle("-fx-padding: 10, 10, 10, 10; -fx-background-color: white;");
-
-        DropShadow ds = new DropShadow();
-        ds.setColor(Color.GREY);
-        ds.setOffsetX(4);
-        ds.setOffsetY(4);
-
-        tempVB.setEffect(ds);
 
         tempVB.getChildren().addAll(table);
 
         vbTerms.getChildren().addAll(tempVB);
+    }
+
+    private void populateTable() {
+        ObservableList<Student> data = FXCollections.observableArrayList(selectedCourse.getlStudents());
+        table.setItems(data);
+        ObservableList<Grade> gradeData = FXCollections.observableArrayList(selectedCourse.getlGrades());
+        //table.setItems(gradeData);
     }
 
     public void backClick(ActionEvent actionEvent) {
