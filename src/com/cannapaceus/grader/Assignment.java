@@ -217,6 +217,9 @@ public class Assignment implements Comparable<Assignment> {
      */
     public Category getCategoryCopy()
     {
+        if (catCategory == null)
+            return null;
+
         Category catCategoryCopy = new Category(this.catCategory);
         return catCategoryCopy;
     }

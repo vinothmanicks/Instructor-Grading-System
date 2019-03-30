@@ -17,6 +17,7 @@ public class Model {
 
     Term selectedTerm = null;
     Course selectedCourse = null;
+    Category selectedCategory = null;
     Student selectedStudent = null;
     Assignment selectedAssignment = null;
 
@@ -137,6 +138,9 @@ public class Model {
 
     public void removeCategory(Category cat) {
         selectedCourse.getlCategories().remove(cat);
+        for (Assignment a : cat.getAssignments()) {
+            a.setCategory(null);
+        }
     }
 
     public void removeAssignment(Assignment a) {
@@ -152,21 +156,36 @@ public class Model {
     public void setSelectedTerm(Term t) {
         if (lCurrentModel.contains(t))
             selectedTerm = t;
+        else
+            selectedTerm = null;
     }
 
     public void setSelectedCourse(Course c) {
-        if (selectedTerm.getCourses().contains(c))
+        if (selectedTerm != null && selectedTerm.getCourses().contains(c))
             selectedCourse = c;
+        else
+            selectedCourse = null;
+    }
+
+    public void setSelectedCategory(Category cat) {
+        if (selectedCourse != null && selectedCourse.getlCategories().contains(cat))
+            selectedCategory = cat;
+        else
+            selectedCategory = null;
     }
 
     public void setSelectedStudent(Student s) {
-        if (selectedCourse.getlStudents().contains(s))
+        if (selectedCourse != null && selectedCourse.getlStudents().contains(s))
             selectedStudent = s;
+        else
+            selectedStudent = null;
     }
 
     public void setSelectedAssignment(Assignment a) {
-        if (selectedCourse.getlAssignments().contains(a))
+        if (selectedCourse != null && selectedCourse.getlAssignments().contains(a))
             selectedAssignment = a;
+        else
+            selectedAssignment = null;
     }
 
     public Term getSelectedTerm() {
@@ -175,6 +194,10 @@ public class Model {
 
     public Course getSelectedCourse() {
         return selectedCourse;
+    }
+
+    public Category getSelectedCategory() {
+        return selectedCategory;
     }
 
     public Student getSelectedStudent() {
@@ -190,13 +213,130 @@ public class Model {
         db.updateObjects(updatedObjects);
         db.deleteObjects(removedObjects);
 
+        long termID = 0;
+        long courseID = 0;
+        long categoryID = 0;
+        long studentID = 0;
+        long assignmentID = 0;
+
+        if (selectedTerm != null)
+            termID = selectedTerm.getDBID();
+
+        if (selectedCourse != null)
+            courseID = selectedCourse.getDBID();
+
+        if (selectedCategory != null)
+            categoryID = selectedCategory.getDBID();
+
+        if (selectedStudent != null)
+            studentID = selectedStudent.getDBID();
+
+        if (selectedAssignment != null)
+            assignmentID = selectedAssignment.getDBID();
+
+        lCurrentModel = db.retrieveModel();
+
+        selectedTerm = null;
+        selectedCourse = null;
+        selectedCategory = null;
+        selectedStudent = null;
+        selectedAssignment = null;
+
+        for (Term t : lCurrentModel) {
+            if (t.getDBID() == termID) {
+                setSelectedTerm(t);
+            }
+        }
+
+        for (Course c : selectedTerm.getCourses()) {
+            if (c.getDBID() == courseID) {
+                setSelectedCourse(c);
+            }
+        }
+
+        for (Category cat : selectedCourse.getlCategories()) {
+            if (cat.getDBID() == categoryID) {
+                setSelectedCategory(cat);
+            }
+        }
+
+        for (Assignment a : selectedCourse.getlAssignments()) {
+            if (a.getDBID() == assignmentID) {
+                setSelectedAssignment(a);
+            }
+        }
+
+        for (Student s : selectedCourse.getlStudents()) {
+            if (s.getDBID() == studentID) {
+                setSelectedStudent(s);
+            }
+        }
+
         newObjects.clear();
         updatedObjects.clear();
         removedObjects.clear();
     }
 
     public void revertChanges() {
+        long termID = 0;
+        long courseID = 0;
+        long categoryID = 0;
+        long studentID = 0;
+        long assignmentID = 0;
+
+        if (selectedTerm != null)
+            termID = selectedTerm.getDBID();
+
+        if (selectedCourse != null)
+            courseID = selectedCourse.getDBID();
+
+        if (selectedCategory != null)
+            categoryID = selectedCategory.getDBID();
+
+        if (selectedStudent != null)
+            studentID = selectedStudent.getDBID();
+
+        if (selectedAssignment != null)
+            assignmentID = selectedAssignment.getDBID();
+
         lCurrentModel = db.retrieveModel();
+
+        selectedTerm = null;
+        selectedCourse = null;
+        selectedCategory = null;
+        selectedStudent = null;
+        selectedAssignment = null;
+
+        for (Term t : lCurrentModel) {
+            if (t.getDBID() == termID) {
+                setSelectedTerm(t);
+            }
+        }
+
+        for (Course c : selectedTerm.getCourses()) {
+            if (c.getDBID() == courseID) {
+                setSelectedCourse(c);
+            }
+        }
+
+        for (Category cat : selectedCourse.getlCategories()) {
+            if (cat.getDBID() == categoryID) {
+                setSelectedCategory(cat);
+            }
+        }
+
+        for (Assignment a : selectedCourse.getlAssignments()) {
+            if (a.getDBID() == assignmentID) {
+                setSelectedAssignment(a);
+            }
+        }
+
+        for (Student s : selectedCourse.getlStudents()) {
+            if (s.getDBID() == studentID) {
+                setSelectedStudent(s);
+            }
+        }
+
         updatedObjects.clear();
         newObjects.clear();
         removedObjects.clear();
