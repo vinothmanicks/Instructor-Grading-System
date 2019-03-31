@@ -103,7 +103,7 @@
                         <HBox fx:id="hbAssignments" spacing="10.0" alignment="CENTER_LEFT">
                             <Label text="Assignments"/>
                             <Pane HBox.hgrow="ALWAYS"/>
-                            <JFXButton fx:id="btnAddCategory" buttonType="FLAT" visible="false" managed="false" text="Add Category">
+                            <JFXButton fx:id="btnAddCategory" buttonType="FLAT" visible="false" managed="false" text="Add Category" onAction="#addCategory">
                                 <graphic>
                                     <FontAwesomeIconView glyphName="PLUS" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                                 </graphic>
