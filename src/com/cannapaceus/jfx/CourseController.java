@@ -493,6 +493,21 @@ public class CourseController {
     }
 
     @FXML
+    private void addCategory(ActionEvent event) {
+        Category c = new Category("",0);
+
+        md.addCategory(c);
+        md.setSelectedCategory(c);
+
+        try {
+            sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("../jfxml/CategoryFormView.fxml")));
+            sc.activate("CategoryForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void addStudent(ActionEvent event) {
         Student s = new Student("", "", "", "");
 
