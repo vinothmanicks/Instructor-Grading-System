@@ -9,6 +9,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXDrawer?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.QBankController"
@@ -40,9 +42,9 @@
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
                         <Label text="Question Bank"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton buttonType="FLAT" text="Add Question" > <!--onAction="#openGradeBook"-->
+                        <JFXButton buttonType="FLAT" text="Generate Assignment" > <!--onAction="#openGradeBook"-->
                             <graphic>
-                                <FontAwesomeIconView glyphName="PLUS" glyphSize="17" glyphStyle="-fx-fill: white;"/>
+                                <FontAwesomeIconView glyphName="ENVELOPE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                             </graphic>
                             <style>
                                 -fx-background-color: #4CAF50;
@@ -54,11 +56,42 @@
 
                     <VBox fx:id="vbTerms"
                           spacing="10">
-
                     </VBox>
                 </children>
             </VBox>
         </ScrollPane>
     </center>
+
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <Pane HBox.hgrow="ALWAYS"/>
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <JFXButton buttonType="FLAT" text="Edit Question" disable="true"> <!--onAction="#openGradeBook"-->
+                    <graphic>
+                        <FontAwesomeIconView glyphName="EDIT" glyphSize="17" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #f7c42a;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton buttonType="FLAT" text="Add Question" > <!--onAction="#openGradeBook"-->
+                    <graphic>
+                        <FontAwesomeIconView glyphName="PLUS" glyphSize="17" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </VBox>
+    </bottom>
 
 </BorderPane>

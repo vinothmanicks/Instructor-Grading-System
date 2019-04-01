@@ -6,23 +6,26 @@ public class Question {
 
     //Name of the question.
     private String sQuestion;
-    //Array of potential answers. If multiple choice, first answer in the list is the correct one.
+    //Array of potential answers
     private ArrayList<String> lAnswers;
     //List of courses names that use this question.
     private String sCourseName;
-    //Enum to sub for lack of structs
-    //TODO: Figure out the best way to do this
-    private QuestionType qtQuestionType;
-    //TODO determine if we're going to use a separate class
-    private QuestionStats stQuestionStats;
 
-    public Question(String sQuestion, ArrayList<String> lAnswers, String sCourseName, QuestionStats stQuestionStats,QuestionType qtQuestionType)
+    //Enum to sub for lack of structs
+    private eQuestionType qtQuestionType;
+    private eQuestionAssignmentType qatQuestionAssignmentType;
+    private eQuestionLevel qlQuestionLevel;
+    private float fToDoTime;
+
+    public Question(String sQuestion, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
         this.sCourseName = sCourseName;
-        this.stQuestionStats = new QuestionStats(stQuestionStats);
         this.qtQuestionType = qtQuestionType;
+        this.qatQuestionAssignmentType = qatQuestionAssignmentType;
+        this.qlQuestionLevel = qlQuestionLevel;
+        this.fToDoTime = fToDoTime;
     }
 
     public Question(Question queQuestion)
@@ -30,36 +33,42 @@ public class Question {
         this.sQuestion = queQuestion.getQuestion();
         this.lAnswers = queQuestion.getAnswers();
         this.sCourseName = queQuestion.getCourse();
-        this.stQuestionStats = queQuestion.getQuestionStats();
         this.qtQuestionType = queQuestion.getQuestionType();
+        this.qatQuestionAssignmentType = queQuestion.getQuestionAssignmentType();
+        this.qlQuestionLevel = queQuestion.getQuestionLevel();
+        this.fToDoTime = queQuestion.getToDoTime();
     }
 
-    public void editQuestion(String sQuestion, ArrayList<String> lAnswers, String sCourseName, QuestionType qtQuestionType, QuestionStats stQuestionStats)
+    public void editQuestion(String sQuestion, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
     {
         this.sQuestion = sQuestion;
         this.lAnswers = new ArrayList<>(lAnswers);
         this.sCourseName = new String(sCourseName);
-        this.stQuestionStats = new QuestionStats(stQuestionStats);
         this.qtQuestionType = qtQuestionType;
+        this.qatQuestionAssignmentType = qatQuestionAssignmentType;
+        this.qlQuestionLevel = qlQuestionLevel;
+        this.fToDoTime = fToDoTime;
     }
     public void setQuestion(String sQuestion)
     {
         this.sQuestion = sQuestion;
     }
 
-    public void setQuestionType(QuestionType qtQuestionType)
+    public void setQuestionType(eQuestionType qtQuestionType)
     {
         this.qtQuestionType = qtQuestionType;
     }
 
-    public void setQuestionStats(QuestionStats stQuestionStats)
-    {
-        this.stQuestionStats = stQuestionStats;
-    }
+    public void setQuestionAssignmentType(eQuestionAssignmentType qatQuestionAssignmentType) { this.qatQuestionAssignmentType = qatQuestionAssignmentType; }
+
+    public void setQlQuestionLevel(eQuestionLevel qlQuestionLevel) { this.qlQuestionLevel = qlQuestionLevel; }
+
+    public void setfToDoTime (float fToDoTime) { this.fToDoTime = fToDoTime; }
 
     public void setAnwsers(ArrayList<String> lAnswers)
     {
-        this.lAnswers = new ArrayList<>(lAnswers);
+        if(this.qtQuestionType == eQuestionType.MULTIPLECHOICE)
+            this.lAnswers = new ArrayList<>(lAnswers);
     }
 
     public void setCourse(String lCourseName)
@@ -72,19 +81,23 @@ public class Question {
         return new String(this.sQuestion);
     }
 
-    public QuestionType getQuestionType()
+    public eQuestionType getQuestionType()
     {
         return this.qtQuestionType;
     }
 
-    public QuestionStats getQuestionStats()
-    {
-        return new QuestionStats(stQuestionStats);
-    }
+    public eQuestionAssignmentType getQuestionAssignmentType () { return  this.qatQuestionAssignmentType; }
+
+    public eQuestionLevel getQuestionLevel () { return  this.qlQuestionLevel; }
+
+    public float getToDoTime () { return  this.fToDoTime; }
 
     public ArrayList<String> getAnswers()
     {
-        return new ArrayList<>(lAnswers);
+        if(this.qtQuestionType == eQuestionType.MULTIPLECHOICE)
+            return new ArrayList<>(lAnswers);
+
+        return null;
     }
 
     public String getCourse()
