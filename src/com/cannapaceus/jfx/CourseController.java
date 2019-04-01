@@ -93,7 +93,15 @@ public class CourseController {
     }
 
     public void backClick(ActionEvent actionEvent) {
-        sc.activate("Terms");
+        md.setSelectedCourse(null);
+        md.setSelectedTerm(null);
+
+        try {
+            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
+            sc.activate("Terms");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void studentClick(MouseEvent event) {
@@ -111,8 +119,8 @@ public class CourseController {
         md.setSelectedAssignment(hmAssignment.get(((Node) event.getSource()).getId()));
 
         try {
-            sc.addScreen("Student", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentView.fxml")));
-            sc.activate("Student");
+            sc.addScreen("Assignment", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentView.fxml")));
+            sc.activate("Assignment");
         } catch (Exception e) {
             e.printStackTrace();
         }
