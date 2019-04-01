@@ -1,6 +1,6 @@
 package com.cannapaceus.qbank;
 
-public enum QuestionType {
+public enum eQuestionType {
     MULTIPLECHOICE (),
     FILLINTHEBLANK(),
     TRUEORFALSE(),

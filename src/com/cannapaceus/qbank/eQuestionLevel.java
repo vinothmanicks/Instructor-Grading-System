@@ -1,6 +1,6 @@
 package com.cannapaceus.qbank;
 
-public enum QuestionLevel {
+public enum eQuestionLevel {
     EASY(),
     MEDIUM(),
     HARD(),
