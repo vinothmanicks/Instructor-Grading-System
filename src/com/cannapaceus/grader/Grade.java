@@ -1,17 +1,24 @@
 package com.cannapaceus.grader;
 
-public class Grade implements Comparable<Grade> {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleFloatProperty;
+
+public class Grade extends RecursiveTreeObject<Grade> implements Comparable<Grade> {
 
     //Long to hold the ID of the grade from the database
     private long lDBID = 0;
 
     private Student stuStudent;
     private Assignment aAssignment;
-    private float fGrade;
-    private boolean bOverdue;
-    private boolean bMissing;
-    private boolean bDropped;
-    private boolean bSubmitted;
+
+    private final FloatProperty fGrade = new SimpleFloatProperty();
+    private final BooleanProperty bOverdue = new SimpleBooleanProperty();
+    private final BooleanProperty bMissing = new SimpleBooleanProperty();
+    private final BooleanProperty bDropped = new SimpleBooleanProperty();
+    private final BooleanProperty bSubmitted = new SimpleBooleanProperty();
 
     /**
      * <h1>Grade Constructor</h1>
@@ -21,16 +28,16 @@ public class Grade implements Comparable<Grade> {
      * @param aAssignment Assignemnt this grade is for. Is a reference and should be assigned at instantiation.
      */
     public Grade(float  fGrade, Student stuStudent, Assignment aAssignment) {
-        this.fGrade = fGrade;
+        this.fGrade.set(fGrade);
 
         //Should not be able to change these variables
         this.stuStudent = stuStudent;
         this.aAssignment = aAssignment;
 
-        this.bOverdue = false;
-        this.bMissing = false;
-        this.bDropped = false;
-        this.bSubmitted = false;
+        this.bOverdue.set(false);
+        this.bMissing.set(false);
+        this.bDropped.set(false);
+        this.bSubmitted.set(false);
     }
 
     /**
@@ -38,13 +45,13 @@ public class Grade implements Comparable<Grade> {
      */
     public Grade(Grade gGrade)
     {
-        this.fGrade = gGrade.getGrade();
+        this.fGrade.set(gGrade.getGrade());
         this.stuStudent = gGrade.getStudentReference();
         this.aAssignment = gGrade.getAssignmentReference();
-        this.bOverdue = gGrade.getOverdue();
-        this.bMissing = gGrade.getMissing();
-        this.bDropped = gGrade.getDropped();
-        this.bSubmitted = gGrade.getSubmitted();
+        this.bOverdue.set(gGrade.getOverdue());
+        this.bMissing.set(gGrade.getMissing());
+        this.bDropped.set(gGrade.getDropped());
+        this.bSubmitted.set(gGrade.getSubmitted());
     }
 
     //Setter functions
@@ -62,7 +69,7 @@ public class Grade implements Comparable<Grade> {
      */
     public void setGrade(float fGrade)
     {
-        this.fGrade = fGrade;
+        this.fGrade.set(fGrade);
     }
 
     /**
@@ -71,7 +78,7 @@ public class Grade implements Comparable<Grade> {
      */
     public void setOverdue(boolean bOverdue)
     {
-        this.bOverdue = bOverdue;
+        this.bOverdue.set(bOverdue);
     }
 
     /**
@@ -80,7 +87,7 @@ public class Grade implements Comparable<Grade> {
      */
     public void setMissing(boolean bMissing)
     {
-        this.bMissing = bMissing;
+        this.bMissing.set(bMissing);
     }
 
     /**
@@ -89,7 +96,7 @@ public class Grade implements Comparable<Grade> {
      */
     public void setDropped(boolean bDropped)
     {
-        this.bDropped = bDropped;
+        this.bDropped.set(bDropped);
     }
 
     /**
@@ -98,7 +105,7 @@ public class Grade implements Comparable<Grade> {
      */
     public void setSubmitted(boolean bSubmitted)
     {
-        this.bSubmitted = bSubmitted;
+        this.bSubmitted.set(bSubmitted);
     }
 
     //Getter functions
@@ -110,13 +117,23 @@ public class Grade implements Comparable<Grade> {
         return this.lDBID;
     }
 
+    public FloatProperty getGradeProperty()
+    {
+        return fGrade;
+    }
+
     /**
      * Getter for the Grade class's grade float
      * @return Copy of the grade float
      */
     public float getGrade()
     {
-        return fGrade;
+        return fGrade.getValue();
+    }
+
+    public BooleanProperty getOverdueProperty()
+    {
+        return bOverdue;
     }
 
     /**
@@ -125,7 +142,12 @@ public class Grade implements Comparable<Grade> {
      */
     public boolean getOverdue()
     {
-        return bOverdue;
+        return bOverdue.getValue();
+    }
+
+    public BooleanProperty getMissingProperty()
+    {
+        return bMissing;
     }
 
     /**
@@ -134,7 +156,12 @@ public class Grade implements Comparable<Grade> {
      */
     public boolean getMissing()
     {
-        return bMissing;
+        return bMissing.getValue();
+    }
+
+    public BooleanProperty getDroppedProperty()
+    {
+        return bDropped;
     }
 
     /**
@@ -143,7 +170,12 @@ public class Grade implements Comparable<Grade> {
      */
     public boolean getDropped()
     {
-        return bDropped;
+        return bDropped.getValue();
+    }
+
+    public BooleanProperty getSubmittedProperty()
+    {
+        return bSubmitted;
     }
 
     /**
@@ -152,7 +184,7 @@ public class Grade implements Comparable<Grade> {
      */
     public boolean getSubmitted()
     {
-        return bSubmitted;
+        return bSubmitted.getValue();
     }
 
     /**

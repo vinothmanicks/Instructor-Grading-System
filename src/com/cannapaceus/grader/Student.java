@@ -42,6 +42,8 @@ public class Student implements Comparable<Student>{
         this.sStudentID = sStudentID;
         this.sEmail = sStudentEmail;
         this.lGrades = new ArrayList<>();
+
+        setAverageGrade(this.lGrades);
     }
 
     /**
@@ -57,6 +59,8 @@ public class Student implements Comparable<Student>{
         this.sStudentID = stuStudent.getStudentID();
         this.sEmail = stuStudent.getStudentEmail();
         this.lGrades = new ArrayList<>();
+
+        setAverageGrade(this.lGrades);
     }
 
     //Setter functions
@@ -93,17 +97,33 @@ public class Student implements Comparable<Student>{
         this.sEmail = sStudentEmail;
     }
 
+    public void setAverageGrade(float fAverageGrade) {
+        this.fAverageGrade = fAverageGrade;
+    }
+
     public void setAverageGrade(ArrayList<Grade> lGrades) {
         float temp = 0;
+        float tempWeight;
         float average = 0;
-        float count = 0;
-        for (int a = 0; a < lGrades.size(); a++) {
-            temp = lGrades.get(a).getGrade() * lGrades.get(a).getAssignmentCopy().getWeight();
+        float totalWeight = 0;
+
+        for (Grade g : lGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            tempWeight = g.getAssignmentReference().getWeight();
+            temp = g.getGrade() * tempWeight;
             average += temp;
-            count++;
+            totalWeight += tempWeight;
         }
-        average = average / count;
-        this.fAverageGrade = average;
+
+        if (totalWeight == 0.0) {
+            this.fAverageGrade = 0;
+        } else {
+            average = average / totalWeight;
+            this.fAverageGrade = average;
+        }
     }
 
     //Getter functions

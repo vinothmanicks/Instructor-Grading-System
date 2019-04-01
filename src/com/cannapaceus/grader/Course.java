@@ -183,6 +183,14 @@ public class Course implements Comparable<Course> {
         return sDepartmentCopy;
     }
 
+    public Statistics getStCourseStats() {
+        return stCourseStats;
+    }
+
+    public boolean getBArchived() {
+        return bArchived;
+    }
+
     public ArrayList<Student> getlStudents() {
         return lStudents;
     }
@@ -223,6 +231,14 @@ public class Course implements Comparable<Course> {
     public void setDepartment(String Department)
     {
         this.sDepartment = Department;
+    }
+
+    public void setStCourseStats(Statistics stCourseStats) {
+        this.stCourseStats = stCourseStats;
+    }
+
+    public void setBArchived(boolean bArchived) {
+        this.bArchived = bArchived;
     }
 
     public int compareTo(Course c) {

@@ -144,6 +144,10 @@ public class Assignment implements Comparable<Assignment> {
         this.fWeight = fWeight;
     }
 
+    public void setStAssignmentStats(Statistics stAssignmentStats) {
+        this.stAssignmentStats = stAssignmentStats;
+    }
+
     /**
      * Setter for the assignment's dropped boolean
      * @param bDropped
@@ -231,6 +235,10 @@ public class Assignment implements Comparable<Assignment> {
     public float getWeight()
     {
         return this.fWeight;
+    }
+
+    public Statistics getStAssignmentStats() {
+        return this.stAssignmentStats;
     }
 
     /**
