@@ -270,6 +270,7 @@ public class CourseController {
             ++numCat;
 
             catAssignmentVB.setId("" + numCat);
+            catHB.setId("" + numCat);
             hmCategory.put("" + numCat, cat);
 
             vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
