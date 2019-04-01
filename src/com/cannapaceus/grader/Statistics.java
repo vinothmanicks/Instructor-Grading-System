@@ -52,21 +52,29 @@ public class Statistics {
 
     public void calculateMean(ArrayList<Grade> listOfGrades)
     {
-        float sumTemp = 0;
-        for (Grade gGrade:listOfGrades)
-        {
-            sumTemp += gGrade.getGrade();
+        if (listOfGrades.size() == 0) {
+            this.fMean = 0.0f;
+        } else {
+            float sumTemp = 0;
+            for (Grade gGrade:listOfGrades)
+            {
+                sumTemp += gGrade.getGrade();
+            }
+
+            sumTemp = (sumTemp/listOfGrades.size());
+
+            this.fMean = sumTemp;
         }
-
-        sumTemp = (sumTemp/listOfGrades.size());
-
-        this.fMean = sumTemp;
     }
 
     public void calculateMedian(ArrayList<Grade> listOfGrades)
     {
-        int medianMarker = Math.round(listOfGrades.size()/2);
-        this.fMedian = listOfGrades.get(medianMarker).getGrade();
+        if (listOfGrades.size() == 0) {
+            this.fMedian = 0.0f;
+        } else {
+            int medianMarker = Math.round(listOfGrades.size()/2.0f) - 1;
+            this.fMedian = listOfGrades.get(medianMarker).getGrade();
+        }
     }
 
     public void calculateMode(ArrayList<Grade> listOfGrades)
@@ -90,16 +98,20 @@ public class Statistics {
 
     public void calculateStandardDev(ArrayList<Grade> listOfGrades)
     {
-        float fCalculationValue = 0;
-        calculateMedian(listOfGrades);
-        for (Grade gGrade:listOfGrades)
-        {
-            float theGrade = gGrade.getGrade();
-            fCalculationValue += Math.multiplyExact((long)(theGrade - this.fMedian),(long)(theGrade - this.fMedian));
-        }
+        if (listOfGrades.size() == 0) {
+            this.fStandardDev = 0;
+        } else {
+            float fCalculationValue = 0;
+            calculateMedian(listOfGrades);
+            for (Grade gGrade:listOfGrades)
+            {
+                float theGrade = gGrade.getGrade();
+                fCalculationValue += Math.multiplyExact((long)(theGrade - this.fMedian),(long)(theGrade - this.fMedian));
+            }
 
-        fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/listOfGrades.size()));
-        this.fStandardDev = fCalculationValue;
+            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/listOfGrades.size()));
+            this.fStandardDev = fCalculationValue;
+        }
     }
 
     public static int geNumOfInstances() {

@@ -55,9 +55,6 @@
                     </validators>
                 </JFXTextField>
             </HBox>
-            <HBox alignment="CENTER_LEFT">
-                <JFXComboBox fx:id="cbAssignmentCategory" promptText="Category" labelFloat="true"/>
-            </HBox>
             <JFXTextField fx:id="tfCustomWeight" promptText="Custom Weight" labelFloat="true">
                 <validators>
                     <IntegerValidator message="Integer Required">

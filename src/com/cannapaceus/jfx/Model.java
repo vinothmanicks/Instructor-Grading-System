@@ -274,8 +274,7 @@ public class Model {
 
         newObjects.clear();
         updatedObjects.clear();
-        removedObjects.clear();
-    }
+        removedObjects.clear(); }
 
     public void revertChanges() {
         long termID = 0;
@@ -313,27 +312,31 @@ public class Model {
             }
         }
 
-        for (Course c : selectedTerm.getCourses()) {
-            if (c.getDBID() == courseID) {
-                setSelectedCourse(c);
+        if (selectedTerm != null) {
+            for (Course c : selectedTerm.getCourses()) {
+                if (c.getDBID() == courseID) {
+                    setSelectedCourse(c);
+                }
             }
-        }
 
-        for (Category cat : selectedCourse.getlCategories()) {
-            if (cat.getDBID() == categoryID) {
-                setSelectedCategory(cat);
-            }
-        }
+            if (selectedCourse != null) {
+                for (Category cat : selectedCourse.getlCategories()) {
+                    if (cat.getDBID() == categoryID) {
+                        setSelectedCategory(cat);
+                    }
+                }
 
-        for (Assignment a : selectedCourse.getlAssignments()) {
-            if (a.getDBID() == assignmentID) {
-                setSelectedAssignment(a);
-            }
-        }
+                for (Assignment a : selectedCourse.getlAssignments()) {
+                    if (a.getDBID() == assignmentID) {
+                        setSelectedAssignment(a);
+                    }
+                }
 
-        for (Student s : selectedCourse.getlStudents()) {
-            if (s.getDBID() == studentID) {
-                setSelectedStudent(s);
+                for (Student s : selectedCourse.getlStudents()) {
+                    if (s.getDBID() == studentID) {
+                        setSelectedStudent(s);
+                    }
+                }
             }
         }
 

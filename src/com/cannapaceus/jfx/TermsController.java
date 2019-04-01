@@ -53,6 +53,9 @@ public class TermsController {
     }
 
     private void createTermList() {
+        int numTerm = 0;
+        int numCourse = 0;
+
         for (Term t : lTerms) {
             VBox tempVB = new VBox();
             tempVB.setSpacing(10.0);
@@ -114,7 +117,7 @@ public class TermsController {
             termExpand.setOnAction((event -> expand(event)));
 
             VBox vbCourses = new VBox();
-            vbCourses.setVisible(false);
+            vbCourses.setVisible(false); 
             vbCourses.setManaged(false);
 
             vbCourses.setSpacing(10.0);
@@ -172,8 +175,10 @@ public class TermsController {
                 courseDelete.setOnAction((event -> deleteCourseClick(event)));
 
 
-                hbCourse.setId("" + c.getDBID());
-                hmCourse.put("" + c.getDBID(), c);
+                hbCourse.setId("" + numCourse);
+                hmCourse.put("" + numCourse, c);
+
+                ++numCourse;
 
                 hbCourse.setOnMouseClicked((event -> courseClick(event)));
 
@@ -186,8 +191,10 @@ public class TermsController {
 
             vbCourses.getChildren().addAll(tempSep, termAddCourse);
 
-            tempVB.setId("" + t.getDBID());
-            hmTerm.put("" + t.getDBID(), t);
+            tempVB.setId("" + numTerm);
+            hmTerm.put("" + numTerm, t);
+
+            ++numTerm;
 
             tempHB.getChildren().addAll(termLabel, termSpanPane, termEdit, termDelete, termExpand);
             tempHB.setHgrow(termSpanPane, Priority.ALWAYS);

@@ -481,17 +481,17 @@ public class DBService {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        Assignment assignCopy = gradeToStore.getAssignmentCopy();
-        Student stuCopy = gradeToStore.getStudentCopy();
+        Assignment assign = gradeToStore.getAssignmentReference();
+        Student stu = gradeToStore.getStudentReference();
 
         long lAssignmentID = 0;
         long lStudentID = 0;
 
-        if (assignCopy != null) {
-            lAssignmentID = assignCopy.getDBID();
+        if (assign != null) {
+            lAssignmentID = assign.getDBID();
         }
-        if (stuCopy != null) {
-            lStudentID = stuCopy.getDBID();
+        if (stu != null) {
+            lStudentID = stu.getDBID();
         }
 
         try {
@@ -1325,10 +1325,7 @@ public class DBService {
                 //Get Assignments for the course
 
                 sql = "SELECT * FROM GRADES " +
-                        "WHERE GRADES.ICOURSE = ? " +
-                        "ORDER BY (SELECT TOP 1 SLASTNAME FROM STUDENTS WHERE STUDENTID = GRADES.ISTUDENT), " +
-                        "(SELECT TOP 1 SFIRSTMINAME FROM STUDENTS WHERE STUDENTID = GRADES.ISTUDENT), " +
-                        "(SELECT TOP 1 SASSIGNMENTNAME FROM ASSIGNMENTS WHERE ASSIGNMENTID = GRADES.IASSIGNMENT)";
+                        "WHERE GRADES.ICOURSE = ? ";
 
                 stm = con.prepareStatement(sql);
 
@@ -1340,8 +1337,8 @@ public class DBService {
                     while(rs.next()) {
 
                         //Set the grade's student and assignment to the appropriate student and assignment in the course's list
-                        long tempStuID = rs.getLong(7);
-                        long tempAssignID = rs.getLong(8);
+                        long tempStuID = rs.getLong(8);
+                        long tempAssignID = rs.getLong(7);
 
                         Student tempStu = null;
                         Assignment tempAssign = null;

@@ -27,9 +27,6 @@ public class AssignmentFormController {
     private JFXTextField tfCustomWeight;
 
     @FXML
-    private JFXComboBox<String> cbAssignmentCategory;
-
-    @FXML
     private JFXDatePicker dpDueDate;
 
     @FXML
@@ -44,17 +41,14 @@ public class AssignmentFormController {
         sc = ScreenController.getInstance();
 
         selectedAssignment = md.getSelectedAssignment();
-
-        //TODO: Add proper categories
-        ObservableList<String> list = FXCollections.observableArrayList("Unassigned");
-
-        cbAssignmentCategory.setItems(list);
     }
 
 
     public void saveClick(ActionEvent event) {
         if (!formValidate())
             return;
+
+        Category cat = md.getSelectedCategory();
 
         selectedAssignment.setAssignmentName(tfAssignmentName.getText());
         selectedAssignment.setMaxScore(Integer.valueOf(tfMaxScore.getText()));
@@ -63,12 +57,35 @@ public class AssignmentFormController {
         selectedAssignment.setDueDate(dpDueDate.getValue());
         selectedAssignment.setAssignedDate(dpAssignedDate.getValue());
         //TODO: Required to save to database
-        //selectedAssignment.setCategory();
+        selectedAssignment.setCategory(md.getSelectedCategory());
+
+        if (cat != null) {
+            cat.addAssignment(selectedAssignment);
+        }
+
+        md.setSelectedCategory(null);
+        md.setSelectedAssignment(null);
 
         if (selectedAssignment.getDBID() == 0 && !md.getNewObjects().contains(selectedAssignment)) {
             md.addNewObject(selectedAssignment);
+
+            Course c = md.getSelectedCourse();
+
+            for (Student s : md.getSelectedCourse().getlStudents()) {
+                Grade g = new Grade(0.0f, s, selectedAssignment);
+
+                selectedAssignment.addGrade(g);
+                s.addGrade(g);
+                c.addGrade(g);
+
+                md.addNewObject(g);
+            }
         } else {
             md.addUpdatedObject(selectedAssignment);
+            for (Grade g : selectedAssignment.getGrades()) {
+                if (!md.getUpdatedObjects().contains(g))
+                    md.addUpdatedObject(g);
+            }
         }
 
         try {
