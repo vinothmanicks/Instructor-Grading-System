@@ -62,7 +62,7 @@ public class Model {
     }
 
     public void addUpdatedObject(Object o) {
-        if (!newObjects.contains(o))
+        if (!newObjects.contains(o) && !updatedObjects.contains(o))
             updatedObjects.add(o);
     }
 

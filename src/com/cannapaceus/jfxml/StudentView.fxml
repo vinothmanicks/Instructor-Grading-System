@@ -8,6 +8,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.StudentController"
@@ -46,7 +47,11 @@
                             </style>
                         </JFXButton>
                         <Label fx:id="lblStudentName"/>
+                        <Label fx:id="lblStudentAvg"/>
                     </HBox>
+                    <JFXTreeTableView fx:id="studentGradeTable">
+
+                    </JFXTreeTableView>
                 </children>
             </VBox>
         </ScrollPane>
