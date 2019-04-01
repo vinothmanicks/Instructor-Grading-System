@@ -83,6 +83,8 @@ public class CourseController {
         hmAssignment = new HashMap<>();
         hmCategory = new HashMap<>();
 
+        hmCategory.put("0", null);
+
         lblCourseName.setText(selectedCourse.getCourseName());
 
         hbStudents.setOnMouseClicked((event) -> expandStudent.fire());
@@ -169,7 +171,7 @@ public class CourseController {
     }
 
     private void createAssignmentList() {
-        int numAssign = 0;
+        int numCat = 0;
 
         for (Category cat : selectedCourse.getlCategories()) {
             Separator tempSep;
@@ -261,7 +263,6 @@ public class CourseController {
                 tempSep = new Separator();
 
                 catAssignmentVB.getChildren().addAll(tempSep, tempHB);
-                ++numAssign;
             }
 
             FontAwesomeIconView catAddIcon = new FontAwesomeIconView();
@@ -282,8 +283,10 @@ public class CourseController {
 
             tempSep = new Separator();
 
-            catHB.setId("" + cat.getDBID());
-            hmCategory.put("" + cat.getDBID(), cat);
+            ++numCat;
+
+            catAssignmentVB.setId("" + numCat);
+            hmCategory.put("" + numCat, cat);
 
             vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
         }
@@ -348,7 +351,6 @@ public class CourseController {
             tempSep = new Separator();
 
             catAssignmentVB.getChildren().addAll(tempSep, tempHB);
-            ++numAssign;
         }
 
         tempSep = new Separator();
@@ -366,6 +368,8 @@ public class CourseController {
         catAddAssignment.setOnAction((event -> addAssignment(event)));
 
         catAssignmentVB.getChildren().addAll(tempSep, catAddAssignment);
+
+        catAssignmentVB.setId("0");
 
         tempSep = new Separator();
 
@@ -555,10 +559,14 @@ public class CourseController {
     private void addAssignment(ActionEvent event)
     {
         LocalDate lo = LocalDate.now();
-        Category catUnassigned = new Category("Unassigned",100);
-        Assignment a = new Assignment("",lo,lo,false,100,catUnassigned,0);
+
+        String id = ((Node) event.getTarget()).getParent().getId();
+        Category cat = hmCategory.get(id);
+
+        Assignment a = new Assignment("",lo,lo,false,100,cat,0);
 
         md.addAssignment(a);
+        md.setSelectedCategory(cat);
         md.setSelectedAssignment(a);
 
         try {
@@ -571,6 +579,14 @@ public class CourseController {
 
     public void commitClick(ActionEvent e) {
         md.commitChanges();
+
+        vbStudents.getChildren().clear();
+        hmStudent.clear();
+
+        vbAssignments.getChildren().clear();
+        hmAssignment.clear();
+
+        initialize();
     }
 
     public void revertClick(ActionEvent e) {

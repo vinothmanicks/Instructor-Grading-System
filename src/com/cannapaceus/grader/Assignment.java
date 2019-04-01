@@ -51,6 +51,8 @@ public class Assignment implements Comparable<Assignment> {
         this.fMaxScore = fMaxScore;
         this.catCategory = catCategory;
         this.fWeight = fWeight;
+
+        this.stAssignmentStats = new Statistics();
     }
 
     /**
@@ -63,13 +65,18 @@ public class Assignment implements Comparable<Assignment> {
         this.setDBID(aAssignment.getDBID());
         this.lGrades = new ArrayList<Grade>();
         this.setAssignmentName(aAssignment.getAssignmentName());
-        aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
+        aAssignment.getGrades().forEach(grade-> this.lGrades.add(grade));
         this.setAssignedDate(aAssignment.getAssignedDate());
         this.setCategory((aAssignment.getCategoryCopy()));
         this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
 
+        this.stAssignmentStats = new Statistics();
+        this.stAssignmentStats.calculateMean(this.lGrades);
+        this.stAssignmentStats.calculateMedian(this.lGrades);
+        this.stAssignmentStats.calculateMode(this.lGrades);
+        this.stAssignmentStats.calculateStandardDev(this.lGrades);
     }
 
     //Setter functions
@@ -80,6 +87,10 @@ public class Assignment implements Comparable<Assignment> {
     public void addGrade(Grade grade)
     {
         this.lGrades.add(grade);
+        this.stAssignmentStats.calculateMean(this.lGrades);
+        this.stAssignmentStats.calculateMedian(this.lGrades);
+        this.stAssignmentStats.calculateMode(this.lGrades);
+        this.stAssignmentStats.calculateStandardDev(this.lGrades);
     }
 
     /**
