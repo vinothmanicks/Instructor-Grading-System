@@ -274,33 +274,43 @@ public class Model {
         selectedStudent = null;
         selectedAssignment = null;
 
-        for (Term t : lCurrentModel) {
-            if (t.getDBID() == termID) {
-                setSelectedTerm(t);
+        if (termID != 0) {
+            for (Term t : lCurrentModel) {
+                if (t.getDBID() == termID) {
+                    setSelectedTerm(t);
+                }
             }
         }
 
-        for (Course c : selectedTerm.getCourses()) {
-            if (c.getDBID() == courseID) {
-                setSelectedCourse(c);
+        if (courseID != 0) {
+            for (Course c : selectedTerm.getCourses()) {
+                if (c.getDBID() == courseID) {
+                    setSelectedCourse(c);
+                }
             }
         }
 
-        for (Category cat : selectedCourse.getlCategories()) {
-            if (cat.getDBID() == categoryID) {
-                setSelectedCategory(cat);
+        if (categoryID != 0) {
+            for (Category cat : selectedCourse.getlCategories()) {
+                if (cat.getDBID() == categoryID) {
+                    setSelectedCategory(cat);
+                }
             }
         }
 
-        for (Assignment a : selectedCourse.getlAssignments()) {
-            if (a.getDBID() == assignmentID) {
-                setSelectedAssignment(a);
+        if (assignmentID != 0) {
+            for (Assignment a : selectedCourse.getlAssignments()) {
+                if (a.getDBID() == assignmentID) {
+                    setSelectedAssignment(a);
+                }
             }
         }
 
-        for (Student s : selectedCourse.getlStudents()) {
-            if (s.getDBID() == studentID) {
-                setSelectedStudent(s);
+        if (studentID != 0) {
+            for (Student s : selectedCourse.getlStudents()) {
+                if (s.getDBID() == studentID) {
+                    setSelectedStudent(s);
+                }
             }
         }
 
