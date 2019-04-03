@@ -41,6 +41,8 @@ public class GradeBookController{
     ArrayList<Assignment> lAssignments;
     int iLAssignmentSize;
 
+    ArrayList<StudentGradeBookData> lGradeBookData;
+
     private TableView table = new TableView();
 
     @FXML
@@ -58,33 +60,17 @@ public class GradeBookController{
 
         lblGradeBookName.setText(selectedCourse.getCourseName() + " Grade Book");
 
+        lGradeBookData = new ArrayList<>();
+
         createTable();
     }
 
     private void createTable() {
         table.setEditable(true);
 
-        TableColumn firstNameCol = new TableColumn("First Name");
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<Student, String>("firstMIName"));
-        TableColumn lastNameCol = new TableColumn("Last Name");
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
-        TableColumn idCol = new TableColumn("Student ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<Student, String>("studentID"));
-        TableColumn emailCol = new TableColumn("Email");
-        emailCol.setCellValueFactory(new PropertyValueFactory<Student, String>("studentEmail"));
+        reCastData();
 
-        table.getColumns().addAll(firstNameCol, lastNameCol, idCol, emailCol);
-
-        lAssignments = selectedCourse.getlAssignments();
-
-        iLAssignmentSize = lAssignments.size();
-
-        for(int i = 0; i < iLAssignmentSize; i++)
-        {
-            TableColumn assignmentColumn = new TableColumn(lAssignments.get(i).getAssignmentName());
-            //enableColumnEdit(assignmentColumn, cellFactory);
-            table.getColumns().add(assignmentColumn);
-        }
+        buildTable();
 
         populateTable();
 
@@ -95,14 +81,69 @@ public class GradeBookController{
         vbTerms.getChildren().addAll(tempVB);
     }
 
+    private void buildTable() {
+        TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("firstMIName"));
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("lastName"));
+        TableColumn idCol = new TableColumn("Student ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("studentID"));
+        TableColumn emailCol = new TableColumn("Email");
+        emailCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("studentEmail"));
+
+        table.getColumns().addAll(firstNameCol, lastNameCol, idCol, emailCol);
+
+        lAssignments = selectedCourse.getlAssignments();
+
+        iLAssignmentSize = lAssignments.size();
+
+        for(int i = 0; i < iLAssignmentSize; i++)
+        {
+            TableColumn assignmentColumn = new TableColumn(lAssignments.get(i).getAssignmentName());
+            assignmentColumn.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>(null));
+            //enableColumnEdit(assignmentColumn, cellFactory);
+            table.getColumns().add(assignmentColumn);
+        }
+    }
+
     private void populateTable() {
-        ObservableList<Student> data = FXCollections.observableArrayList(selectedCourse.getlStudents());
-        table.setItems(data);
+        ObservableList<StudentGradeBookData> data = FXCollections.observableArrayList(lGradeBookData);
         ObservableList<Grade> gradeData = FXCollections.observableArrayList(selectedCourse.getlGrades());
+        table.setItems(data);
+        //table.setItems(gradeData);
+
         //table.setItems(gradeData);
     }
 
     public void backClick(ActionEvent actionEvent) {
         sc.activate("Course");
+    }
+
+    public class StudentGradeBookData{
+        ArrayList<String> sStudentData;
+
+        StudentGradeBookData(Student student) {
+            sStudentData = new ArrayList<>();
+            sStudentData.add(student.getFirstMIName());
+            sStudentData.add(student.getLastName());
+            sStudentData.add(student.getStudentID());
+            sStudentData.add(student.getStudentEmail());
+
+            ArrayList<Grade> lGrades = student.getGrades();
+            int iSize = lGrades.size();
+
+            for(int i = 0; i< iSize; i++) {
+                sStudentData.add(String.valueOf(lGrades.get(i).getGrade()));
+            }
+        }
+    }
+
+    private void reCastData(){
+        ArrayList<Student> lStudents = selectedCourse.getlStudents();
+        int iSize = lStudents.size();
+
+        for(int i = 0; i< iSize; i++) {
+            lGradeBookData.add(new StudentGradeBookData(lStudents.get(i)));
+        }
     }
 }
