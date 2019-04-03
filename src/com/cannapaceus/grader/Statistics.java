@@ -1,6 +1,7 @@
 package com.cannapaceus.grader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Statistics {
 
@@ -52,11 +53,8 @@ public class Statistics {
 
     public void calculateMean(ArrayList<Grade> listOfGrades)
     {
-        float temp = 0;
-        float tempWeight = 0;
         float scoreSum = 0;
-        float fullScoresSum = 0;
-        float tempFullScore = 0;
+        int count = 0;
 
         ArrayList<Grade> validGrades = new ArrayList<>();
 
@@ -69,25 +67,10 @@ public class Statistics {
         }
 
         for (Grade g : validGrades) {
-            Category cat = g.getAssignmentReference().getCategoryCopy();
-
-            if (cat == null) {
-                tempWeight = 1.0f;
-            } else {
-                tempWeight = cat.getWeight();
-            }
-
-            tempFullScore = g.getAssignmentReference().getMaxScore();
-            temp = g.getGrade() * tempWeight;
-            scoreSum += temp;
-            fullScoresSum += tempFullScore * tempWeight;
+            scoreSum += g.getGrade();
+            ++count;
         }
-
-        if (fullScoresSum == 0) {
-            this.fMean = 0;
-        } else {
-            this.fMean = (scoreSum / fullScoresSum) * 100;
-        }
+        this.fMean = scoreSum / count;
     }
 
     public void calculateMedian(ArrayList<Grade> listOfGrades)
@@ -101,6 +84,8 @@ public class Statistics {
 
             validGrades.add(g);
         }
+
+        Collections.sort(validGrades, Grade.scoreComparator);
 
         if (validGrades.size() == 0) {
             this.fMedian = 0.0f;
@@ -157,14 +142,14 @@ public class Statistics {
             this.fStandardDev = 0;
         } else {
             float fCalculationValue = 0;
-            calculateMedian(validGrades);
+            calculateMean(validGrades);
             for (Grade gGrade : validGrades)
             {
                 float theGrade = gGrade.getGrade();
-                fCalculationValue += Math.multiplyExact((long)(theGrade - this.fMedian),(long)(theGrade - this.fMedian));
+                fCalculationValue += ((double)(theGrade - this.fMean)) * ((double)(theGrade - this.fMean));
             }
 
-            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/validGrades.size()));
+            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/(validGrades.size() - 1)));
             this.fStandardDev = fCalculationValue;
         }
     }

@@ -16,14 +16,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
+
+import java.util.Comparator;
 
 public class AssignmentController {
     ScreenController sc = null;
@@ -58,8 +60,14 @@ public class AssignmentController {
         md = Model.getInstance();
 
         selectedAssignment = md.getSelectedAssignment();
+        Statistics st = selectedAssignment.getStAssignmentStats();
 
         lblAssignmentName.setText(selectedAssignment.getAssignmentName());
+
+        lblMean.setText("Average: " + (Math.round(st.getMean() * 100.0) / 100.0));
+        lblMedian.setText("Median: " + (Math.round(st.getMedian() * 100.0) / 100.0));
+        lblMode.setText("Mode: " + (Math.round(st.getMode() * 100.0) / 100.0));
+        lblStandardDev.setText("Standard Deviation: " + (Math.round(st.getStandardDev() * 100.0) / 100.0));
 
         TreeTableColumn<Grade, String> studentNameColumn = new JFXTreeTableColumn<>("Student");
         studentNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, String> param) ->
@@ -67,62 +75,90 @@ public class AssignmentController {
                         ", " + param.getValue().getValue().getStudentReference().getFirstMIName()));
         studentNameColumn.setCellFactory((tc) -> {
             GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setFocusTraversable(false);
             c.setEditable(false);
             return c;
         });
+
+        studentNameColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return -o1.toUpperCase().compareTo(o2.toUpperCase());
+            }
+        });
+        studentNameColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Float> gradeFloatColumn = new JFXTreeTableColumn<>("Grade");
         gradeFloatColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Float> param) ->
                 param.getValue().getValue().getGradeProperty().asObject());
         gradeFloatColumn.setCellFactory((tc) -> {
             GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new DoubleTextFieldEditorBuilder());
+            c.setFocusTraversable(true);
             return c;
         });
+        gradeFloatColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, String> maxScoreColumn = new JFXTreeTableColumn<>("Out of");
         maxScoreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, String> param) ->
                 new ReadOnlyStringWrapper("" + param.getValue().getValue().getAssignmentReference().getMaxScore()));
         maxScoreColumn.setCellFactory((tc) -> {
             GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setFocusTraversable(false);
             c.setEditable(false);
             return c;
         });
+
+        maxScoreColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Float.compare(Float.valueOf(o1), Float.valueOf(o2));
+            }
+        });
+        maxScoreColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> overdueColumn = new JFXTreeTableColumn<>("Overdue");
         overdueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
                 param.getValue().getValue().getOverdueProperty());
         overdueColumn.setCellFactory((tc) -> {
             CheckBoxTreeTableCell c = new CheckBoxTreeTableCell<>();
+            c.setFocusTraversable(false);
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        overdueColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> missingColumn = new JFXTreeTableColumn<>("Missing");
         missingColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
                 param.getValue().getValue().getMissingProperty());
         missingColumn.setCellFactory((tc) -> {
             CheckBoxTreeTableCell c = new CheckBoxTreeTableCell<>();
+            c.setFocusTraversable(false);
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        missingColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> droppedColumn = new JFXTreeTableColumn<>("Dropped");
         droppedColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
                 param.getValue().getValue().getDroppedProperty());
         droppedColumn.setCellFactory((tc) -> {
             CheckBoxTreeTableCell c = new CheckBoxTreeTableCell<>();
+            c.setFocusTraversable(false);
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        droppedColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> submittedColumn = new JFXTreeTableColumn<>("Submitted");
         submittedColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
                 param.getValue().getValue().getSubmittedProperty());
         submittedColumn.setCellFactory((tc) -> {
             CheckBoxTreeTableCell c = new CheckBoxTreeTableCell<>();
+            c.setFocusTraversable(false);
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        submittedColumn.setContextMenu(null);
 
         gradeObservableList = FXCollections.observableArrayList(new Callback<Grade, Observable[]>() {
             @Override
@@ -153,6 +189,7 @@ public class AssignmentController {
 
         assignmentGradeTable.setRoot(root);
         assignmentGradeTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        assignmentGradeTable.setTableMenuButtonVisible(false);
         assignmentGradeTable.setShowRoot(false);
         assignmentGradeTable.setEditable(true);
         assignmentGradeTable.getColumns().setAll(studentNameColumn, gradeFloatColumn, maxScoreColumn, overdueColumn, missingColumn, droppedColumn, submittedColumn);
@@ -185,5 +222,9 @@ public class AssignmentController {
         lblMedian.setText("Median: " + (Math.round(st.getMedian() * 100.0) / 100.0));
         lblMode.setText("Mode: " + (Math.round(st.getMode() * 100.0) / 100.0));
         lblStandardDev.setText("Standard Deviation: " + (Math.round(st.getStandardDev() * 100.0) / 100.0));
+    }
+
+    private JFXTreeTableView getTableView() {
+        return assignmentGradeTable;
     }
 }
