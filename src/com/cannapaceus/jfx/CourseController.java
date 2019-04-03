@@ -33,6 +33,7 @@ public class CourseController {
     HashMap<String, Student> hmStudent;
     HashMap<String, Assignment> hmAssignment;
     HashMap<String, Category> hmCategory;
+    HashMap<String, Float> hmStatistics;
 
     @FXML
     private Label lblCourseName;
@@ -53,6 +54,9 @@ public class CourseController {
     private JFXButton expandAssignment;
 
     @FXML
+    private JFXButton expandStatistics;
+
+    @FXML
     private VBox vbCourse;
 
     @FXML
@@ -65,10 +69,16 @@ public class CourseController {
     private VBox vbCats;
 
     @FXML
+    private VBox vbStats;
+
+    @FXML
     private HBox hbStudents;
 
     @FXML
     private HBox hbAssignments;
+
+    @FXML
+    private HBox hbStatistics;
 
     @FXML
     private void initialize()
@@ -81,13 +91,16 @@ public class CourseController {
         hmStudent = new HashMap<>();
         hmAssignment = new HashMap<>();
         hmCategory = new HashMap<>();
+        hmStatistics = new HashMap<>();
 
         lblCourseName.setText(selectedCourse.getCourseName());
 
         hbStudents.setOnMouseClicked((event) -> expandStudent.fire());
+        hbStatistics.setOnMouseClicked((event) -> expandStatistics.fire());
         hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
 
         createStudentList();
+        createStatisticsList();
         createAssignmentList();
     }
 
@@ -351,6 +364,43 @@ public class CourseController {
         vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
     }
 
+    private void createStatisticsList() {
+        for (Student s : selectedCourse.getlStudents()) {
+            s.setAverageGrade(s.getGrades());
+        }
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        Statistics st = selectedCourse.getStatistics();
+
+        Separator tempSep = new Separator();
+
+        HBox tempHB = new HBox();
+        tempHB.setSpacing(10.0);
+        tempHB.setAlignment(Pos.CENTER);
+
+        Pane tempPane = new Pane();
+
+        Label meanLabel = new Label("Mean: " + String.format("%.1f", st.getMean()));
+        meanLabel.setAlignment(Pos.CENTER_LEFT);
+        Label medianLabel = new Label("Median: " + String.format("%.1f", st.getMedian()));
+        medianLabel.setAlignment(Pos.CENTER_LEFT);
+        Label modeLabel = new Label("Mode: " + String.format("%.1f", st.getMode()));
+        modeLabel.setAlignment(Pos.CENTER_LEFT);
+        Label stddevLabel = new Label("Standard Deviation: " + String.format("%.2f", st.getStandardDev()));
+        stddevLabel.setAlignment(Pos.CENTER_LEFT);
+
+        tempHB.getChildren().addAll(meanLabel, medianLabel, modeLabel, stddevLabel);
+        tempHB.setHgrow(tempPane, Priority.ALWAYS);
+
+        tempHB.setId("" + st.getDBID());
+        hmStatistics.put("" + st.getDBID(), st.getMean());
+        hmStatistics.put("" + st.getDBID(), st.getMedian());
+        hmStatistics.put("" + st.getDBID(), st.getMode());
+        hmStatistics.put("" + st.getDBID(), st.getStandardDev());
+
+        vbStats.getChildren().addAll(tempSep, tempHB);
+    }
+
     @FXML
     private void expand(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
@@ -371,6 +421,10 @@ public class CourseController {
                 btnAddCategory.setVisible(true);
                 btnAddCategory.setManaged(true);
                 hbTemp = hbAssignments;
+                break;
+            case "expandStatistics":
+                s = "collapseStatistics";
+                hbTemp = hbStatistics;
                 break;
         }
 
@@ -426,6 +480,10 @@ public class CourseController {
                 btnAddCategory.setVisible(false);
                 btnAddCategory.setManaged(false);
                 hbTemp = hbAssignments;
+                break;
+            case "collapseStatistics":
+                s = "expandStatistics";
+                hbTemp = hbStatistics;
                 break;
         }
 

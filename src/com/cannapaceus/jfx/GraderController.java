@@ -5,6 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 public class GraderController {
     ScreenController sc = null;
     Model md = null;
@@ -55,7 +59,8 @@ public class GraderController {
         }
     }
 
-    public void helpClick(ActionEvent event) {
-
+    public void helpClick(ActionEvent event) throws IOException {
+        File file = new File("res/help.html");
+        Desktop.getDesktop().browse(file.toURI());
     }
 }

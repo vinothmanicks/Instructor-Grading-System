@@ -1332,8 +1332,8 @@ public class DBService {
                     while(rs.next()) {
 
                         //Set the grade's student and assignment to the appropriate student and assignment in the course's list
-                        long tempStuID = rs.getLong(7);
-                        long tempAssignID = rs.getLong(8);
+                        long tempStuID = rs.getLong(8);
+                        long tempAssignID = rs.getLong(7);
 
                         Student tempStu = null;
                         Assignment tempAssign = null;
