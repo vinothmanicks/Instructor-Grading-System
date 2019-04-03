@@ -12,6 +12,7 @@ import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -75,6 +76,15 @@ public class StudentController {
                 param.getValue().getValue().getGradeProperty().asObject());
         gradeFloatColumn.setCellFactory((tc) -> {
             GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new DoubleTextFieldEditorBuilder());
+            return c;
+        });
+
+        TreeTableColumn<Grade, String> maxScoreColumn = new JFXTreeTableColumn<>("Out of");
+        maxScoreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, String> param) ->
+                new ReadOnlyStringWrapper("" + param.getValue().getValue().getAssignmentReference().getMaxScore()));
+        maxScoreColumn.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setEditable(false);
             return c;
         });
 
@@ -145,7 +155,7 @@ public class StudentController {
         studentGradeTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
         studentGradeTable.setShowRoot(false);
         studentGradeTable.setEditable(true);
-        studentGradeTable.getColumns().setAll(assignmentNameColumn, gradeFloatColumn, overdueColumn, missingColumn, droppedColumn, submittedColumn);
+        studentGradeTable.getColumns().setAll(assignmentNameColumn, gradeFloatColumn, maxScoreColumn, overdueColumn, missingColumn, droppedColumn, submittedColumn);
     }
 
     public void backClick(ActionEvent actionEvent) {

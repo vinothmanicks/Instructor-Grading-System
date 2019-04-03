@@ -70,7 +70,7 @@ public class TermFormController {
             md.addUpdatedObject(selectedTerm);
         }
 
-        Collections.sort(md.getTerms());
+        Collections.sort(md.getTerms(), Term.termComparator);
 
         try {
             sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));

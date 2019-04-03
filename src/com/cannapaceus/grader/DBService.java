@@ -1161,7 +1161,7 @@ public class DBService {
                         }
                     }
 
-                    Collections.sort(temp.getCourses());
+                    Collections.sort(temp.getCourses(), Course.nameComparator);
 
                     retValue.add(temp);
                 }
@@ -1191,7 +1191,7 @@ public class DBService {
             }
         }
 
-        Collections.sort(retValue);
+        Collections.sort(retValue, Term.termComparator);
 
         return retValue;
     }
@@ -1370,6 +1370,23 @@ public class DBService {
                         tempAssign.addGrade(temp);
                         retValue.addGrade(temp);
                     }
+                }
+
+                Collections.sort(retValue.getlCategories(), Category.nameComparator);
+                Collections.sort(retValue.getlAssignments(), Assignment.nameComparator);
+                Collections.sort(retValue.getlStudents(), Student.nameComparator);
+                Collections.sort(retValue.getlGrades(), Grade.nameComparator);
+
+                for (Category cat : retValue.getlCategories()) {
+                    Collections.sort(cat.getAssignments(), Assignment.nameComparator);
+                }
+
+                for (Assignment a : retValue.getlAssignments()) {
+                    Collections.sort(a.getGrades(), Grade.nameComparator);
+                }
+
+                for (Student s : retValue.getlStudents()) {
+                    Collections.sort(s.getGrades(), Grade.nameComparator);
                 }
             }
 

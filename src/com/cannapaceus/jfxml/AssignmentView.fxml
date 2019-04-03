@@ -8,6 +8,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.AssignmentController"
@@ -22,6 +23,11 @@
                     AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-background-color: white;
+                -fx-padding: 10, 10, 10, 10;
+            </style>
 
             <VBox fx:id="vbAssignment"
                   fillWidth="true"
@@ -47,6 +53,18 @@
                         </JFXButton>
                         <Label fx:id="lblAssignmentName"/>
                     </HBox>
+                    <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <Label fx:id="lblMean"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblMedian"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblMode"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblStandardDev"/>
+                    </HBox>
+                    <JFXTreeTableView fx:id="assignmentGradeTable">
+
+                    </JFXTreeTableView>
                 </children>
             </VBox>
         </ScrollPane>

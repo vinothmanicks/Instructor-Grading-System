@@ -6,7 +6,9 @@ import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
-public class Grade extends RecursiveTreeObject<Grade> implements Comparable<Grade> {
+import java.util.Comparator;
+
+public class Grade extends RecursiveTreeObject<Grade> {
 
     //Long to hold the ID of the grade from the database
     private long lDBID = 0;
@@ -215,6 +217,25 @@ public class Grade extends RecursiveTreeObject<Grade> implements Comparable<Grad
 
         return this.getAssignmentCopy().compareTo(g.getAssignmentCopy());
     }
+
+    public static Comparator<Grade> nameComparator = new Comparator<Grade>() {
+        @Override
+        public int compare(Grade g1, Grade g2) {
+            int stuComp = Student.nameComparator.compare(g1.getStudentReference(), g2.getStudentReference());
+            if (stuComp != 0) {
+                return stuComp;
+            }
+
+            return Assignment.nameComparator.compare(g1.getAssignmentReference(), g2.getAssignmentReference());
+        }
+    };
+
+    public static Comparator<Grade> scoreComparator = new Comparator<Grade>() {
+        @Override
+        public int compare(Grade g1, Grade g2) {
+            return Float.compare(g1.getGrade(), g2.getGrade());
+        }
+    };
 
 
     //Potential functions if we need to get references

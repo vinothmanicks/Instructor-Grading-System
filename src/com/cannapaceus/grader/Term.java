@@ -1,8 +1,9 @@
 package com.cannapaceus.grader;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Term implements Comparable<Term> {
+public class Term {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
@@ -95,4 +96,15 @@ public class Term implements Comparable<Term> {
 
         return Integer.compare(this.getYear(), t.getYear());
     }
+
+    public static Comparator<Term> termComparator = new Comparator<Term>() {
+        @Override
+        public int compare(Term t1, Term t2) {
+            if (t1.getYear() == t2.getYear()) {
+                return Integer.compare(t1.getSeason().getInt(), t2.getSeason().getInt());
+            }
+
+            return Integer.compare(t1.getYear(), t2.getYear());
+        }
+    };
 }

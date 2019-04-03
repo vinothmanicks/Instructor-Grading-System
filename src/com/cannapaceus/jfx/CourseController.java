@@ -507,7 +507,7 @@ public class CourseController {
 
     @FXML
     private void addCategory(ActionEvent event) {
-        Category c = new Category("",0);
+        Category c = new Category("",1.0f);
 
         md.addCategory(c);
         md.setSelectedCategory(c);

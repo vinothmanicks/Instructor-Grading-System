@@ -56,36 +56,19 @@ public class AssignmentFormController {
             selectedAssignment.setWeight(Integer.valueOf(tfCustomWeight.getText()));
         selectedAssignment.setDueDate(dpDueDate.getValue());
         selectedAssignment.setAssignedDate(dpAssignedDate.getValue());
-        //TODO: Required to save to database
         selectedAssignment.setCategory(md.getSelectedCategory());
-
-        if (cat != null) {
-            cat.addAssignment(selectedAssignment);
-        }
 
         md.setSelectedCategory(null);
         md.setSelectedAssignment(null);
 
         if (selectedAssignment.getDBID() == 0 && !md.getNewObjects().contains(selectedAssignment)) {
             md.addNewObject(selectedAssignment);
-
-            Course c = md.getSelectedCourse();
-
-            for (Student s : md.getSelectedCourse().getlStudents()) {
-                Grade g = new Grade(0.0f, s, selectedAssignment);
-
-                selectedAssignment.addGrade(g);
-                s.addGrade(g);
-                c.addGrade(g);
-
-                md.addNewObject(g);
+            for (Grade g : selectedAssignment.getGrades()) {
+                if (!md.getNewObjects().contains(g))
+                    md.addNewObject(g);
             }
         } else {
             md.addUpdatedObject(selectedAssignment);
-            for (Grade g : selectedAssignment.getGrades()) {
-                if (!md.getUpdatedObjects().contains(g))
-                    md.addUpdatedObject(g);
-            }
         }
 
         try {
