@@ -209,6 +209,11 @@ public class Course implements Comparable<Course> {
 
     public ArrayList<Grade> getlScaledGrades(){return lScaledGrades;}
 
+    public Statistics getStatistics() {
+        Statistics statsCopy = this.stCourseStats;
+        return statsCopy;
+    }
+
     // Set functions
     /**
      * Setter for the course's ID from the database

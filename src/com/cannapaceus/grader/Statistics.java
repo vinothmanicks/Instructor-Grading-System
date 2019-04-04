@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Statistics {
 
+    //Long to hold the ID of the statistics collection from the database
+    private long lDBID = 0;
+
     private static int counter = 0;
     private float fMean;
     private float fMedian;
@@ -42,6 +45,14 @@ public class Statistics {
         return this.fStandardDev;
     }
 
+    /**
+     * Getter for a copy of the assignment's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
+    }
+
     public void setMean(Float newMean) { this.fMean = newMean; }
 
     public void setMedian(float newMedian) { this.fMedian = newMedian; }
@@ -49,6 +60,14 @@ public class Statistics {
     public void setMode(float newMode) { this.fMode = newMode; }
 
     public void setStandardDev(float newStandardDev) { this.fStandardDev = newStandardDev; }
+
+    /**
+     * Setter for the assignment's ID from the database
+     * @param lDBID ID of the assignment from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
 
     public void calculateMean(ArrayList<Grade> listOfGrades)
     {
