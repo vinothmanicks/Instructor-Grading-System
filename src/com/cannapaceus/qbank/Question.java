@@ -16,10 +16,12 @@ public class Question {
     private eQuestionAssignmentType qatQuestionAssignmentType;
     private eQuestionLevel qlQuestionLevel;
     private float fToDoTime;
+    private float fScore;
 
-    public Question(String sQuestion, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
+    public Question(String sQuestion, float fScore, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
     {
         this.sQuestion = sQuestion;
+        this.fScore = fScore;
         this.lAnswers = new ArrayList<>(lAnswers);
         this.sCourseName = sCourseName;
         this.qtQuestionType = qtQuestionType;
@@ -31,6 +33,7 @@ public class Question {
     public Question(Question queQuestion)
     {
         this.sQuestion = queQuestion.getQuestion();
+        this.fScore = queQuestion.getScore();
         this.lAnswers = queQuestion.getAnswers();
         this.sCourseName = queQuestion.getCourse();
         this.qtQuestionType = queQuestion.getQuestionType();
@@ -39,9 +42,10 @@ public class Question {
         this.fToDoTime = queQuestion.getToDoTime();
     }
 
-    public void editQuestion(String sQuestion, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
+    public void editQuestion(String sQuestion, float fScore, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
     {
         this.sQuestion = sQuestion;
+        this.fScore = fScore;
         this.lAnswers = new ArrayList<>(lAnswers);
         this.sCourseName = new String(sCourseName);
         this.qtQuestionType = qtQuestionType;
@@ -80,6 +84,8 @@ public class Question {
     {
         return new String(this.sQuestion);
     }
+
+    public float getScore() { return this.fScore; }
 
     public eQuestionType getQuestionType()
     {

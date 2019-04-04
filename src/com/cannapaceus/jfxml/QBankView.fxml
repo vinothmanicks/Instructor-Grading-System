@@ -52,8 +52,6 @@
                             </style>
                         </JFXButton>
                     </HBox>
-
-
                     <VBox fx:id="vbTerms"
                           spacing="10">
                     </VBox>
@@ -81,7 +79,7 @@
                     </style>
                 </JFXButton>
                 <Separator orientation="VERTICAL"/>
-                <JFXButton buttonType="FLAT" text="Add Question" > <!--onAction="#openGradeBook"-->
+                <JFXButton buttonType="FLAT" text="Add Question" onAction="#addQuestion"> <!--onAction="#openGradeBook"-->
                     <graphic>
                         <FontAwesomeIconView glyphName="PLUS" glyphSize="17" glyphStyle="-fx-fill: white;"/>
                     </graphic>

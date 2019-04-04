@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -72,5 +73,14 @@ public class QBankController {
         table.setItems(data);
         ObservableList<Grade> gradeData = FXCollections.observableArrayList(selectedCourse.getlGrades());
         //table.setItems(gradeData);*/
+    }
+
+    public void addQuestion(ActionEvent event) {
+        try {
+            sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("../jfxml/QBankAddQuestionView.fxml")));
+            sc.activate("AddQuestion");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

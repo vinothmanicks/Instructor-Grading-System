@@ -41,7 +41,7 @@ public class GradeBookController{
     ArrayList<Assignment> lAssignments;
     int iLAssignmentSize;
 
-    ArrayList<StudentGradeBookData> lGradeBookData;
+    ObservableList<StudentGradeBookData> lGradeBookData;
 
     private TableView table = new TableView();
 
@@ -60,7 +60,7 @@ public class GradeBookController{
 
         lblGradeBookName.setText(selectedCourse.getCourseName() + " Grade Book");
 
-        lGradeBookData = new ArrayList<>();
+        lGradeBookData = FXCollections.observableArrayList();
 
         createTable();
     }
@@ -120,10 +120,10 @@ public class GradeBookController{
     }
 
     public class StudentGradeBookData{
-        ArrayList<String> sStudentData;
+        ObservableList<String> sStudentData;
 
         StudentGradeBookData(Student student) {
-            sStudentData = new ArrayList<>();
+            sStudentData = FXCollections.observableArrayList();
             sStudentData.add(student.getFirstMIName());
             sStudentData.add(student.getLastName());
             sStudentData.add(student.getStudentID());
