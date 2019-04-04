@@ -2,9 +2,10 @@ package com.cannapaceus.grader;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Student implements Comparable<Student>{
+public class Student{
 
     //Long to hold the ID of the student from the database
     private long lDBID = 0;
@@ -103,26 +104,34 @@ public class Student implements Comparable<Student>{
 
     public void setAverageGrade(ArrayList<Grade> lGrades) {
         float temp = 0;
-        float tempWeight;
-        float average = 0;
-        float totalWeight = 0;
+        float tempWeight = 0;
+        float scoreSum = 0;
+        float fullScoresSum = 0;
+        float tempFullScore = 0;
 
         for (Grade g : lGrades) {
             if (!g.getSubmitted() || g.getDropped()) {
                 continue;
             }
 
-            tempWeight = g.getAssignmentReference().getWeight();
+            Category cat = g.getAssignmentReference().getCategoryCopy();
+
+            if (cat == null) {
+                tempWeight = 1.0f;
+            } else {
+                tempWeight = cat.getWeight();
+            }
+
+            tempFullScore = g.getAssignmentReference().getMaxScore();
             temp = g.getGrade() * tempWeight;
-            average += temp;
-            totalWeight += tempWeight;
+            scoreSum += temp;
+            fullScoresSum += tempFullScore * tempWeight;
         }
 
-        if (totalWeight == 0.0) {
+        if (fullScoresSum == 0) {
             this.fAverageGrade = 0;
         } else {
-            average = average / totalWeight;
-            this.fAverageGrade = average;
+            this.fAverageGrade = (scoreSum / fullScoresSum) * 100;
         }
     }
 
@@ -173,6 +182,17 @@ public class Student implements Comparable<Student>{
     public int compareTo(Student anotherStudent) {
         return this.getLastName().compareToIgnoreCase(anotherStudent.getLastName());
     }
+
+    public static Comparator<Student> nameComparator = new Comparator<Student>() {
+        @Override
+        public int compare(Student s1, Student s2) {
+            int cmp = s1.getLastName().toUpperCase().compareTo(s2.getLastName().toUpperCase());
+            if (cmp == 0)
+                return s1.getFirstMIName().toUpperCase().compareTo(s2.getFirstMIName().toUpperCase());
+            else
+                return cmp;
+        }
+    };
 
     /**
      * Function to generate a report for a student based on their course grades provided assignments have been assigned.

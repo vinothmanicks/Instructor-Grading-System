@@ -76,7 +76,7 @@ public class CourseFormController {
             md.addUpdatedObject(selectedCourse);
         }
 
-        Collections.sort(md.getSelectedTerm().getCourses());
+        Collections.sort(md.getSelectedTerm().getCourses(), Course.nameComparator);
 
         try {
             sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));

@@ -2,8 +2,9 @@ package com.cannapaceus.grader;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
-public class Course implements Comparable<Course> {
+public class Course {
 
     //Long to hold the course's ID from the database
     private long lDBID = 0;
@@ -41,7 +42,7 @@ public class Course implements Comparable<Course> {
     public void addStudent(Student newStudent) { // Add a student to a course
         new Student(newStudent);
         this.lStudents.add(newStudent);
-        Collections.sort(this.lStudents);
+        Collections.sort(this.lStudents, Student.nameComparator);
     }
 
     public void addAssignment(Assignment newAssignment) { // Add an assignment to a course
@@ -249,4 +250,11 @@ public class Course implements Comparable<Course> {
     public int compareTo(Course c) {
         return this.getCourseName().compareTo(c.getCourseName());
     }
+
+    public static Comparator<Course> nameComparator = new Comparator<Course>() {
+        @Override
+        public int compare(Course c1, Course c2) {
+            return c1.getCourseName().toUpperCase().compareTo(c2.getCourseName().toUpperCase());
+        }
+    };
 }

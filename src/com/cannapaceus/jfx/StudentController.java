@@ -12,6 +12,7 @@ import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -32,6 +33,7 @@ import javax.swing.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class StudentController {
     ScreenController sc = null;
@@ -70,6 +72,14 @@ public class StudentController {
             return c;
         });
 
+        assignmentNameColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return -o1.toUpperCase().compareTo(o2.toUpperCase());
+            }
+        });
+        assignmentNameColumn.setContextMenu(null);
+
         TreeTableColumn<Grade, Float> gradeFloatColumn = new JFXTreeTableColumn<>("Grade");
         gradeFloatColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Float> param) ->
                 param.getValue().getValue().getGradeProperty().asObject());
@@ -77,6 +87,24 @@ public class StudentController {
             GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new DoubleTextFieldEditorBuilder());
             return c;
         });
+        gradeFloatColumn.setContextMenu(null);
+
+        TreeTableColumn<Grade, String> maxScoreColumn = new JFXTreeTableColumn<>("Out of");
+        maxScoreColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, String> param) ->
+                new ReadOnlyStringWrapper("" + param.getValue().getValue().getAssignmentReference().getMaxScore()));
+        maxScoreColumn.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setEditable(false);
+            return c;
+        });
+
+        maxScoreColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Float.compare(Float.valueOf(o1), Float.valueOf(o2));
+            }
+        });
+        maxScoreColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> overdueColumn = new JFXTreeTableColumn<>("Overdue");
         overdueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
@@ -86,6 +114,7 @@ public class StudentController {
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        overdueColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> missingColumn = new JFXTreeTableColumn<>("Missing");
         missingColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
@@ -95,6 +124,7 @@ public class StudentController {
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        missingColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> droppedColumn = new JFXTreeTableColumn<>("Dropped");
         droppedColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
@@ -104,6 +134,7 @@ public class StudentController {
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        droppedColumn.setContextMenu(null);
 
         TreeTableColumn<Grade, Boolean> submittedColumn = new JFXTreeTableColumn<>("Submitted");
         submittedColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Grade, Boolean> param) ->
@@ -113,6 +144,7 @@ public class StudentController {
             c.setAlignment(Pos.CENTER);
             return c;
         });
+        submittedColumn.setContextMenu(null);
 
         gradeObservableList = FXCollections.observableArrayList(new Callback<Grade, Observable[]>() {
             @Override
@@ -143,9 +175,10 @@ public class StudentController {
 
         studentGradeTable.setRoot(root);
         studentGradeTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        studentGradeTable.setTableMenuButtonVisible(false);
         studentGradeTable.setShowRoot(false);
         studentGradeTable.setEditable(true);
-        studentGradeTable.getColumns().setAll(assignmentNameColumn, gradeFloatColumn, overdueColumn, missingColumn, droppedColumn, submittedColumn);
+        studentGradeTable.getColumns().setAll(assignmentNameColumn, gradeFloatColumn, maxScoreColumn, overdueColumn, missingColumn, droppedColumn, submittedColumn);
     }
 
     public void backClick(ActionEvent actionEvent) {

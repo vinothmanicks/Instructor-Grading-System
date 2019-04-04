@@ -142,6 +142,8 @@ public class CourseController {
     }
 
     private void createStudentList() {
+        int numStu = 0;
+
         for (Student s : selectedCourse.getlStudents()) {
             Separator tempSep = new Separator();
 
@@ -176,8 +178,10 @@ public class CourseController {
 
             tempHB.setOnMouseClicked((event -> studentClick(event)));
 
-            tempHB.setId("" + s.getDBID());
-            hmStudent.put("" + s.getDBID(), s);
+            tempHB.setId("" + numStu);
+            hmStudent.put("" + numStu, s);
+
+            ++numStu;
 
             vbStudents.getChildren().addAll(tempSep, tempHB);
         }
@@ -185,6 +189,7 @@ public class CourseController {
 
     private void createAssignmentList() {
         int numCat = 0;
+        int numAssign = 0;
 
         for (Category cat : selectedCourse.getlCategories()) {
             Separator tempSep;
@@ -270,8 +275,10 @@ public class CourseController {
 
                 tempHB.setOnMouseClicked((event -> assignmentClick(event)));
 
-                tempHB.setId("" + a.getDBID());
-                hmAssignment.put("" + a.getDBID(), a);
+                tempHB.setId("" + numAssign);
+                hmAssignment.put("" + numAssign, a);
+
+                ++numAssign;
 
                 tempSep = new Separator();
 
@@ -296,10 +303,11 @@ public class CourseController {
 
             tempSep = new Separator();
 
-            ++numCat;
-
             catAssignmentVB.setId("" + numCat);
+            catHB.setId("" + numCat);
             hmCategory.put("" + numCat, cat);
+
+            ++numCat;
 
             vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
         }
@@ -585,7 +593,7 @@ public class CourseController {
 
     @FXML
     private void addCategory(ActionEvent event) {
-        Category c = new Category("",0);
+        Category c = new Category("",1.0f);
 
         md.addCategory(c);
         md.setSelectedCategory(c);
@@ -623,9 +631,9 @@ public class CourseController {
 
         Assignment a = new Assignment("",lo,lo,false,100,cat,0);
 
-        md.addAssignment(a);
         md.setSelectedCategory(cat);
         md.setSelectedAssignment(a);
+        md.addAssignment(a);
 
         try {
             sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));
@@ -637,19 +645,15 @@ public class CourseController {
 
     public void commitClick(ActionEvent e) {
         md.commitChanges();
-
-        vbStudents.getChildren().clear();
-        hmStudent.clear();
-
-        vbAssignments.getChildren().clear();
-        hmAssignment.clear();
-
-        initialize();
+        reloadView();
     }
 
     public void revertClick(ActionEvent e) {
         md.revertChanges();
+        reloadView();
+    }
 
+    private void reloadView() {
         vbStudents.getChildren().clear();
         hmStudent.clear();
 

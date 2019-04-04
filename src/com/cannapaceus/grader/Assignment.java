@@ -2,8 +2,9 @@ package com.cannapaceus.grader;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Assignment implements Comparable<Assignment> {
+public class Assignment {
 
     //Long to hold the ID of the assignment from the database
     private long lDBID = 0;
@@ -264,4 +265,11 @@ public class Assignment implements Comparable<Assignment> {
     public int compareTo(Assignment a) {
         return this.getAssignmentName().compareTo(a.getAssignmentName());
     }
+
+    public static Comparator<Assignment> nameComparator = new Comparator<Assignment>() {
+        @Override
+        public int compare(Assignment a1, Assignment a2) {
+            return a1.getAssignmentName().toUpperCase().compareTo(a2.getAssignmentName().toUpperCase());
+        }
+    };
 }

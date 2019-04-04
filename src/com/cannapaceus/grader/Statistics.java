@@ -1,6 +1,7 @@
 package com.cannapaceus.grader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Statistics {
 
@@ -71,28 +72,45 @@ public class Statistics {
 
     public void calculateMean(ArrayList<Grade> listOfGrades)
     {
-        if (listOfGrades.size() == 0) {
-            this.fMean = 0.0f;
-        } else {
-            float sumTemp = 0;
-            for (Grade gGrade:listOfGrades)
-            {
-                sumTemp += gGrade.getGrade();
+        float scoreSum = 0;
+        int count = 0;
+
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
             }
 
-            sumTemp = (sumTemp/listOfGrades.size());
-
-            this.fMean = sumTemp;
+            validGrades.add(g);
         }
+
+        for (Grade g : validGrades) {
+            scoreSum += g.getGrade();
+            ++count;
+        }
+        this.fMean = scoreSum / count;
     }
 
     public void calculateMedian(ArrayList<Grade> listOfGrades)
     {
-        if (listOfGrades.size() == 0) {
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            validGrades.add(g);
+        }
+
+        Collections.sort(validGrades, Grade.scoreComparator);
+
+        if (validGrades.size() == 0) {
             this.fMedian = 0.0f;
         } else {
-            int medianMarker = Math.round(listOfGrades.size()/2.0f) - 1;
-            this.fMedian = listOfGrades.get(medianMarker).getGrade();
+            int medianMarker = Math.round(validGrades.size()/2.0f - 1);
+            this.fMedian = validGrades.get(medianMarker).getGrade();
         }
     }
 
@@ -101,14 +119,26 @@ public class Statistics {
         float maxValue = 0;
         int maxCount = 0;
 
-        for (int i = 0; i < listOfGrades.size(); ++i) {
-            int count = 0;
-            for (int j = 0; j < listOfGrades.size(); ++j) {
-                if (listOfGrades.get(j).getGrade() == listOfGrades.get(i).getGrade() ) ++count;
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
             }
+
+            validGrades.add(g);
+        }
+
+        for (Grade g : validGrades) {
+            int count = 0;
+
+            for (Grade h : validGrades) {
+                if (h.getGrade() == g.getGrade() ) ++count;
+            }
+
             if (count > maxCount) {
                 maxCount = count;
-                maxValue = listOfGrades.get(i).getGrade();
+                maxValue = g.getGrade();
             }
         }
 
@@ -117,18 +147,28 @@ public class Statistics {
 
     public void calculateStandardDev(ArrayList<Grade> listOfGrades)
     {
-        if (listOfGrades.size() == 0) {
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            validGrades.add(g);
+        }
+
+        if (validGrades.size() == 0) {
             this.fStandardDev = 0;
         } else {
             float fCalculationValue = 0;
-            calculateMedian(listOfGrades);
-            for (Grade gGrade:listOfGrades)
+            calculateMean(validGrades);
+            for (Grade gGrade : validGrades)
             {
                 float theGrade = gGrade.getGrade();
-                fCalculationValue += Math.multiplyExact((long)(theGrade - this.fMedian),(long)(theGrade - this.fMedian));
+                fCalculationValue += ((double)(theGrade - this.fMean)) * ((double)(theGrade - this.fMean));
             }
 
-            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/listOfGrades.size()));
+            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/(validGrades.size() - 1)));
             this.fStandardDev = fCalculationValue;
         }
     }

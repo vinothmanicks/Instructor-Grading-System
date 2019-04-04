@@ -24,6 +24,11 @@
                     AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0">
 
+            <style>
+                -fx-background-color: white;
+                -fx-padding: 10, 10, 10, 10;
+            </style>
+
             <VBox fx:id="vbStudent"
                   fillWidth="true"
                   spacing="10"
