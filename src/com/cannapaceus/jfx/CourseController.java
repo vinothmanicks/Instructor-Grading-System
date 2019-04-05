@@ -103,7 +103,9 @@ public class CourseController {
         hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
 
         createStudentList();
-        createStatisticsList();
+        if (!selectedCourse.getlStudents().isEmpty()) {
+            createStatisticsList();
+        }
         createAssignmentList();
     }
 
@@ -659,6 +661,9 @@ public class CourseController {
 
         vbAssignments.getChildren().clear();
         hmAssignment.clear();
+
+        vbStats.getChildren().clear();
+        hmStatistics.clear();
 
         initialize();
     }
