@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import com.cannapaceus.services.EmailService;
 import java.util.Collections;
 
 public class StudentFormController {
@@ -38,6 +38,11 @@ public class StudentFormController {
         sc = ScreenController.getInstance();
 
         selectedStudent = md.getSelectedStudent();
+
+        tfStudentFMName.setText(selectedStudent.getFirstMIName());
+        tfStudentLName.setText(selectedStudent.getLastName());
+        tfStudentID.setText(selectedStudent.getStudentID());
+        tfStudentEmail.setText(selectedStudent.getStudentEmail());
     }
 
 
@@ -85,18 +90,23 @@ public class StudentFormController {
     }
 
     private boolean formValidate() {
+        boolean isAllValid = true;
         if (!tfStudentFMName.validate())
-            return false;
+            isAllValid = false;
 
         if (!tfStudentLName.validate())
-            return false;
+            isAllValid = false;
 
         if(!tfStudentID.validate())
-            return false;
+            isAllValid = false;
 
-        if(!tfStudentEmail.validate())
-            return false;
+        if(!tfStudentEmail.validate()) {
+            isAllValid = false;
+        }
 
-        return true;
+        if(!EmailService.checkEmail(tfStudentEmail.getText()))
+            isAllValid = false;
+
+        return isAllValid;
     }
 }

@@ -8,6 +8,8 @@ import com.cannapaceus.grader.*;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -29,6 +31,8 @@ public class EmailService {
     // String to store SMTP server name;
     private String sHost;
 
+    private String sMessageText = "";
+
     // Variable to store session
     Session session;
     // Variable to store session properties
@@ -45,6 +49,7 @@ public class EmailService {
         this.sPassword = sPassword;
 
         this.sFromAddress = sFromAddress;
+
         sHost = "smtp.gmail.com";
 
         props = new Properties();
@@ -82,6 +87,8 @@ public class EmailService {
         this.sPassword = sPassword;
     }
 
+    public void setsMessageText(String sMessageText){this.sMessageText = sMessageText; }
+
     // Methods
 
     /**
@@ -108,7 +115,7 @@ public class EmailService {
                 BodyPart messageBodyPart = new MimeBodyPart();
 
                 // Now set the actual message
-                messageBodyPart.setText("Find your grade attached.\n Thanks,\nYour Prof");
+                messageBodyPart.setText(sMessageText);
 
                 // Create a multipart message
                 Multipart multipart = new MimeMultipart();
@@ -117,15 +124,16 @@ public class EmailService {
                 multipart.addBodyPart(messageBodyPart);
 
                 // Part two is attachment
-                messageBodyPart = new MimeBodyPart();
+                /*messageBodyPart = new MimeBodyPart();
                 String filename = "C:\\Users\\vinot\\Desktop\\TrialDocument.pdf";
                 DataSource source = new FileDataSource(filename);
                 messageBodyPart.setDataHandler(new DataHandler(source));
                 messageBodyPart.setFileName(filename);
                 multipart.addBodyPart(messageBodyPart);
 
-                // Send the complete message parts
+                // Send the complete message parts*/
                 message.setContent(multipart);
+
 
                 // Send message
                 Transport.send(message);
@@ -137,5 +145,15 @@ public class EmailService {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static boolean checkEmail(String email) {
+        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+        Matcher mat = pattern.matcher(email);
+
+        if (mat.matches()) {
+           return true;
+        }
+        return false;
     }
 }
