@@ -42,6 +42,14 @@ public class Model {
     }
 
     public ArrayList<Term> getTerms() {
+        Collections.sort(lCurrentModel, Term.termComparator);
+        for (Term t : lCurrentModel) {
+            Collections.sort(t.getCourses(), Course.nameComparator);
+            for (Course c : t.getCourses()) {
+                Collections.sort(c.getlCategories(), Category.nameComparator);
+            }
+        }
+
         return lCurrentModel;
     }
 
@@ -62,7 +70,7 @@ public class Model {
     }
 
     public void addUpdatedObject(Object o) {
-        if (!newObjects.contains(o))
+        if (!newObjects.contains(o) && !updatedObjects.contains(o))
             updatedObjects.add(o);
     }
 
@@ -92,36 +100,63 @@ public class Model {
 
     public void addTerm(Term t) {
         lCurrentModel.add(t);
-        Collections.sort(lCurrentModel);
+        Collections.sort(lCurrentModel, Term.termComparator);
     }
 
     public void addCourse(Course c) {
         selectedTerm.addCourse(c);
-        Collections.sort(selectedTerm.getCourses());
+        Collections.sort(selectedTerm.getCourses(), Course.nameComparator);
     }
 
     public void addStudent(Student s) {
+        Grade g = null;
         selectedCourse.addStudent(s);
-        Collections.sort(selectedCourse.getlStudents());
+
+        for (Assignment a : selectedCourse.getlAssignments()) {
+            g = new Grade(0.0f, s, a);
+            s.addGrade(g);
+            a.addGrade(g);
+            selectedCourse.addGrade(g);
+            Collections.sort(a.getGrades(), Grade.nameComparator);
+        }
+
+        Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+        Collections.sort(selectedCourse.getlGrades(), Grade.nameComparator);
+        Collections.sort(s.getGrades(), Grade.nameComparator);
     }
 
     public void addCategory(Category cat) {
         selectedCourse.addCategory(cat);
-        Collections.sort(selectedCourse.getlCategories());
+        Collections.sort(selectedCourse.getlCategories(), Category.nameComparator);
     }
 
     public void addAssignment(Assignment a) {
+        Grade g = null;
         selectedCourse.addAssignment(a);
-        Collections.sort(selectedCourse.getlAssignments());
+        if (selectedCategory != null) {
+            selectedCategory.addAssignment(a);
+        }
+
+        for (Student s : selectedCourse.getlStudents()) {
+            g = new Grade(0.0f, s, a);
+            s.addGrade(g);
+            a.addGrade(g);
+            selectedCourse.addGrade(g);
+            Collections.sort(s.getGrades(), Grade.nameComparator);
+        }
+
+        Collections.sort(selectedCourse.getlAssignments(), Assignment.nameComparator);
+        Collections.sort(selectedCourse.getlGrades(), Grade.nameComparator);
+        Collections.sort(a.getGrades(), Grade.nameComparator);
     }
 
     public void addGrade(Grade g) {
         selectedCourse.addGrade(g);
         selectedStudent.addGrade(g);
         selectedAssignment.addGrade(g);
-        Collections.sort(selectedCourse.getlGrades());
-        Collections.sort(selectedStudent.getGrades());
-        Collections.sort(selectedAssignment.getGrades());
+        Collections.sort(selectedCourse.getlGrades(), Grade.nameComparator);
+        Collections.sort(selectedStudent.getGrades(), Grade.nameComparator);
+        Collections.sort(selectedAssignment.getGrades(), Grade.nameComparator);
     }
 
     public void removeTerm(Term t) {
@@ -134,6 +169,10 @@ public class Model {
 
     public void removeStudent(Student s) {
         selectedCourse.getlStudents().remove(s);
+        for (Grade g : s.getGrades()) {
+            selectedCourse.removeGrade(g);
+            g.getAssignmentReference().getGrades().remove(g);
+        }
     }
 
     public void removeCategory(Category cat) {
@@ -145,6 +184,14 @@ public class Model {
 
     public void removeAssignment(Assignment a) {
         selectedCourse.getlAssignments().remove(a);
+        if (selectedCategory != null) {
+            selectedCategory.removeAssigment(a);
+        }
+
+        for (Grade g : a.getGrades()) {
+            selectedCourse.removeGrade(g);
+            g.getStudentReference().getGrades().remove(g);
+        }
     }
 
     public void removeGrade(Grade g) {
@@ -154,38 +201,23 @@ public class Model {
     }
 
     public void setSelectedTerm(Term t) {
-        if (lCurrentModel.contains(t))
-            selectedTerm = t;
-        else
-            selectedTerm = null;
+        selectedTerm = t;
     }
 
     public void setSelectedCourse(Course c) {
-        if (selectedTerm != null && selectedTerm.getCourses().contains(c))
-            selectedCourse = c;
-        else
-            selectedCourse = null;
+        selectedCourse = c;
     }
 
     public void setSelectedCategory(Category cat) {
-        if (selectedCourse != null && selectedCourse.getlCategories().contains(cat))
-            selectedCategory = cat;
-        else
-            selectedCategory = null;
+        selectedCategory = cat;
     }
 
     public void setSelectedStudent(Student s) {
-        if (selectedCourse != null && selectedCourse.getlStudents().contains(s))
-            selectedStudent = s;
-        else
-            selectedStudent = null;
+        selectedStudent = s;
     }
 
     public void setSelectedAssignment(Assignment a) {
-        if (selectedCourse != null && selectedCourse.getlAssignments().contains(a))
-            selectedAssignment = a;
-        else
-            selectedAssignment = null;
+        selectedAssignment = a;
     }
 
     public Term getSelectedTerm() {
@@ -242,40 +274,49 @@ public class Model {
         selectedStudent = null;
         selectedAssignment = null;
 
-        for (Term t : lCurrentModel) {
-            if (t.getDBID() == termID) {
-                setSelectedTerm(t);
+        if (termID != 0) {
+            for (Term t : lCurrentModel) {
+                if (t.getDBID() == termID) {
+                    setSelectedTerm(t);
+                }
             }
         }
 
-        for (Course c : selectedTerm.getCourses()) {
-            if (c.getDBID() == courseID) {
-                setSelectedCourse(c);
+        if (courseID != 0) {
+            for (Course c : selectedTerm.getCourses()) {
+                if (c.getDBID() == courseID) {
+                    setSelectedCourse(c);
+                }
             }
         }
 
-        for (Category cat : selectedCourse.getlCategories()) {
-            if (cat.getDBID() == categoryID) {
-                setSelectedCategory(cat);
+        if (categoryID != 0) {
+            for (Category cat : selectedCourse.getlCategories()) {
+                if (cat.getDBID() == categoryID) {
+                    setSelectedCategory(cat);
+                }
             }
         }
 
-        for (Assignment a : selectedCourse.getlAssignments()) {
-            if (a.getDBID() == assignmentID) {
-                setSelectedAssignment(a);
+        if (assignmentID != 0) {
+            for (Assignment a : selectedCourse.getlAssignments()) {
+                if (a.getDBID() == assignmentID) {
+                    setSelectedAssignment(a);
+                }
             }
         }
 
-        for (Student s : selectedCourse.getlStudents()) {
-            if (s.getDBID() == studentID) {
-                setSelectedStudent(s);
+        if (studentID != 0) {
+            for (Student s : selectedCourse.getlStudents()) {
+                if (s.getDBID() == studentID) {
+                    setSelectedStudent(s);
+                }
             }
         }
 
         newObjects.clear();
         updatedObjects.clear();
-        removedObjects.clear();
-    }
+        removedObjects.clear(); }
 
     public void revertChanges() {
         long termID = 0;
@@ -313,32 +354,44 @@ public class Model {
             }
         }
 
-        for (Course c : selectedTerm.getCourses()) {
-            if (c.getDBID() == courseID) {
-                setSelectedCourse(c);
+        if (selectedTerm != null) {
+            for (Course c : selectedTerm.getCourses()) {
+                if (c.getDBID() == courseID) {
+                    setSelectedCourse(c);
+                }
             }
-        }
 
-        for (Category cat : selectedCourse.getlCategories()) {
-            if (cat.getDBID() == categoryID) {
-                setSelectedCategory(cat);
-            }
-        }
+            if (selectedCourse != null) {
+                for (Category cat : selectedCourse.getlCategories()) {
+                    if (cat.getDBID() == categoryID) {
+                        setSelectedCategory(cat);
+                    }
+                }
 
-        for (Assignment a : selectedCourse.getlAssignments()) {
-            if (a.getDBID() == assignmentID) {
-                setSelectedAssignment(a);
-            }
-        }
+                for (Assignment a : selectedCourse.getlAssignments()) {
+                    if (a.getDBID() == assignmentID) {
+                        setSelectedAssignment(a);
+                    }
+                }
 
-        for (Student s : selectedCourse.getlStudents()) {
-            if (s.getDBID() == studentID) {
-                setSelectedStudent(s);
+                for (Student s : selectedCourse.getlStudents()) {
+                    if (s.getDBID() == studentID) {
+                        setSelectedStudent(s);
+                    }
+                }
             }
         }
 
         updatedObjects.clear();
         newObjects.clear();
         removedObjects.clear();
+    }
+
+    public boolean isChanged(Object o) {
+        return (updatedObjects.contains(o) || newObjects.contains(o));
+    }
+
+    public boolean isRemoved(Object o) {
+        return (removedObjects.contains(o));
     }
 }

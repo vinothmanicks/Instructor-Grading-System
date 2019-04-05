@@ -8,13 +8,15 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.effect.DropShadow?>
 
-<?import com.jfoenix.controls.JFXBadge?>
-<?import com.jfoenix.controls.JFXDrawer?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.QBankController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.cannapaceus.jfx.GradeBookController"
+            AnchorPane.topAnchor="0.0"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0">
 
     <center>
         <ScrollPane fitToWidth="true"
@@ -40,20 +42,21 @@
                 </style>
                 <children>
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        <Label text="Question Bank"/>
-                        <Pane HBox.hgrow="ALWAYS"/>
-                        <JFXButton buttonType="FLAT" text="Generate Assignment" > <!--onAction="#openGradeBook"-->
+                        <JFXButton buttonType="FLAT" text="Back" onAction="#backClick">
                             <graphic>
-                                <FontAwesomeIconView glyphName="ENVELOPE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                                <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                             </graphic>
                             <style>
-                                -fx-background-color: #4CAF50;
+                                -fx-background-color: #0077C8;
                                 -fx-text-fill: white;
                             </style>
                         </JFXButton>
+                        <Label fx:id="lblGradeBookName"/>
                     </HBox>
+
                     <VBox fx:id="vbTerms"
                           spacing="10">
+
                     </VBox>
                 </children>
             </VBox>
@@ -64,32 +67,32 @@
         <VBox fillWidth="true">
             <Separator></Separator>
             <HBox spacing="20.0" alignment="CENTER_LEFT">
-                <Pane HBox.hgrow="ALWAYS"/>
                 <style>
                     -fx-padding: 10,10,10,10;
                     -fx-background-color: white;
                 </style>
-                <JFXButton buttonType="FLAT" text="Edit Question" disable="true"> <!--onAction="#openGradeBook"-->
+                <Label fx:id="lblChanges" text="Changes: "/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton text="Commit Changes" > <!--onAction="#commitClick"-->
                     <graphic>
-                        <FontAwesomeIconView glyphName="EDIT" glyphSize="17" glyphStyle="-fx-fill: white;"/>
-                    </graphic>
-                    <style>
-                        -fx-background-color: #f7c42a;
-                        -fx-text-fill: white;
-                    </style>
-                </JFXButton>
-                <Separator orientation="VERTICAL"/>
-                <JFXButton buttonType="FLAT" text="Add Question" onAction="#addQuestion"> <!--onAction="#openGradeBook"-->
-                    <graphic>
-                        <FontAwesomeIconView glyphName="PLUS" glyphSize="17" glyphStyle="-fx-fill: white;"/>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                     </graphic>
                     <style>
                         -fx-background-color: #4CAF50;
                         -fx-text-fill: white;
                     </style>
                 </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton text="Revert Changes" > <!--onAction="#revertClick"-->
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
             </HBox>
         </VBox>
     </bottom>
-
 </BorderPane>

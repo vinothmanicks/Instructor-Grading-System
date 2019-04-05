@@ -1,8 +1,12 @@
 package com.cannapaceus.grader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Statistics {
+
+    //Long to hold the ID of the statistics collection from the database
+    private long lDBID = 0;
 
     private static int counter = 0;
     private float fMean;
@@ -42,6 +46,14 @@ public class Statistics {
         return this.fStandardDev;
     }
 
+    /**
+     * Getter for a copy of the assignment's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
+    }
+
     public void setMean(Float newMean) { this.fMean = newMean; }
 
     public void setMedian(float newMedian) { this.fMedian = newMedian; }
@@ -50,23 +62,56 @@ public class Statistics {
 
     public void setStandardDev(float newStandardDev) { this.fStandardDev = newStandardDev; }
 
+    /**
+     * Setter for the assignment's ID from the database
+     * @param lDBID ID of the assignment from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
+
     public void calculateMean(ArrayList<Grade> listOfGrades)
     {
-        float sumTemp = 0;
-        for (Grade gGrade:listOfGrades)
-        {
-            sumTemp += gGrade.getGrade();
+        float scoreSum = 0;
+        int count = 0;
+
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            validGrades.add(g);
         }
 
-        sumTemp = (sumTemp/listOfGrades.size());
-
-        this.fMean = sumTemp;
+        for (Grade g : validGrades) {
+            scoreSum += g.getGrade();
+            ++count;
+        }
+        this.fMean = scoreSum / count;
     }
 
     public void calculateMedian(ArrayList<Grade> listOfGrades)
     {
-        int medianMarker = Math.round(listOfGrades.size()/2);
-        this.fMedian = listOfGrades.get(medianMarker).getGrade();
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            validGrades.add(g);
+        }
+
+        Collections.sort(validGrades, Grade.scoreComparator);
+
+        if (validGrades.size() == 0) {
+            this.fMedian = 0.0f;
+        } else {
+            int medianMarker = Math.round(validGrades.size()/2.0f - 1);
+            this.fMedian = validGrades.get(medianMarker).getGrade();
+        }
     }
 
     public void calculateMode(ArrayList<Grade> listOfGrades)
@@ -74,14 +119,26 @@ public class Statistics {
         float maxValue = 0;
         int maxCount = 0;
 
-        for (int i = 0; i < listOfGrades.size(); ++i) {
-            int count = 0;
-            for (int j = 0; j < listOfGrades.size(); ++j) {
-                if (listOfGrades.get(j).getGrade() == listOfGrades.get(i).getGrade() ) ++count;
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
             }
+
+            validGrades.add(g);
+        }
+
+        for (Grade g : validGrades) {
+            int count = 0;
+
+            for (Grade h : validGrades) {
+                if (h.getGrade() == g.getGrade() ) ++count;
+            }
+
             if (count > maxCount) {
                 maxCount = count;
-                maxValue = listOfGrades.get(i).getGrade();
+                maxValue = g.getGrade();
             }
         }
 
@@ -90,16 +147,30 @@ public class Statistics {
 
     public void calculateStandardDev(ArrayList<Grade> listOfGrades)
     {
-        float fCalculationValue = 0;
-        calculateMedian(listOfGrades);
-        for (Grade gGrade:listOfGrades)
-        {
-            float theGrade = gGrade.getGrade();
-            fCalculationValue += Math.multiplyExact((long)(theGrade - this.fMedian),(long)(theGrade - this.fMedian));
+        ArrayList<Grade> validGrades = new ArrayList<>();
+
+        for (Grade g : listOfGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            validGrades.add(g);
         }
 
-        fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/listOfGrades.size()));
-        this.fStandardDev = fCalculationValue;
+        if (validGrades.size() == 0) {
+            this.fStandardDev = 0;
+        } else {
+            float fCalculationValue = 0;
+            calculateMean(validGrades);
+            for (Grade gGrade : validGrades)
+            {
+                float theGrade = gGrade.getGrade();
+                fCalculationValue += ((double)(theGrade - this.fMean)) * ((double)(theGrade - this.fMean));
+            }
+
+            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/(validGrades.size() - 1)));
+            this.fStandardDev = fCalculationValue;
+        }
     }
 
     public static int geNumOfInstances() {

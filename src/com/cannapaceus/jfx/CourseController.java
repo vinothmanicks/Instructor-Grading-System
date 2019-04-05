@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class CourseController {
@@ -33,6 +34,7 @@ public class CourseController {
     HashMap<String, Student> hmStudent;
     HashMap<String, Assignment> hmAssignment;
     HashMap<String, Category> hmCategory;
+    HashMap<String, Float> hmStatistics;
 
     @FXML
     private Label lblCourseName;
@@ -53,6 +55,9 @@ public class CourseController {
     private JFXButton expandAssignment;
 
     @FXML
+    private JFXButton expandStatistics;
+
+    @FXML
     private VBox vbCourse;
 
     @FXML
@@ -65,10 +70,16 @@ public class CourseController {
     private VBox vbCats;
 
     @FXML
+    private VBox vbStats;
+
+    @FXML
     private HBox hbStudents;
 
     @FXML
     private HBox hbAssignments;
+
+    @FXML
+    private HBox hbStatistics;
 
     @FXML
     private void initialize()
@@ -81,13 +92,18 @@ public class CourseController {
         hmStudent = new HashMap<>();
         hmAssignment = new HashMap<>();
         hmCategory = new HashMap<>();
+        hmStatistics = new HashMap<>();
+
+        hmCategory.put("0", null);
 
         lblCourseName.setText(selectedCourse.getCourseName());
 
         hbStudents.setOnMouseClicked((event) -> expandStudent.fire());
+        hbStatistics.setOnMouseClicked((event) -> expandStatistics.fire());
         hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
 
         createStudentList();
+        createStatisticsList();
         createAssignmentList();
     }
 
@@ -126,12 +142,19 @@ public class CourseController {
     }
 
     private void createStudentList() {
+        int numStu = 0;
+
         for (Student s : selectedCourse.getlStudents()) {
             Separator tempSep = new Separator();
 
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
             tempHB.setAlignment(Pos.CENTER_LEFT);
+            if (md.isChanged(s)) {
+                tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                        "    -fx-border-insets: 5;\n" +
+                        "    -fx-border-width: 3;\n");
+            }
 
             Label tempLabel = new Label(s.getFirstMIName() + " " + s.getLastName());
             tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -155,14 +178,17 @@ public class CourseController {
 
             tempHB.setOnMouseClicked((event -> studentClick(event)));
 
-            tempHB.setId("" + s.getDBID());
-            hmStudent.put("" + s.getDBID(), s);
+            tempHB.setId("" + numStu);
+            hmStudent.put("" + numStu, s);
+
+            ++numStu;
 
             vbStudents.getChildren().addAll(tempSep, tempHB);
         }
     }
 
     private void createAssignmentList() {
+        int numCat = 0;
         int numAssign = 0;
 
         for (Category cat : selectedCourse.getlCategories()) {
@@ -176,6 +202,11 @@ public class CourseController {
 
             HBox catHB = new HBox();
             catHB.setAlignment(Pos.CENTER_LEFT);
+            if (md.isChanged(cat)) {
+                catHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                        "    -fx-border-insets: 5;\n" +
+                        "    -fx-border-width: 3;\n");
+            }
 
             Label catLabel = new Label(cat.getName());
             catLabel.setAlignment(Pos.CENTER_LEFT);
@@ -216,6 +247,11 @@ public class CourseController {
                 HBox tempHB = new HBox();
                 tempHB.setSpacing(10.0);
                 tempHB.setAlignment(Pos.CENTER_LEFT);
+                if (md.isChanged(a)) {
+                    tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                            "    -fx-border-insets: 5;\n" +
+                            "    -fx-border-width: 3;\n");
+                }
 
                 Label tempLabel = new Label(a.getAssignmentName());
                 tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -239,13 +275,14 @@ public class CourseController {
 
                 tempHB.setOnMouseClicked((event -> assignmentClick(event)));
 
-                tempHB.setId("" + a.getDBID());
-                hmAssignment.put("" + a.getDBID(), a);
+                tempHB.setId("" + numAssign);
+                hmAssignment.put("" + numAssign, a);
+
+                ++numAssign;
 
                 tempSep = new Separator();
 
                 catAssignmentVB.getChildren().addAll(tempSep, tempHB);
-                ++numAssign;
             }
 
             FontAwesomeIconView catAddIcon = new FontAwesomeIconView();
@@ -266,8 +303,11 @@ public class CourseController {
 
             tempSep = new Separator();
 
-            catHB.setId("" + cat.getDBID());
-            hmCategory.put("" + cat.getDBID(), cat);
+            catAssignmentVB.setId("" + numCat);
+            catHB.setId("" + numCat);
+            hmCategory.put("" + numCat, cat);
+
+            ++numCat;
 
             vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
         }
@@ -298,6 +338,11 @@ public class CourseController {
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
             tempHB.setAlignment(Pos.CENTER_LEFT);
+            if (md.isChanged(a)) {
+                tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
+                        "    -fx-border-insets: 5;\n" +
+                        "    -fx-border-width: 3;\n");
+            }
 
             Label tempLabel = new Label(a.getAssignmentName());
             tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -327,7 +372,6 @@ public class CourseController {
             tempSep = new Separator();
 
             catAssignmentVB.getChildren().addAll(tempSep, tempHB);
-            ++numAssign;
         }
 
         tempSep = new Separator();
@@ -346,9 +390,48 @@ public class CourseController {
 
         catAssignmentVB.getChildren().addAll(tempSep, catAddAssignment);
 
+        catAssignmentVB.setId("0");
+
         tempSep = new Separator();
 
         vbAssignments.getChildren().addAll(tempSep, catHB, catAssignmentVB);
+    }
+
+    private void createStatisticsList() {
+        for (Student s : selectedCourse.getlStudents()) {
+            s.setAverageGrade(s.getGrades());
+        }
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        Statistics st = selectedCourse.getStatistics();
+
+        Separator tempSep = new Separator();
+
+        HBox tempHB = new HBox();
+        tempHB.setSpacing(10.0);
+        tempHB.setAlignment(Pos.CENTER);
+
+        Pane tempPane = new Pane();
+
+        Label meanLabel = new Label("Mean: " + String.format("%.1f", st.getMean()));
+        meanLabel.setAlignment(Pos.CENTER_LEFT);
+        Label medianLabel = new Label("Median: " + String.format("%.1f", st.getMedian()));
+        medianLabel.setAlignment(Pos.CENTER_LEFT);
+        Label modeLabel = new Label("Mode: " + String.format("%.1f", st.getMode()));
+        modeLabel.setAlignment(Pos.CENTER_LEFT);
+        Label stddevLabel = new Label("Standard Deviation: " + String.format("%.2f", st.getStandardDev()));
+        stddevLabel.setAlignment(Pos.CENTER_LEFT);
+
+        tempHB.getChildren().addAll(meanLabel, medianLabel, modeLabel, stddevLabel);
+        tempHB.setHgrow(tempPane, Priority.ALWAYS);
+
+        tempHB.setId("" + st.getDBID());
+        hmStatistics.put("" + st.getDBID(), st.getMean());
+        hmStatistics.put("" + st.getDBID(), st.getMedian());
+        hmStatistics.put("" + st.getDBID(), st.getMode());
+        hmStatistics.put("" + st.getDBID(), st.getStandardDev());
+
+        vbStats.getChildren().addAll(tempSep, tempHB);
     }
 
     @FXML
@@ -371,6 +454,10 @@ public class CourseController {
                 btnAddCategory.setVisible(true);
                 btnAddCategory.setManaged(true);
                 hbTemp = hbAssignments;
+                break;
+            case "expandStatistics":
+                s = "collapseStatistics";
+                hbTemp = hbStatistics;
                 break;
         }
 
@@ -426,6 +513,10 @@ public class CourseController {
                 btnAddCategory.setVisible(false);
                 btnAddCategory.setManaged(false);
                 hbTemp = hbAssignments;
+                break;
+            case "collapseStatistics":
+                s = "expandStatistics";
+                hbTemp = hbStatistics;
                 break;
         }
 
@@ -502,7 +593,7 @@ public class CourseController {
 
     @FXML
     private void addCategory(ActionEvent event) {
-        Category c = new Category("",0);
+        Category c = new Category("",1.0f);
 
         md.addCategory(c);
         md.setSelectedCategory(c);
@@ -534,11 +625,15 @@ public class CourseController {
     private void addAssignment(ActionEvent event)
     {
         LocalDate lo = LocalDate.now();
-        Category catUnassigned = new Category("Unassigned",100);
-        Assignment a = new Assignment("",lo,lo,false,100,catUnassigned,0);
 
-        md.addAssignment(a);
+        String id = ((Node) event.getTarget()).getParent().getId();
+        Category cat = hmCategory.get(id);
+
+        Assignment a = new Assignment("",lo,lo,false,100,cat,0);
+
+        md.setSelectedCategory(cat);
         md.setSelectedAssignment(a);
+        md.addAssignment(a);
 
         try {
             sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));
@@ -550,11 +645,15 @@ public class CourseController {
 
     public void commitClick(ActionEvent e) {
         md.commitChanges();
+        reloadView();
     }
 
     public void revertClick(ActionEvent e) {
         md.revertChanges();
+        reloadView();
+    }
 
+    private void reloadView() {
         vbStudents.getChildren().clear();
         hmStudent.clear();
 
@@ -562,5 +661,14 @@ public class CourseController {
         hmAssignment.clear();
 
         initialize();
+    }
+
+    public void openGradeBook(ActionEvent event) {
+        try {
+            sc.addScreen("GradeBook", FXMLLoader.load(getClass().getResource("../jfxml/GradeBookView.fxml")));
+            sc.activate("GradeBook");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

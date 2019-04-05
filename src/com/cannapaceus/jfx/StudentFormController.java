@@ -52,6 +52,10 @@ public class StudentFormController {
 
         if (selectedStudent.getDBID() == 0 && !md.getNewObjects().contains(selectedStudent)) {
             md.addNewObject(selectedStudent);
+            for (Grade g : selectedStudent.getGrades()) {
+                if (!md.getNewObjects().contains(g))
+                    md.addNewObject(g);
+            }
         } else {
             md.addUpdatedObject(selectedStudent);
         }

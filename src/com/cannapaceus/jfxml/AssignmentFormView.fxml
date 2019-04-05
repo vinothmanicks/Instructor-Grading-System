@@ -16,6 +16,7 @@
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.validation.NumberValidator?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.AssignmentFormController"
@@ -49,14 +50,11 @@
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
-                        <IntegerValidator message="Integer Required">
+                        <NumberValidator message="Number Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
-                        </IntegerValidator>
+                        </NumberValidator>
                     </validators>
                 </JFXTextField>
-            </HBox>
-            <HBox alignment="CENTER_LEFT">
-                <JFXComboBox fx:id="cbAssignmentCategory" promptText="Category" labelFloat="true"/>
             </HBox>
             <JFXTextField fx:id="tfCustomWeight" promptText="Custom Weight" labelFloat="true">
                 <validators>

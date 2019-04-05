@@ -8,6 +8,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.StudentController"
@@ -22,6 +23,11 @@
                     AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-background-color: white;
+                -fx-padding: 10, 10, 10, 10;
+            </style>
 
             <VBox fx:id="vbStudent"
                   fillWidth="true"
@@ -46,7 +52,11 @@
                             </style>
                         </JFXButton>
                         <Label fx:id="lblStudentName"/>
+                        <Label fx:id="lblStudentAvg"/>
                     </HBox>
+                    <JFXTreeTableView fx:id="studentGradeTable">
+
+                    </JFXTreeTableView>
                 </children>
             </VBox>
         </ScrollPane>

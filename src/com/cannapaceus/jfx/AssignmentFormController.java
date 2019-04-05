@@ -27,9 +27,6 @@ public class AssignmentFormController {
     private JFXTextField tfCustomWeight;
 
     @FXML
-    private JFXComboBox<String> cbAssignmentCategory;
-
-    @FXML
     private JFXDatePicker dpDueDate;
 
     @FXML
@@ -44,11 +41,6 @@ public class AssignmentFormController {
         sc = ScreenController.getInstance();
 
         selectedAssignment = md.getSelectedAssignment();
-
-        //TODO: Add proper categories
-        ObservableList<String> list = FXCollections.observableArrayList("Unassigned");
-
-        cbAssignmentCategory.setItems(list);
     }
 
 
@@ -56,17 +48,25 @@ public class AssignmentFormController {
         if (!formValidate())
             return;
 
+        Category cat = md.getSelectedCategory();
+
         selectedAssignment.setAssignmentName(tfAssignmentName.getText());
         selectedAssignment.setMaxScore(Integer.valueOf(tfMaxScore.getText()));
         if(!tfCustomWeight.getText().isEmpty())
             selectedAssignment.setWeight(Integer.valueOf(tfCustomWeight.getText()));
         selectedAssignment.setDueDate(dpDueDate.getValue());
         selectedAssignment.setAssignedDate(dpAssignedDate.getValue());
-        //TODO: Required to save to database
-        //selectedAssignment.setCategory();
+        selectedAssignment.setCategory(md.getSelectedCategory());
+
+        md.setSelectedCategory(null);
+        md.setSelectedAssignment(null);
 
         if (selectedAssignment.getDBID() == 0 && !md.getNewObjects().contains(selectedAssignment)) {
             md.addNewObject(selectedAssignment);
+            for (Grade g : selectedAssignment.getGrades()) {
+                if (!md.getNewObjects().contains(g))
+                    md.addNewObject(g);
+            }
         } else {
             md.addUpdatedObject(selectedAssignment);
         }

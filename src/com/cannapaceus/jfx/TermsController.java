@@ -53,10 +53,13 @@ public class TermsController {
     }
 
     private void createTermList() {
+        int numTerm = 0;
+        int numCourse = 0;
+
         for (Term t : lTerms) {
             VBox tempVB = new VBox();
             tempVB.setSpacing(10.0);
-            tempVB.setStyle("-fx-padding: 10, 10, 10, 10; -fx-background-color: white;");
+            tempVB.setStyle("-fx-background-color: white;");
 
             DropShadow ds = new DropShadow();
             ds.setColor(Color.GREY);
@@ -67,6 +70,14 @@ public class TermsController {
 
             HBox tempHB = new HBox();
             tempHB.setAlignment(Pos.CENTER_LEFT);
+            tempHB.setStyle("-fx-padding: 10, 10, 10, 10;");
+            if (md.isChanged(t)) {
+                tempHB.setStyle(tempHB.getStyle() + "-fx-background-color: #98FB98;");
+            } else if (md.isRemoved(t)) {
+                tempHB.setStyle(tempHB.getStyle() + "-fx-background-color: red;");
+            } else {
+                tempHB.setStyle(tempHB.getStyle() + "-fx-background-color: white;");
+            }
 
             Label termLabel = new Label(t.getSeason().toString() + " " + t.getYear());
             termLabel.setAlignment(Pos.CENTER_LEFT);
@@ -114,11 +125,11 @@ public class TermsController {
             termExpand.setOnAction((event -> expand(event)));
 
             VBox vbCourses = new VBox();
-            vbCourses.setVisible(false);
+            vbCourses.setVisible(false); 
             vbCourses.setManaged(false);
 
             vbCourses.setSpacing(10.0);
-            vbCourses.setStyle("-fx-padding: 10,10,10,10;");
+            vbCourses.setStyle("-fx-padding: 0 10 10 10;");
 
             tempFA = new FontAwesomeIconView();
             tempFA.setGlyphName("PLUS");
@@ -140,6 +151,14 @@ public class TermsController {
                 HBox hbCourse = new HBox();
                 hbCourse.setSpacing(10.0);
                 hbCourse.setAlignment(Pos.CENTER_LEFT);
+
+                if (md.isChanged(c)) {
+                    hbCourse.setStyle(hbCourse.getStyle() + "-fx-background-color: #98FB98;");
+                } else if (md.isRemoved(c)) {
+                    hbCourse.setStyle(hbCourse.getStyle() + "-fx-background-color: red;");
+                } else {
+                    hbCourse.setStyle(hbCourse.getStyle() + "-fx-background-color: white;");
+                }
 
                 Label lblCourseName = new Label(c.getCourseName());
 
@@ -172,8 +191,10 @@ public class TermsController {
                 courseDelete.setOnAction((event -> deleteCourseClick(event)));
 
 
-                hbCourse.setId("" + c.getDBID());
-                hmCourse.put("" + c.getDBID(), c);
+                hbCourse.setId("" + numCourse);
+                hmCourse.put("" + numCourse, c);
+
+                ++numCourse;
 
                 hbCourse.setOnMouseClicked((event -> courseClick(event)));
 
@@ -186,8 +207,10 @@ public class TermsController {
 
             vbCourses.getChildren().addAll(tempSep, termAddCourse);
 
-            tempVB.setId("" + t.getDBID());
-            hmTerm.put("" + t.getDBID(), t);
+            tempVB.setId("" + numTerm);
+            hmTerm.put("" + numTerm, t);
+
+            ++numTerm;
 
             tempHB.getChildren().addAll(termLabel, termSpanPane, termEdit, termDelete, termExpand);
             tempHB.setHgrow(termSpanPane, Priority.ALWAYS);

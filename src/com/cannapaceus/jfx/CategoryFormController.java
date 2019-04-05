@@ -28,6 +28,9 @@ public class CategoryFormController {
         sc = ScreenController.getInstance();
 
         selectedCategory = md.getSelectedCategory();
+
+        tfCatName.setText(selectedCategory.getName());
+        tfCatWeight.setText("" + selectedCategory.getWeight());
     }
 
 

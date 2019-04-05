@@ -2,9 +2,10 @@ package com.cannapaceus.grader;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Student implements Comparable<Student>{
+public class Student{
 
     //Long to hold the ID of the student from the database
     private long lDBID = 0;
@@ -42,6 +43,8 @@ public class Student implements Comparable<Student>{
         this.sStudentID = sStudentID;
         this.sEmail = sStudentEmail;
         this.lGrades = new ArrayList<>();
+
+        setAverageGrade(this.lGrades);
     }
 
     /**
@@ -57,6 +60,8 @@ public class Student implements Comparable<Student>{
         this.sStudentID = stuStudent.getStudentID();
         this.sEmail = stuStudent.getStudentEmail();
         this.lGrades = new ArrayList<>();
+
+        setAverageGrade(this.lGrades);
     }
 
     //Setter functions
@@ -93,17 +98,41 @@ public class Student implements Comparable<Student>{
         this.sEmail = sStudentEmail;
     }
 
+    public void setAverageGrade(float fAverageGrade) {
+        this.fAverageGrade = fAverageGrade;
+    }
+
     public void setAverageGrade(ArrayList<Grade> lGrades) {
         float temp = 0;
-        float average = 0;
-        float count = 0;
-        for (int a = 0; a < lGrades.size(); a++) {
-            temp = lGrades.get(a).getGrade() * lGrades.get(a).getAssignmentCopy().getWeight();
-            average += temp;
-            count++;
+        float tempWeight = 0;
+        float scoreSum = 0;
+        float fullScoresSum = 0;
+        float tempFullScore = 0;
+
+        for (Grade g : lGrades) {
+            if (!g.getSubmitted() || g.getDropped()) {
+                continue;
+            }
+
+            Category cat = g.getAssignmentReference().getCategoryCopy();
+
+            if (cat == null) {
+                tempWeight = 1.0f;
+            } else {
+                tempWeight = cat.getWeight();
+            }
+
+            tempFullScore = g.getAssignmentReference().getMaxScore();
+            temp = g.getGrade() * tempWeight;
+            scoreSum += temp;
+            fullScoresSum += tempFullScore * tempWeight;
         }
-        average = average / count;
-        this.fAverageGrade = average;
+
+        if (fullScoresSum == 0) {
+            this.fAverageGrade = 0;
+        } else {
+            this.fAverageGrade = (scoreSum / fullScoresSum) * 100;
+        }
     }
 
     //Getter functions
@@ -153,6 +182,17 @@ public class Student implements Comparable<Student>{
     public int compareTo(Student anotherStudent) {
         return this.getLastName().compareToIgnoreCase(anotherStudent.getLastName());
     }
+
+    public static Comparator<Student> nameComparator = new Comparator<Student>() {
+        @Override
+        public int compare(Student s1, Student s2) {
+            int cmp = s1.getLastName().toUpperCase().compareTo(s2.getLastName().toUpperCase());
+            if (cmp == 0)
+                return s1.getFirstMIName().toUpperCase().compareTo(s2.getFirstMIName().toUpperCase());
+            else
+                return cmp;
+        }
+    };
 
     /**
      * Function to generate a report for a student based on their course grades provided assignments have been assigned.

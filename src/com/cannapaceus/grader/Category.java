@@ -1,8 +1,9 @@
 package com.cannapaceus.grader;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Category implements Comparable<Category> {
+public class Category {
     //Long to hold the ID of the category from the database
     private long lDBID = 0;
     //The name of the category
@@ -48,7 +49,7 @@ public class Category implements Comparable<Category> {
 
     public ArrayList<Assignment> getAssignments()
     {
-        return new ArrayList<>(lCatAssignments);
+        return lCatAssignments;
     }
 
     public void addAssignment(Assignment aAssignment)
@@ -82,4 +83,11 @@ public class Category implements Comparable<Category> {
     public int compareTo(Category cat) {
         return this.getName().compareTo(cat.getName());
     }
+
+    public static Comparator<Category> nameComparator = new Comparator<Category>() {
+        @Override
+        public int compare(Category cat1, Category cat2) {
+            return cat1.getName().toUpperCase().compareTo(cat2.getName().toUpperCase());
+        }
+    };
 }

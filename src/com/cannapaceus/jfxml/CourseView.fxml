@@ -51,6 +51,16 @@
                             </style>
                         </JFXButton>
                         <Label fx:id="lblCourseName"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <JFXButton buttonType="FLAT" text="Grade Book" onAction="#openGradeBook">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="BOOK" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
                     </HBox>
 
                     <VBox>
@@ -126,6 +136,35 @@
                             <style>
                                 -fx-padding: 10, 10, 10, 10;
                             </style>
+                        </VBox>
+                    </VBox>
+
+                    <VBox>
+                        <style>
+                            -fx-padding: 10, 10, 10, 10;
+                            -fx-background-color: white;
+                        </style>
+                        <effect>
+                            <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+                        </effect>
+                        <HBox fx:id="hbStatistics" spacing="10.0" alignment="CENTER_RIGHT">
+                            <Label text="Course Statistics"></Label>
+                            <Pane HBox.hgrow="ALWAYS"></Pane>
+                            <JFXButton fx:id="expandStatistics" buttonType="FLAT" ripplerFill="white" onAction="#expand">
+                                <graphic>
+                                    <FontAwesomeIconView glyphName="CHEVRON_RIGHT" glyphSize="20" glyphStyle="-fx-fill: grey;"/>
+                                </graphic>
+                                <style>
+                                    -fx-cursor: hand;
+                                </style>
+                            </JFXButton>
+                        </HBox>
+                        <VBox fx:id="vbStats" spacing="10.0" visible="false" managed="false">
+
+                            <style>
+                                -fx-padding: 10, 10, 10, 10;
+                            </style>
+
                         </VBox>
                     </VBox>
                 </children>

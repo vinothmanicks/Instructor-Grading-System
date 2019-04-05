@@ -32,33 +32,83 @@ public class Main {
         } while (!db.loginDB(user, pass));
 
 
-        Term teTest = new Term(2019, eSeason.FALL);
-        System.out.println(db.storeTerm(teTest));
+        Term teTest = new Term(2019, eSeason.SPRING);
+        //System.out.println(db.storeTerm(teTest));
 
-        Course coTest = new Course("Prob and Stats", "MA 385", "Mathematics");
-        System.out.println(db.storeCourse(coTest, teTest.getDBID()));
+        Course coTest = new Course("Test Course", "TST 000", "Testing");
+        //System.out.println(db.storeCourse(coTest, teTest.getDBID()));
 
-        Category catBlank = new Category("Homework", 0.15f);
-        System.out.println(db.storeCategory(catBlank, coTest.getDBID()));
+        Category catTests = new Category("Tests", 0.50f);
+        coTest.addCategory(catTests);
+        //System.out.println(db.storeCategory(catTests, coTest.getDBID()));
 
-        Student stuBobby = new Student("BobbyJ","Miller","00451J","bjm0001@UAH.EDU");
-        System.out.println(db.storeStudent(stuBobby, coTest.getDBID()));
+        Category catHmwk = new Category("Homework", 0.35f);
+        coTest.addCategory(catHmwk);
+        //System.out.println(db.storeCategory(catHmwk, coTest.getDBID()));
 
-        LocalDate dueDateMondaiIchi = LocalDate.of(2019, 02, 20);
-        LocalDate assignedDateMondaiIchi = LocalDate.of(2019, 02, 27);
-        Assignment aAssignment = new Assignment("Mondai-ichi",dueDateMondaiIchi,assignedDateMondaiIchi,false,100,catBlank,0.30f);
-        System.out.println(db.storeAssignment(aAssignment, coTest.getDBID()));
+        Category catOther = new Category("Other", 0.15f);
+        coTest.addCategory(catOther);
+        //System.out.println(db.storeCategory(catOther, coTest.getDBID()));
 
-        Grade gBobbyAssGrade = new Grade(20,stuBobby,aAssignment);
-        System.out.println(db.storeGrade(gBobbyAssGrade, coTest.getDBID()));
+        Student stuOne = new Student("Student","One","id001","id001@email.address");
+        coTest.addStudent(stuOne);
+        //System.out.println(db.storeStudent(stuOne, coTest.getDBID()));
 
-        aAssignment.addGrade(gBobbyAssGrade);
-        stuBobby.addGrade(gBobbyAssGrade);
+        Student stuTwo = new Student("Student","Two","id002","id002@email.address");
+        coTest.addStudent(stuTwo);
+        //System.out.println(db.storeStudent(stuTwo, coTest.getDBID()));
 
-        System.out.println(stuBobby.GenerateStudentReport());
+        Student stuThree = new Student("Student","Three","id003","id003@email.address");
+        coTest.addStudent(stuThree);
+        //System.out.println(db.storeStudent(stuThree, coTest.getDBID()));
+
+        LocalDate dueDateTestOne = LocalDate.of(2019, 04, 20);
+        LocalDate assignedDateTestOne = LocalDate.of(2019, 04, 03);
+        Assignment aTestOne = new Assignment("Test One",dueDateTestOne,assignedDateTestOne,false,100,catTests,catTests.getWeight());
+        coTest.addAssignment(aTestOne);
+        //System.out.println(db.storeAssignment(aTestOne, coTest.getDBID()));
+
+        LocalDate dueDateHmwkOne = LocalDate.of(2019, 04, 10);
+        LocalDate assignedDateHmwkOne = LocalDate.of(2019, 04, 03);
+        Assignment aHmwkOne = new Assignment("Homework One",dueDateHmwkOne,assignedDateHmwkOne,false,100,catHmwk,catHmwk.getWeight());
+        coTest.addAssignment(aHmwkOne);
+        //System.out.println(db.storeAssignment(aHmwkOne, coTest.getDBID()));
+
+        LocalDate dueDatePopQuiz = LocalDate.of(2019, 04, 03);
+        LocalDate assignedDatePopQuiz = LocalDate.of(2019, 04, 03);
+        Assignment aPopQuiz = new Assignment("Pop Quiz 04/03",dueDatePopQuiz,assignedDatePopQuiz,false,100,catOther,catOther.getWeight());
+        coTest.addAssignment(aPopQuiz);
+        //System.out.println(db.storeAssignment(aPopQuiz, coTest.getDBID()));
+
+        Grade gTestOneGradeOne = new Grade(90,stuOne,aTestOne);
+        //System.out.println(db.storeGrade(gTestOneGradeOne, coTest.getDBID()));
+
+        Grade gTestOneGradeTwo = new Grade(100,stuTwo,aTestOne);
+        //System.out.println(db.storeGrade(gTestOneGradeTwo, coTest.getDBID()));
+
+        Grade gTestOneGradeThree = new Grade(99,stuThree,aTestOne);
+        //System.out.println(db.storeGrade(gTestOneGradeThree, coTest.getDBID()));
+
+        aTestOne.addGrade(gTestOneGradeOne);
+        aTestOne.addGrade(gTestOneGradeTwo);
+        aTestOne.addGrade(gTestOneGradeThree);
+        stuOne.addGrade(gTestOneGradeOne);
+        stuTwo.addGrade(gTestOneGradeTwo);
+        stuThree.addGrade(gTestOneGradeThree);
+        coTest.addGrade(gTestOneGradeOne);
+        coTest.addGrade(gTestOneGradeTwo);
+        coTest.addGrade(gTestOneGradeThree);
+
+        //System.out.println(stuOne.GenerateStudentReport());
+
+        stuOne.setAverageGrade(stuOne.getGrades());
+        stuTwo.setAverageGrade(stuTwo.getGrades());
+        stuThree.setAverageGrade(stuThree.getGrades());
+        coTest.PopulateAverages(coTest.getlStudents());
+        coTest.calculateStats();
 
         ArrayList<Term> lTerms;
-        Course coTest2 = null;
+        Course coTest2;
 
 
         lTerms = db.retrieveTerms();
@@ -72,7 +122,7 @@ public class Main {
                 System.out.println(coTest2.getCourseName());
 
                 for(Category catTemp : coTest2.getlCategories()) {
-                    System.out.println(catTemp.getWeight());
+                    System.out.println(catTemp.getName() + " " + catTemp.getWeight());
                 }
 
                 for(Assignment asnTemp : coTest2.getlAssignments()) {
@@ -89,9 +139,9 @@ public class Main {
             }
         }
 
-        ArrayList<Grade> gHolder = aAssignment.getGrades();
+        //ArrayList<Grade> gHolder = aTestOne.getGrades();
 
-        System.out.println(gHolder.get(0).getGrade());
+        //System.out.println(gHolder.get(0).getGrade());
     }
 
 }

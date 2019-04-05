@@ -2,8 +2,9 @@ package com.cannapaceus.grader;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Assignment implements Comparable<Assignment> {
+public class Assignment {
 
     //Long to hold the ID of the assignment from the database
     private long lDBID = 0;
@@ -51,6 +52,8 @@ public class Assignment implements Comparable<Assignment> {
         this.fMaxScore = fMaxScore;
         this.catCategory = catCategory;
         this.fWeight = fWeight;
+
+        this.stAssignmentStats = new Statistics();
     }
 
     /**
@@ -63,13 +66,18 @@ public class Assignment implements Comparable<Assignment> {
         this.setDBID(aAssignment.getDBID());
         this.lGrades = new ArrayList<Grade>();
         this.setAssignmentName(aAssignment.getAssignmentName());
-        aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
+        aAssignment.getGrades().forEach(grade-> this.lGrades.add(grade));
         this.setAssignedDate(aAssignment.getAssignedDate());
         this.setCategory((aAssignment.getCategoryCopy()));
         this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
 
+        this.stAssignmentStats = new Statistics();
+        this.stAssignmentStats.calculateMean(this.lGrades);
+        this.stAssignmentStats.calculateMedian(this.lGrades);
+        this.stAssignmentStats.calculateMode(this.lGrades);
+        this.stAssignmentStats.calculateStandardDev(this.lGrades);
     }
 
     //Setter functions
@@ -80,6 +88,10 @@ public class Assignment implements Comparable<Assignment> {
     public void addGrade(Grade grade)
     {
         this.lGrades.add(grade);
+        this.stAssignmentStats.calculateMean(this.lGrades);
+        this.stAssignmentStats.calculateMedian(this.lGrades);
+        this.stAssignmentStats.calculateMode(this.lGrades);
+        this.stAssignmentStats.calculateStandardDev(this.lGrades);
     }
 
     /**
@@ -142,6 +154,10 @@ public class Assignment implements Comparable<Assignment> {
     public void setWeight(float fWeight)
     {
         this.fWeight = fWeight;
+    }
+
+    public void setStAssignmentStats(Statistics stAssignmentStats) {
+        this.stAssignmentStats = stAssignmentStats;
     }
 
     /**
@@ -233,6 +249,10 @@ public class Assignment implements Comparable<Assignment> {
         return this.fWeight;
     }
 
+    public Statistics getStAssignmentStats() {
+        return this.stAssignmentStats;
+    }
+
     /**
      * Getter for a copy of the dropped boolean flag status
      * @return
@@ -245,4 +265,11 @@ public class Assignment implements Comparable<Assignment> {
     public int compareTo(Assignment a) {
         return this.getAssignmentName().compareTo(a.getAssignmentName());
     }
+
+    public static Comparator<Assignment> nameComparator = new Comparator<Assignment>() {
+        @Override
+        public int compare(Assignment a1, Assignment a2) {
+            return a1.getAssignmentName().toUpperCase().compareTo(a2.getAssignmentName().toUpperCase());
+        }
+    };
 }

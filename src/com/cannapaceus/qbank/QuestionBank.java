@@ -37,7 +37,7 @@ public class QuestionBank {
         return toReturn;
     }
 
-    public ArrayList<Question> getQuestionList(QuestionType qtQuestionType)
+    public ArrayList<Question> getQuestionList(eQuestionType qtQuestionType)
     {
         ArrayList<Question> toReturn = new ArrayList<>();
         for (Question que : lQuestions) {
