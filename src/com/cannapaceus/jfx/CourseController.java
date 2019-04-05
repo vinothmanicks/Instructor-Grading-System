@@ -440,26 +440,21 @@ public class CourseController {
     private void expand(ActionEvent e) {
         JFXButton t = (JFXButton) e.getTarget();
 
-        HBox hbTemp = null;
-
-        String s = "";
+        boolean newVal = false;
 
         switch (t.getId()) {
             case "expandStudent":
-                s = "collapseStudent";
-                btnAddStudent.setVisible(true);
-                btnAddStudent.setManaged(true);
-                hbTemp = hbStudents;
+                newVal = !btnAddStudent.isVisible();
+                btnAddStudent.setVisible(newVal);
+                btnAddStudent.setManaged(newVal);
                 break;
             case "expandAssignment":
-                s = "collapseAssignment";
-                btnAddCategory.setVisible(true);
-                btnAddCategory.setManaged(true);
-                hbTemp = hbAssignments;
+                newVal = !btnAddCategory.isVisible();
+                btnAddCategory.setVisible(newVal);
+                btnAddCategory.setManaged(newVal);
                 break;
             case "expandStatistics":
-                s = "collapseStatistics";
-                hbTemp = hbStatistics;
+                newVal = !vbStats.isVisible();
                 break;
         }
 
@@ -467,92 +462,27 @@ public class CourseController {
 
         VBox vbTerm = (VBox) p.getParent();
 
-        p.getChildren().remove(t);
-
         FontAwesomeIconView tempFA = new FontAwesomeIconView();
         tempFA.setGlyphName("CHEVRON_DOWN");
         tempFA.setGlyphSize(20);
         tempFA.setGlyphStyle("-fx-fill: grey;");
 
-        JFXButton tempCollapse = new JFXButton("");
-        tempCollapse.setId(s);
-        tempCollapse.setAlignment(Pos.BASELINE_CENTER);
-        tempCollapse.setGraphic(tempFA);
-        tempCollapse.setStyle("-fx-cursor: hand;");
-        tempCollapse.setRipplerFill(Color.WHITE);
-        tempCollapse.setButtonType(JFXButton.ButtonType.FLAT);
-        tempCollapse.setOnAction((event -> collapse(event)));
+        if (newVal) {
+            tempFA.setGlyphName("CHEVRON_DOWN");
+        } else {
+            tempFA.setGlyphName("CHEVRON_RIGHT");
+        }
 
-        if (hbTemp != null)
-            hbTemp.setOnMouseClicked(event -> tempCollapse.fire());
+
+
+        t.setGraphic(tempFA);
 
         for (Node n : vbTerm.getChildren()) {
             if (n instanceof VBox) {
-                n.setVisible(true);
-                n.setManaged(true);
+                n.setVisible(newVal);
+                n.setManaged(newVal);
             }
         }
-
-        p.getChildren().add(tempCollapse);
-    }
-
-    private void collapse(ActionEvent e) {
-        JFXButton t = (JFXButton) e.getTarget();
-
-        HBox hbTemp = null;
-
-        String s = "";
-
-        switch (t.getId()) {
-            case "collapseStudent":
-                s = "expandStudent";
-                btnAddStudent.setVisible(false);
-                btnAddStudent.setManaged(false);
-                hbTemp = hbStudents;
-                break;
-            case "collapseAssignment":
-                s = "expandAssignment";
-                btnAddCategory.setVisible(false);
-                btnAddCategory.setManaged(false);
-                hbTemp = hbAssignments;
-                break;
-            case "collapseStatistics":
-                s = "expandStatistics";
-                hbTemp = hbStatistics;
-                break;
-        }
-
-        HBox p = (HBox) t.getParent();
-
-        VBox vBox = (VBox) p.getParent();
-
-        p.getChildren().remove(t);
-
-        FontAwesomeIconView tempFA = new FontAwesomeIconView();
-        tempFA.setGlyphName("CHEVRON_RIGHT");
-        tempFA.setGlyphSize(20);
-        tempFA.setGlyphStyle("-fx-fill: grey;");
-
-        JFXButton tempExpand = new JFXButton("");
-        tempExpand.setId(s);
-        tempExpand.setAlignment(Pos.BASELINE_CENTER);
-        tempExpand.setGraphic(tempFA);
-        tempExpand.setStyle("-fx-cursor: hand;");
-        tempExpand.setRipplerFill(Color.WHITE);
-        tempExpand.setButtonType(JFXButton.ButtonType.FLAT);
-        tempExpand.setOnAction((event -> expand(event)));
-
-        if (hbTemp != null)
-            hbTemp.setOnMouseClicked(event -> tempExpand.fire());
-
-        for (Node n : vBox.getChildren()) {
-            if (n instanceof VBox) {
-                n.setVisible(false);
-                n.setManaged(false);
-            }
-        }
-
-        p.getChildren().add(tempExpand);
     }
 
     private void deleteCategoryClick(ActionEvent event) {
