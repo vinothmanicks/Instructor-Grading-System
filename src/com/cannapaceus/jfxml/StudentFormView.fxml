@@ -63,7 +63,7 @@
             <HBox alignment="CENTER_LEFT">
                 <JFXTextField fx:id="tfStudentEmail" promptText="Email" labelFloat="true">
                     <validators>
-                        <RequiredFieldValidator message="Input Required">
+                        <RequiredFieldValidator message="Must be valid email address">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
                     </validators>

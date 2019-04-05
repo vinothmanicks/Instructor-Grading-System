@@ -6,9 +6,68 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.effect.DropShadow?>
+<?import com.jfoenix.validation.IntegerValidator?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.SettingsController"
             prefHeight="400.0" prefWidth="600.0">
+
+    <VBox fx:id="vbInstructor"
+          fillWidth="true"
+          spacing="30.0"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <style>
+            -fx-padding: 20, 20, 20, 20;
+            -fx-background-color: white;
+        </style>
+        <children>
+            <HBox>
+                <JFXTextField fx:id="tfInstructorEmail" promptText="Email" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Must be valid email address">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <Pane VBox.vgrow="ALWAYS"/>
+            <HBox fillHeight="true" spacing="10.0">
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton buttonType="FLAT" text="Save" onAction="#saveClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <Separator orientation="VERTICAL"/>
+                <JFXButton buttonType="FLAT" text="Cancel" onAction="#cancelClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </children>
+    </VBox>
 
 </AnchorPane>
