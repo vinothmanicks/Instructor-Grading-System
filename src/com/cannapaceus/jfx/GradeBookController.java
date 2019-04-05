@@ -4,15 +4,27 @@ import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Grade;
 import com.cannapaceus.grader.Student;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.cells.editors.DoubleTextFieldEditorBuilder;
+import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
+import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
@@ -31,6 +43,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Set;
 
 public class GradeBookController{
@@ -41,12 +54,10 @@ public class GradeBookController{
     ArrayList<Assignment> lAssignments;
     int iLAssignmentSize;
 
-    ObservableList<StudentGradeBookData> lGradeBookData;
-
-    private TableView table = new TableView();
+    ObservableList<Student> lGradeBookData;
 
     @FXML
-    private VBox vbTerms;
+    private JFXTreeTableView gradeBookTable;
 
     @FXML
     private Label lblGradeBookName;
@@ -66,84 +77,110 @@ public class GradeBookController{
     }
 
     private void createTable() {
-        table.setEditable(true);
 
-        reCastData();
+        TreeTableColumn<Student, String> firstNameColumn = new JFXTreeTableColumn<>("First Name");
+        firstNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getFirstMIName()));
+        firstNameColumn.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setEditable(false);
+            return c;
+        });
 
-        buildTable();
+        firstNameColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return -o1.toUpperCase().compareTo(o2.toUpperCase());
+            }
+        });
+        firstNameColumn.setContextMenu(null);
 
-        populateTable();
+        TreeTableColumn<Student, String> lastNameColumn = new JFXTreeTableColumn<>("Last Name");
+        lastNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getLastName()));
+        lastNameColumn.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setEditable(false);
+            return c;
+        });
+        lastNameColumn.setContextMenu(null);
 
-        VBox tempVB = new VBox();
+        TreeTableColumn<Student, String> studentIDColumn = new JFXTreeTableColumn<>("Student ID");
+        studentIDColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getStudentID()));
+        studentIDColumn.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder());
+            c.setEditable(false);
+            return c;
+        });
+        studentIDColumn.setContextMenu(null);
 
-        tempVB.getChildren().addAll(table);
+        final TreeItem<Student> root = new RecursiveTreeItem<>(lGradeBookData, RecursiveTreeObject::getChildren);
 
-        vbTerms.getChildren().addAll(tempVB);
-    }
+        gradeBookTable.setRoot(root);
+        gradeBookTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        gradeBookTable.setTableMenuButtonVisible(false);
+        gradeBookTable.setShowRoot(false);
+        gradeBookTable.setEditable(true);
+        gradeBookTable.getColumns().setAll(firstNameColumn, lastNameColumn, studentIDColumn);
 
-    private void buildTable() {
-        TableColumn firstNameCol = new TableColumn("First Name");
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("firstMIName"));
-        TableColumn lastNameCol = new TableColumn("Last Name");
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("lastName"));
-        TableColumn idCol = new TableColumn("Student ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("studentID"));
-        TableColumn emailCol = new TableColumn("Email");
-        emailCol.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>("studentEmail"));
+        ArrayList<Assignment> lAssignments = selectedCourse.getlAssignments();
+        int iSize = lAssignments.size();
 
-        table.getColumns().addAll(firstNameCol, lastNameCol, idCol, emailCol);
+        for(int i = 0; i<iSize; i++) {
+            TreeTableColumn<Student, Float> assignmentColumn = new JFXTreeTableColumn<>(lAssignments.get(i).getAssignmentName());
+            final Assignment tempRef = lAssignments.get(i);
+            assignmentColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, Float> param) -> {
+                    ArrayList<Grade> lGrades= param.getValue().getValue().getGrades();
+                    for(Grade gGrades: lGrades) {
+                        if (gGrades.getAssignmentReference() == tempRef) {
+                            return gGrades.getGradeProperty().asObject();
+                        }
+                    }
+                    return null;
+                }
+            );
+            assignmentColumn.setCellFactory((tc) -> {
+                GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>(new DoubleTextFieldEditorBuilder());
+                return c;
+            });
+            assignmentColumn.setContextMenu(null);
 
-        lAssignments = selectedCourse.getlAssignments();
-
-        iLAssignmentSize = lAssignments.size();
-
-        for(int i = 0; i < iLAssignmentSize; i++)
-        {
-            TableColumn assignmentColumn = new TableColumn(lAssignments.get(i).getAssignmentName());
-            assignmentColumn.setCellValueFactory(new PropertyValueFactory<StudentGradeBookData, String>(null));
-            //enableColumnEdit(assignmentColumn, cellFactory);
-            table.getColumns().add(assignmentColumn);
+            gradeBookTable.getColumns().add(assignmentColumn);
         }
-    }
 
-    private void populateTable() {
-        ObservableList<StudentGradeBookData> data = FXCollections.observableArrayList(lGradeBookData);
-        ObservableList<Grade> gradeData = FXCollections.observableArrayList(selectedCourse.getlGrades());
-        table.setItems(data);
-        //table.setItems(gradeData);
+        lGradeBookData = FXCollections.observableArrayList(new Callback<Student, Observable[]>() {
+            @Override
+            public Observable[] call(Student param) {
+                return new Observable[]{
+                        param.getFirstMINameProperty(),
+                        param.getLastNameProperty(),
+                        param.getStudentEmailProperty()
+                };
+            }
+        });
 
-        //table.setItems(gradeData);
+        /*gradeBookObservableList.addListener(new ListChangeListener<Grade>() {
+            @Override
+            public void onChanged(Change<? extends Grade> c) {
+                while (c.next()) {
+                    if (c.wasUpdated()) {
+                        Grade g = selectedStudent.getGrades().get(c.getFrom());
+                        md.addUpdatedObject(g);
+
+                        recalculateStats();
+                    }
+                }
+            }
+        });*/
     }
 
     public void backClick(ActionEvent actionEvent) {
-        sc.activate("Course");
-    }
-
-    public class StudentGradeBookData{
-        ObservableList<String> sStudentData;
-
-        StudentGradeBookData(Student student) {
-            sStudentData = FXCollections.observableArrayList();
-            sStudentData.add(student.getFirstMIName());
-            sStudentData.add(student.getLastName());
-            sStudentData.add(student.getStudentID());
-            sStudentData.add(student.getStudentEmail());
-
-            ArrayList<Grade> lGrades = student.getGrades();
-            int iSize = lGrades.size();
-
-            for(int i = 0; i< iSize; i++) {
-                sStudentData.add(String.valueOf(lGrades.get(i).getGrade()));
-            }
-        }
-    }
-
-    private void reCastData(){
-        ArrayList<Student> lStudents = selectedCourse.getlStudents();
-        int iSize = lStudents.size();
-
-        for(int i = 0; i< iSize; i++) {
-            lGradeBookData.add(new StudentGradeBookData(lStudents.get(i)));
+        try {
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.activate("Course");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -99,6 +99,8 @@ public class Course {
         float mode;
         float standardDev;
 
+        
+
         float tempSum = 0;
         for (int a = 0; a < this.lAverageGrades.size(); a++) {
             tempSum += this.lAverageGrades.get(a);

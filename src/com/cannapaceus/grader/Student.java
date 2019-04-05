@@ -1,26 +1,29 @@
 package com.cannapaceus.grader;
 
-import java.sql.Array;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
-public class Student{
+public class Student extends RecursiveTreeObject<Student> {
 
     //Long to hold the ID of the student from the database
     private long lDBID = 0;
 
     //String to hold the student's last name
-    private String sLastName;
+    private final StringProperty sLastName;
 
     //String to hold the student's first name and middle initial
-    private String sFirstMIName;
+    private final StringProperty sFirstMIName;
 
     //String to hold the student's ID
-    private String sStudentID;
+    private final StringProperty sStudentID;
 
     //String to hold the student's email address
-    private String sEmail;
+    private final StringProperty sEmail;
 
     //List to hold all course grades
     private ArrayList<Grade> lGrades;
@@ -38,10 +41,10 @@ public class Student{
      */
     public Student(String sFirstMIName, String sLastName, String sStudentID, String sStudentEmail)
     {
-        this.sFirstMIName = sFirstMIName;
-        this.sLastName = sLastName;
-        this.sStudentID = sStudentID;
-        this.sEmail = sStudentEmail;
+        this.sFirstMIName = new SimpleStringProperty(sFirstMIName);
+        this.sLastName = new SimpleStringProperty(sLastName);
+        this.sStudentID = new SimpleStringProperty(sStudentID);
+        this.sEmail = new SimpleStringProperty(sStudentEmail);
         this.lGrades = new ArrayList<>();
 
         setAverageGrade(this.lGrades);
@@ -55,10 +58,10 @@ public class Student{
     public Student(Student stuStudent)
     {
         this.lDBID = stuStudent.getDBID();
-        this.sLastName = stuStudent.getLastName();
-        this.sFirstMIName = stuStudent.getFirstMIName();
-        this.sStudentID = stuStudent.getStudentID();
-        this.sEmail = stuStudent.getStudentEmail();
+        this.sLastName = new SimpleStringProperty(stuStudent.getLastName());
+        this.sFirstMIName = new SimpleStringProperty(stuStudent.getFirstMIName());
+        this.sStudentID = new SimpleStringProperty(stuStudent.getStudentID());
+        this.sEmail = new SimpleStringProperty(stuStudent.getStudentEmail());
         this.lGrades = new ArrayList<>();
 
         setAverageGrade(this.lGrades);
@@ -80,22 +83,22 @@ public class Student{
 
     public void setFirstMIName(String sFirstMIName)
     {
-        this.sFirstMIName = sFirstMIName;
+        this.sFirstMIName.set(sFirstMIName);
     }
 
     public void setLastName(String sLastName)
     {
-        this.sLastName = sLastName;
+        this.sLastName.set(sLastName);
     }
 
     public void setStudentID(String sStudentID)
     {
-        this.sStudentID = sStudentID;
+        this.sStudentID.set(sStudentID);
     }
 
     public void setStudentEmail(String sStudentEmail)
     {
-        this.sEmail = sStudentEmail;
+        this.sEmail.set(sStudentEmail);
     }
 
     public void setAverageGrade(float fAverageGrade) {
@@ -149,28 +152,48 @@ public class Student{
         return this.lDBID;
     }
 
+    public StringProperty getFirstMINameProperty()
+    {
+        return sFirstMIName;
+    }
+
+    public StringProperty getLastNameProperty()
+    {
+        return sLastName;
+    }
+
+    public StringProperty getStudentIDProperty()
+    {
+        return sStudentID;
+    }
+
+    public StringProperty getStudentEmailProperty()
+    {
+        return sEmail;
+    }
+
     public String getFirstMIName()
     {
-        String sFirstMINameCopy = new String(this.sFirstMIName);
-        return new String(sFirstMINameCopy);
+        String sFirstMINameCopy = new String(this.sFirstMIName.getValue());
+        return sFirstMINameCopy;
     }
 
     public String getStudentID()
     {
-        String sStudentIDCopy = new String(this.sStudentID);
-        return new String(sStudentIDCopy);
+        String sStudentIDCopy = new String(this.sStudentID.getValue());
+        return sStudentIDCopy;
     }
 
     public String getLastName()
     {
-        String sLastNameCopy = new String(this.sLastName);
-        return new String(sLastNameCopy);
+        String sLastNameCopy = new String(this.sLastName.getValue());
+        return sLastNameCopy;
     }
 
     public String getStudentEmail()
     {
-        String sEmailCopy = new String(this.sEmail);
-        return new String(sEmailCopy);
+        String sEmailCopy = new String(this.sEmail.getValue());
+        return sEmailCopy;
     }
 
     public float getAverageGrade()
@@ -200,7 +223,7 @@ public class Student{
      */
     public String GenerateStudentReport()
     {
-        String sReport = new String( "Student name: " + this.sFirstMIName + " " + this.sLastName + "\n\n"+"Assignments:\n");
+        String sReport = new String( "Student name: " + this.sFirstMIName.getValue() + " " + this.sLastName.getValue() + "\n\n"+"Assignments:\n");
 
         for (Grade gGrade:lGrades)
         {
