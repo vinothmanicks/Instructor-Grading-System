@@ -51,8 +51,7 @@ public class GradeBookController{
     Model md = null;
 
     Course selectedCourse;
-    ArrayList<Assignment> lAssignments;
-    int iLAssignmentSize;
+    ArrayList<TreeTableColumn<Student, Float>> lAssignmentColumns;
 
     ObservableList<Student> lGradeBookData;
 
@@ -72,6 +71,7 @@ public class GradeBookController{
         lblGradeBookName.setText(selectedCourse.getCourseName() + " Grade Book");
 
         lGradeBookData = FXCollections.observableArrayList();
+        lAssignmentColumns = new ArrayList<TreeTableColumn<Student, Float>>();
 
         createTable();
     }
@@ -115,15 +115,6 @@ public class GradeBookController{
         });
         studentIDColumn.setContextMenu(null);
 
-        final TreeItem<Student> root = new RecursiveTreeItem<>(lGradeBookData, RecursiveTreeObject::getChildren);
-
-        gradeBookTable.setRoot(root);
-        gradeBookTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
-        gradeBookTable.setTableMenuButtonVisible(false);
-        gradeBookTable.setShowRoot(false);
-        gradeBookTable.setEditable(true);
-        gradeBookTable.getColumns().setAll(firstNameColumn, lastNameColumn, studentIDColumn);
-
         ArrayList<Assignment> lAssignments = selectedCourse.getlAssignments();
         int iSize = lAssignments.size();
 
@@ -146,33 +137,49 @@ public class GradeBookController{
             });
             assignmentColumn.setContextMenu(null);
 
-            gradeBookTable.getColumns().add(assignmentColumn);
+            lAssignmentColumns.add(assignmentColumn);
         }
 
         lGradeBookData = FXCollections.observableArrayList(new Callback<Student, Observable[]>() {
             @Override
             public Observable[] call(Student param) {
-                return new Observable[]{
-                        param.getFirstMINameProperty(),
-                        param.getLastNameProperty(),
-                        param.getStudentEmailProperty()
-                };
+                ArrayList<Observable> o = new ArrayList<>();
+
+                o.add(param.getStudentEmailProperty());
+
+                for (Grade g : param.getGrades()) {
+                    o.add(g.getGradeProperty().asObject());
+                }
+
+                Observable[] arrO = (Observable[]) o.toArray();
+
+                return arrO;
             }
         });
 
-        /*gradeBookObservableList.addListener(new ListChangeListener<Grade>() {
+        lGradeBookData.addListener(new ListChangeListener<Student>() {
             @Override
-            public void onChanged(Change<? extends Grade> c) {
+            public void onChanged(Change<? extends Student> c) {
                 while (c.next()) {
                     if (c.wasUpdated()) {
-                        Grade g = selectedStudent.getGrades().get(c.getFrom());
-                        md.addUpdatedObject(g);
-
-                        recalculateStats();
+                        //Grade g = selectedCourse.getlStudents().get(c.getFrom());
+                        //md.addUpdatedObject(g);
                     }
                 }
             }
-        });*/
+        });
+
+        final TreeItem<Student> root = new RecursiveTreeItem<>(lGradeBookData, RecursiveTreeObject::getChildren);
+
+        gradeBookTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        gradeBookTable.setTableMenuButtonVisible(false);
+        gradeBookTable.setShowRoot(false);
+        gradeBookTable.setEditable(true);
+        gradeBookTable.getColumns().setAll(firstNameColumn, lastNameColumn, studentIDColumn);
+
+        gradeBookTable.getColumns().addAll(lAssignmentColumns);
+
+        gradeBookTable.setRoot(root);
     }
 
     public void backClick(ActionEvent actionEvent) {
