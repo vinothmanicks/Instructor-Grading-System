@@ -7,8 +7,7 @@ import com.cannapaceus.grader.Term;
 
 import com.opencsv.*;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -173,8 +172,26 @@ public class CSVService {
         writer.writeAll(myResultSet, includeHeaders); //writer is instance of CSVWriter
     }*/
 
-    public void ImportCSV() {
+    public Course ImportCSV(String csvFilePath) {
+        String line = "";
+        String cvsSplitBy = ",";
+        Course importedCourse = new Course("","","");
 
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+
+            while ((line = br.readLine()) != null) {
+
+                //Text to store to objects
+
+            }
+
+            return importedCourse;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public String Today() {
