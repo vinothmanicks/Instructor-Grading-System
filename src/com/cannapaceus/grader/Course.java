@@ -94,6 +94,14 @@ public class Course {
 
     public void calculateStats()
     {
+        if (this.lAverageGrades.size() == 0) {
+            this.stCourseStats.setMean(0.0f);
+            this.stCourseStats.setMedian(0.0f);
+            this.stCourseStats.setMode(0.0f);
+            this.stCourseStats.setStandardDev(0.0f);
+            return;
+        }
+
         float mean;
         float median;
         float mode;
