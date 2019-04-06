@@ -1,9 +1,14 @@
 package com.cannapaceus.grader;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,7 +34,7 @@ public class Student extends RecursiveTreeObject<Student> {
     private ArrayList<Grade> lGrades;
 
     //Grade class containing student's average grade for the course
-    private float fAverageGrade;
+    private FloatProperty fAverageGrade;
 
     /**
      * <h1>Student Constructor</h1>
@@ -47,6 +52,8 @@ public class Student extends RecursiveTreeObject<Student> {
         this.sEmail = new SimpleStringProperty(sStudentEmail);
         this.lGrades = new ArrayList<>();
 
+        this.fAverageGrade = new SimpleFloatProperty();
+
         setAverageGrade(this.lGrades);
     }
 
@@ -63,6 +70,8 @@ public class Student extends RecursiveTreeObject<Student> {
         this.sStudentID = new SimpleStringProperty(stuStudent.getStudentID());
         this.sEmail = new SimpleStringProperty(stuStudent.getStudentEmail());
         this.lGrades = new ArrayList<>();
+
+        this.fAverageGrade = new SimpleFloatProperty();
 
         setAverageGrade(this.lGrades);
     }
@@ -102,7 +111,7 @@ public class Student extends RecursiveTreeObject<Student> {
     }
 
     public void setAverageGrade(float fAverageGrade) {
-        this.fAverageGrade = fAverageGrade;
+        this.fAverageGrade.setValue(fAverageGrade);
     }
 
     public void setAverageGrade(ArrayList<Grade> lGrades) {
@@ -132,9 +141,9 @@ public class Student extends RecursiveTreeObject<Student> {
         }
 
         if (fullScoresSum == 0) {
-            this.fAverageGrade = 0;
+            this.fAverageGrade.setValue(0);
         } else {
-            this.fAverageGrade = (scoreSum / fullScoresSum) * 100;
+            this.fAverageGrade.setValue((scoreSum / fullScoresSum) * 100);
         }
     }
 
@@ -198,8 +207,11 @@ public class Student extends RecursiveTreeObject<Student> {
 
     public float getAverageGrade()
     {
-        float fAverageCopy = this.fAverageGrade;
-        return fAverageCopy;
+        return this.fAverageGrade.getValue();
+    }
+
+    public FloatProperty getfAverageGradeProperty() {
+        return this.fAverageGrade;
     }
 
     public int compareTo(Student anotherStudent) {
