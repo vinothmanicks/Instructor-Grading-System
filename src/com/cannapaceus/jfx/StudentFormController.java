@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import com.cannapaceus.services.EmailService;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import com.jfoenix.validation.*;
 
 public class StudentFormController {
 
@@ -43,6 +46,22 @@ public class StudentFormController {
         tfStudentLName.setText(selectedStudent.getLastName());
         tfStudentID.setText(selectedStudent.getStudentID());
         tfStudentEmail.setText(selectedStudent.getStudentEmail());
+
+        tfStudentFMName.textProperty().addListener((o, oldVal, newVal) -> {
+            tfStudentFMName.validate();
+        });
+
+        tfStudentLName.textProperty().addListener((o, oldVal, newVal) -> {
+            tfStudentLName.validate();
+        });
+
+        tfStudentID.textProperty().addListener((o, oldVal, newVal) -> {
+            tfStudentID.validate();
+        });
+
+        tfStudentEmail.textProperty().addListener((o, oldVal, newVal) -> {
+            tfStudentEmail.validate();
+        });
     }
 
 
@@ -104,8 +123,8 @@ public class StudentFormController {
             isAllValid = false;
         }
 
-        if(!EmailService.checkEmail(tfStudentEmail.getText()))
-            isAllValid = false;
+        /*if(!EmailService.checkEmail(tfStudentEmail.getText()))
+            isAllValid = false;*/
 
         return isAllValid;
     }
