@@ -47,10 +47,6 @@ public class StudentFormController {
         tfStudentID.setText(selectedStudent.getStudentID());
         tfStudentEmail.setText(selectedStudent.getStudentEmail());
 
-        /*RegexValidator emailValidator = new RegexValidator();
-        emailValidator.setRegexPattern("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,4}");
-        tfStudentEmail.setValidators(emailValidator);
-*/
         tfStudentFMName.textProperty().addListener((o, oldVal, newVal) -> {
             tfStudentFMName.validate();
         });
