@@ -107,13 +107,22 @@ public class Course {
         float mode;
         float standardDev;
 
+        if (this.lAverageGrades.size() == 0) {
+            this.stCourseStats.setMean(0.0f);
+            this.stCourseStats.setMedian(0.0f);
+            this.stCourseStats.setMode(0.0f);
+            this.stCourseStats.setStandardDev(0.0f);
+
+            return;
+        }
+
         float tempSum = 0;
         for (int a = 0; a < this.lAverageGrades.size(); a++) {
             tempSum += this.lAverageGrades.get(a);
         }
         mean = tempSum / this.lAverageGrades.size();
 
-        int medianMarker = Math.round(this.lAverageGrades.size()/2);
+        int medianMarker = Math.round(this.lAverageGrades.size()/2.0f) - 1;
         median = this.lAverageGrades.get(medianMarker);
 
         float maxValue = 0;

@@ -370,6 +370,12 @@ public class TermsController {
 
     public void commitClick(ActionEvent e) {
         md.commitChanges();
+
+        vbTerms.getChildren().clear();
+        hmTerm.clear();
+        hmCourse.clear();
+
+        initialize();
     }
 
     public void revertClick(ActionEvent e) {
