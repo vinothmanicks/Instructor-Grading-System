@@ -82,7 +82,7 @@ public class AssignmentController {
         studentNameColumn.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return -o1.toUpperCase().compareTo(o2.toUpperCase());
+                return o1.toUpperCase().compareTo(o2.toUpperCase());
             }
         });
         studentNameColumn.setContextMenu(null);
@@ -176,7 +176,6 @@ public class AssignmentController {
                 while (c.next()) {
                     if (c.wasUpdated()) {
                         Grade g = selectedAssignment.getGrades().get(c.getFrom());
-                        md.addUpdatedObject(g);
 
                         recalculateStats(g);
                     }
@@ -236,6 +235,7 @@ public class AssignmentController {
         md.addUpdatedObject(selectedAssignment);
         md.addUpdatedObject(s);
         md.addUpdatedObject(c);
+        md.addUpdatedObject(g);
 
         lblMean.setText("Average: " + (Math.round(st.getMean() * 100.0) / 100.0));
         lblMedian.setText("Median: " + (Math.round(st.getMedian() * 100.0) / 100.0));
