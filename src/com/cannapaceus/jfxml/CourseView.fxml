@@ -9,6 +9,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.CourseController"
@@ -58,6 +59,15 @@
                             </graphic>
                             <style>
                                 -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                        <JFXButton fx:id="btnOpenOptionsMenu" buttonType="FLAT" onAction="#operateMenu">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="ELLIPSIS_V" glyphSize="30" glyphStyle="-fx-fill: grey;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #ffffff;
                                 -fx-text-fill: white;
                             </style>
                         </JFXButton>
@@ -203,4 +213,42 @@
             </HBox>
         </VBox>
     </bottom>
+    <right>
+        <VBox fx:id="vbOptionsMenuPane" minWidth="100.0" visible="false" managed="false" spacing="10">
+            <style>
+                -fx-padding: 10,10,10,10;
+                -fx-background-color: #ffffff;
+            </style>
+            <!--JFXButton fx:id="btnCloseOptionsMenu" buttonType="FLAT" onAction="#operateMenu">
+                <graphic>
+                    <FontAwesomeIconView glyphName="TIMES_CIRCLE" glyphSize="30" glyphStyle="-fx-fill: grey;"/>
+                </graphic>
+                <style>
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: white;
+                </style>
+            </JFXButton-->
+            <JFXButton fx:id="btnPrintList" buttonType="FLAT" text="Print List of Students" onAction="#printList">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: blue;
+                </style>
+            </JFXButton>
+            <JFXButton fx:id="btnPrintGrades" buttonType="FLAT" text="Print Grade Reports" onAction="#printGrades">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: blue;
+                </style>
+            </JFXButton>
+            <JFXButton fx:id="btnEmailGrades" buttonType="FLAT" text="Email Grade Reports" onAction="#emailGrades">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: blue;
+                </style>
+            </JFXButton>
+        </VBox>
+    </right>
 </BorderPane>
