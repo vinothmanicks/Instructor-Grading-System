@@ -14,7 +14,7 @@ public class EmailTester {
         recipiants.add(toEmail);
         EmailService es = new EmailService(myEmail,"N000000!");
         es.setsMessageText("Find your grade attached.\n Thanks,\nYour Prof");
-        es.SendEmail(recipiants,"Not important");
+        //es.SendEmail(recipiants,"Not important");
     }
 
 

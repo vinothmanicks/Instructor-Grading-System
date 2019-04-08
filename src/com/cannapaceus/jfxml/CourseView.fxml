@@ -64,7 +64,7 @@
                         </JFXButton>
                         <JFXButton fx:id="btnOpenOptionsMenu" buttonType="FLAT" onAction="#operateMenu">
                             <graphic>
-                                <FontAwesomeIconView glyphName="ELLIPSIS_V" glyphSize="30" glyphStyle="-fx-fill: grey;"/>
+                                <FontAwesomeIconView glyphName="BARS" glyphSize="30" glyphStyle="-fx-fill: grey;"/> <!--ELLIPSIS_V-->
                             </graphic>
                             <style>
                                 -fx-background-color: #ffffff;
@@ -232,21 +232,21 @@
                 <style>
                     -fx-cursor: hand;
                     -fx-background-color: #ffffff;
-                    -fx-text-fill: blue;
+                    -fx-text-fill: #0077C8;
                 </style>
             </JFXButton>
             <JFXButton fx:id="btnPrintGrades" buttonType="FLAT" text="Print Grade Reports" onAction="#printGrades">
                 <style>
                     -fx-cursor: hand;
                     -fx-background-color: #ffffff;
-                    -fx-text-fill: blue;
+                    -fx-text-fill: #0077C8;
                 </style>
             </JFXButton>
             <JFXButton fx:id="btnEmailGrades" buttonType="FLAT" text="Email Grade Reports" onAction="#emailGrades">
                 <style>
                     -fx-cursor: hand;
                     -fx-background-color: #ffffff;
-                    -fx-text-fill: blue;
+                    -fx-text-fill: #0077C8;
                 </style>
             </JFXButton>
         </VBox>

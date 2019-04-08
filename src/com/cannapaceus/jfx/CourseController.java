@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXNodesList;
@@ -620,7 +621,7 @@ public class CourseController {
             vbOptionsMenuPane.setVisible(false);
 
             FontAwesomeIconView tempFA = new FontAwesomeIconView();
-            tempFA.setGlyphName("ELLIPSIS_V");
+            tempFA.setGlyphName("BARS"); //ELLIPSIS_V
             tempFA.setGlyphSize(30);
             tempFA.setGlyphStyle("-fx-fill: grey;");
             btnOpenOptionsMenu.setGraphic(tempFA);
@@ -639,7 +640,8 @@ public class CourseController {
     }
 
     public void printList(ActionEvent event) {
-
+        PrinterService service = PrinterService.getInstance();
+        service.printList(selectedCourse);
     }
 
     public void printGrades(ActionEvent event) {

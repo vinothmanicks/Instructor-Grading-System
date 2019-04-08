@@ -63,8 +63,7 @@ public class EmailService {
         props.put("mail.smtp.port", "465");
 
         // Get the Session object.
-        session = Session.getInstance(props,
-        new javax.mail.Authenticator() {
+        session = Session.getInstance(props,new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(sFromAddress, sPassword);
             }
@@ -97,55 +96,31 @@ public class EmailService {
      * @param lTo
      * @param sSubject
      */
-    public void SendEmail(List<String> lTo, String sSubject) {
+    public void SendEmail(String lTo, String sSubject) {
 
-        for (String to : lTo) {
-            try {
-                // Create a default MimeMessage object.
-                Message message = new MimeMessage(session);
+        try {
+            // Create a default MimeMessage object.
+            Message message = new MimeMessage(session);
 
-                // Set From: header field of the header.
-                message.setFrom(new InternetAddress(sFromAddress));
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(sFromAddress));
 
-                // Set To: header field of the header.
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            // Set To: header field of the header.
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(lTo));
 
-                // Set Subject: header field
-                message.setSubject(sSubject);
+            // Set Subject: header field
+            message.setSubject(sSubject);
 
-                // Create the message part
-                BodyPart messageBodyPart = new MimeBodyPart();
+            // Now set the actual message
+            message.setText(sMessageText);
 
-                // Now set the actual message
-                messageBodyPart.setText(sMessageText);
+            // Send message
+            Transport.send(message);
 
-                // Create a multipart message
-                Multipart multipart = new MimeMultipart();
+            //System.out.println("Sent message successfully....");
 
-                // Set text message part
-                multipart.addBodyPart(messageBodyPart);
-
-                // Part two is attachment
-                /*messageBodyPart = new MimeBodyPart();
-                String filename = "C:\\Users\\vinot\\Desktop\\TrialDocument.pdf";
-                DataSource source = new FileDataSource(filename);
-                messageBodyPart.setDataHandler(new DataHandler(source));
-                messageBodyPart.setFileName(filename);
-                multipart.addBodyPart(messageBodyPart);
-
-                // Send the complete message parts*/
-                message.setContent(multipart);
-
-
-                // Send message
-                Transport.send(message);
-
-
-                System.out.println("Sent message successfully....");
-
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 
