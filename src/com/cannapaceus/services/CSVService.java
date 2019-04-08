@@ -4,6 +4,7 @@ import com.cannapaceus.grader.*;
 import com.opencsv.*;
 import com.cannapaceus.services.ErrorMessage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -108,6 +109,7 @@ public class CSVService {
 
             CSVWriter_Assignment(course.getlAssignments());
             CSVWriter_Student(course.getlStudents());
+            CSVWriter_Grades(course);
 
             writer.close();
         }
@@ -129,9 +131,52 @@ public class CSVService {
         int iSize = lAssignments.size();
 
         for(int i = 0; i < iSize; i++) {
-            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString(), lAssignments.get(i).getAssignmentName().toString(), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
+            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString(), lAssignments.get(i).getAssignedDate().toString(), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
             writer.writeNext(data);
         }
+
+        String[] footer = {"___END___"};
+        writer.writeNext(footer);
+        writer.writeNext(emptyLine);
+    }
+
+    private void CSVWriter_Grades(Course cCourse)
+    {
+        String[] dataType = {"DataType", "Grade"};
+        writer.writeNext(dataType);
+
+        String[] emptyLine = {" "};
+        writer.writeNext(emptyLine);
+
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Student Name");
+        for (Assignment aAssignment: cCourse.getlAssignments())
+        {
+            header.add(aAssignment.getAssignmentName());
+        }
+        String[] aheader = new String[header.size()];
+        aheader = header.toArray(aheader);
+        writer.writeNext(aheader);
+
+        for(Student stuStudent: cCourse.getlStudents()) {
+            ArrayList<String> dataList = new ArrayList<>();
+            dataList.add(stuStudent.getLastName());
+            for (Assignment aAssignment : cCourse.getlAssignments()) {
+                for (Grade gGrade:aAssignment.getGrades()) {
+                    if(gGrade.getStudentReference().getStudentID().equals(stuStudent.getStudentID()))
+                    {
+                        dataList.add(String.valueOf(gGrade.getGrade()));
+                        break;
+                    }
+                }
+            }
+            String[] data = new String[dataList.size()];
+            data = dataList.toArray(data);
+            writer.writeNext(data);
+        }
+
+
+
 
         String[] footer = {"___END___"};
         writer.writeNext(footer);
@@ -201,7 +246,7 @@ public class CSVService {
                                     while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
                                     {
                                         lineElements = line.split(",");
-                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Assignment Name")))
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().toLowerCase().equals("assignment name")))
                                         {
                                             continue;
                                         }
@@ -225,7 +270,7 @@ public class CSVService {
                                     while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
                                     {
                                         lineElements = line.split(",");
-                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Student name")))
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().toLowerCase().equals("student name")))
                                         {
                                             continue;
                                         }
