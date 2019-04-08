@@ -214,9 +214,8 @@ public class CSVService {
                                         LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]));
                                         addedAssignment.setAssignedDate(assignedDate);
                                         addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
-
-                                        //Search and create all categories
                                         addedAssignment.setMaxScore(Float.valueOf(lineElements[4]));
+                                        //TODO: Search and create all categories
                                         addedAssignment.setCategory(null);
                                         addedAssignment.setWeight(Float.valueOf(lineElements[6]));
                                         importedCourse.addAssignment(addedAssignment);
