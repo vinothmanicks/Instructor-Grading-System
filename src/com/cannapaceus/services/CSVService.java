@@ -1,19 +1,13 @@
 package com.cannapaceus.services;
 
-import com.cannapaceus.grader.Assignment;
-import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.Student;
-import com.cannapaceus.grader.Term;
-
+import com.cannapaceus.grader.*;
 import com.opencsv.*;
-
+import com.cannapaceus.services.ErrorMessage;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 public class CSVService {
 
@@ -179,9 +173,78 @@ public class CSVService {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null)
+            {
+                String[] lineElements= line.split(",");
 
-                //Text to store to objects
+                if(lineElements[0] != null) {
+                    switch (lineElements[0]) {
+                        case "FileType":
+                            /*if (lineElements[1] != "Course") {
+                                System.out.println("Invalid file imported");
+                                return null;
+                            }*/
+                            break;
+                        case "CourseName":
+                            importedCourse.setCourseName(lineElements[1]);
+                            break;
+                        case "CourseID":
+                            importedCourse.setCourseID(lineElements[1]);
+                            break;
+                        case "DepartmentName":
+                            importedCourse.setDepartment(lineElements[1]);
+                            break;
+                        case "DataType":
+                            switch (lineElements[1])
+                            {
+                                case "Assignment":
+                                    while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
+                                    {
+                                        lineElements = line.split(",");
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Assignment Name")))
+                                        {
+                                            continue;
+                                        }
+                                        Assignment addedAssignment = new Assignment("",null,null,false,100,null,100);
+                                        addedAssignment.setAssignmentName(lineElements[0]);
+                                        String[] dateSections = lineElements[1].split("/");
+                                        LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]));
+                                        addedAssignment.setDueDate(dueDate);
+                                        dateSections = lineElements[2].split("/");
+                                        LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]));
+                                        addedAssignment.setAssignedDate(assignedDate);
+                                        addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
+
+                                        //Search and create all categories
+                                        addedAssignment.setCategory(null);
+                                        addedAssignment.setWeight(Float.valueOf(lineElements[5]));
+                                        importedCourse.addAssignment(addedAssignment);
+                                    }
+                                    break;
+                                case "Student":
+                                    while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
+                                    {
+                                        lineElements = line.split(",");
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Student name")))
+                                        {
+                                            continue;
+                                        }
+                                        Student addedStudent = new Student("","","","");
+                                        addedStudent.setFirstMIName(lineElements[0]);
+                                        addedStudent.setLastName(lineElements[1]);
+                                        addedStudent.setStudentID(lineElements[2]);
+                                        addedStudent.setStudentID(lineElements[3]);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
 
             }
 
@@ -189,6 +252,7 @@ public class CSVService {
 
         } catch (IOException e) {
             e.printStackTrace();
+            ErrorMessage.showError("File not formatted correctly");
         }
 
         return null;
