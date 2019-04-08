@@ -246,7 +246,7 @@ public class CSVService {
                                     while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
                                     {
                                         lineElements = line.split(",");
-                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().toLowerCase().equals("assignment name")))
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Assignment Name")))
                                         {
                                             continue;
                                         }
@@ -270,7 +270,7 @@ public class CSVService {
                                     while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
                                     {
                                         lineElements = line.split(",");
-                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().toLowerCase().equals("student name")))
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("First MI Name")))
                                         {
                                             continue;
                                         }

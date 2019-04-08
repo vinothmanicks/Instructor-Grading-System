@@ -10,10 +10,10 @@ public class CSVServiceTester {
 
     public static void main(String args[])
     {
-        /*Term teTest = new Term(2019, eSeason.SPRING);
+        Term teTest = new Term(2019, eSeason.SPRING);
         //System.out.println(db.storeTerm(teTest));
 
-        Course coTest = new Course("Test Course", "TST 000", "Testing");
+        /*Course coTest = new Course("Test Course", "TST 000", "Testing");
         //System.out.println(db.storeCourse(coTest, teTest.getDBID()));
 
         Category catTests = new Category("Tests", 0.50f);
@@ -87,6 +87,7 @@ public class CSVServiceTester {
 
         CSVService csvService = new CSVService();
         //csvService.ExportCSV(coTest,teTest);
-        csvService.ImportCSV("C:\\Users\\cjg0019\\IdeaProjects\\java-application\\20190408_181819_Test Course_2019Spring.csv");
+        Course importedBoi = csvService.ImportCSV("C:\\Users\\cjg0019\\IdeaProjects\\java-application\\20190408_181819_Test Course_2019Spring.csv");
+        csvService.ExportCSV(importedBoi,teTest);
     }
 }
