@@ -216,8 +216,9 @@ public class CSVService {
                                         addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
 
                                         //Search and create all categories
+                                        addedAssignment.setMaxScore(Float.valueOf(lineElements[4]));
                                         addedAssignment.setCategory(null);
-                                        addedAssignment.setWeight(Float.valueOf(lineElements[5]));
+                                        addedAssignment.setWeight(Float.valueOf(lineElements[6]));
                                         importedCourse.addAssignment(addedAssignment);
                                     }
                                     break;
@@ -252,7 +253,6 @@ public class CSVService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            ErrorMessage.showError("File not formatted correctly");
         }
 
         return null;
