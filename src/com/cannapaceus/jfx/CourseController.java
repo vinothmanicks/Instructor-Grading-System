@@ -1,7 +1,10 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXNodesList;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,12 +14,11 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
@@ -80,6 +82,12 @@ public class CourseController {
 
     @FXML
     private HBox hbStatistics;
+
+    @FXML
+    private VBox vbOptionsMenuPane;
+
+    @FXML
+    private JFXButton btnOpenOptionsMenu;
 
     @FXML
     private void initialize()
@@ -605,5 +613,42 @@ public class CourseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void operateMenu(ActionEvent event) {
+        if(vbOptionsMenuPane.isVisible()) {
+            vbOptionsMenuPane.setManaged(false);
+            vbOptionsMenuPane.setVisible(false);
+
+            FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("BARS"); //ELLIPSIS_V
+            tempFA.setGlyphSize(30);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+            btnOpenOptionsMenu.setGraphic(tempFA);
+        }
+
+        else {
+            vbOptionsMenuPane.setManaged(true);
+            vbOptionsMenuPane.setVisible(true);
+
+            FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("TIMES_CIRCLE");
+            tempFA.setGlyphSize(30);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+            btnOpenOptionsMenu.setGraphic(tempFA);
+        }
+    }
+
+    public void printList(ActionEvent event) {
+        PrinterService service = PrinterService.getInstance();
+        service.printList(selectedCourse);
+    }
+
+    public void printGrades(ActionEvent event) {
+
+    }
+
+    public void emailGrades(ActionEvent event) {
+
     }
 }

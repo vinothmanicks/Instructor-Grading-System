@@ -15,6 +15,6 @@ class EmailServiceTest {
         lTo.add("nab0016@uah.edu");
         lTo.add("cjg0019@uah.edu");
         lTo.add("jes0030@uah.edu");
-        emailService.SendEmail(lTo, "[CS 499] Test Email with Attachment");
+        //emailService.SendEmail(lTo, "[CS 499] Test Email with Attachment");
     }
 }

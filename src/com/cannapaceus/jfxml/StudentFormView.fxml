@@ -23,7 +23,7 @@
 
     <VBox fx:id="vbStudent"
             fillWidth="true"
-            spacing="30.0"
+            spacing="50.0"
             AnchorPane.topAnchor="0.0"
             AnchorPane.bottomAnchor="0.0"
             AnchorPane.leftAnchor="0.0"
@@ -67,7 +67,7 @@
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
-                        <RegexValidator regexPattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,4}" message="Valid email required">
+                        <RegexValidator regexPattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}" message="Valid email required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RegexValidator>
                     </validators>
@@ -85,8 +85,6 @@
                         -fx-text-fill: white;
                     </style>
                 </JFXButton>
-            </HBox>
-            <HBox alignment="CENTER_LEFT">
                 <Separator orientation="VERTICAL"/>
                 <JFXButton buttonType="FLAT" text="Cancel" onAction="#cancelClick">
                     <graphic>

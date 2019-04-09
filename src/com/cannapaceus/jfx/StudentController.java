@@ -73,7 +73,7 @@ public class StudentController {
         assignmentNameColumn.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return -o1.toUpperCase().compareTo(o2.toUpperCase());
+                return o1.toUpperCase().compareTo(o2.toUpperCase());
             }
         });
         assignmentNameColumn.setContextMenu(null);
@@ -161,7 +161,6 @@ public class StudentController {
                 while (c.next()) {
                     if (c.wasUpdated()) {
                         Grade g = selectedStudent.getGrades().get(c.getFrom());
-                        md.addUpdatedObject(g);
 
                         recalculateStats(g);
                     }
@@ -171,12 +170,13 @@ public class StudentController {
 
         final TreeItem<Grade> root = new RecursiveTreeItem<>(gradeObservableList, RecursiveTreeObject::getChildren);
 
-        studentGradeTable.setRoot(root);
         studentGradeTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
         studentGradeTable.setTableMenuButtonVisible(false);
         studentGradeTable.setShowRoot(false);
         studentGradeTable.setEditable(true);
         studentGradeTable.getColumns().setAll(assignmentNameColumn, gradeFloatColumn, maxScoreColumn, overdueColumn, missingColumn, droppedColumn, submittedColumn);
+
+        studentGradeTable.setRoot(root);
     }
 
     public void backClick(ActionEvent actionEvent) {
@@ -223,6 +223,7 @@ public class StudentController {
         md.addUpdatedObject(a);
         md.addUpdatedObject(selectedStudent);
         md.addUpdatedObject(c);
+        md.addUpdatedObject(g);
 
         lblStudentAvg.setText("Average: " + (Math.round(selectedStudent.getAverageGrade() * 100.0) / 100.0));
     }

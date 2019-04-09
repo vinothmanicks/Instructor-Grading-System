@@ -1,5 +1,9 @@
 package com.cannapaceus.services;
 
+import com.cannapaceus.grader.Course;
+import com.cannapaceus.grader.Student;
+import javafx.beans.property.StringProperty;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,22 +14,24 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.util.ArrayList;
 
-public class PrinterService implements Printable, ActionListener {
+public class PrinterService implements Printable {
+
+    private static PrinterService instance = null;
+
+    public static PrinterService getInstance() {
+        if (instance == null)
+            instance = new PrinterService();
+
+        return instance;
+    }
+
 
     int[] pageBreaks;  // array of page break line positions.
 
     /* Synthesise some sample lines of text */
-    String[] textLines;
-    private void initTextLines() {
-        if (textLines == null) {
-            int numLines=200;
-            textLines = new String[numLines];
-            for (int i=0;i<numLines;i++) {
-                textLines[i]= "This is line number " + i;
-            }
-        }
-    }
+    String[] data;
 
     public int print(Graphics g, PageFormat pf, int pageIndex)
             throws PrinterException {
@@ -35,9 +41,8 @@ public class PrinterService implements Printable, ActionListener {
         int lineHeight = metrics.getHeight();
 
         if (pageBreaks == null) {
-            initTextLines();
             int linesPerPage = (int)(pf.getImageableHeight()/lineHeight);
-            int numBreaks = (textLines.length-1)/linesPerPage;
+            int numBreaks = (data.length-1)/linesPerPage;
             pageBreaks = new int[numBreaks];
             for (int b=0; b<numBreaks; b++) {
                 pageBreaks[b] = (b+1)*linesPerPage;
@@ -61,17 +66,17 @@ public class PrinterService implements Printable, ActionListener {
         int y = 0;
         int start = (pageIndex == 0) ? 0 : pageBreaks[pageIndex-1];
         int end   = (pageIndex == pageBreaks.length)
-                ? textLines.length : pageBreaks[pageIndex];
+                ? data.length : pageBreaks[pageIndex];
         for (int line=start; line<end; line++) {
             y += lineHeight;
-            g.drawString(textLines[line], 0, y);
+            g.drawString(data[line], 0, y);
         }
 
         /* tell the caller that this page is part of the printed document */
         return PAGE_EXISTS;
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void startPrintJob() {
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(this);
         boolean ok = job.printDialog();
@@ -84,38 +89,19 @@ public class PrinterService implements Printable, ActionListener {
         }
     }
 
-    public void PrintTest() {
-        try {
-            String cn = UIManager.getSystemLookAndFeelClassName();
-            UIManager.setLookAndFeel(cn); // Use the native L&F
-        } catch (Exception cnf) {
+    public void printList(Course course) {
+        pageBreaks = null;
+
+        ArrayList<Student> lStudents = course.getlStudents();
+
+        int iSize =  lStudents.size();
+        data = new String[iSize];
+
+        for(int i = 0; i < iSize; i++) {
+            data[i] = lStudents.get(i).getFirstMIName() + "\t" + lStudents.get(i).getLastName() + "\t" + lStudents.get(i).getStudentID();
         }
-        JFrame f = new JFrame("Printing Pagination Example");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-        });
-        JButton printButton = new JButton("Print Pages");
-        printButton.addActionListener(new PrinterService());
-        f.add("Center", printButton);
-        f.pack();
-        f.setVisible(true);
+
+        startPrintJob();
     }
 
-    public static void main(String args[]) {
-
-        try {
-            String cn = UIManager.getSystemLookAndFeelClassName();
-            UIManager.setLookAndFeel(cn); // Use the native L&F
-        } catch (Exception cnf) {
-        }
-        JFrame f = new JFrame("Printing Pagination Example");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
-        });
-        JButton printButton = new JButton("Print Pages");
-        printButton.addActionListener(new PrinterService());
-        f.add("Center", printButton);
-        f.pack();
-        f.setVisible(true);
-    }
 }
