@@ -89,6 +89,7 @@
                         -fx-text-fill: white;
                     </style>
                 </JFXButton>
+
             </HBox>
         </children>
     </VBox>
