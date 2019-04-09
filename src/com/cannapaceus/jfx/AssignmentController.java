@@ -1,8 +1,6 @@
 package com.cannapaceus.jfx;
 
-import com.cannapaceus.grader.Assignment;
-import com.cannapaceus.grader.Grade;
-import com.cannapaceus.grader.Statistics;
+import com.cannapaceus.grader.*;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
@@ -180,7 +178,7 @@ public class AssignmentController {
                         Grade g = selectedAssignment.getGrades().get(c.getFrom());
                         md.addUpdatedObject(g);
 
-                        recalculateStats();
+                        recalculateStats(g);
                     }
                 }
             }
@@ -210,6 +208,7 @@ public class AssignmentController {
 
     public void commitClick(ActionEvent e) {
         md.commitChanges();
+        initialize();
     }
 
     public void revertClick(ActionEvent e) {
@@ -217,7 +216,16 @@ public class AssignmentController {
         initialize();
     }
 
-    private void recalculateStats() {
+    private void recalculateStats(Grade g) {
+        Course c = md.getSelectedCourse();
+
+        c.PopulateAverages(c.getlStudents());
+        c.calculateStats();
+
+        Student s = g.getStudentReference();
+
+        s.setAverageGrade(s.getGrades());
+
         Statistics st = selectedAssignment.getStAssignmentStats();
 
         st.calculateMean(selectedAssignment.getGrades());
@@ -226,6 +234,8 @@ public class AssignmentController {
         st.calculateStandardDev(selectedAssignment.getGrades());
 
         md.addUpdatedObject(selectedAssignment);
+        md.addUpdatedObject(s);
+        md.addUpdatedObject(c);
 
         lblMean.setText("Average: " + (Math.round(st.getMean() * 100.0) / 100.0));
         lblMedian.setText("Median: " + (Math.round(st.getMedian() * 100.0) / 100.0));
