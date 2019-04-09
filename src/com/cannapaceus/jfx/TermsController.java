@@ -1,8 +1,7 @@
 package com.cannapaceus.jfx;
 
-import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.Term;
-import com.cannapaceus.grader.eSeason;
+import com.cannapaceus.grader.*;
+import com.cannapaceus.services.CSVService;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
@@ -20,15 +19,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileFilter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class TermsController {
     ScreenController sc = null;
     Model md = null;
+    CSVService csvService;
 
     ArrayList<Term> lTerms;
 
@@ -43,6 +48,8 @@ public class TermsController {
     {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
+
+        csvService = new CSVService();
 
         lTerms = md.getTerms();
 
@@ -142,6 +149,18 @@ public class TermsController {
             termAddCourse.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
             termAddCourse.setButtonType(JFXButton.ButtonType.FLAT);
             termAddCourse.setOnAction((event -> addCourseClick(event)));
+
+            tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("PLUS");
+            tempFA.setGlyphSize(20);
+            tempFA.setGlyphStyle("-fx-fill: white;");
+
+            JFXButton termImportCourse = new JFXButton("Import Course");
+            termImportCourse.setAlignment(Pos.BASELINE_RIGHT);
+            termImportCourse.setGraphic(tempFA);
+            termImportCourse.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+            termImportCourse.setButtonType(JFXButton.ButtonType.FLAT);
+            termImportCourse.setOnAction((event -> importCourseClick(event)));
 
             Separator tempSep;
 
@@ -307,6 +326,55 @@ public class TermsController {
         try {
             sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("../jfxml/CourseFormView.fxml")));
             sc.activate("CourseForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void importCourseClick(ActionEvent event) {
+        Term targetTerm = hmTerm.get(((Node) event.getSource()).getParent().getParent().getId());
+        Course targetCourse = new Course("", "", "");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Course CSV");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try {
+
+        if(file != null)
+        {
+            targetCourse = csvService.ImportCSV(file.getPath());
+            if(targetCourse != null)
+            {
+                md.setSelectedTerm(targetTerm);
+                md.addCourse(targetCourse);
+
+                md.setSelectedCourse(targetCourse);
+
+                //TODO: Fix the database mangling
+                md.addNewObject(targetCourse);
+                for (Student stuStudent:targetCourse.getlStudents()) {
+                    md.addNewObject(stuStudent);
+                }
+                for (Assignment aAssignment:targetCourse.getlAssignments())
+                {
+                    md.addNewObject(aAssignment);
+                }
+                for (Category cat:targetCourse.getlCategories())
+                {
+                    md.addNewObject(cat);
+                }
+                for (Grade gGrade:targetCourse.getlGrades())
+                {
+                    md.addNewObject(gGrade);
+                }
+
+                Collections.sort(md.getSelectedTerm().getCourses(), Course.nameComparator);
+            }
+        }
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
