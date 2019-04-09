@@ -115,48 +115,8 @@
                         <JFXRadioButton fx:id="difficult" selected="false" text="Difficult" toggleGroup="$levelGroup" styleClass="custom-jfx-radio-button"/>
                         <JFXRadioButton fx:id="hots" selected="false" text="Higher Order Think Skill" toggleGroup="$levelGroup" styleClass="custom-jfx-radio-button"/>
                     </children>
-                    <!--<JFXDatePicker fx:id="dpDueDate" promptText="Due Date">
-                        <validators>
-                            <RequiredFieldValidator message="Input Required">
-                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
-                            </RequiredFieldValidator>
-                        </validators>
-                    </JFXDatePicker>
-                    <JFXDatePicker fx:id="dpAssignedDate" promptText="Assigned Date">
-                        <validators>
-                            <RequiredFieldValidator message="Input Required">
-                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
-                            </RequiredFieldValidator>
-                        </validators>
-                    </JFXDatePicker>-->
                 </HBox>
                 <Pane VBox.vgrow="ALWAYS"/>
-                <!-- <HBox fillHeight="true" spacing="10.0">
-                    <Pane HBox.hgrow="ALWAYS"/>
-                    <JFXButton buttonType="FLAT" text="Save" ><!-onAction="#saveClick"-
-                        <graphic>
-                            <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                        </graphic>
-                        <style>
-                            -fx-background-color: #4CAF50;
-                            -fx-text-fill: white;
-                        </style>
-                    </JFXButton>
-                </HBox>
-                <HBox alignment="CENTER_LEFT">
-                    <Separator orientation="VERTICAL"/>
-                    <JFXButton buttonType="FLAT" text="Cancel" ><!-onAction="#cancelClick"-
-                        <graphic>
-                            <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
-                        </graphic>
-                        <style>
-                            -fx-background-color: #e74c3c;
-                            -fx-text-fill: white;
-                        </style>
-                    </JFXButton>
-                </HBox>-->
-
-
             </children>
         </VBox>
         </ScrollPane>
@@ -180,7 +140,7 @@
                         -fx-text-fill: white;
                     </style>
                 </JFXButton>
-                <JFXButton text="Cancel" > <!--onAction="#revertClick"-->
+                <JFXButton text="Cancel" onAction="#backClick">
                     <graphic>
                         <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                     </graphic>

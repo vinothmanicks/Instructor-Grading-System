@@ -24,7 +24,7 @@
 
     <VBox fx:id="vbTerm"
           fillWidth="true"
-          spacing="30.0"
+          spacing="50.0"
           AnchorPane.topAnchor="0.0"
           AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0"

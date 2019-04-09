@@ -7,6 +7,6 @@ class PrinterServiceTest {
     @Test
     public void printTest() {
         PrinterService printerService = new PrinterService();
-        printerService.PrintTest();
+
     }
 }
