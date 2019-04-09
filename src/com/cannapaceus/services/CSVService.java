@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CSVService {
@@ -89,7 +90,8 @@ public class CSVService {
             FileWriter outputfile = new FileWriter(filename);
 
             // create CSVWriter object filewriter object as parameter
-            writer = new CSVWriter(outputfile);
+            writer = new CSVWriter(outputfile,',',writer.NO_QUOTE_CHARACTER);
+
 
             //Write CSV document styling
             String[] fileType = {"FileType", "Course"};
@@ -131,7 +133,15 @@ public class CSVService {
         int iSize = lAssignments.size();
 
         for(int i = 0; i < iSize; i++) {
-            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString(), lAssignments.get(i).getAssignedDate().toString(), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
+            //TODO: Make sure category is retrieved from import file.
+            if(lAssignments.get(i).getCategoryCopy() == null)
+            {
+                lAssignments.get(i).setCategory(new Category("Uncategorized",0));
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+            lAssignments.get(i).getDueDate().format(formatter);
+            lAssignments.get(i).getAssignedDate().format(formatter);
+            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-","/"), lAssignments.get(i).getAssignedDate().toString().replace("-","/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
             writer.writeNext(data);
         }
 
@@ -253,10 +263,10 @@ public class CSVService {
                                         Assignment addedAssignment = new Assignment("",null,null,false,100,null,100);
                                         addedAssignment.setAssignmentName(lineElements[0]);
                                         String[] dateSections = lineElements[1].split("/");
-                                        LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]));
+                                        LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));
                                         addedAssignment.setDueDate(dueDate);
                                         dateSections = lineElements[2].split("/");
-                                        LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]));
+                                        LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));
                                         addedAssignment.setAssignedDate(assignedDate);
                                         addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
                                         addedAssignment.setMaxScore(Float.valueOf(lineElements[4]));
@@ -279,6 +289,7 @@ public class CSVService {
                                         addedStudent.setLastName(lineElements[1]);
                                         addedStudent.setStudentID(lineElements[2]);
                                         addedStudent.setStudentID(lineElements[3]);
+                                        importedCourse.addStudent(addedStudent);
                                     }
                                     break;
                                 default:
