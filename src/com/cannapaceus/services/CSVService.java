@@ -1,20 +1,15 @@
 package com.cannapaceus.services;
 
-import com.cannapaceus.grader.Assignment;
-import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.Student;
-import com.cannapaceus.grader.Term;
-
+import com.cannapaceus.grader.*;
 import com.opencsv.*;
-
-import java.io.FileWriter;
-import java.io.IOException;
+import com.cannapaceus.services.ErrorMessage;
+import java.io.*;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class CSVService {
 
@@ -95,7 +90,8 @@ public class CSVService {
             FileWriter outputfile = new FileWriter(filename);
 
             // create CSVWriter object filewriter object as parameter
-            writer = new CSVWriter(outputfile);
+            writer = new CSVWriter(outputfile,',',writer.NO_QUOTE_CHARACTER);
+
 
             //Write CSV document styling
             String[] fileType = {"FileType", "Course"};
@@ -115,6 +111,7 @@ public class CSVService {
 
             CSVWriter_Assignment(course.getlAssignments());
             CSVWriter_Student(course.getlStudents());
+            CSVWriter_Grades(course);
 
             writer.close();
         }
@@ -136,9 +133,60 @@ public class CSVService {
         int iSize = lAssignments.size();
 
         for(int i = 0; i < iSize; i++) {
-            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString(), lAssignments.get(i).getAssignmentName().toString(), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
+            //TODO: Make sure category is retrieved from import file.
+            if(lAssignments.get(i).getCategoryCopy() == null)
+            {
+                lAssignments.get(i).setCategory(new Category("Uncategorized",0));
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+            lAssignments.get(i).getDueDate().format(formatter);
+            lAssignments.get(i).getAssignedDate().format(formatter);
+            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-","/"), lAssignments.get(i).getAssignedDate().toString().replace("-","/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
             writer.writeNext(data);
         }
+
+        String[] footer = {"___END___"};
+        writer.writeNext(footer);
+        writer.writeNext(emptyLine);
+    }
+
+    private void CSVWriter_Grades(Course cCourse)
+    {
+        String[] dataType = {"DataType", "Grade"};
+        writer.writeNext(dataType);
+
+        String[] emptyLine = {" "};
+        writer.writeNext(emptyLine);
+
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Student Name");
+        for (Assignment aAssignment: cCourse.getlAssignments())
+        {
+            header.add(aAssignment.getAssignmentName());
+        }
+        String[] aheader = new String[header.size()];
+        aheader = header.toArray(aheader);
+        writer.writeNext(aheader);
+
+        for(Student stuStudent: cCourse.getlStudents()) {
+            ArrayList<String> dataList = new ArrayList<>();
+            dataList.add(stuStudent.getLastName());
+            for (Assignment aAssignment : cCourse.getlAssignments()) {
+                for (Grade gGrade:aAssignment.getGrades()) {
+                    if(gGrade.getStudentReference().getStudentID().equals(stuStudent.getStudentID()))
+                    {
+                        dataList.add(String.valueOf(gGrade.getGrade()));
+                        break;
+                    }
+                }
+            }
+            String[] data = new String[dataList.size()];
+            data = dataList.toArray(data);
+            writer.writeNext(data);
+        }
+
+
+
 
         String[] footer = {"___END___"};
         writer.writeNext(footer);
@@ -173,8 +221,96 @@ public class CSVService {
         writer.writeAll(myResultSet, includeHeaders); //writer is instance of CSVWriter
     }*/
 
-    public void ImportCSV() {
+    public Course ImportCSV(String csvFilePath) {
+        String line = "";
+        String cvsSplitBy = ",";
+        Course importedCourse = new Course("","","");
 
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+
+            while ((line = br.readLine()) != null)
+            {
+                String[] lineElements= line.split(",");
+
+                if(lineElements[0] != null) {
+                    switch (lineElements[0]) {
+                        case "FileType":
+                            /*if (lineElements[1] != "Course") {
+                                System.out.println("Invalid file imported");
+                                return null;
+                            }*/
+                            break;
+                        case "CourseName":
+                            importedCourse.setCourseName(lineElements[1]);
+                            break;
+                        case "CourseID":
+                            importedCourse.setCourseID(lineElements[1]);
+                            break;
+                        case "DepartmentName":
+                            importedCourse.setDepartment(lineElements[1]);
+                            break;
+                        case "DataType":
+                            switch (lineElements[1])
+                            {
+                                case "Assignment":
+                                    while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
+                                    {
+                                        lineElements = line.split(",");
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Assignment Name")))
+                                        {
+                                            continue;
+                                        }
+                                        Assignment addedAssignment = new Assignment("",null,null,false,100,null,100);
+                                        addedAssignment.setAssignmentName(lineElements[0]);
+                                        String[] dateSections = lineElements[1].split("/");
+                                        LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));
+                                        addedAssignment.setDueDate(dueDate);
+                                        dateSections = lineElements[2].split("/");
+                                        LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));
+                                        addedAssignment.setAssignedDate(assignedDate);
+                                        addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
+                                        addedAssignment.setMaxScore(Float.valueOf(lineElements[4]));
+                                        //TODO: Search and create all categories
+                                        addedAssignment.setCategory(null);
+                                        addedAssignment.setWeight(Float.valueOf(lineElements[6]));
+                                        importedCourse.addAssignment(addedAssignment);
+                                    }
+                                    break;
+                                case "Student":
+                                    while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
+                                    {
+                                        lineElements = line.split(",");
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("First MI Name")))
+                                        {
+                                            continue;
+                                        }
+                                        Student addedStudent = new Student("","","","");
+                                        addedStudent.setFirstMIName(lineElements[0]);
+                                        addedStudent.setLastName(lineElements[1]);
+                                        addedStudent.setStudentID(lineElements[2]);
+                                        addedStudent.setStudentID(lineElements[3]);
+                                        importedCourse.addStudent(addedStudent);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+
+            }
+
+            return importedCourse;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public String Today() {

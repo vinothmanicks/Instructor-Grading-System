@@ -15,6 +15,7 @@
 <?import com.jfoenix.validation.IntegerValidator?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 
+<?import com.jfoenix.validation.RegexValidator?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.StudentFormController"
@@ -63,9 +64,12 @@
             <HBox alignment="CENTER_LEFT">
                 <JFXTextField fx:id="tfStudentEmail" promptText="Email" labelFloat="true">
                     <validators>
-                        <RequiredFieldValidator message="Must be valid email address">
+                        <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
+                        <RegexValidator regexPattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,4}" message="Valid email required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RegexValidator>
                     </validators>
                 </JFXTextField>
             </HBox>
