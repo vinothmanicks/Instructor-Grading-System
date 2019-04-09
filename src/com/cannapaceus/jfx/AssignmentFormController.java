@@ -41,6 +41,7 @@ public class AssignmentFormController {
         sc = ScreenController.getInstance();
 
         selectedAssignment = md.getSelectedAssignment();
+
     }
 
 
