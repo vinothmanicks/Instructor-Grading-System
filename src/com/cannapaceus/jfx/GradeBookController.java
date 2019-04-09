@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
@@ -116,7 +117,12 @@ public class GradeBookController{
     }
 
     public void backClick(ActionEvent actionEvent) {
-        sc.activate("Course");
+        try {
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.activate("Course");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public class StudentGradeBookData{
