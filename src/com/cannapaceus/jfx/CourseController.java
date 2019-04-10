@@ -656,7 +656,7 @@ public class CourseController {
         selectedCourse.calculateStats();
         selectedCourse.scaleGrades(selectedCourse.getScale());
 
-        EmailService service = new EmailService("ChubbaDubba420@gmail.com","N000000!");
+        EmailService service = new EmailService("service.cannapaceus@gmail.com","bIQ!9C13!6JC#rlA5Dqy");
         for(Student stuStudent:selectedCourse.getlStudents())
         {
             service.setsMessageText(stuStudent.GenerateStudentReport());
