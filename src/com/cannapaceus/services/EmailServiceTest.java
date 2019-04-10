@@ -9,7 +9,7 @@ class EmailServiceTest {
     @Test
     void sendEmailTest() {
         // Add your own email and password for now
-        EmailService emailService = new EmailService("", "");
+        //EmailService emailService = new EmailService("", "");
         List<String> lTo = new ArrayList<String>();
         lTo.add("vm0025@uah.edu");
         lTo.add("nab0016@uah.edu");

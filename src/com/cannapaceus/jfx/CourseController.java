@@ -1,30 +1,25 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.services.EmailService;
 import com.cannapaceus.services.PrinterService;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.controls.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class CourseController {
@@ -37,6 +32,9 @@ public class CourseController {
     HashMap<String, Assignment> hmAssignment;
     HashMap<String, Category> hmCategory;
     HashMap<String, Float> hmStatistics;
+
+    @FXML
+    private  BorderPane bpBorderPane;
 
     @FXML
     private Label lblCourseName;
@@ -649,6 +647,20 @@ public class CourseController {
     }
 
     public void emailGrades(ActionEvent event) {
+        StackPane stackPane = new StackPane();
+        bpBorderPane.getChildren().add(stackPane);
 
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Sending Emails..."));
+        content.setBody(new Text("Emails are being sent to all students in " + selectedCourse.getCourseName()));
+
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+        dialog.show();
+
+        EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
+        boolean noice = emailService.email(selectedCourse);
+
+        dialog.close();
     }
 }
