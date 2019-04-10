@@ -651,13 +651,16 @@ public class CourseController {
     }
 
     public void emailGrades(ActionEvent event) {
-        //TODO: Implement database retrieval of instructor email and make sure email is set in settings before sending.
+        //TODO: Implement database retrieval of instructor email and make sure email is set in settings before sending.'
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleGrades(selectedCourse.getScale());
 
         EmailService service = new EmailService("ChubbaDubba420@gmail.com","N000000!");
         for(Student stuStudent:selectedCourse.getlStudents())
         {
             service.setsMessageText(stuStudent.GenerateStudentReport());
-            service.SendEmail(stuStudent.getStudentEmail(),"Grades");
+            service.SendEmail(stuStudent.getStudentEmail(), "Grades");
         }
     }
 }

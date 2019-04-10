@@ -171,6 +171,18 @@ public class Course {
             lScaledGrades.add(gNewGrade);
         }
     }
+
+    public void setScale(float scale)
+    {
+        this.courseGradeScale = scale;
+    }
+
+    public float getScale()
+    {
+        return this.courseGradeScale;
+    }
+
+
     // private Assignment generateAssignment(String sCourseName, )
     // Honors requirement
 
