@@ -239,10 +239,10 @@ public class Student extends RecursiveTreeObject<Student> {
 
         for (Grade gGrade:lGrades)
         {
-            String sNextAssignment = new String(gGrade.getAssignmentCopy().getAssignmentName() + ":\t" + gGrade.getGrade() + "\n");
+            String sNextAssignment = new String(gGrade.getAssignmentCopy().getAssignmentName() + ":\t" + gGrade.getGrade()+"\\"+ gGrade.getAssignmentCopy().getMaxScore() + "\n");
             sReport = sReport + sNextAssignment;
 
-            if(gGrade.getMissing() != false)
+            if(gGrade.getMissing() == true)
             {
                 String sMissingData = new String("-Missing\n");
                 sReport = sReport + sNextAssignment;
@@ -259,6 +259,8 @@ public class Student extends RecursiveTreeObject<Student> {
             }
             sReport = sReport + "\n";
         }
+
+        sReport = sReport + "\n" + "Overall grade: " + this.getAverageGrade();
 
         return sReport;
     }
