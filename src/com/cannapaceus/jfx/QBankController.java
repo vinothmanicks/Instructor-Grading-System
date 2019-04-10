@@ -1,81 +1,271 @@
 package com.cannapaceus.jfx;
 
-import com.cannapaceus.grader.Assignment;
-import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.Grade;
-import com.cannapaceus.grader.Student;
-import com.cannapaceus.qbank.QuestionBank;
+import com.cannapaceus.grader.*;
+import com.cannapaceus.qbank.Question;
+import com.cannapaceus.qbank.eQuestionAssignmentType;
+import com.cannapaceus.qbank.eQuestionLevel;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTreeTableCell;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class QBankController {
 
     ScreenController sc = null;
     Model md = null;
+    DBService db = null;
 
-    QuestionBank questionBank;
-    int iLAssignmentSize;
+    private HashMap<String, Course> hmCourses = new HashMap<>();
+    private HashMap<String, Question> hmQuestion = new HashMap<>();
 
-    private TableView table = new TableView();
+    private ArrayList<Question> qList = new ArrayList<>();
+    private ArrayList<Question> selectedQuestions = new ArrayList<>();
+
+    private Course selectedCourse = null;
+    private ObservableList<Question> questionObservableList;
 
     @FXML
-    private VBox vbTerms;
+    private VBox vbCourse;
+
+    @FXML
+    private JFXComboBox cbCourse;
+
+    @FXML
+    private JFXTreeTableView questionTable;
+
+    @FXML
+    private JFXButton btnEditQuestion;
+
+    @FXML
+    private JFXButton btnAddQuestion;
+
+    @FXML
+    private JFXButton btnGenerate;
 
     @FXML
     private void initialize() {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
+        db = DBService.getInstance();
 
-        questionBank.getInstance();
+        ObservableList<String> courseItems = FXCollections.observableArrayList();
+
+        selectedCourse = md.getSelectedCourse();
+        String selectedKey = "";
+
+        for (Term t : md.getTerms()) {
+            if (t.getDBID() == 0)
+                continue;
+            String s = t.getSeason().toString() + " " + t.getYear();
+            for (Course c : t.getCourses()) {
+                if (c.getDBID() == 0)
+                    continue;
+                String key = s + " " + c.getCourseName();
+                if (selectedCourse == c)
+                    selectedKey = key;
+                courseItems.add(key);
+                hmCourses.put(key, c);
+            }
+        }
+
+        cbCourse.setItems(courseItems);
+        cbCourse.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> selected, String oldValue, String newValue) {
+                selectedCourse = hmCourses.get(newValue);
+                md.setSelectedCourse(selectedCourse);
+                btnAddQuestion.setDisable(false);
+                populateTable();
+            }
+        });
 
         createTable();
+
+        if (selectedCourse != null) {
+            cbCourse.getSelectionModel().select(selectedKey);
+        }
     }
 
     private void createTable() {
-        table.setEditable(true);
+        TreeTableColumn<Question, String> questionCol = new JFXTreeTableColumn<>("Question");
+        questionCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getQuestion()));
+        questionCol.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>();
+            c.setWrapText(true);
+            c.setFocusTraversable(false);
+            c.setEditable(false);
+            return c;
+        });
+        questionCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.toUpperCase().compareTo(o2.toUpperCase());
+            }
+        });
+        questionCol.setMinWidth(80);
+        questionCol.setMaxWidth(140);
+        questionCol.setPrefWidth(80);
+        questionCol.setContextMenu(null);
 
-        TableColumn courseNameCol = new TableColumn("Course Name");
-        courseNameCol.setCellValueFactory(new PropertyValueFactory<QuestionBank, String>("courseName"));
-        TableColumn questionCol = new TableColumn("Question");
-        questionCol.setCellValueFactory(new PropertyValueFactory<QuestionBank, String>("question"));
-        TableColumn questionTypeCol = new TableColumn("Question Type");
-        questionTypeCol.setCellValueFactory(new PropertyValueFactory<QuestionBank, String>("questionType"));
-        TableColumn questionLevelCol = new TableColumn("Question Level");
-        questionLevelCol.setCellValueFactory(new PropertyValueFactory<QuestionBank, String>("questionLevel"));
-        TableColumn questionAssignmentTypeCol = new TableColumn("Question Assignment Type");
-        questionAssignmentTypeCol.setCellValueFactory(new PropertyValueFactory<QuestionBank, String>("questionAssignmentType"));
-        TableColumn timeCol = new TableColumn("Time");
-        timeCol.setCellValueFactory(new PropertyValueFactory<QuestionBank, String>("toDoTime"));
+        TreeTableColumn<Question, String> questionTypeCol = new JFXTreeTableColumn<>("Type");
+        questionTypeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getQuestionType().toString()));
+        questionTypeCol.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>();
+            c.setFocusTraversable(false);
+            c.setEditable(false);
+            return c;
+        });
+        questionTypeCol.setMinWidth(80);
+        questionTypeCol.setContextMenu(null);
 
-        table.getColumns().addAll(courseNameCol, questionCol, questionTypeCol, questionLevelCol, questionAssignmentTypeCol, timeCol);
+        TreeTableColumn<Question, String> questionLevelCol = new JFXTreeTableColumn<>("Difficulty");
+        questionLevelCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getQuestionLevel().toString()));
+        questionLevelCol.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>();
+            c.setFocusTraversable(false);
+            c.setEditable(false);
+            return c;
+        });
+        questionLevelCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.compare(eQuestionLevel.fromStr(o1).getInt(), eQuestionLevel.fromStr(o2).getInt());
+            }
+        });
+        questionLevelCol.setMinWidth(80);
+        questionLevelCol.setContextMenu(null);
 
-        populateTable();
+        TreeTableColumn<Question, String> questionAssignmentTypeCol = new JFXTreeTableColumn<>("Assignment Type");
+        questionAssignmentTypeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, String> param) ->
+                new ReadOnlyStringWrapper(param.getValue().getValue().getQuestionAssignmentType().toString()));
+        questionAssignmentTypeCol.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>();
+            c.setFocusTraversable(false);
+            c.setEditable(false);
+            return c;
+        });
+        questionAssignmentTypeCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.compare(eQuestionAssignmentType.fromStr(o1).getInt(),
+                        eQuestionAssignmentType.fromStr(o2).getInt());
+            }
+        });
+        questionAssignmentTypeCol.setMinWidth(120);
+        questionAssignmentTypeCol.setContextMenu(null);
 
-        VBox tempVB = new VBox();
+        TreeTableColumn<Question, String> timeCol = new JFXTreeTableColumn<>("Time to Complete");
+        timeCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, String> param) ->
+                new ReadOnlyStringWrapper("" + param.getValue().getValue().getToDoTime()));
+        timeCol.setCellFactory((tc) -> {
+            GenericEditableTreeTableCell c = new GenericEditableTreeTableCell<>();
+            c.setFocusTraversable(false);
+            c.setEditable(false);
+            return c;
+        });
+        timeCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Float.compare(Float.valueOf(o1), Float.valueOf(o2));
+            }
+        });
+        timeCol.setMinWidth(120);
+        timeCol.setContextMenu(null);
 
-        tempVB.getChildren().addAll(table);
+        TreeTableColumn<Question, Boolean> selectedCol = new JFXTreeTableColumn<>("Submitted");
+        selectedCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, Boolean> param) -> {
+            BooleanProperty b = new SimpleBooleanProperty();
+            b.addListener(((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    selectedQuestions.add(param.getValue().getValue());
+                } else {
+                    selectedQuestions.remove(param.getValue().getValue());
+                }
 
-        vbTerms.getChildren().addAll(tempVB);
+                btnGenerate.setDisable(selectedQuestions.isEmpty());
+            }));
+            return b;
+        });
+        selectedCol.setCellFactory((tc) -> {
+            CheckBoxTreeTableCell c = new CheckBoxTreeTableCell<>();
+            c.setFocusTraversable(false);
+            c.setAlignment(Pos.CENTER);
+            return c;
+        });
+        selectedCol.setSortable(false);
+        selectedCol.setMinWidth(80);
+        selectedCol.setContextMenu(null);
+
+        questionObservableList = FXCollections.observableArrayList();
+
+        final TreeItem<Question> root = new RecursiveTreeItem<>(questionObservableList, RecursiveTreeObject::getChildren);
+
+        questionTable.setRoot(root);
+        questionTable.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        questionTable.setTableMenuButtonVisible(false);
+        questionTable.setShowRoot(false);
+        questionTable.setEditable(true);
+        questionTable.getColumns().setAll(selectedCol, questionCol, questionTypeCol, questionLevelCol, questionAssignmentTypeCol, timeCol);
+
+        questionTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue selected, Object oldValue, Object newValue) {
+                TreeItem<Question> selectedItem = (TreeItem<Question>)newValue;
+                if (selectedItem != null) {
+                    Question q = selectedItem.getValue();
+                    md.setSelectedQuestion(q);
+                    if (q == null) {
+                        btnEditQuestion.setDisable(true);
+                    } else {
+                        btnEditQuestion.setDisable(false);
+                    }
+                } else {
+                    btnEditQuestion.setDisable(false);
+                }
+            }
+        });
     }
 
     private void populateTable() {
-        /*ObservableList<Student> data = FXCollections.observableArrayList(selectedCourse.getlStudents());
-        table.setItems(data);
-        ObservableList<Grade> gradeData = FXCollections.observableArrayList(selectedCourse.getlGrades());
-        //table.setItems(gradeData);*/
+        questionObservableList.addAll(db.retrieveQuestions(selectedCourse.getDBID()));
+    }
+
+    public void generateAssignment(ActionEvent event) {
+
+    }
+
+    public void editQuestion(ActionEvent event) {
+        try {
+            sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("../jfxml/QBankAddQuestionView.fxml")));
+            sc.activate("AddQuestion");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addQuestion(ActionEvent event) {
+        md.setSelectedQuestion(null);
+
         try {
             sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("../jfxml/QBankAddQuestionView.fxml")));
             sc.activate("AddQuestion");
