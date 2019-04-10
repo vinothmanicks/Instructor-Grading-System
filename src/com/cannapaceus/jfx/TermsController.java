@@ -355,19 +355,26 @@ public class TermsController {
                 md.addNewObject(targetCourse);
                 for (Student stuStudent:targetCourse.getlStudents()) {
                     md.addNewObject(stuStudent);
-                }
-                for (Assignment aAssignment:targetCourse.getlAssignments())
-                {
-                    md.addNewObject(aAssignment);
+                    md.setSelectedStudent(stuStudent);
+                    for (Grade g : md.selectedStudent.getGrades()) {
+                        if (!md.getNewObjects().contains(g))
+                            md.addNewObject(g);
+                    }
                 }
                 for (Category cat:targetCourse.getlCategories())
                 {
                     md.addNewObject(cat);
                 }
-                for (Grade gGrade:targetCourse.getlGrades())
+                for (Assignment aAssignment:targetCourse.getlAssignments())
                 {
-                    md.addNewObject(gGrade);
+                    md.addNewObject(aAssignment);
+                    md.setSelectedAssignment(aAssignment);
+                    for (Grade g : md.selectedAssignment.getGrades()) {
+                        if (!md.getNewObjects().contains(g))
+                            md.addNewObject(g);
+                    }
                 }
+
 
                 Collections.sort(md.getSelectedTerm().getCourses(), Course.nameComparator);
             }

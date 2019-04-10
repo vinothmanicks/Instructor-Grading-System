@@ -6,21 +6,13 @@ package com.cannapaceus.services;
 
 import com.cannapaceus.grader.*;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import com.jfoenix.validation.RegexValidator;
 
 public class EmailService {
     // Variables
@@ -33,20 +25,35 @@ public class EmailService {
     // String to store SMTP server name;
     private String sHost;
 
-    private String sMessageText = "";
-
     // Variable to store session
     Session session;
     // Variable to store session properties
     private Properties props;
 
+    /**
+     * Singleton Class
+     */
+
+    private static EmailService instance = null;
+
+    public static EmailService getInstance() {
+        //if (instance == null)
+            //instance = new EmailService();
+        return instance;
+    }
+
+    public static EmailService getInstance(String sFromAddress, String sPassword) {
+        if (instance == null)
+            instance = new EmailService(sFromAddress, sPassword);
+        return instance;
+    }
 
     //Constructor
     /**
      * @param sFromAddress
      * @param sPassword
      */
-    public EmailService(String sFromAddress, String sPassword) {
+    private EmailService(String sFromAddress, String sPassword) {
         //this.sSender = sSender;
         this.sPassword = sPassword;
 
@@ -88,15 +95,13 @@ public class EmailService {
         this.sPassword = sPassword;
     }
 
-    public void setsMessageText(String sMessageText){this.sMessageText = sMessageText; }
-
     // Methods
 
     /**
      * @param lTo
      * @param sSubject
      */
-    public void SendEmail(String lTo, String sSubject) {
+    private void SendEmail(String lTo, String sSubject, String sMessageText) {
 
         try {
             // Create a default MimeMessage object.
@@ -132,5 +137,25 @@ public class EmailService {
            return true;
         }
         return false;
+    }
+
+    public boolean email(Course course) {
+        ArrayList<Student> lStudents = course.getlStudents();
+        String sSubjectText = "Grade Report for " + course.getCourseName();
+
+        for (Student student : lStudents) {
+            String sMessageText = student.GenerateStudentReport();
+            SendEmail(student.getStudentEmail(), sSubjectText, sMessageText);
+        }
+
+        return true;
+    }
+
+    public boolean email(Student student, Course course) {
+        String sSubjectText = "Grade Report for " + course.getCourseName();
+        String sMessageText = student.GenerateStudentReport();
+        SendEmail(student.getStudentEmail(), sSubjectText, sMessageText);
+
+        return true;
     }
 }
