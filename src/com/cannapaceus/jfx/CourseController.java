@@ -4,28 +4,21 @@ import com.cannapaceus.grader.*;
 import com.cannapaceus.services.EmailService;
 import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXNodesList;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class CourseController {
@@ -654,7 +647,7 @@ public class CourseController {
         //TODO: Implement database retrieval of instructor email and make sure email is set in settings before sending.'
         selectedCourse.PopulateAverages(selectedCourse.getlStudents());
         selectedCourse.calculateStats();
-        selectedCourse.scaleGrades(selectedCourse.getScale());
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
 
         EmailService service = new EmailService("service.cannapaceus@gmail.com","bIQ!9C13!6JC#rlA5Dqy");
         for(Student stuStudent:selectedCourse.getlStudents())

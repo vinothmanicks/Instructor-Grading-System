@@ -17,7 +17,7 @@ public class Course {
     private ArrayList<Assignment> lAssignments; // List of assignments in a course
     private ArrayList<Category> lCategories; // List of assignment categories
     private ArrayList<Grade> lGrades; // List of all grades for the course
-    private ArrayList<Grade> lScaledGrades; //List of scaled grades, each corresponding to a student's final grade in a course
+    private ArrayList<Float> lScaledGrades; //List of scaled grades, each corresponding to a student's final grade in a course
     private float courseGradeScale; //Float to scale all grades by.
 
     private ArrayList<Float> lAverageGrades; // List of student average grades for the course
@@ -34,6 +34,7 @@ public class Course {
         this.lCategories = new ArrayList<Category>();
         this.lGrades = new ArrayList<Grade>();
         this.lAverageGrades = new ArrayList<Float>();
+        this.lScaledGrades = new ArrayList<Float>();
 
         this.bArchived = false;
         this.stCourseStats = new Statistics();
@@ -160,15 +161,13 @@ public class Course {
         //System.out.printf("%.3f\n", this.stCourseStats.getStandardDev());
     }
 
-    public void scaleGrades(float fScaleBy)
+    public void scaleFinalAverages(float fScaleBy)
     {
         lScaledGrades.clear();
 
-        for (Grade gGrade:lGrades)
+        for (float f:lAverageGrades)
         {
-            Grade gNewGrade = new Grade(gGrade);
-            gNewGrade.setGrade(gNewGrade.getGrade()+fScaleBy);
-            lScaledGrades.add(gNewGrade);
+            lScaledGrades.add(f+fScaleBy);
         }
     }
 
@@ -237,7 +236,7 @@ public class Course {
         return lGrades;
     }
 
-    public ArrayList<Grade> getlScaledGrades(){return lScaledGrades;}
+    public ArrayList<Float> getlScaledGrades(){return lScaledGrades;}
 
     public Statistics getStatistics() {
         Statistics statsCopy = this.stCourseStats;
