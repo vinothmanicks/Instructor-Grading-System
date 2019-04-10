@@ -34,7 +34,7 @@ public class CourseController {
     HashMap<String, Float> hmStatistics;
 
     @FXML
-    private  BorderPane bpBorderPane;
+    private StackPane spDialogPane;
 
     @FXML
     private Label lblCourseName;
@@ -657,7 +657,7 @@ public class CourseController {
         content.setHeading(new Text("Sending Emails..."));
         content.setBody(new Text("Emails are being sent to all students in " + selectedCourse.getCourseName()));
 
-        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+        JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
 
         dialog.show();
 

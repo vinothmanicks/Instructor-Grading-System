@@ -18,6 +18,9 @@
             AnchorPane.leftAnchor="0.0"
             AnchorPane.rightAnchor="0.0"
             fx:id="bpBorderPane">
+    <StackPane fx:id="spDialogPane">
+
+    </StackPane>
 
     <center>
         <ScrollPane fitToWidth="true"
