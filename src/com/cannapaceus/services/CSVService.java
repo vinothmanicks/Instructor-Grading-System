@@ -109,9 +109,11 @@ public class CSVService {
             String[] emptyLine = {" "};
             writer.writeNext(emptyLine);
 
+            CSVWriter_Categories(course);
             CSVWriter_Assignment(course.getlAssignments());
             CSVWriter_Student(course.getlStudents());
             CSVWriter_Grades(course);
+
 
             writer.close();
         }
@@ -159,7 +161,7 @@ public class CSVService {
         writer.writeNext(emptyLine);
 
         ArrayList<String> header = new ArrayList<>();
-        header.add("Student Name");
+        header.add("Student ID");
         for (Assignment aAssignment: cCourse.getlAssignments())
         {
             header.add(aAssignment.getAssignmentName());
@@ -170,7 +172,7 @@ public class CSVService {
 
         for(Student stuStudent: cCourse.getlStudents()) {
             ArrayList<String> dataList = new ArrayList<>();
-            dataList.add(stuStudent.getLastName());
+            dataList.add(stuStudent.getStudentID());
             for (Assignment aAssignment : cCourse.getlAssignments()) {
                 for (Grade gGrade:aAssignment.getGrades()) {
                     if(gGrade.getStudentReference().getStudentID().equals(stuStudent.getStudentID()))
@@ -207,6 +209,28 @@ public class CSVService {
 
         for(int i = 0; i < iSize; i++) {
             String[] data = {lStudents.get(i).getFirstMIName(), lStudents.get(i).getLastName(), lStudents.get(i).getStudentID(), lStudents.get(i).getStudentEmail()};
+            writer.writeNext(data);
+        }
+
+        String[] footer = {"___END___"};
+        writer.writeNext(footer);
+        writer.writeNext(emptyLine);
+    }
+
+    private void CSVWriter_Categories(Course coCourse) {
+        String[] dataType = {"DataType", "Category"};
+        writer.writeNext(dataType);
+
+        String[] emptyLine = {" "};
+        writer.writeNext(emptyLine);
+
+        String[] header = {"Category Name", "Weight"};
+        writer.writeNext(header);
+
+        int iSize = coCourse.getlCategories().size();
+
+        for(int i = 0; i < iSize; i++) {
+            String[] data = {coCourse.getlCategories().get(i).getName(), String.valueOf(coCourse.getlCategories().get(i).getWeight())};
             writer.writeNext(data);
         }
 
@@ -252,6 +276,18 @@ public class CSVService {
                         case "DataType":
                             switch (lineElements[1])
                             {
+                                case "Category":
+                                    while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
+                                    {
+                                        lineElements = line.split(",");
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Category Name")))
+                                        {
+                                            continue;
+                                        }
+                                        Category newCat = new Category(lineElements[0],Float.valueOf(lineElements[1]));
+                                        importedCourse.addCategory(newCat);
+                                    }
+                                    break;
                                 case "Assignment":
                                     while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
                                     {
@@ -270,8 +306,14 @@ public class CSVService {
                                         addedAssignment.setAssignedDate(assignedDate);
                                         addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
                                         addedAssignment.setMaxScore(Float.valueOf(lineElements[4]));
-                                        //TODO: Search and create all categories
-                                        addedAssignment.setCategory(null);
+                                        for (Category cat:importedCourse.getlCategories())
+                                        {
+                                            if(cat.getName().equals(lineElements[5]))
+                                            {
+                                                addedAssignment.setCategory(cat);
+                                                break;
+                                            }
+                                        }
                                         addedAssignment.setWeight(Float.valueOf(lineElements[6]));
                                         importedCourse.addAssignment(addedAssignment);
                                     }
@@ -290,6 +332,33 @@ public class CSVService {
                                         addedStudent.setStudentID(lineElements[2]);
                                         addedStudent.setStudentID(lineElements[3]);
                                         importedCourse.addStudent(addedStudent);
+                                    }
+                                    break;
+                                case "Grade":
+                                    while(((line = br.readLine()) != null)&&(!line.contains("_END_")))
+                                    {
+                                        String[] studentGrades = line.split(",");
+                                        if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Student ID")))
+                                        {
+                                            continue;
+                                        }
+                                        for (Student stuStudent:importedCourse.getlStudents()) {
+                                            if(stuStudent.getStudentID().equals(lineElements[0].trim()))
+                                            for (Assignment aAssignment:importedCourse.getlAssignments()) {
+                                                int size = importedCourse.getlAssignments().size();
+                                                for(int i = 1; i < size; i++) {
+                                                    if(studentGrades[i].trim().equals(""))
+                                                    {
+                                                        break;
+                                                    }
+                                                    Grade gGrade = new Grade(Float.valueOf(studentGrades[i]), stuStudent, aAssignment);
+                                                    aAssignment.addGrade(gGrade);
+                                                    stuStudent.addGrade(gGrade);
+                                                    importedCourse.addGrade(gGrade);
+                                                }
+                                            }
+                                        }
+
                                     }
                                     break;
                                 default:

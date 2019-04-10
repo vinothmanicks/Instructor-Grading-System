@@ -1,5 +1,10 @@
 package com.cannapaceus.grader;
 
+import com.cannapaceus.qbank.Question;
+import com.cannapaceus.qbank.eQuestionAssignmentType;
+import com.cannapaceus.qbank.eQuestionLevel;
+import com.cannapaceus.qbank.eQuestionType;
+
 import java.sql.*;
 import java.util.*;
 
@@ -140,14 +145,14 @@ public class DBService {
 
             stm.execute("CREATE TABLE QUESTIONS (\n" +
                     "QUESTIONID IDENTITY,\n" +
-                    "SQUESTION CLOB,\n" +
-                    "BMC BOOLEAN,\n" +
-                    "BTF BOOLEAN,\n" +
-                    "BSA BOOLEAN,\n" +
-                    "IMINS SMALLINT,\n" +
-                    "IDIFFICULTY TINYINT,\n" +
+                    "SQUESTION TEXT,\n" +
+                    "EQUESTIONTYPE ENUM ('MC', 'FITB', 'TOF', 'SA', 'LA'),\n" +
+                    "EQUESTIONLEVEL ENUM ('EASY', 'MEDIUM', 'HARD', 'HOTS'),\n" +
+                    "EQUESTIONASSIGNMENTTYPE ENUM ('TEST', 'QUIZ', 'HW', 'OTHER'),\n" +
+                    "FMINS REAL,\n" +
                     "ARRSANSWERS ARRAY,\n" +
-                    "ARRSCOURSENAMES ARRAY\n" +
+                    "FSCORE REAL,\n" +
+                    "ICOURSE BIGINT NOT NULL\n" +
                     ");");
 
         } catch (Exception e) {
@@ -542,7 +547,65 @@ public class DBService {
         return retValue;
     }
 
-    //TODO: boolean StoreQuestion(Question questionToStore, lCourseID)
+    public boolean storeQuestion(Question questionToStore, long lCourseID) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "INSERT INTO QUESTIONS " +
+                    "(SQUESTION, EQUESTIONTYPE, EQUESTIONLEVEL, EQUESTIONASSIGNMENTTYPE, FMINS, ARRSANSWERS, FSCORE, ICOURSE) " +
+                    "VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?, ?)";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            Object[] arr = null;
+
+            if (questionToStore.getAnswers() != null)
+                arr = questionToStore.getAnswers().toArray();
+
+            stm.setString(1, questionToStore.getQuestion());
+            stm.setInt(2, questionToStore.getQuestionType().getInt());
+            stm.setInt(3, questionToStore.getQuestionLevel().getInt());
+            stm.setInt(4, questionToStore.getQuestionAssignmentType().getInt());
+            stm.setFloat(5, questionToStore.getToDoTime());
+            stm.setObject(6, arr);
+            stm.setFloat(7, questionToStore.getScore());
+            stm.setLong(8, lCourseID);
+
+            stm.executeUpdate();
+
+            rs = stm.getGeneratedKeys();
+            rs.next();
+            questionToStore.setlDBID(rs.getLong(1));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
 
     private boolean updateTerm(Term t) {
         boolean retValue = true;
@@ -799,6 +862,57 @@ public class DBService {
             stm.setLong(6, lAssignmentID);
             stm.setLong(7, lStudentID);
             stm.setLong(8, g.getDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    public boolean updateQuestion(Question q) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            String sql = "UPDATE QUESTIONS " +
+                    "SET SQUESTION = ?, EQUESTIONTYPE = ?, EQUESTIONLEVEL = ?, EQUESTIONASSIGNMENTTYPE = ?, " +
+                    "FMINS = ?, ARRSANSWERS = ?, FSCORE = ? " +
+                    "WHERE QUESTIONID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            Object[] arr = null;
+
+            if (q.getAnswers() != null)
+                arr = q.getAnswers().toArray();
+
+            stm.setString(1, q.getQuestion());
+            stm.setInt(2, q.getQuestionType().getInt());
+            stm.setInt(3, q.getQuestionLevel().getInt());
+            stm.setInt(4, q.getQuestionAssignmentType().getInt());
+            stm.setFloat(5, q.getToDoTime());
+            stm.setObject(6, arr);
+            stm.setFloat(7, q.getScore());
+
+            stm.setLong(8, q.getlDBID());
 
             stm.executeUpdate();
 
@@ -1467,6 +1581,68 @@ public class DBService {
             if (rsc != null) {
                 try {
                     rsc.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    public ArrayList<Question> retrieveQuestions(long lCourseID) {
+        ArrayList<Question> retValue = new ArrayList<>();
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //Get the course with the ID passed in
+            String sql = "SELECT * FROM QUESTIONS WHERE ICOURSE = ? ORDER BY EQUESTIONTYPE";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+            stm.setLong(1, lCourseID);
+
+            rs = stm.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    ArrayList<String> lAnswers;
+                    if (rs.getArray(7) != null) {
+                        lAnswers = new ArrayList<String>(Arrays.asList((String[])rs.getArray(7).getArray()));
+                    } else {
+                        lAnswers = new ArrayList<>();
+                    }
+
+                    Question temp = new Question(rs.getString(2),
+                            rs.getFloat(8),
+                            lAnswers,
+                            eQuestionType.fromInt(rs.getInt(3)),
+                            eQuestionAssignmentType.fromInt(rs.getInt(5)),
+                            eQuestionLevel.fromInt(rs.getInt(4)),
+                            rs.getFloat(6));
+
+                    temp.setlDBID(rs.getLong(1));
+
+                    retValue.add(temp);
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
                 } catch (SQLException e) { /* ignored */}
             }
             if (stm != null) {

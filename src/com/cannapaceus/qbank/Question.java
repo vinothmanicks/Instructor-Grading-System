@@ -1,15 +1,16 @@
 package com.cannapaceus.qbank;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
 import java.util.ArrayList;
 
-public class Question {
+public class Question extends RecursiveTreeObject<Question> {
 
+    private long lDBID;
     //Name of the question.
     private String sQuestion;
     //Array of potential answers
     private ArrayList<String> lAnswers;
-    //List of courses names that use this question.
-    private String sCourseName;
 
     //Enum to sub for lack of structs
     private eQuestionType qtQuestionType;
@@ -18,12 +19,11 @@ public class Question {
     private float fToDoTime;
     private float fScore;
 
-    public Question(String sQuestion, float fScore, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
+    public Question(String sQuestion, float fScore, ArrayList<String> lAnswers, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
     {
         this.sQuestion = sQuestion;
         this.fScore = fScore;
         this.lAnswers = new ArrayList<>(lAnswers);
-        this.sCourseName = sCourseName;
         this.qtQuestionType = qtQuestionType;
         this.qatQuestionAssignmentType = qatQuestionAssignmentType;
         this.qlQuestionLevel = qlQuestionLevel;
@@ -35,24 +35,27 @@ public class Question {
         this.sQuestion = queQuestion.getQuestion();
         this.fScore = queQuestion.getScore();
         this.lAnswers = queQuestion.getAnswers();
-        this.sCourseName = queQuestion.getCourse();
         this.qtQuestionType = queQuestion.getQuestionType();
         this.qatQuestionAssignmentType = queQuestion.getQuestionAssignmentType();
         this.qlQuestionLevel = queQuestion.getQuestionLevel();
         this.fToDoTime = queQuestion.getToDoTime();
     }
 
-    public void editQuestion(String sQuestion, float fScore, ArrayList<String> lAnswers, String sCourseName, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
+    public void editQuestion(String sQuestion, float fScore, ArrayList<String> lAnswers, eQuestionType qtQuestionType, eQuestionAssignmentType qatQuestionAssignmentType, eQuestionLevel qlQuestionLevel, float fToDoTime)
     {
         this.sQuestion = sQuestion;
         this.fScore = fScore;
         this.lAnswers = new ArrayList<>(lAnswers);
-        this.sCourseName = new String(sCourseName);
         this.qtQuestionType = qtQuestionType;
         this.qatQuestionAssignmentType = qatQuestionAssignmentType;
         this.qlQuestionLevel = qlQuestionLevel;
         this.fToDoTime = fToDoTime;
     }
+
+    public void setlDBID(long lDBID) {
+        this.lDBID = lDBID;
+    }
+
     public void setQuestion(String sQuestion)
     {
         this.sQuestion = sQuestion;
@@ -69,15 +72,18 @@ public class Question {
 
     public void setfToDoTime (float fToDoTime) { this.fToDoTime = fToDoTime; }
 
+    public void setfScore(float fScore) {
+        this.fScore = fScore;
+    }
+
     public void setAnwsers(ArrayList<String> lAnswers)
     {
         if(this.qtQuestionType == eQuestionType.MULTIPLECHOICE)
             this.lAnswers = new ArrayList<>(lAnswers);
     }
 
-    public void setCourse(String lCourseName)
-    {
-        this.sCourseName = new String(lCourseName);
+    public long getlDBID() {
+        return this.lDBID;
     }
 
     public String getQuestion()
@@ -98,16 +104,15 @@ public class Question {
 
     public float getToDoTime () { return  this.fToDoTime; }
 
+    public float getfScore() {
+        return fScore;
+    }
+
     public ArrayList<String> getAnswers()
     {
         if(this.qtQuestionType == eQuestionType.MULTIPLECHOICE)
             return new ArrayList<>(lAnswers);
 
         return null;
-    }
-
-    public String getCourse()
-    {
-        return this.sCourseName;
     }
 }

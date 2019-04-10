@@ -1,6 +1,8 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.qbank.Question;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,6 +22,7 @@ public class Model {
     Category selectedCategory = null;
     Student selectedStudent = null;
     Assignment selectedAssignment = null;
+    Question selectedQuestion = null;
 
     private Model() {
         initModel();
@@ -220,6 +223,10 @@ public class Model {
         selectedAssignment = a;
     }
 
+    public void setSelectedQuestion(Question q) {
+        selectedQuestion = q;
+    }
+
     public Term getSelectedTerm() {
         return selectedTerm;
     }
@@ -238,6 +245,10 @@ public class Model {
 
     public Assignment getSelectedAssignment() {
         return selectedAssignment;
+    }
+
+    public Question getSelectedQuestion() {
+        return selectedQuestion;
     }
 
     public void commitChanges() {
