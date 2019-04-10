@@ -643,12 +643,15 @@ public class CourseController {
     }
 
     public void printGrades(ActionEvent event) {
-
+        PrinterService service = PrinterService.getInstance();
+        service.printGrades(selectedCourse);
     }
 
     public void emailGrades(ActionEvent event) {
-        StackPane stackPane = new StackPane();
-        bpBorderPane.getChildren().add(stackPane);
+        //TODO: Implement database retrieval of instructor email and make sure email is set in settings before sending.'
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
 
         JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Text("Sending Emails..."));

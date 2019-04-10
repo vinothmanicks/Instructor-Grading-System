@@ -1,7 +1,9 @@
 package com.cannapaceus.services;
 
+import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
+import com.cannapaceus.grader.Grade;
 import javafx.beans.property.StringProperty;
 
 import javax.swing.*;
@@ -102,6 +104,41 @@ public class PrinterService implements Printable {
         }
 
         startPrintJob();
+    }
+
+    public void printGrades(Course course)
+    {
+        pageBreaks = null;
+
+        ArrayList<Student> lStudents = course.getlStudents();
+        ArrayList<Assignment> lAssignments = course.getlAssignments();
+
+
+
+        int iSize =  lStudents.size();
+        int jSize =  lAssignments.size();
+        data = new String[iSize+1];
+
+        data[0] = "Student ID";
+        for(int j = 0; j<jSize; j++)
+        {
+            data[0] = data[0] + "\t" + lAssignments.get(j).getAssignmentName();
+        }
+
+        for(int i = 1; i < iSize; i++) {
+            data[i] = lStudents.get(i).getStudentID();
+            for(int j = 0; j < jSize; j++) {
+                for (Grade gGrade: lAssignments.get(j).getGrades()) {
+                    if(gGrade.getStudentCopy().getStudentID().equals(lStudents.get(i).getStudentID()))
+                    {
+                        data[i] = data[i] + "\t" + gGrade.getGrade();
+                    }
+                }
+            }
+        }
+
+        startPrintJob();
+
     }
 
 }
