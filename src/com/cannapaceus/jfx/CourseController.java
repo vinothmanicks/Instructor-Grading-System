@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.services.EmailService;
 import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -645,10 +646,18 @@ public class CourseController {
     }
 
     public void printGrades(ActionEvent event) {
-
+        PrinterService service = PrinterService.getInstance();
+        service.printGrades(selectedCourse);
     }
 
     public void emailGrades(ActionEvent event) {
+        //TODO: Implement database retrieval of instructor email and make sure email is set in settings before sending.
 
+        EmailService service = new EmailService("ChubbaDubba420@gmail.com","N000000!");
+        for(Student stuStudent:selectedCourse.getlStudents())
+        {
+            service.setsMessageText(stuStudent.GenerateStudentReport());
+            service.SendEmail(stuStudent.getStudentEmail(),"Grades");
+        }
     }
 }
