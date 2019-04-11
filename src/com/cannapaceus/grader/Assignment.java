@@ -95,6 +95,14 @@ public class Assignment {
     }
 
     /**
+     * Function to clear the grades from an assignment
+     */
+    public void clearGrades()
+    {
+        lGrades.clear();
+    }
+
+    /**
      * Setter for the assignment's ID from the database
      * @param lDBID ID of the assignment from the database
      */
