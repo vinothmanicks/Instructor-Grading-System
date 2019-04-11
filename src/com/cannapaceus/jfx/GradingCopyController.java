@@ -74,6 +74,7 @@ public class GradingCopyController {
         if(xbScale.isSelected())
         {
             md.selectedCourse.setScale(courseToCopy.getScale());
+            md.addUpdatedObject(md.selectedCourse);
         }
         if(xbCategories.isSelected())
         {
