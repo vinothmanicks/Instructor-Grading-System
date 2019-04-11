@@ -249,6 +249,13 @@
                     -fx-text-fill: #0077C8;
                 </style>
             </JFXButton>
+            <JFXButton fx:id="btnCopyFromCourse" buttonType="FLAT" text="Use Previous Grade Scheme" onAction="#copyStuff">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: #0077C8;
+                </style>
+            </JFXButton>
         </VBox>
     </right>
 </BorderPane>

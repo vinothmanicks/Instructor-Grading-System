@@ -656,4 +656,14 @@ public class CourseController {
             service.SendEmail(stuStudent.getStudentEmail(), "Grades");
         }
     }
+
+    public void copyStuff(ActionEvent event)
+    {
+        try {
+            sc.addScreen("GradeCopy", FXMLLoader.load(getClass().getResource("../jfxml/GradingCopyView.fxml")));
+            sc.activate("GradeCopy");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

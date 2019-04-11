@@ -90,7 +90,8 @@ public class DBService {
                     "FMODE REAL, \n" +
                     "FSTDDEV REAL, \n" +
                     "BARCHIVED BOOLEAN, \n" +
-                    "ITERM BIGINT NOT NULL \n" +
+                    "ITERM BIGINT NOT NULL, \n" +
+                    "FSCALE REAL \n" +
                     ");");
 
             stm.execute("CREATE TABLE CATEGORIES (\n" +
@@ -234,9 +235,9 @@ public class DBService {
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO COURSES " +
-                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM) " +
+                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM, FSCALE) " +
                     "VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -250,6 +251,7 @@ public class DBService {
             stm.setFloat(7, courseToStore.getStCourseStats().getStandardDev());  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
             stm.setBoolean(8, courseToStore.getBArchived());
             stm.setLong(9, lTermID);
+            stm.setFloat(10, courseToStore.getScale());
 
             stm.executeUpdate();
 
@@ -590,7 +592,7 @@ public class DBService {
         try {
             String sql = "UPDATE COURSES " +
                     "SET SCOURSENAME = ?, SCOURSEID = ?, SCOURSEDEPT = ?, FMEAN = ?, " +
-                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ? " +
+                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ?, FSCALE = ? " +
                     "WHERE COURSEID = ? ";
 
             con = DriverManager.getConnection(conString, user, pass);
@@ -605,6 +607,7 @@ public class DBService {
             stm.setFloat(7, c.getStCourseStats().getStandardDev());  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
             stm.setBoolean(8, c.getBArchived());
             stm.setLong(9, c.getDBID());
+            stm.setFloat(10,c.getScale());
 
             stm.executeUpdate();
 
@@ -1221,7 +1224,7 @@ public class DBService {
                         rs.getString(4));
 
                 retValue.setDBID(rs.getLong(1));
-
+                retValue.setScale(rs.getFloat(11));
 
                 //Get categories for the course
                 sql = "SELECT * FROM CATEGORIES " +
