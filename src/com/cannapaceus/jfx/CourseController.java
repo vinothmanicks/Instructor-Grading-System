@@ -339,7 +339,7 @@ public class CourseController {
         catHB.setHgrow(catSpanPane, Priority.ALWAYS);
 
         for (Assignment a : selectedCourse.getlAssignments()) {
-            if (a.getCategoryCopy() != null) {
+            if (a.getCategoryReference() != null) {
                 continue;
             }
 
