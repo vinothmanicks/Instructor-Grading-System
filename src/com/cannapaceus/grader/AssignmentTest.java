@@ -61,10 +61,10 @@ class AssignmentTest {
 
     @Test
     void setAndGetCategory() {
-        assertEquals(0, assignment.getCategoryCopy().compareTo(category));
+        assertEquals(0, assignment.getCategoryReference().compareTo(category));
         assignment.setCategory(new Category("New Test Category", 2));
-        assertEquals(0, assignment.getCategoryCopy().compareTo(new Category("New Test Category", 2)));
-        assertNotEquals(0, assignment.getCategoryCopy().compareTo(category));
+        assertEquals(0, assignment.getCategoryReference().compareTo(new Category("New Test Category", 2)));
+        assertNotEquals(0, assignment.getCategoryReference().compareTo(category));
     }
 
     @Test

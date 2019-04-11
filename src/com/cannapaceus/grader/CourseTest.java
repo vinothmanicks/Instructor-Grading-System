@@ -70,8 +70,8 @@ class CourseTest {
         assertEquals(100, lAssignment.get(0).getMaxScore());
         assertEquals(101, lAssignment.get(1).getMaxScore());
 
-        assertEquals("Test Category 0", lAssignment.get(0).getCategoryCopy().getName());
-        assertEquals("Test Category 1", lAssignment.get(1).getCategoryCopy().getName());
+        assertEquals("Test Category 0", lAssignment.get(0).getCategoryReference().getName());
+        assertEquals("Test Category 1", lAssignment.get(1).getCategoryReference().getName());
     }
 
     @Test

@@ -38,8 +38,6 @@ public class StudentFormController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
-        sc = ScreenController.getInstance();
-
         selectedStudent = md.getSelectedStudent();
 
         tfStudentFMName.setText(selectedStudent.getFirstMIName());

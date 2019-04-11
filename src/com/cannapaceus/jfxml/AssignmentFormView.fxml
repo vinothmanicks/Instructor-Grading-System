@@ -58,11 +58,14 @@
             </HBox>
             <JFXTextField fx:id="tfCustomWeight" promptText="Custom Weight" labelFloat="true">
                 <validators>
-                    <IntegerValidator message="Integer Required">
+                    <NumberValidator message="Number Required">
                         <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
-                    </IntegerValidator>
+                    </NumberValidator>
                 </validators>
             </JFXTextField>
+            <JFXComboBox fx:id="cbCategory" promptText="Category" labelFloat="true">
+
+            </JFXComboBox>
             <HBox alignment="CENTER_LEFT">
                 <JFXDatePicker fx:id="dpDueDate" promptText="Due Date">
                     <validators>
