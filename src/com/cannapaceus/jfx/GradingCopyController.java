@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 
 import com.cannapaceus.grader.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -79,6 +80,7 @@ public class GradingCopyController {
             if(xbAssignments.isSelected()) {
                 for (Category refCat : courseToCopy.getlCategories()) {
                     Category cat = new Category(refCat);
+                    cat.setDBID(0);
                     md.setSelectedCategory(cat);
                     md.selectedCourse.addCategory(cat);
                     if (md.selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(md.selectedCategory)) {
@@ -90,34 +92,47 @@ public class GradingCopyController {
 
                 for(Category cat: md.selectedCourse.getlCategories())
                 {
-                    for(Assignment refAssignment: cat.getAssignments())
+                    ArrayList<Assignment> toRemove = new ArrayList<>(cat.getAssignments());
+                    for(Assignment refAssignment: toRemove)
                     {
                         Assignment aAssignment = new Assignment(refAssignment);
+                        aAssignment.setDBID(0);
+                        aAssignment.setDueDate(refAssignment.getDueDate());
+                        aAssignment.setAssignedDate(refAssignment.getDueDate());
+                        aAssignment.clearGrades();
+                        aAssignment.setCategory(cat);
                         cat.removeAssigment(refAssignment);
-                        cat.addAssignment(aAssignment);
+                        md.setSelectedCategory(cat);
                         md.setSelectedAssignment(aAssignment);
-                        md.addAssignment(md.selectedAssignment);
-                        for(Grade gGrade: md.selectedAssignment.getGrades()) {
-                            md.removeGrade(gGrade);
-                        }
+                        md.addAssignment(aAssignment);
                         if (md.selectedAssignment.getDBID() == 0 && !md.getNewObjects().contains(md.selectedAssignment)) {
                             md.addNewObject(md.selectedAssignment);
+                            for (Grade g : md.selectedAssignment.getGrades()) {
+                                if (!md.getNewObjects().contains(g))
+                                    md.addNewObject(g);
+                            }
                         }
                     }
+
                 }
             }
             else
             {
                 for (Category refCat : courseToCopy.getlCategories()) {
                     Category cat = new Category(refCat);
-                    for(Assignment aAssignment:cat.getAssignments()) {
+                    cat.setDBID(0);
+                    ArrayList<Assignment> toRemove = new ArrayList<>(cat.getAssignments());
+                    for(Assignment aAssignment:toRemove) {
                         cat.removeAssigment(aAssignment);
                     }
                     md.selectedCourse.addCategory(cat);
                     md.setSelectedCategory(cat);
-                    if (md.selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(md.selectedCategory)) {
+                    if (md.selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(md.selectedCategory))
+                    {
                         md.addNewObject(md.selectedCategory);
-                    } else {
+                    }
+                    else
+                    {
                         md.addUpdatedObject(md.selectedCategory);
                     }
                 }
@@ -128,16 +143,20 @@ public class GradingCopyController {
             for(Assignment refAssignment: courseToCopy.getlAssignments())
             {
                 Assignment aAssignment = new Assignment(refAssignment);
-                md.setSelectedAssignment(aAssignment);
+                aAssignment.setDBID(0);
+                aAssignment.setDueDate(refAssignment.getDueDate());
+                aAssignment.setAssignedDate(refAssignment.getDueDate());
+                aAssignment.clearGrades();
+                aAssignment.setCategory(null);
                 md.setSelectedCategory(null);
-                md.selectedAssignment.setCategory(md.selectedCategory);
-                md.addAssignment(md.selectedAssignment);
-                md.addAssignment(md.selectedAssignment);
-                for(Grade gGrade: md.selectedAssignment.getGrades()) {
-                    md.removeGrade(gGrade);
-                }
+                md.setSelectedAssignment(aAssignment);
+                md.addAssignment(aAssignment);
                 if (md.selectedAssignment.getDBID() == 0 && !md.getNewObjects().contains(md.selectedAssignment)) {
                     md.addNewObject(md.selectedAssignment);
+                    for (Grade g : md.selectedAssignment.getGrades()) {
+                        if (!md.getNewObjects().contains(g))
+                            md.addNewObject(g);
+                    }
                 }
             }
         }
