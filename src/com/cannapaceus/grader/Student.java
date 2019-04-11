@@ -1,14 +1,10 @@
 package com.cannapaceus.grader;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -126,7 +122,7 @@ public class Student extends RecursiveTreeObject<Student> {
                 continue;
             }
 
-            Category cat = g.getAssignmentReference().getCategoryCopy();
+            Category cat = g.getAssignmentReference().getCategoryReference();
 
             if (cat == null) {
                 tempWeight = 1.0f;

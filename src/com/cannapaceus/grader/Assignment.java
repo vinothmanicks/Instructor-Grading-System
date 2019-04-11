@@ -68,7 +68,7 @@ public class Assignment {
         this.setAssignmentName(aAssignment.getAssignmentName());
         aAssignment.getGrades().forEach(grade-> this.lGrades.add(grade));
         this.setAssignedDate(aAssignment.getAssignedDate());
-        this.setCategory((aAssignment.getCategoryCopy()));
+        this.setCategory((aAssignment.getCategoryReference()));
         this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
@@ -231,13 +231,9 @@ public class Assignment {
      * Getter for a copy of the assignment's category
      * @return
      */
-    public Category getCategoryCopy()
+    public Category getCategoryReference()
     {
-        if (catCategory == null)
-            return null;
-
-        Category catCategoryCopy = new Category(this.catCategory);
-        return catCategoryCopy;
+        return this.catCategory;
     }
 
     /**

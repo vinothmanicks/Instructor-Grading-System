@@ -354,7 +354,7 @@ public class DBService {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        Category catCopy = assignmentToStore.getCategoryCopy();
+        Category catCopy = assignmentToStore.getCategoryReference();
 
         long lCategoryID = 0;
 
@@ -775,7 +775,7 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
 
-        Category catCopy = a.getCategoryCopy();
+        Category catCopy = a.getCategoryReference();
 
         long lCategoryID = 0;
 
@@ -1137,7 +1137,7 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
 
-        Category catCopy = a.getCategoryCopy();
+        Category catCopy = a.getCategoryReference();
 
         long lCategoryID = 0;
 

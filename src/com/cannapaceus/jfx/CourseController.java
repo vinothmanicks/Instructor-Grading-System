@@ -3,28 +3,21 @@ package com.cannapaceus.jfx;
 import com.cannapaceus.grader.*;
 import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXNodesList;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class CourseController {
@@ -172,6 +165,19 @@ public class CourseController {
             Pane tempPane = new Pane();
 
             FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("EDIT");
+            tempFA.setGlyphSize(20);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+
+            JFXButton studentEdit = new JFXButton("");
+            studentEdit.setAlignment(Pos.BASELINE_CENTER);
+            studentEdit.setGraphic(tempFA);
+            studentEdit.setStyle("-fx-cursor: hand;");
+            studentEdit.setRipplerFill(Color.WHITE);
+            studentEdit.setButtonType(JFXButton.ButtonType.FLAT);
+            studentEdit.setOnAction((event -> editStudentClick(event)));
+
+            tempFA = new FontAwesomeIconView();
             tempFA.setGlyphName("TRASH_ALT");
             tempFA.setGlyphSize(20);
             tempFA.setGlyphStyle("-fx-fill: grey;");
@@ -183,7 +189,7 @@ public class CourseController {
             tempDelete.setRipplerFill(Color.WHITE);
             tempDelete.setButtonType(JFXButton.ButtonType.FLAT);
 
-            tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
+            tempHB.getChildren().addAll(tempLabel, tempPane, studentEdit, tempDelete);
             tempHB.setHgrow(tempPane, Priority.ALWAYS);
 
             tempHB.setOnMouseClicked((event -> studentClick(event)));
@@ -269,6 +275,19 @@ public class CourseController {
                 Pane tempPane = new Pane();
 
                 FontAwesomeIconView tempFA = new FontAwesomeIconView();
+                tempFA.setGlyphName("EDIT");
+                tempFA.setGlyphSize(20);
+                tempFA.setGlyphStyle("-fx-fill: grey;");
+
+                JFXButton assignmentEdit = new JFXButton("");
+                assignmentEdit.setAlignment(Pos.BASELINE_CENTER);
+                assignmentEdit.setGraphic(tempFA);
+                assignmentEdit.setStyle("-fx-cursor: hand;");
+                assignmentEdit.setRipplerFill(Color.WHITE);
+                assignmentEdit.setButtonType(JFXButton.ButtonType.FLAT);
+                assignmentEdit.setOnAction((event -> editAssignmentClick(event)));
+
+                tempFA = new FontAwesomeIconView();
                 tempFA.setGlyphName("TRASH_ALT");
                 tempFA.setGlyphSize(20);
                 tempFA.setGlyphStyle("-fx-fill: grey;");
@@ -280,7 +299,7 @@ public class CourseController {
                 tempDelete.setRipplerFill(Color.WHITE);
                 tempDelete.setButtonType(JFXButton.ButtonType.FLAT);
 
-                tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
+                tempHB.getChildren().addAll(tempLabel, tempPane, assignmentEdit, tempDelete);
                 tempHB.setHgrow(tempPane, Priority.ALWAYS);
 
                 tempHB.setOnMouseClicked((event -> assignmentClick(event)));
@@ -341,7 +360,7 @@ public class CourseController {
         catHB.setHgrow(catSpanPane, Priority.ALWAYS);
 
         for (Assignment a : selectedCourse.getlAssignments()) {
-            if (a.getCategoryCopy() != null) {
+            if (a.getCategoryReference() != null) {
                 continue;
             }
 
@@ -360,6 +379,19 @@ public class CourseController {
             Pane tempPane = new Pane();
 
             FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("EDIT");
+            tempFA.setGlyphSize(20);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+
+            JFXButton assignmentEdit = new JFXButton("");
+            assignmentEdit.setAlignment(Pos.BASELINE_CENTER);
+            assignmentEdit.setGraphic(tempFA);
+            assignmentEdit.setStyle("-fx-cursor: hand;");
+            assignmentEdit.setRipplerFill(Color.WHITE);
+            assignmentEdit.setButtonType(JFXButton.ButtonType.FLAT);
+            assignmentEdit.setOnAction((event -> editAssignmentClick(event)));
+
+            tempFA = new FontAwesomeIconView();
             tempFA.setGlyphName("TRASH_ALT");
             tempFA.setGlyphSize(20);
             tempFA.setGlyphStyle("-fx-fill: grey;");
@@ -371,7 +403,7 @@ public class CourseController {
             tempDelete.setRipplerFill(Color.WHITE);
             tempDelete.setButtonType(JFXButton.ButtonType.FLAT);
 
-            tempHB.getChildren().addAll(tempLabel, tempPane, tempDelete);
+            tempHB.getChildren().addAll(tempLabel, tempPane, assignmentEdit, tempDelete);
             tempHB.setHgrow(tempPane, Priority.ALWAYS);
 
             tempHB.setOnMouseClicked((event -> assignmentClick(event)));
@@ -526,6 +558,34 @@ public class CourseController {
         try {
             sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("../jfxml/CategoryFormView.fxml")));
             sc.activate("CategoryForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editStudentClick(ActionEvent event) {
+        Student targetStudent = hmStudent.get(((Node) event.getSource()).getParent().getId());
+
+        md.setSelectedStudent(targetStudent);
+
+        try {
+            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("../jfxml/StudentFormView.fxml")));
+            sc.activate("StudentForm");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editAssignmentClick(ActionEvent event) {
+        Assignment targetAssignment = hmAssignment.get(((Node) event.getSource()).getParent().getId());
+        Category targetCategory = targetAssignment.getCategoryReference();
+
+        md.setSelectedAssignment(targetAssignment);
+        md.setSelectedCategory(targetCategory);
+
+        try {
+            sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));
+            sc.activate("AssignmentForm");
         } catch (Exception e) {
             e.printStackTrace();
         }
