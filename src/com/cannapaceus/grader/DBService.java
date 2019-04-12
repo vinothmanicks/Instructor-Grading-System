@@ -1338,7 +1338,7 @@ public class DBService {
                         rs.getString(4));
 
                 retValue.setDBID(rs.getLong(1));
-                retValue.setScale(rs.getFloat(11));
+                retValue.setScale(rs.getFloat(1));
 
                 //Get categories for the course
                 sql = "SELECT * FROM CATEGORIES " +
