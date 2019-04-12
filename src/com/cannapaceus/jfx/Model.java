@@ -187,8 +187,8 @@ public class Model {
 
     public void removeAssignment(Assignment a) {
         selectedCourse.getlAssignments().remove(a);
-        if (selectedCategory != null) {
-            selectedCategory.removeAssigment(a);
+        if (a.getCategoryReference() != null) {
+            a.getCategoryReference().removeAssigment(a);
         }
 
         for (Grade g : a.getGrades()) {

@@ -566,8 +566,6 @@ public class CourseController {
         md.removeStudent(stu);
         md.addRemovedObject(stu);
 
-        hmCategory.clear();
-
         reloadView();
     }
 
@@ -578,8 +576,6 @@ public class CourseController {
 
         md.removeAssignment(assign);
         md.addRemovedObject(assign);
-
-        hmCategory.clear();
 
         reloadView();
     }

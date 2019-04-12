@@ -669,8 +669,8 @@ public class DBService {
             stm.setFloat(6, c.getStCourseStats().getMode());  //TODO: stm.setFloat(6, courseToStore.getStatistics().getMode());
             stm.setFloat(7, c.getStCourseStats().getStandardDev());  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
             stm.setBoolean(8, c.getBArchived());
-            stm.setLong(9, c.getDBID());
-            stm.setFloat(10,c.getScale());
+            stm.setFloat(9,c.getScale());
+            stm.setLong(10, c.getDBID());
 
             stm.executeUpdate();
 
