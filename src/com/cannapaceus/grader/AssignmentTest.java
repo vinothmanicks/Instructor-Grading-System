@@ -18,7 +18,7 @@ class AssignmentTest {
     @BeforeEach
     void setUp() {
         category = new Category("Test Category", 1);
-        assignment = new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, 5);
+        assignment = new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, new Float(5));
         student = new Student("Test", "Student", "25825845", "ts0012@test.edu");
         grade = new Grade(20, student, assignment);
     }
@@ -70,7 +70,7 @@ class AssignmentTest {
     @Test
     void setAndGetWeight() {
         assertEquals(5, assignment.getWeight());
-        assignment.setWeight(10);
+        assignment.setWeight(new Float(10));
         assertEquals(10, assignment.getWeight());
         assertNotEquals(5, assignment.getWeight());
     }
@@ -85,8 +85,8 @@ class AssignmentTest {
 
     @Test
     void compareTo() {
-        assertEquals(0, assignment.compareTo(new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, 5)));
+        assertEquals(0, assignment.compareTo(new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, new Float(5))));
 
-        assertNotEquals(0, assignment.compareTo(new Assignment("New Test Assignment", LocalDate.of(2395, 12, 25), LocalDate.of(2395, 12, 25), false, 100, category, 5)));
+        assertNotEquals(0, assignment.compareTo(new Assignment("New Test Assignment", LocalDate.of(2395, 12, 25), LocalDate.of(2395, 12, 25), false, 100, category, new Float(5))));
     }
 }

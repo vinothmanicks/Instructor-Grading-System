@@ -210,7 +210,7 @@ public class GradeBookController{
         c.calculateStats();
 
         Student s = g.getStudentReference();
-        s.setAverageGrade(s.getGrades());
+        s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
 
         Assignment a = g.getAssignmentReference();
         Statistics st = a.getStAssignmentStats();

@@ -25,6 +25,9 @@ public class CourseFormController {
     private JFXTextField tfCourseDept;
 
     @FXML
+    private JFXTextField tfCourseScale;
+
+    @FXML
     private void initialize()
     {
         sc = ScreenController.getInstance();
@@ -35,6 +38,7 @@ public class CourseFormController {
         tfCourseName.setText(selectedCourse.getCourseName());
         tfCourseID.setText(selectedCourse.getCourseID());
         tfCourseDept.setText(selectedCourse.getDepartment());
+        tfCourseScale.setText(String.valueOf(selectedCourse.getScale()));
 
         tfCourseName.textProperty().addListener((o, oldVal, newVal) -> {
             tfCourseName.validate();
@@ -46,6 +50,10 @@ public class CourseFormController {
 
         tfCourseDept.textProperty().addListener((o, oldVal, newVal) -> {
             tfCourseDept.validate();
+        });
+
+        tfCourseScale.textProperty().addListener((o, oldVal, newVal) -> {
+            tfCourseScale.validate();
         });
     }
 
@@ -69,6 +77,7 @@ public class CourseFormController {
         selectedCourse.setCourseName(tfCourseName.getText());
         selectedCourse.setCourseID(tfCourseID.getText());
         selectedCourse.setDepartment(tfCourseDept.getText());
+        selectedCourse.setScale(Float.valueOf(tfCourseScale.getText()));
 
         if (selectedCourse.getDBID() == 0 && !md.getNewObjects().contains(selectedCourse)) {
             md.addNewObject(selectedCourse);
@@ -87,15 +96,19 @@ public class CourseFormController {
     }
 
     private boolean formValidate() {
+        Boolean anyFail = true;
         if (!tfCourseName.validate())
-            return false;
+            anyFail = false;
 
         if (!tfCourseID.validate())
-            return false;
+            anyFail = false;
 
         if (!tfCourseDept.validate())
-            return false;
+            anyFail = false;
 
-        return true;
+        if (!tfCourseScale.validate())
+            anyFail = false;
+
+        return anyFail;
     }
 }

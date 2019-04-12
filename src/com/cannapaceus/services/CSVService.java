@@ -295,7 +295,7 @@ public class CSVService {
                                         {
                                             continue;
                                         }
-                                        Assignment addedAssignment = new Assignment("",null,null,false,100,null,100);
+                                        Assignment addedAssignment = new Assignment("",null,null,false,100,null,new Float(100));
                                         addedAssignment.setAssignmentName(lineElements[0]);
                                         String[] dateSections = lineElements[1].split("/");
                                         LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));

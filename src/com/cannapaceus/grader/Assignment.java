@@ -29,7 +29,7 @@ public class Assignment {
     //Category object that this assignment is assigned to. This hold the weight and name that this assignment will be graded under.
     private Category catCategory;
     //float to hold the manual override weight for this assignment
-    private float fWeight;
+    private Float fWeight = null;
 
     /**
      * <h1>Assignment Constructor</h1>
@@ -42,7 +42,7 @@ public class Assignment {
      * @param catCategory Category the assignment is created under
      * @param fWeight Float if manually overriding the category weight
      */
-    public Assignment(String sAssignmentName, LocalDate dtDueDate, LocalDate dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, float fWeight)
+    public Assignment(String sAssignmentName, LocalDate dtDueDate, LocalDate dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, Float fWeight)
     {
         this.lGrades = new ArrayList<Grade>();
         this.sAssignmentName = sAssignmentName;
@@ -159,7 +159,7 @@ public class Assignment {
      * Setter for the assignment's manual weight
      * @param fWeight
      */
-    public void setWeight(float fWeight)
+    public void setWeight(Float fWeight)
     {
         this.fWeight = fWeight;
     }
@@ -248,7 +248,7 @@ public class Assignment {
      * Getter for a copy of the manual assignment weight
      * @return
      */
-    public float getWeight()
+    public Float getWeight()
     {
         return this.fWeight;
     }
