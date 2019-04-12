@@ -72,13 +72,14 @@ public class CategoryFormController {
     }
 
     private boolean formValidate() {
+        boolean anyFail = true;
         if (!tfCatName.validate())
-            return false;
+            anyFail = false;
 
         if (!tfCatWeight.validate())
-            return false;
+            anyFail = false;
 
-        return true;
+        return anyFail;
     }
 
 
