@@ -383,7 +383,13 @@ public class DBService {
             stm.setFloat(7, assignmentToStore.getStAssignmentStats().getStandardDev());
             stm.setBoolean(8, assignmentToStore.getDroppedAssignment());
             stm.setFloat(9, assignmentToStore.getMaxScore());
-            stm.setFloat(10, assignmentToStore.getWeight());
+            if(assignmentToStore.getWeight()==null)
+            {
+                stm.setNull(10, Types.FLOAT);
+            }
+            else {
+                stm.setFloat(10, assignmentToStore.getWeight());
+            }
             stm.setLong(11, lCategoryID);
             stm.setLong(12, lCourseID);
 
@@ -804,7 +810,13 @@ public class DBService {
             stm.setFloat(7, a.getStAssignmentStats().getStandardDev());
             stm.setBoolean(8, a.getDroppedAssignment());
             stm.setFloat(9, a.getMaxScore());
-            stm.setFloat(10, a.getWeight());
+            if(a.getWeight()==null)
+            {
+                stm.setNull(10, Types.FLOAT);
+            }
+            else {
+                stm.setFloat(10, a.getWeight());
+            }
             stm.setLong(11, lCategoryID);
             stm.setLong(12, a.getDBID());
 
@@ -1385,13 +1397,26 @@ public class DBService {
                             }
                         }
 
-                        Assignment temp = new Assignment(rs.getString(2),
-                                rs.getDate(3).toLocalDate(),
-                                rs.getDate(4).toLocalDate(),
-                                rs.getBoolean(9),
-                                rs.getFloat(10),
-                                tempCat,
-                                rs.getFloat(11));
+                        Assignment temp;
+                        rs.getFloat(11);
+                        if(rs.wasNull()) {
+                            temp = new Assignment(rs.getString(2),
+                                    rs.getDate(3).toLocalDate(),
+                                    rs.getDate(4).toLocalDate(),
+                                    rs.getBoolean(9),
+                                    rs.getFloat(10),
+                                    tempCat,
+                                    null);
+                        }
+                        else {
+                            temp = new Assignment(rs.getString(2),
+                                    rs.getDate(3).toLocalDate(),
+                                    rs.getDate(4).toLocalDate(),
+                                    rs.getBoolean(9),
+                                    rs.getFloat(10),
+                                    tempCat,
+                                    rs.getFloat(11));
+                        }
 
                         Statistics tempStats = new Statistics();
                         tempStats.setMean(rs.getFloat(5));

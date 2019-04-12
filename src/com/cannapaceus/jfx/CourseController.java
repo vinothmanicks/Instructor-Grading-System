@@ -663,7 +663,7 @@ public class CourseController {
         String id = ((Node) event.getTarget()).getParent().getId();
         Category cat = hmCategory.get(id);
 
-        Assignment a = new Assignment("",lo,lo,false,100,cat, new Float(0));
+        Assignment a = new Assignment("",lo,lo,false,100,cat, null);
 
         md.setSelectedCategory(cat);
         md.setSelectedAssignment(a);
