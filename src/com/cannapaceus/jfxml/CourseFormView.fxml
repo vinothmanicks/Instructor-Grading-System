@@ -16,6 +16,8 @@
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 
+<?import com.jfoenix.validation.RegexValidator?>
+<?import com.jfoenix.validation.NumberValidator?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cannapaceus.jfx.CourseFormController"
@@ -61,6 +63,18 @@
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfCourseScale" promptText="Final Scale" prefWidth="200" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                        <NumberValidator message="Valid Number Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </NumberValidator>
                     </validators>
                 </JFXTextField>
             </HBox>

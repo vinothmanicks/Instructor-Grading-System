@@ -209,7 +209,7 @@ public class StudentController {
         c.PopulateAverages(c.getlStudents());
         c.calculateStats();
 
-        selectedStudent.setAverageGrade(selectedStudent.getGrades());
+        selectedStudent.setAverageGrade(selectedStudent.getGrades(),md.selectedCourse.getScale());
 
         Assignment a = g.getAssignmentReference();
 
