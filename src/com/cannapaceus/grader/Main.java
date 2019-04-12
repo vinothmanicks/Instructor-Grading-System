@@ -101,9 +101,9 @@ public class Main {
 
         //System.out.println(stuOne.GenerateStudentReport());
 
-        stuOne.setAverageGrade(stuOne.getGrades());
-        stuTwo.setAverageGrade(stuTwo.getGrades());
-        stuThree.setAverageGrade(stuThree.getGrades());
+        stuOne.setAverageGrade(stuOne.getGrades(),0);
+        stuTwo.setAverageGrade(stuTwo.getGrades(),0);
+        stuThree.setAverageGrade(stuThree.getGrades(),0);
         coTest.PopulateAverages(coTest.getlStudents());
         coTest.calculateStats();
 

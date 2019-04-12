@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -41,8 +42,10 @@ public class AssignmentFormController {
     private JFXDatePicker dpAssignedDate;
 
     @FXML
-    private void initialize()
-    {
+    private JFXCheckBox xbUseCustom;
+
+    @FXML
+    private void initialize() {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
@@ -52,7 +55,7 @@ public class AssignmentFormController {
         int i = 0;
 
         ArrayList<String> catList = new ArrayList<>();
-        for(Category tempCat: md.getSelectedCourse().getlCategories()) {
+        for (Category tempCat : md.getSelectedCourse().getlCategories()) {
             catList.add(tempCat.getName());
             hmCat.put(i, tempCat);
             i++;
@@ -64,7 +67,15 @@ public class AssignmentFormController {
 
         tfAssignmentName.setText(selectedAssignment.getAssignmentName());
         tfMaxScore.setText(String.valueOf(selectedAssignment.getMaxScore()));
-        tfCustomWeight.setText(String.valueOf(selectedAssignment.getWeight()));
+        if (selectedAssignment.getWeight() == null)
+        {
+            xbUseCustom.selectedProperty().setValue(false);
+        }
+        else
+        {
+            tfCustomWeight.setText(String.valueOf(selectedAssignment.getWeight()));
+            xbUseCustom.selectedProperty().setValue(true);
+        }
         if(md.getSelectedCategory() != null) {
             cbCategory.getSelectionModel().select(md.getSelectedCategory().getName());
         }
@@ -85,8 +96,14 @@ public class AssignmentFormController {
 
         selectedAssignment.setAssignmentName(tfAssignmentName.getText());
         selectedAssignment.setMaxScore(Float.valueOf(tfMaxScore.getText()));
-        if(!tfCustomWeight.getText().isEmpty())
+        if (xbUseCustom.isSelected())
+        {
             selectedAssignment.setWeight(Float.valueOf(tfCustomWeight.getText()));
+        }
+        else
+        {
+            selectedAssignment.setWeight(null);
+        }
         selectedAssignment.setDueDate(dpDueDate.getValue());
         selectedAssignment.setAssignedDate(dpAssignedDate.getValue());
         selectedAssignment.setCategory(hmCat.get(cbCategory.getSelectionModel().getSelectedIndex()));
@@ -126,16 +143,20 @@ public class AssignmentFormController {
     }
 
     private boolean formValidate() {
+        boolean anyFail = true;
+
         if (!tfAssignmentName.validate())
-            return false;
+            anyFail = false;
         if(!tfMaxScore.validate())
-            return false;
-        if(!tfCustomWeight.validate())
-            return false;
+            anyFail = false;
+        if(xbUseCustom.isSelected()) {
+            if (!tfCustomWeight.validate())
+                anyFail = false;
+        }
         if(!dpDueDate.validate())
-            return false;
+            anyFail = false;
         if(!dpAssignedDate.validate())
-            return false;
-        return true;
+            anyFail = false;
+        return anyFail;
     }
 }

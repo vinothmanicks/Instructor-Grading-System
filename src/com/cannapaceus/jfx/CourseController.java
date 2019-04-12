@@ -449,7 +449,7 @@ public class CourseController {
 
     private void createStatisticsList() {
         for (Student s : selectedCourse.getlStudents()) {
-            s.setAverageGrade(s.getGrades());
+            s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
         }
         selectedCourse.PopulateAverages(selectedCourse.getlStudents());
         selectedCourse.calculateStats();
@@ -659,7 +659,7 @@ public class CourseController {
         String id = ((Node) event.getTarget()).getParent().getId();
         Category cat = hmCategory.get(id);
 
-        Assignment a = new Assignment("",lo,lo,false,100,cat,0);
+        Assignment a = new Assignment("",lo,lo,false,100,cat, new Float(0));
 
         md.setSelectedCategory(cat);
         md.setSelectedAssignment(a);
