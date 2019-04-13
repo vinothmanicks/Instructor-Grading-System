@@ -48,7 +48,7 @@ public class PDFService {
             contentStream.beginText();
             contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
             contentStream.setLeading(14.5f);
-            contentStream.newLineAtOffset(25, 725);
+            contentStream.newLineAtOffset(25, 720);
             for (String text : data) {
                 contentStream.showText(text);
                 contentStream.newLine();
@@ -84,7 +84,11 @@ public class PDFService {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
                 contentStream.setLeading(14.5f);
-                contentStream.newLineAtOffset(25, 725);
+                contentStream.newLineAtOffset(25, 720);
+
+                contentStream.showText("Course Name: " + course.getCourseName());
+                contentStream.newLine();
+                contentStream.newLine();
 
                 for (String text : data) {
                     contentStream.showText(text);
@@ -94,6 +98,47 @@ public class PDFService {
                 contentStream.endText();
                 contentStream.close();
             }
+
+            document.save(filename);
+            document.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printGrades(Student student, Course course)
+    {
+        ArrayList<Student> lStudents = course.getlStudents();
+
+        String filename = "Grades_" + course.getCourseName() + "_" + student.getFirstMIName() + student.getLastName() + ".pdf";
+
+        try {
+            PDDocument document = new PDDocument();
+
+            PDPage page = new PDPage();
+            document.addPage(page);
+
+            String[] data = student.GenerateStudentReportArray();
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+            contentStream.setLeading(14.5f);
+            contentStream.newLineAtOffset(25, 720);
+
+            contentStream.showText("Course Name: " + course.getCourseName());
+            contentStream.newLine();
+            contentStream.newLine();
+
+            for (String text : data) {
+                contentStream.showText(text);
+                contentStream.newLine();
+            }
+
+            contentStream.endText();
+            contentStream.close();
 
             document.save(filename);
             document.close();

@@ -283,17 +283,17 @@ public class Student extends RecursiveTreeObject<Student> {
             sReport[i] = "    " + gGrade.getAssignmentCopy().getAssignmentName() + ":    " + gGrade.getGrade()+"\\"+ gGrade.getAssignmentCopy().getMaxScore();
             if(gGrade.getMissing() == true)
             {
-                String sMissingData = new String("-Missing\n");
+                String sMissingData = new String("    - Missing");
                 sReport[i] = sReport[i] + sMissingData;
             }
             if(gGrade.getOverdue() == true)
             {
-                String sOverdueData = new String("-Overdue\n");
+                String sOverdueData = new String("    - Overdue");
                 sReport[i] = sReport[i] + sOverdueData;
             }
             if(gGrade.getDropped() == true)
             {
-                String sDroppedData = new String("-Dropped\n");
+                String sDroppedData = new String("    - Dropped");
                 sReport[i] = sReport[i] + sDroppedData;
             }
 

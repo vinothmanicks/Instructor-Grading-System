@@ -2,6 +2,7 @@ package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
 import com.cannapaceus.services.EmailService;
+import com.cannapaceus.services.PDFService;
 import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.DoubleTextFieldEditorBuilder;
@@ -264,8 +265,8 @@ public class StudentController {
     }
 
     public void printGrade(ActionEvent event) {
-        PrinterService service = PrinterService.getInstance();
-        service.printGrades(selectedCourse);
+        PDFService service = PDFService.getInstance();
+        service.printGrades(selectedStudent, selectedCourse);
     }
 
     public void emailGrade(ActionEvent event) {
