@@ -83,6 +83,8 @@ public class CategoryFormController {
             }
         }
 
+        md.setSelectedCategory(null);
+
         try {
             sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
             sc.activate("Course");
