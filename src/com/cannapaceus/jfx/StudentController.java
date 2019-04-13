@@ -9,6 +9,7 @@ import com.jfoenix.controls.cells.editors.DoubleTextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -27,6 +28,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.CheckBoxTreeTableCell;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -45,6 +47,9 @@ public class StudentController {
     Course selectedCourse;
 
     ObservableList<Grade> gradeObservableList;
+
+    @FXML
+    private StackPane spDialogPane;
 
     @FXML
     private JFXTreeTableView studentGradeTable;
@@ -271,7 +276,7 @@ public class StudentController {
 
     public void printGrade(ActionEvent event) {
         PDFService service = PDFService.getInstance();
-        service.printGrades(selectedStudent, selectedCourse);
+        service.printGrades(selectedStudent, selectedCourse, false);
     }
 
     public void emailGrade(ActionEvent event) {
@@ -281,16 +286,20 @@ public class StudentController {
         selectedCourse.scaleFinalAverages(selectedCourse.getScale());
 
         JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Sending Emails..."));
-        content.setBody(new Text("Emails are being sent to all students in " + selectedCourse.getCourseName()));
+        content.setHeading(new Text("Sending Email..."));
+        content.setBody(new Text("Email is being sent to " + selectedStudent.getFirstMIName() + " " + selectedStudent.getLastName() + " in " + selectedCourse.getCourseName()));
 
-        //JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
+        JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
 
-        //dialog.show();
+        dialog.show();
 
-        EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
-        boolean noice = emailService.email(selectedStudent, selectedCourse);
-
-        //dialog.close();
+        dialog.setOnDialogOpened(new EventHandler<JFXDialogEvent>() {
+            @Override
+            public void handle(JFXDialogEvent event) {
+                EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
+                emailService.email(selectedStudent, selectedCourse);
+                dialog.close();
+            }
+        });
     }
 }

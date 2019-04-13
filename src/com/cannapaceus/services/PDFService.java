@@ -6,6 +6,8 @@ import com.cannapaceus.grader.Student;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
@@ -64,7 +66,7 @@ public class PDFService {
         }
     }
 
-    public void printGrades(Course course)
+    public void printGrades(Course course, Boolean bEncrypt)
     {
         ArrayList<Student> lStudents = course.getlStudents();
 
@@ -107,10 +109,8 @@ public class PDFService {
         }
     }
 
-    public void printGrades(Student student, Course course)
+    public void printGrades(Student student, Course course, Boolean bEncrypt)
     {
-        ArrayList<Student> lStudents = course.getlStudents();
-
         String filename = "Grades_" + course.getCourseName() + "_" + student.getFirstMIName() + student.getLastName() + ".pdf";
 
         try {
@@ -139,6 +139,23 @@ public class PDFService {
 
             contentStream.endText();
             contentStream.close();
+
+            if (bEncrypt == true) {
+                //Creating access permission object
+                AccessPermission ap = new AccessPermission();
+
+                //Creating StandardProtectionPolicy object
+                StandardProtectionPolicy spp = new StandardProtectionPolicy("1234", student.getStudentID(), ap);
+
+                //Setting the length of the encryption key
+                spp.setEncryptionKeyLength(128);
+
+                //Setting the access permissions
+                spp.setPermissions(ap);
+
+                //Protecting the document
+                document.protect(spp);
+            }
 
             document.save(filename);
             document.close();
