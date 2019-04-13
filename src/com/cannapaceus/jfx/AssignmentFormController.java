@@ -83,8 +83,8 @@ public class AssignmentFormController {
             cbCategory.getSelectionModel().select(i);
         }
 
-        dpDueDate.setValue(selectedAssignment.getDueDate());
-        dpAssignedDate.setValue(selectedAssignment.getAssignedDate());
+        //dpDueDate.setValue(selectedAssignment.getDueDate());
+        //dpAssignedDate.setValue(selectedAssignment.getAssignedDate());
     }
 
 

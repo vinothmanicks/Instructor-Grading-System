@@ -37,7 +37,7 @@
         </style>
         <children>
             <HBox alignment="CENTER_LEFT">
-                <JFXTextField fx:id="tfAssignmentName" promptText="AssignmentName" labelFloat="true">
+                <JFXTextField fx:id="tfAssignmentName" promptText="Assignment Name" labelFloat="true">
                     <validators>
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
