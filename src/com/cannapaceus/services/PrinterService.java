@@ -1,24 +1,15 @@
 package com.cannapaceus.services;
 
-import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
-import com.cannapaceus.grader.Grade;
-import javafx.beans.property.StringProperty;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 
-public class PrinterService implements Printable {
+public class PrinterService {
 
     private static PrinterService instance = null;
 
@@ -35,7 +26,7 @@ public class PrinterService implements Printable {
     /* Synthesise some sample lines of text */
     String[] data;
 
-    public int print(Graphics g, PageFormat pf, int pageIndex)
+    /*public int print(Graphics g, PageFormat pf, int pageIndex)
             throws PrinterException {
 
         Font font = new Font("Serif", Font.PLAIN, 12);
@@ -59,12 +50,12 @@ public class PrinterService implements Printable {
          * translate by the X and Y values in the PageFormat to avoid clipping
          * Since we are drawing text we
          */
-        Graphics2D g2d = (Graphics2D)g;
-        g2d.translate(pf.getImageableX(), pf.getImageableY());
+        //Graphics2D g2d = (Graphics2D)g;
+        //g2d.translate(pf.getImageableX(), pf.getImageableY());
 
         /* Draw each line that is on this page.
          * Increment 'y' position by lineHeight for each line.
-         */
+         *
         int y = 0;
         int start = (pageIndex == 0) ? 0 : pageBreaks[pageIndex-1];
         int end   = (pageIndex == pageBreaks.length)
@@ -74,13 +65,13 @@ public class PrinterService implements Printable {
             g.drawString(data[line], 0, y);
         }
 
-        /* tell the caller that this page is part of the printed document */
+        /* tell the caller that this page is part of the printed document *
         return PAGE_EXISTS;
-    }
+    }*/
 
     public void startPrintJob() {
         PrinterJob job = PrinterJob.getPrinterJob();
-        job.setPrintable(this);
+        //job.setPrintable(this);
         boolean ok = job.printDialog();
         if (ok) {
             try {
@@ -111,34 +102,16 @@ public class PrinterService implements Printable {
         pageBreaks = null;
 
         ArrayList<Student> lStudents = course.getlStudents();
-        ArrayList<Assignment> lAssignments = course.getlAssignments();
+        int iSize = lStudents.size();
+        data = new String[iSize];
 
+        int iIterator = 0;
 
-
-        int iSize =  lStudents.size();
-        int jSize =  lAssignments.size();
-        data = new String[iSize+1];
-
-        data[0] = "Student ID";
-        for(int j = 0; j<jSize; j++)
-        {
-            data[0] = data[0] + "\t" + lAssignments.get(j).getAssignmentName();
-        }
-
-        for(int i = 1; i < iSize; i++) {
-            data[i] = lStudents.get(i).getStudentID();
-            for(int j = 0; j < jSize; j++) {
-                for (Grade gGrade: lAssignments.get(j).getGrades()) {
-                    if(gGrade.getStudentCopy().getStudentID().equals(lStudents.get(i).getStudentID()))
-                    {
-                        data[i] = data[i] + "\t" + gGrade.getGrade();
-                    }
-                }
-            }
+        for(Student student : lStudents) {
+            data[iIterator] = student.GenerateStudentReportString();
+            ++iIterator;
         }
 
         startPrintJob();
-
     }
-
 }

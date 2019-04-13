@@ -144,7 +144,7 @@ public class EmailService {
         String sSubjectText = "Grade Report for " + course.getCourseName();
 
         for (Student student : lStudents) {
-            String sMessageText = student.GenerateStudentReport();
+            String sMessageText = student.GenerateStudentReportString();
             SendEmail(student.getStudentEmail(), sSubjectText, sMessageText);
         }
 
@@ -153,7 +153,7 @@ public class EmailService {
 
     public boolean email(Student student, Course course) {
         String sSubjectText = "Grade Report for " + course.getCourseName();
-        String sMessageText = student.GenerateStudentReport();
+        String sMessageText = student.GenerateStudentReportString();
         SendEmail(student.getStudentEmail(), sSubjectText, sMessageText);
 
         return true;

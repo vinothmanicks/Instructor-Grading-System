@@ -53,6 +53,17 @@
                         </JFXButton>
                         <Label fx:id="lblStudentName"/>
                         <Label fx:id="lblStudentAvg"/>
+
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <JFXButton fx:id="btnOpenOptionsMenu" buttonType="FLAT" onAction="#operateMenu">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="BARS" glyphSize="30" glyphStyle="-fx-fill: grey;"/> <!--ELLIPSIS_V-->
+                            </graphic>
+                            <style>
+                                -fx-background-color: #ffffff;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
                     </HBox>
                     <JFXTreeTableView fx:id="studentGradeTable">
 
@@ -93,4 +104,35 @@
             </HBox>
         </VBox>
     </bottom>
+    <right>
+        <VBox fx:id="vbOptionsMenuPane" minWidth="100.0" visible="false" managed="false" spacing="10">
+            <style>
+                -fx-padding: 10,10,10,10;
+                -fx-background-color: #ffffff;
+            </style>
+            <!--JFXButton fx:id="btnCloseOptionsMenu" buttonType="FLAT" onAction="#operateMenu">
+                <graphic>
+                    <FontAwesomeIconView glyphName="TIMES_CIRCLE" glyphSize="30" glyphStyle="-fx-fill: grey;"/>
+                </graphic>
+                <style>
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: white;
+                </style>
+            </JFXButton-->
+            <JFXButton fx:id="btnPrintGrades" buttonType="FLAT" text="Print Grade Report" onAction="#printGrade">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: #0077C8;
+                </style>
+            </JFXButton>
+            <JFXButton fx:id="btnEmailGrades" buttonType="FLAT" text="Email Grade Report" onAction="#emailGrade">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: #0077C8;
+                </style>
+            </JFXButton>
+        </VBox>
+    </right>
 </BorderPane>
