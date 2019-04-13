@@ -177,7 +177,11 @@ public class AssignmentController {
                     if (c.wasUpdated()) {
                         Grade g = selectedAssignment.getGrades().get(c.getFrom());
 
+                        gradeObservableList.removeListener(this);
+
                         recalculateStats(g);
+
+                        gradeObservableList.addListener(this);
                     }
                 }
             }

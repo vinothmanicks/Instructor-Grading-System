@@ -309,28 +309,28 @@ public class Course {
         for (Category cat : this.lCategories) {
             numToDrop = cat.getDropped();
 
-            if (numToDrop <= 0) {
-                continue;
-            }
-
-            if (numToDrop >= lAssignments.size()) {
-                for (Assignment a : lAssignments) {
-                    for (Grade g : a.getGrades()) {
-                        g.setDropped(true);
+            for (Student s : this.lStudents) {
+                ArrayList<Grade> gradesInCat = new ArrayList<>();
+                for (Grade g : s.getGrades()) {
+                    if (!g.getSubmitted()) {
+                        continue;
+                    }
+                    if (g.getAssignmentReference().getCategoryReference() == cat) {
+                        gradesInCat.add(g);
+                        retVal.add(g);
+                        g.setDropped(false);
                     }
                 }
-            } else {
-                for (Student s : this.lStudents) {
 
-                    ArrayList<Grade> gradesInCat = new ArrayList<>();
-                    for (Grade g : s.getGrades()) {
-                        if (g.getAssignmentReference().getCategoryReference() == cat) {
-                            gradesInCat.add(g);
-                            retVal.add(g);
-                            g.setDropped(false);
-                        }
+                if (numToDrop <= 0) {
+                    continue;
+                }
+
+                if (numToDrop >= gradesInCat.size()) {
+                    for (Grade g : gradesInCat) {
+                        g.setDropped(true);
                     }
-
+                } else {
                     Collections.sort(gradesInCat, Grade.scoreComparator);
                     for (int i = 0; i < numToDrop; ++i) {
                         gradesInCat.get(i).setDropped(true);
@@ -343,10 +343,10 @@ public class Course {
                     }
 
                     s.setAverageGrade(s.getGrades(), this.getScale());
-                }
 
-                for (Assignment a : this.getlAssignments()) {
-                    a.calculateStats();
+                    for (Assignment a : this.getlAssignments()) {
+                        a.calculateStats();
+                    }
                 }
             }
         }
@@ -357,40 +357,43 @@ public class Course {
             }
         }
 
+
         numToDrop = this.getDropUncategorized();
 
-        if (numToDrop > 0) {
-            if (numToDrop >= noCatAssigns.size()) {
-                for (Assignment a : noCatAssigns) {
-                    for (Grade g : a.getGrades()) {
-                        g.setDropped(true);
-                    }
+        for (Student s : this.lStudents) {
+            ArrayList<Grade> gradesInCat = new ArrayList<>();
+            for (Grade g : s.getGrades()) {
+                if (!g.getSubmitted()) {
+                    continue;
+                }
+                if (g.getAssignmentReference().getCategoryReference() == null) {
+                    gradesInCat.add(g);
+                    retVal.add(g);
+                    g.setDropped(false);
+                }
+            }
+
+            if (numToDrop <= 0) {
+                continue;
+            }
+
+            if (numToDrop >= gradesInCat.size()) {
+                for (Grade g : gradesInCat) {
+                    g.setDropped(true);
                 }
             } else {
-                for (Student s : this.lStudents) {
+                Collections.sort(gradesInCat, Grade.scoreComparator);
+                for (int i = 0; i < numToDrop; ++i) {
+                    gradesInCat.get(i).setDropped(true);
 
-                    ArrayList<Grade> gradesInCat = new ArrayList<>();
-                    for (Grade g : s.getGrades()) {
-                        if (g.getAssignmentReference().getCategoryReference() == null) {
-                            gradesInCat.add(g);
-                            retVal.add(g);
-                            g.setDropped(false);
-                        }
-                    }
+                    if (!retVal.contains(gradesInCat.get(i).getStudentReference()))
+                        retVal.add(gradesInCat.get(i).getStudentReference());
 
-                    Collections.sort(gradesInCat, Grade.scoreComparator);
-                    for (int i = 0; i < numToDrop; ++i) {
-                        gradesInCat.get(i).setDropped(true);
-
-                        if (!retVal.contains(gradesInCat.get(i).getStudentReference()))
-                            retVal.add(gradesInCat.get(i).getStudentReference());
-
-                        if (!retVal.contains(gradesInCat.get(i).getAssignmentReference()))
-                            retVal.add(gradesInCat.get(i).getAssignmentReference());
-                    }
-
-                    s.setAverageGrade(s.getGrades(), this.getScale());
+                    if (!retVal.contains(gradesInCat.get(i).getAssignmentReference()))
+                        retVal.add(gradesInCat.get(i).getAssignmentReference());
                 }
+
+                s.setAverageGrade(s.getGrades(), this.getScale());
 
                 for (Assignment a : this.getlAssignments()) {
                     a.calculateStats();
