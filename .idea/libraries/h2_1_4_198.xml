@@ -6,6 +6,7 @@
       <root url="jar://$PROJECT_DIR$/lib/fontawesomefx-8.9.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/opencsv-4.5.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.5.0-M1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/pdfbox-app-2.0.15.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
