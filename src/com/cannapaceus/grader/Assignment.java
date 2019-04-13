@@ -29,7 +29,7 @@ public class Assignment {
     //Category object that this assignment is assigned to. This hold the weight and name that this assignment will be graded under.
     private Category catCategory;
     //float to hold the manual override weight for this assignment
-    private float fWeight;
+    private Float fWeight = null;
 
     /**
      * <h1>Assignment Constructor</h1>
@@ -42,7 +42,7 @@ public class Assignment {
      * @param catCategory Category the assignment is created under
      * @param fWeight Float if manually overriding the category weight
      */
-    public Assignment(String sAssignmentName, LocalDate dtDueDate, LocalDate dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, float fWeight)
+    public Assignment(String sAssignmentName, LocalDate dtDueDate, LocalDate dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, Float fWeight)
     {
         this.lGrades = new ArrayList<Grade>();
         this.sAssignmentName = sAssignmentName;
@@ -68,7 +68,7 @@ public class Assignment {
         this.setAssignmentName(aAssignment.getAssignmentName());
         aAssignment.getGrades().forEach(grade-> this.lGrades.add(grade));
         this.setAssignedDate(aAssignment.getAssignedDate());
-        this.setCategory((aAssignment.getCategoryCopy()));
+        this.setCategory((aAssignment.getCategoryReference()));
         this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
@@ -92,6 +92,14 @@ public class Assignment {
         this.stAssignmentStats.calculateMedian(this.lGrades);
         this.stAssignmentStats.calculateMode(this.lGrades);
         this.stAssignmentStats.calculateStandardDev(this.lGrades);
+    }
+
+    /**
+     * Function to clear the grades from an assignment
+     */
+    public void clearGrades()
+    {
+        lGrades.clear();
     }
 
     /**
@@ -151,7 +159,7 @@ public class Assignment {
      * Setter for the assignment's manual weight
      * @param fWeight
      */
-    public void setWeight(float fWeight)
+    public void setWeight(Float fWeight)
     {
         this.fWeight = fWeight;
     }
@@ -231,20 +239,16 @@ public class Assignment {
      * Getter for a copy of the assignment's category
      * @return
      */
-    public Category getCategoryCopy()
+    public Category getCategoryReference()
     {
-        if (catCategory == null)
-            return null;
-
-        Category catCategoryCopy = new Category(this.catCategory);
-        return catCategoryCopy;
+        return this.catCategory;
     }
 
     /**
      * Getter for a copy of the manual assignment weight
      * @return
      */
-    public float getWeight()
+    public Float getWeight()
     {
         return this.fWeight;
     }

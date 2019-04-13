@@ -16,11 +16,7 @@
             AnchorPane.topAnchor="0.0"
             AnchorPane.bottomAnchor="0.0"
             AnchorPane.leftAnchor="0.0"
-            AnchorPane.rightAnchor="0.0"
-            fx:id="bpBorderPane">
-    <StackPane fx:id="spDialogPane">
-
-    </StackPane>
+            AnchorPane.rightAnchor="0.0">
 
     <center>
         <ScrollPane fitToWidth="true"
@@ -247,6 +243,13 @@
                 </style>
             </JFXButton>
             <JFXButton fx:id="btnEmailGrades" buttonType="FLAT" text="Email Grade Reports" onAction="#emailGrades">
+                <style>
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-text-fill: #0077C8;
+                </style>
+            </JFXButton>
+            <JFXButton fx:id="btnCopyFromCourse" buttonType="FLAT" text="Use Previous Grade Scheme" onAction="#copyStuff">
                 <style>
                     -fx-cursor: hand;
                     -fx-background-color: #ffffff;

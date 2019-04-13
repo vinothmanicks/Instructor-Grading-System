@@ -1,14 +1,10 @@
 package com.cannapaceus.grader;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,7 +50,7 @@ public class Student extends RecursiveTreeObject<Student> {
 
         this.fAverageGrade = new SimpleFloatProperty();
 
-        setAverageGrade(this.lGrades);
+        setAverageGrade(this.lGrades,0);
     }
 
     /**
@@ -73,7 +69,7 @@ public class Student extends RecursiveTreeObject<Student> {
 
         this.fAverageGrade = new SimpleFloatProperty();
 
-        setAverageGrade(this.lGrades);
+        setAverageGrade(this.lGrades,0);
     }
 
     //Setter functions
@@ -114,7 +110,7 @@ public class Student extends RecursiveTreeObject<Student> {
         this.fAverageGrade.setValue(fAverageGrade);
     }
 
-    public void setAverageGrade(ArrayList<Grade> lGrades) {
+    public void setAverageGrade(ArrayList<Grade> lGrades, float scaleBy) {
         float temp = 0;
         float tempWeight = 0;
         float scoreSum = 0;
@@ -126,9 +122,13 @@ public class Student extends RecursiveTreeObject<Student> {
                 continue;
             }
 
-            Category cat = g.getAssignmentReference().getCategoryCopy();
+            Category cat = g.getAssignmentReference().getCategoryReference();
 
-            if (cat == null) {
+            if(g.getAssignmentReference().getWeight() != null)
+            {
+                tempWeight = g.getAssignmentReference().getWeight();
+            }
+            else if (cat == null) {
                 tempWeight = 1.0f;
             } else {
                 tempWeight = cat.getWeight();
@@ -143,7 +143,7 @@ public class Student extends RecursiveTreeObject<Student> {
         if (fullScoresSum == 0) {
             this.fAverageGrade.setValue(0);
         } else {
-            this.fAverageGrade.setValue((scoreSum / fullScoresSum) * 100);
+            this.fAverageGrade.setValue(((scoreSum / fullScoresSum) * 100)+scaleBy);
         }
     }
 

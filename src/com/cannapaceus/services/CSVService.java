@@ -2,9 +2,8 @@ package com.cannapaceus.services;
 
 import com.cannapaceus.grader.*;
 import com.opencsv.*;
-import com.cannapaceus.services.ErrorMessage;
+
 import java.io.*;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -136,14 +135,14 @@ public class CSVService {
 
         for(int i = 0; i < iSize; i++) {
             //TODO: Make sure category is retrieved from import file.
-            if(lAssignments.get(i).getCategoryCopy() == null)
+            if(lAssignments.get(i).getCategoryReference() == null)
             {
                 lAssignments.get(i).setCategory(new Category("Uncategorized",0));
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
             lAssignments.get(i).getDueDate().format(formatter);
             lAssignments.get(i).getAssignedDate().format(formatter);
-            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-","/"), lAssignments.get(i).getAssignedDate().toString().replace("-","/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryCopy().getName(), String.valueOf(lAssignments.get(i).getWeight())};
+            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-","/"), lAssignments.get(i).getAssignedDate().toString().replace("-","/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryReference().getName(), String.valueOf(lAssignments.get(i).getWeight())};
             writer.writeNext(data);
         }
 
@@ -296,7 +295,7 @@ public class CSVService {
                                         {
                                             continue;
                                         }
-                                        Assignment addedAssignment = new Assignment("",null,null,false,100,null,100);
+                                        Assignment addedAssignment = new Assignment("",null,null,false,100,null,new Float(100));
                                         addedAssignment.setAssignmentName(lineElements[0]);
                                         String[] dateSections = lineElements[1].split("/");
                                         LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));

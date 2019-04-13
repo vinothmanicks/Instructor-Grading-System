@@ -95,7 +95,8 @@ public class DBService {
                     "FMODE REAL, \n" +
                     "FSTDDEV REAL, \n" +
                     "BARCHIVED BOOLEAN, \n" +
-                    "ITERM BIGINT NOT NULL \n" +
+                    "ITERM BIGINT NOT NULL, \n" +
+                    "FSCALE REAL \n" +
                     ");");
 
             stm.execute("CREATE TABLE CATEGORIES (\n" +
@@ -239,9 +240,9 @@ public class DBService {
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO COURSES " +
-                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM) " +
+                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM, FSCALE) " +
                     "VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -255,6 +256,7 @@ public class DBService {
             stm.setFloat(7, courseToStore.getStCourseStats().getStandardDev());  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
             stm.setBoolean(8, courseToStore.getBArchived());
             stm.setLong(9, lTermID);
+            stm.setFloat(10, courseToStore.getScale());
 
             stm.executeUpdate();
 
@@ -354,7 +356,7 @@ public class DBService {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        Category catCopy = assignmentToStore.getCategoryCopy();
+        Category catCopy = assignmentToStore.getCategoryReference();
 
         long lCategoryID = 0;
 
@@ -381,7 +383,13 @@ public class DBService {
             stm.setFloat(7, assignmentToStore.getStAssignmentStats().getStandardDev());
             stm.setBoolean(8, assignmentToStore.getDroppedAssignment());
             stm.setFloat(9, assignmentToStore.getMaxScore());
-            stm.setFloat(10, assignmentToStore.getWeight());
+            if(assignmentToStore.getWeight()==null)
+            {
+                stm.setNull(10, Types.FLOAT);
+            }
+            else {
+                stm.setFloat(10, assignmentToStore.getWeight());
+            }
             stm.setLong(11, lCategoryID);
             stm.setLong(12, lCourseID);
 
@@ -653,7 +661,7 @@ public class DBService {
         try {
             String sql = "UPDATE COURSES " +
                     "SET SCOURSENAME = ?, SCOURSEID = ?, SCOURSEDEPT = ?, FMEAN = ?, " +
-                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ? " +
+                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ?, FSCALE = ? " +
                     "WHERE COURSEID = ? ";
 
             con = DriverManager.getConnection(conString, user, pass);
@@ -667,7 +675,8 @@ public class DBService {
             stm.setFloat(6, c.getStCourseStats().getMode());  //TODO: stm.setFloat(6, courseToStore.getStatistics().getMode());
             stm.setFloat(7, c.getStCourseStats().getStandardDev());  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
             stm.setBoolean(8, c.getBArchived());
-            stm.setLong(9, c.getDBID());
+            stm.setFloat(9,c.getScale());
+            stm.setLong(10, c.getDBID());
 
             stm.executeUpdate();
 
@@ -775,7 +784,7 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
 
-        Category catCopy = a.getCategoryCopy();
+        Category catCopy = a.getCategoryReference();
 
         long lCategoryID = 0;
 
@@ -801,7 +810,13 @@ public class DBService {
             stm.setFloat(7, a.getStAssignmentStats().getStandardDev());
             stm.setBoolean(8, a.getDroppedAssignment());
             stm.setFloat(9, a.getMaxScore());
-            stm.setFloat(10, a.getWeight());
+            if(a.getWeight()==null)
+            {
+                stm.setNull(10, Types.FLOAT);
+            }
+            else {
+                stm.setFloat(10, a.getWeight());
+            }
             stm.setLong(11, lCategoryID);
             stm.setLong(12, a.getDBID());
 
@@ -1137,7 +1152,7 @@ public class DBService {
         Connection con = null;
         PreparedStatement stm = null;
 
-        Category catCopy = a.getCategoryCopy();
+        Category catCopy = a.getCategoryReference();
 
         long lCategoryID = 0;
 
@@ -1335,7 +1350,7 @@ public class DBService {
                         rs.getString(4));
 
                 retValue.setDBID(rs.getLong(1));
-
+                retValue.setScale(rs.getFloat(1));
 
                 //Get categories for the course
                 sql = "SELECT * FROM CATEGORIES " +
@@ -1382,13 +1397,26 @@ public class DBService {
                             }
                         }
 
-                        Assignment temp = new Assignment(rs.getString(2),
-                                rs.getDate(3).toLocalDate(),
-                                rs.getDate(4).toLocalDate(),
-                                rs.getBoolean(9),
-                                rs.getFloat(10),
-                                tempCat,
-                                rs.getFloat(11));
+                        Assignment temp;
+                        rs.getFloat(11);
+                        if(rs.wasNull()) {
+                            temp = new Assignment(rs.getString(2),
+                                    rs.getDate(3).toLocalDate(),
+                                    rs.getDate(4).toLocalDate(),
+                                    rs.getBoolean(9),
+                                    rs.getFloat(10),
+                                    tempCat,
+                                    null);
+                        }
+                        else {
+                            temp = new Assignment(rs.getString(2),
+                                    rs.getDate(3).toLocalDate(),
+                                    rs.getDate(4).toLocalDate(),
+                                    rs.getBoolean(9),
+                                    rs.getFloat(10),
+                                    tempCat,
+                                    rs.getFloat(11));
+                        }
 
                         Statistics tempStats = new Statistics();
                         tempStats.setMean(rs.getFloat(5));

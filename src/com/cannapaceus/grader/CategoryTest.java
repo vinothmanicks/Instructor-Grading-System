@@ -35,9 +35,9 @@ class CategoryTest {
 
     @Test
     void addAndGetAssignments() {
-        assignment = new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, 5);
+        assignment = new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, new Float(5));
         category.addAssignment(assignment);
-        assignment = new Assignment("New Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2209, 03, 25), true, 250, category, 9);
+        assignment = new Assignment("New Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2209, 03, 25), true, 250, category, new Float(9));
         category.addAssignment(assignment);
 
         ArrayList<Assignment> lAssignments = category.getAssignments();

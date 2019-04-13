@@ -223,7 +223,7 @@ public class AssignmentController {
 
         Student s = g.getStudentReference();
 
-        s.setAverageGrade(s.getGrades());
+        s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
 
         Statistics st = selectedAssignment.getStAssignmentStats();
 
