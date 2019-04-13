@@ -1,3 +1,181 @@
+<!DOCTYPE html>
 <html>
-    <h1>Hello world.</h1>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Instructor Grading Program - Online Help</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="help.css">
+    <link rel="stylesheet" href="lightbox.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,700,900" rel="stylesheet">
+</head>
+<body>
+<div class="row">
+    <div class="column left">
+        <div id="tableofcontents">
+            <p>Table of Contents</p>
+            <ol type="I">
+                <li><a href="#login">Introduction</a></li>
+                <li><a href="#term">Term View</a></li>
+                <li><a href="#course">Course View</a></li>
+                <li><a href="#student">Student View</a></li>
+                <li><a href="#assignment">Assignment View</a></li>
+                <li><a href="#gradebook">Grade Book</a></li>
+                <li><a href="#options">Additional Course Functions</a></li>
+                <li><a href="#qbank">Question Bank</a></li>
+                <li><a href="#settings">User Settings</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="column right">
+        <h1>CANNAPACEUS</h1>
+        <h2>Instructor Grading Program</h2>
+        <h3>Online Help Documentation</h3>
+        <div id="intro">
+            <p>Cannapaceus is a software tool secondary-level professors and professional instructors. It serves as a total digital replacement for a traditional gradebook and a means of consolidating electronic resources pertaining to student grades and other classroom information.</p><p>This help document is broken down into sections pertaining to the functionality of the software and the means by which the user interacts with it. Refer to the table of contents on the left side of the page for help with specific parts of the program.</p></div>
+        <div id="login">
+            <h3>Login Page</h3>
+            <p>Users will access the Instructor Grading Program through a traditional username/password login interface. When the user first runs the program, he or she will create a database by entering a username and password of their choice. This username and password will serve as their login information for all future usage of the software</p>
+            <p>If you wish to reset your login information, contact your system administrator or contact service.cannapaceus@gmail.com.</p>
+            <a href="01%20-%20Login_annotated.png" data-lightbox="img1"><img src="01%20-%20Login_annotated.png" alt="Login Page"></a>
+            <script src="lightbox-plus-jquery.js"></script>
+            <br></div>
+        <div id="term">
+            <h3>Term View</h3>
+            <p>The home page, also known as Term View, is where the user can view current, past, and future terms as well as lists of all courses in each term.</p>
+            <a href="02%20-%20Term%20View_annotated.png" data-lightbox="img2"><img src="02%20-%20Term%20View_annotated.png" alt="Term View"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <h3>The Sidebar</h3>
+            <p>The Sidebar is a persistent navigation element present across all views. It provides quick and easy returns to several key parts of the program.</p>
+            <a href="02%20-%20Sidebar_annotated.png" data-lightbox="img3"><img src="02%20-%20Sidebar_annotated.png" alt="The Sidebar"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <h3>The Commit/Revert Buttons</h3>
+            <p>Two buttons, labled "Commit Changes" and "Revert Changes" are present at the bottom of almost all views. They allow the user to see the effects of potential changes without immediately overwriting existing data. All changes are highlighted in green until the users presses the "Commit Changes" button. The "Revert Changes" button undoes all changes made since the last commit.</p>
+            <a href="02%20-%20CommitRevert_annotated.png" data-lightbox="img4"><img src="02%20-%20CommitRevert_annotated.png" alt="Commit/Revert Buttons"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <h3>How to Add or Edit a Term</h3>
+            <p>After clicking the "Add Term" button on the Term View or clicking the "Edit" icon to the right of the term's name, the user must fill out a form with the term's information, including:</p>
+            <ul>
+                <li>Season (Winter, Spring, Summer, Fall)</li>
+                <li>The Academic Year</li>
+            </ul>
+            <a href="03%20-%20Term%20Form_annotated.png" data-lightbox="img5"><img src="03%20-%20Term%20Form_annotated.png" alt="Term Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="course">
+            <h3>How to Add or Edit a Course</h3>
+            <p>After creating a term, the user can add a course to the Term by clicking the "Add Course" button underneath the selected term or edit a course's information by clicking the "Edit" icon to the right of the course's name, and filling in the course's information, including:</p>
+            <ul>
+                <li>The name of the course</li>
+                <li>The course ID</li>
+                <li>The department that the course falls under</li>
+                <li>OPTIONAL: A grading scale, defined as a percentage added to the students' average grades as a decimal value between 0.0 and 1.0</li>
+                <li>OPTIONAL: A course can be tagged as "Archive" to indicate that the course is completed and that no additional edits to grades or other information can be made</li>
+            </ul>
+            <a href="04%20-%20Course%20Form_annotated.png" data-lightbox="img6"><img src="04%20-%20Course%20Form_annotated.png" alt="Course Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <h3>Course View</h3>
+            <p>After selecting a course from Term View, the user is directed to Course View. From Course View, the user can view and edit the list of students in a course, the list of assignments, view course statistics, and view a course grade book.</p>
+            <a href="05%20-%20Course%20View_annotated.png" data-lightbox="img7"><img src="05%20-%20Course%20View_annotated.png" alt="Course View"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="student">
+            <h3>Student View</h3>
+            <p>To access Student View, the user must first populate a list of students by selecting the "Add Student" button from the student tab in Course View</p>
+            <a href="06%20-%20Course%20View_Student_Expanded_annotated.png" data-lightbox="img8"><img src="06%20-%20Course%20View_Student_Expanded_annotated.png" alt="Course View - Student Tab Expanded"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <p>To add a student, fill in the student's information, including:</p>
+            <ul>
+                <li>The student's first name and middle initial, seperated by a comma</li>
+                <li>The student's last name</li>
+                <li>The student's unique institutional ID number</li>
+                <li>The student's institutional email address</li>
+            </ul>
+            <a href="07%20-%20Student%20Form_annotated.png" data-lightbox="img9"><img src="07%20-%20Student%20Form_annotated.png" alt="Student Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <p>Click on the name of student to enter Student View. From Student View, the user can see the student's grade for every assignment in the course, as well as the student's average grade for the course.</p>
+            <p>Assignments are sorted based on category, but the sorting order may be changed by clicking the corresponding key at the top of the table. The assignment grade can be edited from this view. Each grade has four properties:</p>
+            <ul>
+                <li>OVERDUE: The assignment was completed after the assigned due date. The user can make manual grade deductions at their discretion.</li>
+                <li>MISSING: The assignment was not completed at all. Unless the user specifies otherwise, this will result is a grade of zero.</li>
+                <li>DROPPED: The assignment was completed, but is not being counted towards the student's average grade.</li>
+                <li>SUBMITTED: The assignment was completed, regardless of timing, and is being counted towards the student's average grades. A grade value will not appear as part of the student's average until an assignment is labeled as SUBMITTED.</li>
+            </ul>
+            <a href="07%20-%20Student%20View.png" data-lightbox="img10"><img src="07%20-%20Student%20View.png" alt="Student View"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="assignment">
+            <h3>Assignment View</h3>
+            <p>To access Assignment View, the user must first populate a list of assignment categories applicable to the course. To add an assignment category, select the "Add Assignment" button from the assignment tab in Course View.</p>
+            <a href="08%20-%20Course%20View_Assignment_Expanded_annotated.png" data-lightbox="img11"><img src="08%20-%20Course%20View_Assignment_Expanded_annotated.png" alt="Course View - Assignment Tab Expanded"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <p>To add an assignment category, fill in the following information:</p>
+            <ul>
+                <li>The name of the category</li>
+                <li>The weight of the category, defined as a percentage of the student's average grade. Weights across all assignment categories <strong>should add up to 1.0</strong> for accurate calculation. Unweighted categories should be given the default value of 1.0.</li>
+            </ul>
+            <a href="09%20-%20Category%20Form_annotated.png" data-lightbox="img12"><img src="09%20-%20Category%20Form_annotated.png" alt="Category Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <p>After creating assignment categories, the user can create assignments by selecting the "Add Assignment" button underneath the desired category.</p>
+            <p>An unweighted "Uncategorized" category is available by default.</p>
+            <p>To create an assignment, fill in the assignment's information, including:</p>
+            <ul>
+                <li>The name of the assignment</li>
+                <li>The maximum score of the assignment (any grade higher than this value indicates the presence of bonus points or extra credit)</li>
+                <li>OPTIONAL: The user can specify an assignment's weight to be a value other than that of it's corresponding category.</li>
+                <li>The assignment category under which the assignment's grades will be weighed. If a category is not selected, the assignment will default to the "Uncategorized" category.</li>
+                <li>The date on which the assignment is due</li>
+                <li>The date on which the assignment is made available to students</li>
+            </ul>
+            <a href="10%20-%20Assignment%20Form_annotated.png" data-lightbox="img13"><img src="10%20-%20Assignment%20Form_annotated.png" alt="Assignment Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <p>Assignment View functions similarly to Student View. The table displays a single assignment grade for each student in the course. Grade values and properties can be edited from this view.</p>
+            <p>Assigment View also displays statistics for the selected assignment, including mean, median, mode, and standard deviation.</p>
+            <a href="10%20-%20Assignment%20View.png" data-lightbox="img14"><img src="10%20-%20Assignment%20View.png" alt="Assignment View"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="gradebook">
+            <h3>Grade book view</h3>
+            <p>From Course View, the user can access a course's Grade Book by seleting the "Grade Book" button at the top right. The Grade Book shows every grade in the course, sorted by Student.</p>
+            <p>The Grade Book also displays the student's average grade. Grade values can be edited from this view.</p>
+            <a href="11%20-%20Grade%20Book%20View.png" data-lightbox="img15"><img src="11%20-%20Grade%20Book%20View.png" alt="Grade Book View"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="options">
+            <h3>Additional Course Functions</h3>
+            <p>By expanding the hamburger menu at the top-right corner of Course View, the user can access additional course functions, including:</p>
+            <ul>
+                <li>The ability to download and print a list of students and all student information not related to grades as a .CSV or a .PDF file.</li>
+                <li>The ability to download and print grade reports for the entire course.</li>
+                <li>The ability to email individual academic reports to students in the course.</li>
+                <li>The ability to import a grading scale, category list, or assignment list from a previous course. See the next section for more details on this function.</li>
+            </ul>
+            <a href="12%20-%20Course%20Options_annotated.png" data-lightbox="img16"><img src="12%20-%20Course%20Options_annotated.png" alt="Additional Course Functions"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <h3>How to use a previous grade scheme</h3>
+            <p>From the "Addtional Course Functions" list, the user can choose to import a grading scheme from another course. This functionality will overwrite any existing grading scale, category list, or assignment list.</p>
+            <a href="13%20-%20Grader%20Copy%20Form_annotated.png" data-lightbox="img17"><img src="13%20-%20Grader%20Copy%20Form_annotated.png" alt="Grading Scheme Import Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="qbank">
+            <h3>Question Bank</h3>
+            <p>By selecting the "QBank" button from the sidebar, the user can maintain a list of questions that can be used to automatically generate timed online assignments.</p>
+            <a href="14%20-%20Question%20Bank_annotated.png" data-lightbox="img18"><img src="14%20-%20Question%20Bank_annotated.png" alt="Question Bank View"></a>
+            <script src="lightbox-plus-jquery.js"></script><br>
+            <p>To create a question, the user will need to provide the following information:</p>
+            <ul>
+                <li>The question text</li>
+                <li>The estimated time to complete the question in minutes</li>
+                <li>The maximum amount of points the question will be worth</li>
+                <li>The question type (depending on the selected type, the user may have to provide correct and incorrect answers)</li>
+                <li>The relative difficulty of the question</li>
+                <li>The assignment category that an assignment containing this question would be classified under</li>
+            </ul>
+            <a href="15%20-%20Question%20Form_annotated.png" data-lightbox="img19"><img src="15%20-%20Question%20Form_annotated.png" alt="Question Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <div id="settings">
+            <h3>User Settings</h3>
+            <p>As of the most recent version of Cannapaceus, the user settings contains only a field where the user can specify their email address to use the program's email functionality. Future versions of the programs will contain additional personalization options.</p>
+            <a href="16%20-%20Settings%20Form.png" data-lightbox="img20"><img src="16%20-%20Settings%20Form.png" alt="User Settings Form"></a>
+            <script src="lightbox-plus-jquery.js"></script><br></div>
+        <p>For additional help, contact us at service.cannapaceus@gmail.com</p>
+        <footer>Cannapaceus &#169; 2019 Cannapaceus Team<br>All Rights Reserved</footer>
+    </div>
+</div>
+</body>
 </html>
