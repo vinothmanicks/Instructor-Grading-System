@@ -101,10 +101,10 @@ public class Term {
         @Override
         public int compare(Term t1, Term t2) {
             if (t1.getYear() == t2.getYear()) {
-                return Integer.compare(t1.getSeason().getInt(), t2.getSeason().getInt());
+                return -Integer.compare(t1.getSeason().getInt(), t2.getSeason().getInt());
             }
 
-            return Integer.compare(t1.getYear(), t2.getYear());
+            return -Integer.compare(t1.getYear(), t2.getYear());
         }
     };
 }

@@ -2,6 +2,7 @@ package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
 import com.cannapaceus.services.EmailService;
+import com.cannapaceus.services.PDFService;
 import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -638,12 +639,12 @@ public class CourseController {
     }
 
     public void printList(ActionEvent event) {
-        PrinterService service = PrinterService.getInstance();
+        PDFService service = PDFService.getInstance();
         service.printList(selectedCourse);
     }
 
     public void printGrades(ActionEvent event) {
-        PrinterService service = PrinterService.getInstance();
+        PDFService service = PDFService.getInstance();
         service.printGrades(selectedCourse);
     }
 

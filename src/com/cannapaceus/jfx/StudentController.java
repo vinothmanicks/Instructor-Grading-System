@@ -1,13 +1,14 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.cannapaceus.services.EmailService;
+import com.cannapaceus.services.PrinterService;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.DoubleTextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -25,6 +26,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.CheckBoxTreeTableCell;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 import javax.swing.*;
@@ -38,6 +41,7 @@ public class StudentController {
     Model md = null;
 
     Student selectedStudent;
+    Course selectedCourse;
 
     ObservableList<Grade> gradeObservableList;
 
@@ -51,12 +55,19 @@ public class StudentController {
     private Label lblStudentAvg;
 
     @FXML
+    private VBox vbOptionsMenuPane;
+
+    @FXML
+    private JFXButton btnOpenOptionsMenu;
+
+    @FXML
     private void initialize()
     {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
         selectedStudent = md.getSelectedStudent();
+        selectedCourse = md.getSelectedCourse();
 
         lblStudentName.setText(selectedStudent.getFirstMIName() + " " + selectedStudent.getLastName());
         lblStudentAvg.setText("Average: " + (Math.round(selectedStudent.getAverageGrade() * 100.0) / 100.0));
@@ -226,5 +237,54 @@ public class StudentController {
         md.addUpdatedObject(g);
 
         lblStudentAvg.setText("Average: " + (Math.round(selectedStudent.getAverageGrade() * 100.0) / 100.0));
+    }
+
+    public void operateMenu(ActionEvent event) {
+        if(vbOptionsMenuPane.isVisible()) {
+            vbOptionsMenuPane.setManaged(false);
+            vbOptionsMenuPane.setVisible(false);
+
+            FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("BARS"); //ELLIPSIS_V
+            tempFA.setGlyphSize(30);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+            btnOpenOptionsMenu.setGraphic(tempFA);
+        }
+
+        else {
+            vbOptionsMenuPane.setManaged(true);
+            vbOptionsMenuPane.setVisible(true);
+
+            FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("TIMES_CIRCLE");
+            tempFA.setGlyphSize(30);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+            btnOpenOptionsMenu.setGraphic(tempFA);
+        }
+    }
+
+    public void printGrade(ActionEvent event) {
+        PrinterService service = PrinterService.getInstance();
+        service.printGrades(selectedCourse);
+    }
+
+    public void emailGrade(ActionEvent event) {
+        //TODO: Implement database retrieval of instructor email and make sure email is set in settings before sending.'
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Sending Emails..."));
+        content.setBody(new Text("Emails are being sent to all students in " + selectedCourse.getCourseName()));
+
+        //JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
+
+        //dialog.show();
+
+        EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
+        boolean noice = emailService.email(selectedStudent, selectedCourse);
+
+        //dialog.close();
     }
 }

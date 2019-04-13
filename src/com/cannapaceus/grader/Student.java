@@ -233,7 +233,7 @@ public class Student extends RecursiveTreeObject<Student> {
      * Function to generate a report for a student based on their course grades provided assignments have been assigned.
      * @return Report in the form of a string to print out.
      */
-    public String GenerateStudentReport()
+    public String GenerateStudentReportString()
     {
         String sReport = new String( "Student name: " + this.sFirstMIName.getValue() + " " + this.sLastName.getValue() + "\n\n"+"Assignments:\n");
 
@@ -261,6 +261,47 @@ public class Student extends RecursiveTreeObject<Student> {
         }
 
         sReport = sReport + "\n" + "Overall grade: " + this.getAverageGrade();
+
+        return sReport;
+    }
+
+    public String[] GenerateStudentReportArray()
+    {
+        int iSize = (lGrades.size()*2) + 5;
+
+        String[] sReport = new String[iSize];
+
+        sReport[0] = "Student Name: " + this.sFirstMIName.getValue() + " " + this.sLastName.getValue();
+        sReport[1] = "Student ID: " + this.sStudentID.getValue();
+        sReport[2] = "";
+        sReport[3] = "Assignments: ";
+        sReport[4] = "";
+
+        int iPos = 0;
+        for(int i = 5; i < iSize;) {
+            Grade gGrade = lGrades.get(iPos);
+            sReport[i] = "    " + gGrade.getAssignmentCopy().getAssignmentName() + ":    " + gGrade.getGrade()+"\\"+ gGrade.getAssignmentCopy().getMaxScore();
+            if(gGrade.getMissing() == true)
+            {
+                String sMissingData = new String("-Missing\n");
+                sReport[i] = sReport[i] + sMissingData;
+            }
+            if(gGrade.getOverdue() == true)
+            {
+                String sOverdueData = new String("-Overdue\n");
+                sReport[i] = sReport[i] + sOverdueData;
+            }
+            if(gGrade.getDropped() == true)
+            {
+                String sDroppedData = new String("-Dropped\n");
+                sReport[i] = sReport[i] + sDroppedData;
+            }
+
+            sReport[i+1] = "";
+
+            i += 2;
+            ++iPos;
+        }
 
         return sReport;
     }
