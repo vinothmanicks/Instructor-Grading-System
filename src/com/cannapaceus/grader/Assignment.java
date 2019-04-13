@@ -69,7 +69,6 @@ public class Assignment {
         aAssignment.getGrades().forEach(grade-> this.lGrades.add(grade));
         this.setAssignedDate(aAssignment.getAssignedDate());
         this.setCategory((aAssignment.getCategoryReference()));
-        this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
 
