@@ -110,10 +110,11 @@ public class CourseController {
         hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
 
         createStudentList();
-        if (!selectedCourse.getlStudents().isEmpty()) {
-            createStatisticsList();
-        }
+//        if (!selectedCourse.getlStudents().isEmpty()) {
+//            createStatisticsList();
+//        }
         createAssignmentList();
+        createStatisticsList();
     }
 
     public void backClick(ActionEvent actionEvent) {
@@ -362,9 +363,22 @@ public class CourseController {
         Label catLabel = new Label("Uncategorized");
         catLabel.setAlignment(Pos.CENTER_LEFT);
 
+        FontAwesomeIconView catFA = new FontAwesomeIconView();
+        catFA.setGlyphName("EDIT");
+        catFA.setGlyphSize(20);
+        catFA.setGlyphStyle("-fx-fill: grey;");
+
+        JFXButton catEdit = new JFXButton("");
+        catEdit.setAlignment(Pos.BASELINE_CENTER);
+        catEdit.setGraphic(catFA);
+        catEdit.setStyle("-fx-cursor: hand;");
+        catEdit.setRipplerFill(Color.WHITE);
+        catEdit.setButtonType(JFXButton.ButtonType.FLAT);
+        catEdit.setOnAction((event -> editCategoryClick(event)));
+
         Pane catSpanPane = new Pane();
 
-        catHB.getChildren().addAll(catLabel, catSpanPane);
+        catHB.getChildren().addAll(catLabel, catSpanPane, catEdit);
         catHB.setHgrow(catSpanPane, Priority.ALWAYS);
 
         for (Assignment a : selectedCourse.getlAssignments()) {
@@ -624,7 +638,7 @@ public class CourseController {
 
     @FXML
     private void addCategory(ActionEvent event) {
-        Category c = new Category("",1.0f);
+        Category c = new Category("",1.0f, 0);
 
         md.addCategory(c);
         md.setSelectedCategory(c);

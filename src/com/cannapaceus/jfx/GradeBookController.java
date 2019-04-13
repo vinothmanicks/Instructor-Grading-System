@@ -176,7 +176,11 @@ public class GradeBookController{
                     if (c.wasUpdated()) {
                         Grade g = selectedCourse.getlGrades().get(c.getFrom());
 
+                        lGradeData.removeListener(this);
+
                         recalculateStats(g);
+
+                        lGradeData.addListener(this);
                     }
                 }
             }
@@ -206,11 +210,14 @@ public class GradeBookController{
 
     private void recalculateStats(Grade g) {
         Course c = md.getSelectedCourse();
-        c.PopulateAverages(c.getlStudents());
-        c.calculateStats();
+
+        c.dropGrades();
 
         Student s = g.getStudentReference();
         s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
+
+        c.PopulateAverages(c.getlStudents());
+        c.calculateStats();
 
         Assignment a = g.getAssignmentReference();
         Statistics st = a.getStAssignmentStats();

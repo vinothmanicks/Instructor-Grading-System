@@ -17,7 +17,7 @@ class AssignmentTest {
 
     @BeforeEach
     void setUp() {
-        category = new Category("Test Category", 1);
+        category = new Category("Test Category", 1, 0);
         assignment = new Assignment("Test Assignment", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, category, new Float(5));
         student = new Student("Test", "Student", "25825845", "ts0012@test.edu");
         grade = new Grade(20, student, assignment);
@@ -62,8 +62,8 @@ class AssignmentTest {
     @Test
     void setAndGetCategory() {
         assertEquals(0, assignment.getCategoryReference().compareTo(category));
-        assignment.setCategory(new Category("New Test Category", 2));
-        assertEquals(0, assignment.getCategoryReference().compareTo(new Category("New Test Category", 2)));
+        assignment.setCategory(new Category("New Test Category", 2, 0));
+        assertEquals(0, assignment.getCategoryReference().compareTo(new Category("New Test Category", 2, 0)));
         assertNotEquals(0, assignment.getCategoryReference().compareTo(category));
     }
 

@@ -9,6 +9,8 @@ public class Course {
     //Long to hold the course's ID from the database
     private long lDBID = 0;
 
+    private int iDropUncategorized = 0;
+
     private String sCourseName = null; // Course name
     private String sCourseID = null; // Course ID
     private String sDepartment = null; // Optional
@@ -35,6 +37,8 @@ public class Course {
         this.lGrades = new ArrayList<Grade>();
         this.lAverageGrades = new ArrayList<Float>();
         this.lScaledGrades = new ArrayList<Float>();
+
+        this.iDropUncategorized = 0;
 
         this.bArchived = false;
         this.stCourseStats = new Statistics();
@@ -171,15 +175,6 @@ public class Course {
         }
     }
 
-    public void setScale(float scale)
-    {
-        this.courseGradeScale = scale;
-    }
-
-    public float getScale()
-    {
-        return this.courseGradeScale;
-    }
 
 
     // private Assignment generateAssignment(String sCourseName, )
@@ -192,6 +187,15 @@ public class Course {
      */
     public long getDBID() {
         return this.lDBID;
+    }
+
+    public float getScale()
+    {
+        return this.courseGradeScale;
+    }
+
+    public int getDropUncategorized() {
+        return this.iDropUncategorized;
     }
 
     public String getCourseName()
@@ -252,6 +256,16 @@ public class Course {
         this.lDBID = lDBID;
     }
 
+    public void setScale(float scale)
+    {
+        this.courseGradeScale = scale;
+    }
+
+    public void setDropUncategorized(int numDrop)
+    {
+        this.iDropUncategorized = numDrop;
+    }
+
     public void setCourseName(String CourseName)
     {
         this.sCourseName = CourseName;
@@ -285,4 +299,109 @@ public class Course {
             return c1.getCourseName().toUpperCase().compareTo(c2.getCourseName().toUpperCase());
         }
     };
+
+    public ArrayList<Object> dropGrades() {
+        ArrayList<Object> retVal = new ArrayList<>();
+        ArrayList<Assignment> noCatAssigns = new ArrayList<>();
+
+        int numToDrop = 0;
+
+        for (Category cat : this.lCategories) {
+            numToDrop = cat.getDropped();
+
+            for (Student s : this.lStudents) {
+                ArrayList<Grade> gradesInCat = new ArrayList<>();
+                for (Grade g : s.getGrades()) {
+                    if (!g.getSubmitted()) {
+                        continue;
+                    }
+                    if (g.getAssignmentReference().getCategoryReference() == cat) {
+                        gradesInCat.add(g);
+                        retVal.add(g);
+                        g.setDropped(false);
+                    }
+                }
+
+                if (numToDrop <= 0) {
+                    continue;
+                }
+
+                if (numToDrop >= gradesInCat.size()) {
+                    for (Grade g : gradesInCat) {
+                        g.setDropped(true);
+                    }
+                } else {
+                    Collections.sort(gradesInCat, Grade.scoreComparator);
+                    for (int i = 0; i < numToDrop; ++i) {
+                        gradesInCat.get(i).setDropped(true);
+
+                        if (!retVal.contains(gradesInCat.get(i).getStudentReference()))
+                            retVal.add(gradesInCat.get(i).getStudentReference());
+
+                        if (!retVal.contains(gradesInCat.get(i).getAssignmentReference()))
+                            retVal.add(gradesInCat.get(i).getAssignmentReference());
+                    }
+
+                    s.setAverageGrade(s.getGrades(), this.getScale());
+
+                    for (Assignment a : this.getlAssignments()) {
+                        a.calculateStats();
+                    }
+                }
+            }
+        }
+
+        for (Assignment a : this.getlAssignments()) {
+            if (a.getCategoryReference() == null) {
+                noCatAssigns.add(a);
+            }
+        }
+
+
+        numToDrop = this.getDropUncategorized();
+
+        for (Student s : this.lStudents) {
+            ArrayList<Grade> gradesInCat = new ArrayList<>();
+            for (Grade g : s.getGrades()) {
+                if (!g.getSubmitted()) {
+                    continue;
+                }
+                if (g.getAssignmentReference().getCategoryReference() == null) {
+                    gradesInCat.add(g);
+                    retVal.add(g);
+                    g.setDropped(false);
+                }
+            }
+
+            if (numToDrop <= 0) {
+                continue;
+            }
+
+            if (numToDrop >= gradesInCat.size()) {
+                for (Grade g : gradesInCat) {
+                    g.setDropped(true);
+                }
+            } else {
+                Collections.sort(gradesInCat, Grade.scoreComparator);
+                for (int i = 0; i < numToDrop; ++i) {
+                    gradesInCat.get(i).setDropped(true);
+
+                    if (!retVal.contains(gradesInCat.get(i).getStudentReference()))
+                        retVal.add(gradesInCat.get(i).getStudentReference());
+
+                    if (!retVal.contains(gradesInCat.get(i).getAssignmentReference()))
+                        retVal.add(gradesInCat.get(i).getAssignmentReference());
+                }
+
+                s.setAverageGrade(s.getGrades(), this.getScale());
+
+                for (Assignment a : this.getlAssignments()) {
+                    a.calculateStats();
+                }
+            }
+        }
+
+
+        return retVal;
+    }
 }

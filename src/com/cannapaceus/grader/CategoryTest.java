@@ -15,7 +15,7 @@ class CategoryTest {
 
     @BeforeEach
     void setUp() {
-        category = new Category("Test Category", 1);
+        category = new Category("Test Category", 1, 0);
     }
 
     @Test
@@ -86,7 +86,7 @@ class CategoryTest {
 
     @Test
     void compareTo() {
-        assertEquals(0, category.compareTo(new Category("Test Category", 1)));
-        assertNotEquals(0, category.compareTo(new Category("New Test Category", 25)));
+        assertEquals(0, category.compareTo(new Category("Test Category", 1, 0)));
+        assertNotEquals(0, category.compareTo(new Category("New Test Category", 25, 0)));
     }
 }

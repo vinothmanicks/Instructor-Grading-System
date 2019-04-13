@@ -174,7 +174,11 @@ public class StudentController {
                     if (c.wasUpdated()) {
                         Grade g = selectedStudent.getGrades().get(c.getFrom());
 
+                        gradeObservableList.removeListener(this);
+
                         recalculateStats(g);
+
+                        gradeObservableList.addListener(this);
                     }
                 }
             }
@@ -215,13 +219,14 @@ public class StudentController {
     }
 
     private void recalculateStats(Grade g) {
-
         Course c = md.getSelectedCourse();
+
+        c.dropGrades();
+
+        selectedStudent.setAverageGrade(selectedStudent.getGrades(),md.selectedCourse.getScale());
 
         c.PopulateAverages(c.getlStudents());
         c.calculateStats();
-
-        selectedStudent.setAverageGrade(selectedStudent.getGrades(),md.selectedCourse.getScale());
 
         Assignment a = g.getAssignmentReference();
 
