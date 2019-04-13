@@ -55,6 +55,21 @@
                     </validators>
                 </JFXTextField>
             </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfDropped" promptText="Drop Lowest" labelFloat="true">
+                    <tooltip>
+                        <Tooltip text="Drop lowest N grades from this category."/>
+                    </tooltip>
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                        <IntegerValidator message="Integer Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </IntegerValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
             <Pane VBox.vgrow="ALWAYS"/>
             <HBox fillHeight="true" spacing="10.0">
                 <Pane HBox.hgrow="ALWAYS"/>

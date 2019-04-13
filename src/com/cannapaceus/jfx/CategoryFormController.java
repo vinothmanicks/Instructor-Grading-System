@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.Category;
+import com.cannapaceus.grader.Course;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,12 +13,16 @@ public class CategoryFormController {
     Model md = null;
 
     Category selectedCategory;
+    Course selectedCourse;
 
     @FXML
     JFXTextField tfCatName;
 
     @FXML
     JFXTextField tfCatWeight;
+
+    @FXML
+    JFXTextField tfDropped;
 
     @FXML
     private void initialize()
@@ -28,27 +33,55 @@ public class CategoryFormController {
         sc = ScreenController.getInstance();
 
         selectedCategory = md.getSelectedCategory();
+        selectedCourse = md.getSelectedCourse();
 
-        tfCatName.setText(selectedCategory.getName());
-        tfCatWeight.setText("" + selectedCategory.getWeight());
+        if (selectedCategory != null) {
+            tfCatName.setText(selectedCategory.getName());
+            tfCatWeight.setText("" + selectedCategory.getWeight());
+            tfDropped.setText("" + selectedCategory.getDropped());
+        } else {
+            tfCatName.setDisable(true);
+            tfCatWeight.setDisable(true);
+            tfDropped.setText("" + selectedCourse.getDropUncategorized());
+        }
+
+
     }
 
 
     public void saveClick(ActionEvent event) {
-        if (!formValidate())
-            return;
+        if (selectedCategory != null) {
+            if (!formValidate())
+                return;
+            selectedCategory.setCategoryName(tfCatName.getText());
+            selectedCategory.setWeight(Float.valueOf(tfCatWeight.getText()));
+            selectedCategory.setDropped(Integer.valueOf(tfDropped.getText()));
 
-        selectedCategory.setCategoryName(tfCatName.getText());
-        selectedCategory.setWeight(Float.valueOf(tfCatWeight.getText()));
+            for (Object o : selectedCourse.dropGrades()) {
+                md.addUpdatedObject(o);
+            }
 
-        if (selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(selectedCategory)) {
-            md.addNewObject(selectedCategory);
+            if (selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(selectedCategory)) {
+                md.addNewObject(selectedCategory);
+            } else {
+                md.addUpdatedObject(selectedCategory);
+            }
         } else {
-            md.addUpdatedObject(selectedCategory);
-        }
+            if (!tfDropped.validate())
+                return;
 
-        //Might need this for students
-        //Collections.sort(md.getTerms());
+            selectedCourse.setDropUncategorized(Integer.valueOf(tfDropped.getText()));
+
+            for (Object o : selectedCourse.dropGrades()) {
+                md.addUpdatedObject(o);
+            }
+
+            if (selectedCourse.getDBID() == 0 && !md.getNewObjects().contains(selectedCourse)) {
+                md.addNewObject(selectedCourse);
+            } else {
+                md.addUpdatedObject(selectedCourse);
+            }
+        }
 
         try {
             sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
@@ -59,8 +92,10 @@ public class CategoryFormController {
     }
 
     public void cancelClick(ActionEvent event) {
-        if (selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(selectedCategory)) {
-            md.removeCategory(selectedCategory);
+        if (selectedCategory != null) {
+            if (selectedCategory.getDBID() == 0 && !md.getNewObjects().contains(selectedCategory)) {
+                md.removeCategory(selectedCategory);
+        }
     }
 
         try {

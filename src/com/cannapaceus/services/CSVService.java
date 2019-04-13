@@ -137,7 +137,7 @@ public class CSVService {
             //TODO: Make sure category is retrieved from import file.
             if(lAssignments.get(i).getCategoryReference() == null)
             {
-                lAssignments.get(i).setCategory(new Category("Uncategorized",0));
+                lAssignments.get(i).setCategory(new Category("Uncategorized",0, 0));
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
             lAssignments.get(i).getDueDate().format(formatter);
@@ -283,7 +283,7 @@ public class CSVService {
                                         {
                                             continue;
                                         }
-                                        Category newCat = new Category(lineElements[0],Float.valueOf(lineElements[1]));
+                                        Category newCat = new Category(lineElements[0],Float.valueOf(lineElements[1]), 0);
                                         importedCourse.addCategory(newCat);
                                     }
                                     break;

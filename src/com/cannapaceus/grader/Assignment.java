@@ -276,4 +276,11 @@ public class Assignment {
             return a1.getAssignmentName().toUpperCase().compareTo(a2.getAssignmentName().toUpperCase());
         }
     };
+
+    public void calculateStats() {
+        stAssignmentStats.calculateMean(lGrades);
+        stAssignmentStats.calculateMedian(lGrades);
+        stAssignmentStats.calculateMode(lGrades);
+        stAssignmentStats.calculateStandardDev(lGrades);
+    }
 }

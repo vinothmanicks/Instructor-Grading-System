@@ -51,9 +51,9 @@ class CourseTest {
 
     @Test
     void addAndGetAssignment() {
-        assignment = new Assignment("Test Assignment 0", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, new Category("Test Category 0", 1), new Float(5));
+        assignment = new Assignment("Test Assignment 0", LocalDate.of(2019, 03, 25), LocalDate.of(2019, 03, 5), false, 100, new Category("Test Category 0", 1, 0), new Float(5));
         course.addAssignment(assignment);
-        assignment = new Assignment("Test Assignment 1", LocalDate.of(2020, 03, 25), LocalDate.of(2020, 03, 5), false, 101, new Category("Test Category 1", 1), new Float(5));
+        assignment = new Assignment("Test Assignment 1", LocalDate.of(2020, 03, 25), LocalDate.of(2020, 03, 5), false, 101, new Category("Test Category 1", 1, 0), new Float(5));
         course.addAssignment(assignment);
 
         ArrayList<Assignment> lAssignment = course.getlAssignments();
@@ -76,9 +76,9 @@ class CourseTest {
 
     @Test
     void addAndGetCategory() {
-        category = new Category("Test Category 0", 10);
+        category = new Category("Test Category 0", 10, 0);
         course.addCategory(category);
-        category = new Category("Test Category 1", 20);
+        category = new Category("Test Category 1", 20, 0);
         course.addCategory(category);
 
         ArrayList<Category> lCategory = course.getlCategories();
@@ -94,7 +94,7 @@ class CourseTest {
     void addAndGetGrade() {
         student = new Student("Test", "Student 0", "1234567890", "ts0000@test.edu");
         course.addStudent(student);
-        assignment = new Assignment("Test Assignment 1", LocalDate.of(2020, 03, 25), LocalDate.of(2020, 03, 5), false, 101, new Category("Test Category 1", 1), new Float(5));
+        assignment = new Assignment("Test Assignment 1", LocalDate.of(2020, 03, 25), LocalDate.of(2020, 03, 5), false, 101, new Category("Test Category 1", 1, 0), new Float(5));
         course.addAssignment(assignment);
 
         grade = new Grade(10.5f, student, assignment);
