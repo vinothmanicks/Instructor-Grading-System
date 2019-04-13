@@ -10,9 +10,14 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class EmailService {
     // Variables
@@ -30,6 +35,9 @@ public class EmailService {
     // Variable to store session properties
     private Properties props;
 
+    private OSService osService;
+    private PDFService pdfService;
+
     /**
      * Singleton Class
      */
@@ -37,8 +45,6 @@ public class EmailService {
     private static EmailService instance = null;
 
     public static EmailService getInstance() {
-        //if (instance == null)
-            //instance = new EmailService();
         return instance;
     }
 
@@ -75,6 +81,9 @@ public class EmailService {
                 return new PasswordAuthentication(sFromAddress, sPassword);
             }
         });
+
+        osService = OSService.getInstance();
+        pdfService = PDFService.getInstance();
     }
 
     //Getters and setters
@@ -98,10 +107,18 @@ public class EmailService {
     // Methods
 
     /**
-     * @param lTo
-     * @param sSubject
+     *
+     * @param student
+     * @param course
      */
-    private void SendEmail(String lTo, String sSubject, String sMessageText) {
+    private void SendEmail(Student student, Course course) {
+
+        String sToAddress = student.getStudentEmail();
+        String sSubjectText = "Grade Report for " + course.getCourseName();
+        String sMessageText = "Hello,\n\n" +
+                              "Find your grade report attached to this email.\n" +
+                              "To open the password protected file, use your Student ID.\n\n" +
+                              "Your Professor";
 
         try {
             // Create a default MimeMessage object.
@@ -111,19 +128,42 @@ public class EmailService {
             message.setFrom(new InternetAddress(sFromAddress));
 
             // Set To: header field of the header.
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(lTo));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(sToAddress));
 
             // Set Subject: header field
-            message.setSubject(sSubject);
+            message.setSubject(sSubjectText);
+
+            // Create the message part
+            BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
-            message.setText(sMessageText);
+            messageBodyPart.setText(sMessageText);
+
+            // Create a multipart message
+            Multipart multipart = new MimeMultipart();
+
+            // Set text message part
+            multipart.addBodyPart(messageBodyPart);
+
+            // Part two is attachment
+            messageBodyPart = new MimeBodyPart();
+
+            //Create and add pdf
+            String filename = pdfService.printGrades(student, course, true);
+            DataSource source = new FileDataSource(filename);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(filename);
+            multipart.addBodyPart(messageBodyPart);
+
+            // Send the complete message parts
+            message.setContent(multipart);
 
             // Send message
             Transport.send(message);
 
-            //System.out.println("Sent message successfully....");
-
+            // Delete PDF
+            osService.delete(filename);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -139,23 +179,29 @@ public class EmailService {
         return false;
     }
 
+    /**
+     *
+     * @param course
+     * @return
+     */
     public boolean email(Course course) {
         ArrayList<Student> lStudents = course.getlStudents();
-        String sSubjectText = "Grade Report for " + course.getCourseName();
 
         for (Student student : lStudents) {
-            String sMessageText = student.GenerateStudentReportString();
-            SendEmail(student.getStudentEmail(), sSubjectText, sMessageText);
+            SendEmail(student, course);
         }
 
         return true;
     }
 
+    /**
+     *
+     * @param student
+     * @param course
+     * @return
+     */
     public boolean email(Student student, Course course) {
-        String sSubjectText = "Grade Report for " + course.getCourseName();
-        String sMessageText = student.GenerateStudentReportString();
-        SendEmail(student.getStudentEmail(), sSubjectText, sMessageText);
-
+        SendEmail(student, course);
         return true;
     }
 }
