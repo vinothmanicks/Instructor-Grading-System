@@ -5,8 +5,10 @@ import com.cannapaceus.services.EmailService;
 import com.cannapaceus.services.PDFService;
 import com.cannapaceus.services.PrinterService;
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -751,7 +753,7 @@ public class CourseController {
 
     public void printGrades(ActionEvent event) {
         PDFService service = PDFService.getInstance();
-        service.printGrades(selectedCourse);
+        service.printGrades(selectedCourse, false);
     }
 
     public void emailGrades(ActionEvent event) {
@@ -768,10 +770,14 @@ public class CourseController {
 
         dialog.show();
 
-        EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
-        boolean noice = emailService.email(selectedCourse);
-
-        dialog.close();
+        dialog.setOnDialogOpened(new EventHandler<JFXDialogEvent>() {
+            @Override
+            public void handle(JFXDialogEvent event) {
+                EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
+                emailService.email(selectedCourse);
+                dialog.close();
+            }
+        });
     }
 
     public void copyStuff(ActionEvent event)

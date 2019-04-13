@@ -233,7 +233,7 @@ public class Grade extends RecursiveTreeObject<Grade> {
     public static Comparator<Grade> scoreComparator = new Comparator<Grade>() {
         @Override
         public int compare(Grade g1, Grade g2) {
-            return Float.compare(g1.getGrade(), g2.getGrade());
+            return Float.compare(g1.getGrade()/g1.getAssignmentReference().getMaxScore(), g2.getGrade()/g2.getAssignmentReference().getMaxScore());
         }
     };
 
