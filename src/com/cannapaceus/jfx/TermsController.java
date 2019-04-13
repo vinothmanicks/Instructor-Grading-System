@@ -317,6 +317,10 @@ public class TermsController {
     public void addCourseClick(ActionEvent event) {
         Term targetTerm = hmTerm.get(((Node) event.getSource()).getParent().getParent().getId());
         Course targetCourse = new Course("", "", "");
+        targetCourse.getStatistics().setMean(0.0f);
+        targetCourse.getStatistics().setMedian(0.0f);
+        targetCourse.getStatistics().setMode(0.0f);
+        targetCourse.getStatistics().setStandardDev(0.0f);
 
         md.setSelectedTerm(targetTerm);
         md.addCourse(targetCourse);

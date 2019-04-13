@@ -218,12 +218,11 @@ public class AssignmentController {
     private void recalculateStats(Grade g) {
         Course c = md.getSelectedCourse();
 
+        Student s = g.getStudentReference();
+        s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
+
         c.PopulateAverages(c.getlStudents());
         c.calculateStats();
-
-        Student s = g.getStudentReference();
-
-        s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
 
         Statistics st = selectedAssignment.getStAssignmentStats();
 

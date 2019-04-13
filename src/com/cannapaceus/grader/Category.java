@@ -10,13 +10,16 @@ public class Category {
     private String sCategoryName;
     //The weight assigned to this category
     private float fCategoryWeight;
+
+    private int iDropped;
     //The list of assignments assigned to this category
     private ArrayList<Assignment> lCatAssignments;
 
-    public Category(String sCategoryName, float fCategoryWeight)
+    public Category(String sCategoryName, float fCategoryWeight, int iDropped)
     {
         this.sCategoryName = sCategoryName;
         this.fCategoryWeight = fCategoryWeight;
+        this.iDropped = iDropped;
         lCatAssignments = new ArrayList<>();
     }
 
@@ -25,6 +28,7 @@ public class Category {
         this.lDBID = catCategory.getDBID();
         this.sCategoryName = catCategory.getName();
         this.fCategoryWeight = catCategory.getWeight();
+        this.iDropped = catCategory.getDropped();
         this.lCatAssignments = new ArrayList<>(catCategory.getAssignments());
     }
 
@@ -45,6 +49,11 @@ public class Category {
     public float getWeight()
     {
         return fCategoryWeight;
+    }
+
+    public int getDropped()
+    {
+        return iDropped;
     }
 
     public ArrayList<Assignment> getAssignments()
@@ -78,6 +87,10 @@ public class Category {
     public void setCategoryName(String categoryName)
     {
         sCategoryName = new String(categoryName);
+    }
+
+    public void setDropped(int iDropped) {
+        this.iDropped = iDropped;
     }
 
     public int compareTo(Category cat) {

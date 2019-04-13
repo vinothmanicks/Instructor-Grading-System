@@ -96,13 +96,15 @@ public class DBService {
                     "FSTDDEV REAL, \n" +
                     "BARCHIVED BOOLEAN, \n" +
                     "ITERM BIGINT NOT NULL, \n" +
-                    "FSCALE REAL \n" +
+                    "FSCALE REAL, \n" +
+                    "IDROPUNCAT INT \n" +
                     ");");
 
             stm.execute("CREATE TABLE CATEGORIES (\n" +
                     "CATEGORYID IDENTITY,\n" +
                     "SCATEGORYNAME VARCHAR (255),\n" +
                     "FWEIGHT REAL,\n" +
+                    "IDROPPED INT, \n" +
                     "ICOURSE BIGINT NOT NULL\n" +
                     ");");
 
@@ -240,9 +242,9 @@ public class DBService {
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO COURSES " +
-                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM, FSCALE) " +
+                    "(SCOURSENAME, SCOURSEID, SCOURSEDEPT, FMEAN, FMEDIAN, FMODE, FSTDDEV, BARCHIVED, ITERM, FSCALE, IDROPUNCAT) " +
                     "VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -257,6 +259,7 @@ public class DBService {
             stm.setBoolean(8, courseToStore.getBArchived());
             stm.setLong(9, lTermID);
             stm.setFloat(10, courseToStore.getScale());
+            stm.setInt(11, courseToStore.getDropUncategorized());
 
             stm.executeUpdate();
 
@@ -302,16 +305,17 @@ public class DBService {
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO CATEGORIES " +
-                    "(SCATEGORYNAME, FWEIGHT, ICOURSE) " +
+                    "(SCATEGORYNAME, FWEIGHT, IDROPPED, ICOURSE) " +
                     "VALUES " +
-                    "(?, ?, ?)";
+                    "(?, ?, ?, ?)";
 
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stm.setString(1, categoryToStore.getName());
             stm.setFloat(2, categoryToStore.getWeight());
-            stm.setLong(3, lCourseID);
+            stm.setInt(3, categoryToStore.getDropped());
+            stm.setLong(4, lCourseID);
 
             stm.executeUpdate();
 
@@ -661,7 +665,7 @@ public class DBService {
         try {
             String sql = "UPDATE COURSES " +
                     "SET SCOURSENAME = ?, SCOURSEID = ?, SCOURSEDEPT = ?, FMEAN = ?, " +
-                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ?, FSCALE = ? " +
+                    "FMEDIAN = ?, FMODE = ?, FSTDDEV = ?, BARCHIVED = ?, FSCALE = ?, IDROPUNCAT = ? " +
                     "WHERE COURSEID = ? ";
 
             con = DriverManager.getConnection(conString, user, pass);
@@ -676,7 +680,8 @@ public class DBService {
             stm.setFloat(7, c.getStCourseStats().getStandardDev());  //TODO: stm.setFloat(7, courseToStore.getStatistics().getStdDev());
             stm.setBoolean(8, c.getBArchived());
             stm.setFloat(9,c.getScale());
-            stm.setLong(10, c.getDBID());
+            stm.setInt(10, c.getDropUncategorized());
+            stm.setLong(11, c.getDBID());
 
             stm.executeUpdate();
 
@@ -706,7 +711,7 @@ public class DBService {
         PreparedStatement stm = null;
         try {
             String sql = "UPDATE CATEGORIES " +
-                    "SET SCATEGORYNAME = ?, FWEIGHT = ? " +
+                    "SET SCATEGORYNAME = ?, FWEIGHT = ?, IDROPPED = ? " +
                     "WHERE CATEGORYID = ? ";
 
             con = DriverManager.getConnection(conString, user, pass);
@@ -714,7 +719,8 @@ public class DBService {
 
             stm.setString(1, cat.getName());
             stm.setFloat(2, cat.getWeight());
-            stm.setLong(3, cat.getDBID());
+            stm.setLong(3, cat.getDropped());
+            stm.setLong(4, cat.getDBID());
 
             stm.executeUpdate();
 
@@ -1350,7 +1356,18 @@ public class DBService {
                         rs.getString(4));
 
                 retValue.setDBID(rs.getLong(1));
-                retValue.setScale(rs.getFloat(1));
+
+                Statistics tempStats = new Statistics();
+
+                tempStats.setMean(rs.getFloat(5));
+                tempStats.setMedian(rs.getFloat(6));
+                tempStats.setMode(rs.getFloat(7));
+                tempStats.setStandardDev(rs.getFloat(8));
+
+                retValue.setStCourseStats(tempStats);
+                retValue.setBArchived(rs.getBoolean(9));
+                retValue.setScale(rs.getFloat(11));
+                retValue.setDropUncategorized(rs.getInt(12));
 
                 //Get categories for the course
                 sql = "SELECT * FROM CATEGORIES " +
@@ -1365,7 +1382,7 @@ public class DBService {
 
                 if (rs != null) {
                     while(rs.next()) {
-                        Category temp = new Category(rs.getString(2), rs.getFloat(3));
+                        Category temp = new Category(rs.getString(2), rs.getFloat(3), rs.getInt(4));
                         temp.setDBID(rs.getLong(1));
 
                         retValue.addCategory(temp);
@@ -1418,7 +1435,7 @@ public class DBService {
                                     rs.getFloat(11));
                         }
 
-                        Statistics tempStats = new Statistics();
+                        tempStats = new Statistics();
                         tempStats.setMean(rs.getFloat(5));
                         tempStats.setMedian(rs.getFloat(6));
                         tempStats.setMode(rs.getFloat(7));

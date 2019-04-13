@@ -38,15 +38,15 @@ public class Main {
         Course coTest = new Course("Test Course", "TST 000", "Testing");
         //System.out.println(db.storeCourse(coTest, teTest.getDBID()));
 
-        Category catTests = new Category("Tests", 0.50f);
+        Category catTests = new Category("Tests", 0.50f, 0);
         coTest.addCategory(catTests);
         //System.out.println(db.storeCategory(catTests, coTest.getDBID()));
 
-        Category catHmwk = new Category("Homework", 0.35f);
+        Category catHmwk = new Category("Homework", 0.35f, 0);
         coTest.addCategory(catHmwk);
         //System.out.println(db.storeCategory(catHmwk, coTest.getDBID()));
 
-        Category catOther = new Category("Other", 0.15f);
+        Category catOther = new Category("Other", 0.15f, 0);
         coTest.addCategory(catOther);
         //System.out.println(db.storeCategory(catOther, coTest.getDBID()));
 
