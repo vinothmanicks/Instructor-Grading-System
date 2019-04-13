@@ -1,6 +1,5 @@
 package com.cannapaceus.services;
 
-
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -18,17 +17,17 @@ public class PDFService {
     private static PDFService instance = null;
 
     public static PDFService getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new PDFService();
-
+        }
         return instance;
     }
 
     /* Synthesise some sample lines of text */
     String[] data;
 
-    public void printList(Course course) {
-
+    public String printList(Course course) {
+        OSService osService = OSService.getInstance();
         ArrayList<Student> lStudents = course.getlStudents();
 
         int iSize =  lStudents.size();
@@ -38,7 +37,7 @@ public class PDFService {
             data[i] = lStudents.get(i).getFirstMIName() + "    " + lStudents.get(i).getLastName() + "    " + lStudents.get(i).getStudentID();
         }
 
-        String filename = "StudentList_" + course.getCourseName() + ".pdf";
+        String filename = osService.getDesktopDirectoryPath() + "StudentList_" + course.getCourseName() + ".pdf";
 
         try {
             PDDocument document = new PDDocument();
@@ -64,13 +63,20 @@ public class PDFService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return filename;
     }
 
-    public void printGrades(Course course, Boolean bEncrypt)
-    {
+    public String printGrades(Course course, Boolean bEncrypt) {
+        OSService osService = OSService.getInstance();
         ArrayList<Student> lStudents = course.getlStudents();
+        String filename;
 
-        String filename = "Grades_" + course.getCourseName() + ".pdf";
+        if (bEncrypt) {
+            filename = osService.getTempDirectoryPath() + "Grades_" + course.getCourseName() + ".pdf";
+        }
+        else
+            filename = osService.getDesktopDirectoryPath() + "Grades_" + course.getCourseName() + ".pdf";
 
         try {
             PDDocument document = new PDDocument();
@@ -107,11 +113,19 @@ public class PDFService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return filename;
     }
 
-    public void printGrades(Student student, Course course, Boolean bEncrypt)
-    {
-        String filename = "Grades_" + course.getCourseName() + "_" + student.getFirstMIName() + student.getLastName() + ".pdf";
+    public String printGrades(Student student, Course course, Boolean bEncrypt) {
+        OSService osService = OSService.getInstance();
+        String filename;
+
+        if (bEncrypt) {
+            filename = osService.getTempDirectoryPath() + "Grades_" + course.getCourseName() + "_" + student.getFirstMIName() + student.getLastName() + ".pdf";
+        }
+        else
+            filename = osService.getDesktopDirectoryPath() + "Grades_" + course.getCourseName() + "_" + student.getFirstMIName() + student.getLastName() + ".pdf";
 
         try {
             PDDocument document = new PDDocument();
@@ -163,6 +177,7 @@ public class PDFService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
+        return filename;
+    }
 }
