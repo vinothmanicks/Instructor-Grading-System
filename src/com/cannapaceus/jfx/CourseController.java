@@ -747,13 +747,13 @@ public class CourseController {
     }
 
     public void printList(ActionEvent event) {
-        //PrinterService service = PrinterService.getInstance();
-        //service.printList(selectedCourse);
+        PrinterService service = PrinterService.getInstance();
+        service.printList(selectedCourse);
     }
 
     public void pdfList(ActionEvent event) {
         PDFService service = PDFService.getInstance();
-        service.printList(selectedCourse);
+        service.printList(selectedCourse, false);
     }
 
     public void printGrades(ActionEvent event) {
