@@ -1,42 +1,45 @@
 package com.cannapaceus.jfx;
 
+import com.cannapaceus.grader.DBService;
 import com.cannapaceus.services.EmailService;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
-import javax.swing.*;
-import java.util.Collections;
 
 public class SettingsController {
-
     ScreenController sc;
-    Model md;
+    DBService db;
+    EmailService em;
 
 
     @FXML
     JFXTextField tfInstructorEmail;
 
     @FXML
+    JFXPasswordField tfInstructorEmailPass;
+
+    @FXML
     private void initialize()
     {
         sc = ScreenController.getInstance();
-        md = Model.getInstance();
+        db = DBService.getInstance();
+        em = EmailService.getInstance();
 
-        //selectedInstructor = md.getSelectedCourse();
-
-        tfInstructorEmail.setText("BubbaDubba420@gmail.com");
-    }
-
-    @FXML
-    public void cancelClick(ActionEvent event) {
-
+        tfInstructorEmail.setText(em.getsFromAddress());
+        tfInstructorEmailPass.setText(em.getsPassword());
     }
 
     public void saveClick(ActionEvent event) {
-        if(formValidate())
+        if(!formValidate())
             return;
+
+        db.updateEmail(tfInstructorEmail.getText());
+        db.updateEmailPass(tfInstructorEmailPass.getText());
+
+        em.setsFromAddress(tfInstructorEmail.getText());
+        em.setsPassword(tfInstructorEmailPass.getText());
     }
 
     private boolean formValidate() {
@@ -44,10 +47,10 @@ public class SettingsController {
         if (!tfInstructorEmail.validate())
             isAllValid = false;
 
-        if(!EmailService.checkEmail(tfInstructorEmail.getText()))
+        if (!tfInstructorEmailPass.validate())
             isAllValid = false;
 
-        return true;
+        return isAllValid;
     }
 
 

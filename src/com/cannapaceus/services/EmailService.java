@@ -30,6 +30,8 @@ public class EmailService {
     // String to store SMTP server name;
     private String sHost;
 
+    private String errMessage = null;
+
     // Variable to store session
     Session session;
     // Variable to store session properties
@@ -96,12 +98,30 @@ public class EmailService {
         this.sSender = sSender;
     }
 
+    public String getsFromAddress() {
+        return sFromAddress;
+    }
+
+    public void setsFromAddress(String sSender) {
+        this.sFromAddress = sSender;
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sFromAddress, sPassword);
+            }
+        });
+    }
+
     public String getsPassword() {
         return sPassword;
     }
 
     public void setsPassword(String sPassword) {
         this.sPassword = sPassword;
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sFromAddress, sPassword);
+            }
+        });
     }
 
     // Methods
@@ -164,6 +184,11 @@ public class EmailService {
 
             // Delete PDF
             osService.delete(filename);
+            errMessage = null;
+        } catch (AuthenticationFailedException e) {
+            errMessage = "Email or password incorrect. Check the settings page to ensure you entered them correctly.";
+        } catch (javax.mail.internet.AddressException e) {
+            errMessage = "Set your email and password in the settings first.";
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -189,6 +214,8 @@ public class EmailService {
 
         for (Student student : lStudents) {
             SendEmail(student, course);
+            if (errMessage != null)
+                return false;
         }
 
         return true;
@@ -202,6 +229,12 @@ public class EmailService {
      */
     public boolean email(Student student, Course course) {
         SendEmail(student, course);
+        if (errMessage != null)
+            return false;
         return true;
+    }
+
+    public String getErrorMessage() {
+        return this.errMessage;
     }
 }

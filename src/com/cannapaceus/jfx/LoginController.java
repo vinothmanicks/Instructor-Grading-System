@@ -3,6 +3,7 @@ package com.cannapaceus.jfx;
 import java.net.URL;
 
 import com.cannapaceus.grader.DBService;
+import com.cannapaceus.services.EmailService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,6 +41,7 @@ public class LoginController {
     private void login() {
         if (db.loginDB(inUsername.getText(), inPassword.getText())){
             try {
+                EmailService.getInstance(db.retrieveEmail(), db.retrieveEmailPass());
                 sc.setRoot(FXMLLoader.load(getClass().getResource("../jfxml/GraderView.fxml")));
             } catch(Exception e) {
                 e.printStackTrace();
