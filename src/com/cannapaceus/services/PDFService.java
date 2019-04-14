@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.util.Matrix;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,18 +28,16 @@ public class PDFService {
     /* Synthesise some sample lines of text */
     String[] data;
 
-    public String printList(Course course) {
+    public String printList(Course course, Boolean bTemp) {
         OSService osService = OSService.getInstance();
         ArrayList<Student> lStudents = course.getlStudents();
+        String filename;
 
-        int iSize =  lStudents.size();
-        data = new String[iSize];
-
-        for(int i = 0; i < iSize; i++) {
-            data[i] = lStudents.get(i).getFirstMIName() + "    " + lStudents.get(i).getLastName() + "    " + lStudents.get(i).getStudentID();
+        if (bTemp) {
+            filename = osService.getTempDirectoryPath() + "Grades_" + course.getCourseName() + ".pdf";
         }
-
-        String filename = osService.getDesktopDirectoryPath() + "StudentList_" + course.getCourseName() + ".pdf";
+        else
+            filename = osService.getDesktopDirectoryPath() + "Grades_" + course.getCourseName() + ".pdf";
 
         try {
             PDDocument document = new PDDocument();
@@ -48,11 +47,27 @@ public class PDFService {
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
             contentStream.beginText();
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+
             contentStream.setLeading(14.5f);
             contentStream.newLineAtOffset(25, 720);
-            for (String text : data) {
-                contentStream.showText(text);
+
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
+            contentStream.showText("Last Name");
+            contentStream.newLineAtOffset(160, 0);
+            contentStream.showText("First and Middle Name");
+            contentStream.newLineAtOffset(160, 0);
+            contentStream.showText("Student ID");
+            contentStream.newLineAtOffset(-320, 0);
+            contentStream.newLine();
+
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+            for (Student student : lStudents) {
+                contentStream.showText(student.getLastName());
+                contentStream.newLineAtOffset(160, 0);
+                contentStream.showText(student.getFirstMIName());
+                contentStream.newLineAtOffset(160, 0);
+                contentStream.showText(student.getStudentID());
+                contentStream.newLineAtOffset(-320, 0);
                 contentStream.newLine();
             }
             contentStream.endText();
