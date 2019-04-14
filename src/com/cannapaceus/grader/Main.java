@@ -29,7 +29,7 @@ public class Main {
             user = reader.next();
             System.out.print("Enter database password: ");
             pass = reader.next();
-        } while (!db.loginDB(user, pass));
+        } while (db.loginDB(user, pass) != null);
 
 
         Term teTest = new Term(2019, eSeason.SPRING);

@@ -11,41 +11,59 @@
 
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import javafx.scene.effect.DropShadow?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cannapaceus.jfx.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.validation.RegexValidator?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:id="spDialogPane"
+           fx:controller="com.cannapaceus.jfx.LoginController"
+           prefHeight="400.0" prefWidth="600.0">
 
-    <center>
-        <VBox fx:id="vbLogin" spacing="20" maxWidth="200" maxHeight="100" fillWidth="true">
-            <children>
-                <JFXTextField fx:id="inUsername"
+    <VBox fx:id="vbLogin" spacing="50" maxWidth="200" maxHeight="100" fillWidth="true">
+        <children>
+            <JFXTextField fx:id="inUsername"
+                          alignment="CENTER_LEFT"
+                          promptText="Username"
+                          onKeyPressed="#handleEnterKey"
+                          labelFloat="true">
+                <validators>
+                    <RequiredFieldValidator message="Input Required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </RequiredFieldValidator>
+                </validators>
+            </JFXTextField>
+
+            <JFXPasswordField fx:id="inPassword"
                               alignment="CENTER_LEFT"
-                              promptText="Username"
+                              promptText="Password"
                               onKeyPressed="#handleEnterKey"
-                              labelFloat="true"/>
+                              labelFloat="true">
 
-                <JFXPasswordField fx:id="inPassword"
-                                  alignment="CENTER_LEFT"
-                                  promptText="Password"
-                                  onKeyPressed="#handleEnterKey"
-                                  labelFloat="true"/>
+                <validators>
+                    <RequiredFieldValidator message="Input Required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </RequiredFieldValidator>
+                    <RegexValidator regexPattern=".{8,}" message="8 characters required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </RegexValidator>
+                </validators>
+            </JFXPasswordField>
 
-                <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#loginClick" buttonType="FLAT">
-                    <style>
-                        -fx-background-color: #0077C8;
-                        -fx-text-fill: white;
-                    </style>
-                </JFXButton>
-            </children>
+            <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#loginClick" buttonType="FLAT">
+                <style>
+                    -fx-background-color: #0077C8;
+                    -fx-text-fill: white;
+                </style>
+            </JFXButton>
+        </children>
 
-            <style>
-                -fx-padding: 20, 20, 20, 20;
-                -fx-background-color: white;
-            </style>
-            <effect>
-                <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
-            </effect>
-        </VBox>
-    </center>
-</BorderPane>
+        <style>
+            -fx-padding: 20, 20, 20, 20;
+            -fx-background-color: white;
+        </style>
+        <effect>
+            <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+        </effect>
+    </VBox>
+</StackPane>
