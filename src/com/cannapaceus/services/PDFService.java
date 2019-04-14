@@ -2,6 +2,7 @@ package com.cannapaceus.services;
 
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
+import com.sun.istack.internal.Nullable;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -67,12 +68,12 @@ public class PDFService {
         return filename;
     }
 
-    public String printGrades(Course course, Boolean bEncrypt) {
+    public String printGrades(Course course, Boolean bTemp) {
         OSService osService = OSService.getInstance();
         ArrayList<Student> lStudents = course.getlStudents();
         String filename;
 
-        if (bEncrypt) {
+        if (bTemp) {
             filename = osService.getTempDirectoryPath() + "Grades_" + course.getCourseName() + ".pdf";
         }
         else
@@ -117,11 +118,11 @@ public class PDFService {
         return filename;
     }
 
-    public String printGrades(Student student, Course course, Boolean bEncrypt) {
+    public String printGrades(Student student, Course course, Boolean bEncrypt, Boolean bTemp) {
         OSService osService = OSService.getInstance();
         String filename;
 
-        if (bEncrypt) {
+        if (bEncrypt || bTemp) {
             filename = osService.getTempDirectoryPath() + "Grades_" + course.getCourseName() + "_" + student.getFirstMIName() + student.getLastName() + ".pdf";
         }
         else

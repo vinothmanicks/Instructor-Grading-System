@@ -238,7 +238,21 @@
                         -fx-text-fill: #0077C8;
                     </style>
                 </JFXButton>
+                <JFXButton fx:id="btnPDFPrintList" buttonType="FLAT" text="PDF List of Students" onAction="#pdfList">
+                    <style>
+                        -fx-cursor: hand;
+                        -fx-background-color: #ffffff;
+                        -fx-text-fill: #0077C8;
+                    </style>
+                </JFXButton>
                 <JFXButton fx:id="btnPrintGrades" buttonType="FLAT" text="Print Grade Reports" onAction="#printGrades">
+                    <style>
+                        -fx-cursor: hand;
+                        -fx-background-color: #ffffff;
+                        -fx-text-fill: #0077C8;
+                    </style>
+                </JFXButton>
+                <JFXButton fx:id="btnPDFGrades" buttonType="FLAT" text="PDF Grade Reports" onAction="#pdfGrades">
                     <style>
                         -fx-cursor: hand;
                         -fx-background-color: #ffffff;

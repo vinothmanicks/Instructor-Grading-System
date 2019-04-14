@@ -275,8 +275,13 @@ public class StudentController {
     }
 
     public void printGrade(ActionEvent event) {
+        PrinterService service = PrinterService.getInstance();
+        service.printGrades(selectedStudent, selectedCourse);
+    }
+
+    public void pdfGrade(ActionEvent event) {
         PDFService service = PDFService.getInstance();
-        service.printGrades(selectedStudent, selectedCourse, false);
+        service.printGrades(selectedStudent, selectedCourse, false, false);
     }
 
     public void emailGrade(ActionEvent event) {
