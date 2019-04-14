@@ -170,7 +170,7 @@ public class EmailService {
             messageBodyPart = new MimeBodyPart();
 
             //Create and add pdf
-            String filename = pdfService.printGrades(student, course, true);
+            String filename = pdfService.printGrades(student, course, true, true);
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
