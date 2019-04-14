@@ -2,11 +2,21 @@ package com.cannapaceus.services;
 
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
+
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class PrinterService {
@@ -20,10 +30,51 @@ public class PrinterService {
         return instance;
     }
 
+    private void startPrintJob(String filename){
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(filename);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-    int[] pageBreaks;  // array of page break line positions.
+        Doc doc = new SimpleDoc(inputStream, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+        attributeSet.add(new Copies(1));
 
-    /* Synthesise some sample lines of text */
+        DocPrintJob job = new PrinterJob.();
+        job.print();
+        boolean ok = job.printDialog();
+        if (ok) {
+            try {
+                job.print(attributeSet);
+            } catch (PrinterException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void printGrades(Student student, Course course) {
+        OSService osService = OSService.getInstance();
+        PDFService pdfService = PDFService.getInstance();
+
+        String filename = pdfService.printGrades(student, course, false, true);
+        startPrintJob(filename);
+        osService.delete(filename);
+    }
+
+    public void printGrades(Course course) {
+        OSService osService = OSService.getInstance();
+        PDFService pdfService = PDFService.getInstance();
+
+        String filename = pdfService.printGrades(course, true);
+        startPrintJob(filename);
+        osService.delete(filename);
+    }
+
+    /*int[] pageBreaks;  // array of page break line positions.
+
+    /* Synthesise some sample lines of text
     String[] data;
 
     /*public int print(Graphics g, PageFormat pf, int pageIndex)
@@ -67,7 +118,7 @@ public class PrinterService {
 
         /* tell the caller that this page is part of the printed document *
         return PAGE_EXISTS;
-    }*/
+    }
 
     public void startPrintJob() {
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -77,7 +128,7 @@ public class PrinterService {
             try {
                 job.print();
             } catch (PrinterException ex) {
-                /* The job did not successfully complete */
+                // The job did not successfully complete
             }
         }
     }
@@ -113,5 +164,5 @@ public class PrinterService {
         }
 
         startPrintJob();
-    }
+    }*/
 }
