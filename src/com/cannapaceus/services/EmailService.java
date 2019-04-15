@@ -47,6 +47,8 @@ public class EmailService {
     private static EmailService instance = null;
 
     public static EmailService getInstance() {
+        if (instance == null)
+            instance = new EmailService(null, null);
         return instance;
     }
 
