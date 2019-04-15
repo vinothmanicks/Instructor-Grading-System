@@ -4,6 +4,8 @@ import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Category;
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Grade;
+import com.cannapaceus.qbank.Question;
+import com.cannapaceus.services.PDFService;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,8 +26,10 @@ public class QBankGenerateAssignmentController {
     ScreenController sc = null;
     Model md = null;
 
-    Course selectedCourse;
-    Assignment selectedAssignment;
+    private Course selectedCourse;
+    private Assignment selectedAssignment;
+
+    private ArrayList<Question> selectedQuestions = new ArrayList<>();
 
     private HashMap<Integer, Category> hmCat;
     private HashMap<String, Assignment> hmAssignments = new HashMap<>();
@@ -73,6 +77,8 @@ public class QBankGenerateAssignmentController {
     private void initialize() {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
+
+        selectedQuestions = md.getSelectedQuestions();
     }
 
     public void radioSelect(ActionEvent event) {
@@ -110,6 +116,7 @@ public class QBankGenerateAssignmentController {
         md.addAssignment(a);
 
         selectedAssignment = md.getSelectedAssignment();
+        selectedCourse = md.getSelectedCourse();
 
         hmCat = new HashMap<>();
         int i = 0;
@@ -165,7 +172,6 @@ public class QBankGenerateAssignmentController {
         }
 
         cbAssignment.setItems(assignmentItems);
-
         cbAssignment.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> selected, String oldValue, String newValue) {
@@ -174,25 +180,36 @@ public class QBankGenerateAssignmentController {
             }
         });
 
-        if (selectedAssignment != null) {
+        /*if (selectedAssignment != null) {
             cbAssignment.getSelectionModel().select(selectedKey);
-        }
+        }*/
     }
 
     public void generateClick(ActionEvent event) {
-        if (!formValidate())
-            return;
 
-        if(rbNewAssignment.isSelected())
+        if(rbNewAssignment.isSelected()) {
             generateNewAssignmentClick();
-        else if(rbExistingAssignment.isSelected())
-            generateExistingAssignmentClick();
-        else
-            return;
+        }
 
+        if(rbExistingAssignment.isSelected()) {
+            generateExistingAssignmentClick();
+        }
+
+        PDFService pdfService = PDFService.getInstance();
+        pdfService.printAssignment(selectedCourse, selectedAssignment, selectedQuestions);
+
+        try {
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.activate("Course");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void generateNewAssignmentClick() {
+        if (!newFormValidate())
+            return;
+
         Category cat = md.getSelectedCategory();
 
         selectedAssignment.setAssignmentName(tfAssignmentName.getText());
@@ -221,17 +238,11 @@ public class QBankGenerateAssignmentController {
         } else {
             md.addUpdatedObject(selectedAssignment);
         }
-
-        try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
-            sc.activate("Course");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void generateExistingAssignmentClick() {
-
+        if (!existingFormValidate())
+            return;
     }
 
     public void cancelClick(ActionEvent event) {
@@ -258,7 +269,7 @@ public class QBankGenerateAssignmentController {
 
     }
 
-    private boolean formValidate() {
+    private boolean newFormValidate() {
         boolean anyFail = true;
 
         if (!tfAssignmentName.validate())
@@ -273,6 +284,15 @@ public class QBankGenerateAssignmentController {
             anyFail = false;
         if(!dpAssignedDate.validate())
             anyFail = false;
+        return anyFail;
+    }
+
+    private boolean existingFormValidate() {
+        boolean anyFail = true;
+
+        if (!cbAssignment.validate())
+            anyFail = false;
+
         return anyFail;
     }
 }

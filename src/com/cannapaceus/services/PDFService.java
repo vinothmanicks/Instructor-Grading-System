@@ -1,7 +1,9 @@
 package com.cannapaceus.services;
 
+import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
+import com.cannapaceus.qbank.Question;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 public class PDFService {
 
+
     private static PDFService instance = null;
     PDPageContentStream contentStream = null;
     PDDocument document;
@@ -25,7 +28,7 @@ public class PDFService {
         return instance;
     }
 
-    /* Synthesise some sample lines of text */
+    /* Synthesise new page */
     private void GenerateNewPage() throws IOException {
         if(contentStream != null) {
             contentStream.endText();
@@ -170,7 +173,7 @@ public class PDFService {
             contentStream.newLine();
             contentStream.newLine();
 
-            int iCounter = 3;
+            int iCounter = 2;
             for (String text : data) {
                 contentStream.showText(text);
                 contentStream.newLine();
@@ -213,5 +216,163 @@ public class PDFService {
         }
 
         return filename;
+    }
+
+    public void printAssignment(Course course, Assignment assignment, ArrayList<Question> selectedQuestions) {
+        OSService osService = OSService.getInstance();
+        String filename;
+
+        filename = osService.getDesktopDirectoryPath() + course.getCourseName() + "_" + selectedQuestions.get(0).getQuestionAssignmentType().toString() + "_" + assignment.getAssignmentName() + ".pdf";
+
+        try {
+            document = new PDDocument();
+            GenerateNewPage();
+
+            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 16);
+            contentStream.showText("Course Name: " + course.getCourseName());
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
+            contentStream.showText("Assignment Name: " + assignment.getAssignmentName());
+            contentStream.newLine();
+            contentStream.showText("Due Date: " + assignment.getDueDate());
+            contentStream.newLine();
+            contentStream.showText("Assigned Date: " + assignment.getAssignedDate());
+            contentStream.newLine();
+            contentStream.showText("Max Score: " + assignment.getMaxScore());
+            contentStream.newLine();
+
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+
+            int iNumberOfQuestions = 0;
+            int iCounter = 6;
+            for (Question question : selectedQuestions) {
+                ++iNumberOfQuestions;
+                contentStream.newLine();
+                ++iCounter;
+                String[] words = question.getQuestion().split(" ");
+                contentStream.showText(iNumberOfQuestions + ". ");
+                int iCharacterCounter = 3;
+
+                for (int j = 0; j < words.length; j++) {
+                    if(words[j].length() <= 120) {
+                        if (iCharacterCounter + words[j].length() > 120) {
+                            contentStream.newLine();
+                            ++iCounter;
+                            iCharacterCounter = 0;
+                        }
+
+                        if (iCounter == 47) {
+                            GenerateNewPage();
+                            iCounter = 0;
+                        }
+
+                        contentStream.showText(words[j] + " ");
+                        iCharacterCounter = iCharacterCounter + 1 + words[j].length();
+                    }
+
+                    else if (words[j].length() > 120) {
+                        contentStream.newLine();
+                        int iSplitter = 0;
+                        while (iSplitter < (words[j].length()/120)) {
+                            if (iCounter == 47) {
+                                GenerateNewPage();
+                                iCounter = 0;
+                            }
+                            contentStream.showText(words[j].substring(iSplitter*120, iSplitter*120 + 119));
+                            contentStream.newLine();
+                            ++iSplitter;
+                            ++iCounter;
+                        }
+                        if (iCounter == 47) {
+                            GenerateNewPage();
+                            iCounter = 0;
+                        }
+                        contentStream.showText(words[j].substring(iSplitter*120));
+
+                        ++iCounter;
+                    }
+                }
+
+                if(iCounter == 47){
+                    GenerateNewPage();
+                    iCounter = 0;
+                }
+
+                contentStream.newLine();
+
+                switch (question.getQuestionType()) {
+                    case LONGANSWER:
+                        for (int i = 0; i < 7; i++) {
+                            if(iCounter == 47){
+                                GenerateNewPage();
+                                iCounter = 0;
+                            }
+                            contentStream.newLine();
+                            ++iCounter;
+                        }
+                        break;
+
+                    case SHORTANSWER:
+                        for (int i = 0; i < 2; i++) {
+                            if(iCounter == 47){
+                                GenerateNewPage();
+                                iCounter = 0;
+                            }
+                            contentStream.newLine();
+                            ++iCounter;
+                        }
+                        break;
+
+                    case TRUEORFALSE:
+                        if(iCounter == 47){
+                            GenerateNewPage();
+                            iCounter = 0;
+                        }
+                        contentStream.newLineAtOffset(100, 0);
+                        contentStream.showText("a. True");
+                        contentStream.newLineAtOffset(220, 0);
+                        contentStream.showText("b. False");
+                        contentStream.newLineAtOffset(-320, 0);
+                        contentStream.newLine();
+                        ++iCounter;
+                        break;
+
+                    case FILLINTHEBLANK:
+                        if(iCounter == 47){
+                            GenerateNewPage();
+                            iCounter = 0;
+                        }
+                        contentStream.newLine();
+                        ++iCounter;
+                        break;
+
+                    case MULTIPLECHOICE:
+                        break;
+
+                    default:
+                        for (int i = 0; i < 5; i++) {
+                            if(iCounter == 47){
+                                GenerateNewPage();
+                                iCounter = 0;
+                            }
+                            contentStream.newLine();
+                            ++iCounter;
+                        }
+                        break;
+                }
+            }
+
+            contentStream.endText();
+            contentStream.close();
+
+            document.save(filename);
+            document.close();
+
+            contentStream = null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

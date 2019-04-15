@@ -33,12 +33,14 @@ public class QBankController {
     DBService db = null;
 
     private HashMap<String, Course> hmCourses = new HashMap<>();
+    private HashMap<String, Term> hmTerms = new HashMap<>();
     private HashMap<String, Question> hmQuestion = new HashMap<>();
 
     private ArrayList<Question> qList = new ArrayList<>();
     private ArrayList<Question> selectedQuestions = new ArrayList<>();
 
     private Course selectedCourse = null;
+    private Term selectedTerm = null;
     private ObservableList<Question> questionObservableList;
 
     @FXML
@@ -82,6 +84,7 @@ public class QBankController {
                     selectedKey = key;
                 courseItems.add(key);
                 hmCourses.put(key, c);
+                hmTerms.put(key, t);
             }
         }
 
@@ -90,8 +93,11 @@ public class QBankController {
             @Override
             public void changed(ObservableValue<? extends String> selected, String oldValue, String newValue) {
                 selectedCourse = hmCourses.get(newValue);
+                selectedTerm = hmTerms.get(newValue);
                 md.setSelectedCourse(selectedCourse);
+                md.setSelectedTerm(selectedTerm);
                 btnAddQuestion.setDisable(false);
+                questionObservableList.clear();
                 populateTable();
             }
         });
