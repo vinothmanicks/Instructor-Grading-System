@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.validation.NumberValidator?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.QBankGenerateAssignmentController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <VBox fx:id="vbGenerate"
+              fillWidth="true"
+              spacing="23.0"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-padding: 20, 20, 20, 20;
+                -fx-background-color: white;
+            </style>
+
+            <HBox spacing="20">
+                <children>
+                    <JFXRadioButton fx:id="rbExistingAssignment" text="Use Existing Assignment" onAction="#radioSelect">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="toggleGroup" />
+                        </toggleGroup>
+                    </JFXRadioButton>
+                    <JFXRadioButton fx:id="rbNewAssignment" text="Add New Assignment" toggleGroup="$toggleGroup" onAction="#radioSelect">
+                    </JFXRadioButton>
+                </children>
+            </HBox>
+            <Separator/>
+            <VBox fx:id="vbUseExistingAssignment"
+                  visible="false"
+                  managed="false">
+                <JFXComboBox fx:id="cbAssignment" promptText="Select Assignment"/>
+            </VBox>
+
+            <VBox fx:id="vbGenerateNewAssignment"
+                  visible="false"
+                  managed="false"
+                  spacing="40.0"
+                  maxHeight="-Infinity">
+                <children>
+                    <HBox alignment="CENTER_LEFT">
+                        <JFXTextField fx:id="tfAssignmentName" promptText="Assignment Name" labelFloat="true">
+                            <validators>
+                                <RequiredFieldValidator message="Input Required">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </RequiredFieldValidator>
+                            </validators>
+                        </JFXTextField>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT">
+                        <JFXTextField fx:id="tfMaxScore" promptText="Max Score" labelFloat="true">
+                            <validators>
+                                <RequiredFieldValidator message="Input Required">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </RequiredFieldValidator>
+                                <NumberValidator message="Number Required">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </NumberValidator>
+                            </validators>
+                        </JFXTextField>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT">
+                        <JFXTextField fx:id="tfCustomWeight" promptText="Custom Weight" labelFloat="true">
+                            <validators>
+                                <NumberValidator message="Number Required">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </NumberValidator>
+                            </validators>
+                        </JFXTextField>
+                        <JFXCheckBox fx:id="xbUseCustom"/>
+                    </HBox>
+                    <JFXComboBox fx:id="cbCategory" promptText="Category" labelFloat="true" />
+                    <HBox alignment="CENTER_LEFT">
+                        <JFXDatePicker fx:id="dpDueDate" promptText="Due Date">
+                            <validators>
+                                <RequiredFieldValidator message="Input Required">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </RequiredFieldValidator>
+                            </validators>
+                        </JFXDatePicker>
+                        <JFXDatePicker fx:id="dpAssignedDate" promptText="Assigned Date">
+                            <validators>
+                                <RequiredFieldValidator message="Input Required">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </RequiredFieldValidator>
+                            </validators>
+                        </JFXDatePicker>
+                    </HBox>
+                </children>
+            </VBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <Pane HBox.hgrow="ALWAYS"/>
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <JFXButton fx:id="btnGenerate" buttonType="FLAT" text="Generate" onAction="#generateClick" managed="false" visible="false">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton fx:id="btnCancel" buttonType="FLAT" text="Cancel" onAction="#cancelClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

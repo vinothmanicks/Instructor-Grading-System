@@ -251,7 +251,13 @@ public class QBankController {
     }
 
     public void generateAssignment(ActionEvent event) {
-
+        try {
+            md.saveSelectedQuestions(selectedQuestions);
+            sc.addScreen("GenerateAssignment", FXMLLoader.load(getClass().getResource("../jfxml/QBankGenerateAssignmentView.fxml")));
+            sc.activate("GenerateAssignment");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void editQuestion(ActionEvent event) {

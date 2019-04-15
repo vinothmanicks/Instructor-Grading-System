@@ -8,21 +8,14 @@ import org.apache.pdfbox.printing.PDFPageable;
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Copies;
-import javax.xml.ws.Service;
-import java.awt.*;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PrinterService {
 
+    /** Singleton Design Pattern**/
     private static PrinterService instance = null;
 
     public static PrinterService getInstance() {
@@ -32,6 +25,10 @@ public class PrinterService {
         return instance;
     }
 
+    /**
+     *
+     * @param filename
+     */
     private void startPrintJob(String filename){
 
         PDDocument pdf = null;
@@ -54,15 +51,6 @@ public class PrinterService {
                 job.print(attributeSet);
             }
 
-            //'top': The top input tray in the printer.
-            //'middle': The middle input tray in the printer.
-            //'bottom': The bottom input tray in the printer.
-            //'envelope': The envelope input tray in the printer.
-            //'manual': The manual feed input tray in the printer.
-            //'large-capacity': The large capacity input tray in the printer.
-            //'main': The main input tray
-            //'side': The side input tray
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (PrinterException e) {
@@ -70,6 +58,10 @@ public class PrinterService {
         }
     }
 
+    /**
+     *
+     * @param course
+     */
     public void printList(Course course) {
         OSService osService = OSService.getInstance();
         PDFService pdfService = PDFService.getInstance();
@@ -79,6 +71,11 @@ public class PrinterService {
         osService.delete(filename);
     }
 
+    /**
+     *
+     * @param student
+     * @param course
+     */
     public void printGrades(Student student, Course course) {
         OSService osService = OSService.getInstance();
         PDFService pdfService = PDFService.getInstance();
@@ -88,6 +85,10 @@ public class PrinterService {
         osService.delete(filename);
     }
 
+    /**
+     *
+     * @param course
+     */
     public void printGrades(Course course) {
         OSService osService = OSService.getInstance();
         PDFService pdfService = PDFService.getInstance();
