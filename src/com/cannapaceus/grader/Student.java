@@ -229,6 +229,20 @@ public class Student extends RecursiveTreeObject<Student> {
         }
     };
 
+    public static Comparator<Student> idComparator = new Comparator<Student>() {
+        @Override
+        public int compare(Student s1, Student s2) {
+            return s1.getStudentID().toUpperCase().compareTo(s2.getStudentID().toUpperCase());
+        }
+    };
+
+    public static Comparator<Student> averageComparator = new Comparator<Student>() {
+        @Override
+        public int compare(Student s1, Student s2) {
+            return Float.compare(s1.getAverageGrade(), s2.getAverageGrade());
+        }
+    };
+
     /**
      * Function to generate a report for a student based on their course grades provided assignments have been assigned.
      * @return Report in the form of a string to print out.

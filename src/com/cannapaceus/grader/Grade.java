@@ -230,7 +230,21 @@ public class Grade extends RecursiveTreeObject<Grade> {
         }
     };
 
+    public static Comparator<Grade> idComparator = new Comparator<Grade>() {
+        @Override
+        public int compare(Grade g1, Grade g2) {
+            return Student.idComparator.compare(g1.getStudentReference(), g2.getStudentReference());
+        }
+    };
+
     public static Comparator<Grade> scoreComparator = new Comparator<Grade>() {
+        @Override
+        public int compare(Grade g1, Grade g2) {
+            return Float.compare(g1.getGrade(), g2.getGrade());
+        }
+    };
+
+    public static Comparator<Grade> scorePercentComparator = new Comparator<Grade>() {
         @Override
         public int compare(Grade g1, Grade g2) {
             return Float.compare(g1.getGrade()/g1.getAssignmentReference().getMaxScore(), g2.getGrade()/g2.getAssignmentReference().getMaxScore());
