@@ -155,13 +155,6 @@ public class TermsController {
             tempFA.setGlyphSize(20);
             tempFA.setGlyphStyle("-fx-fill: white;");
 
-            JFXButton termImportCourse = new JFXButton("Import Course");
-            termImportCourse.setAlignment(Pos.BASELINE_RIGHT);
-            termImportCourse.setGraphic(tempFA);
-            termImportCourse.setStyle("-fx-cursor: hand; -fx-background-color: #4CAF50; -fx-text-fill: white;");
-            termImportCourse.setButtonType(JFXButton.ButtonType.FLAT);
-            termImportCourse.setOnAction((event -> importCourseClick(event)));
-
             Separator tempSep;
 
             for (Course c : t.getCourses()) {
@@ -330,62 +323,6 @@ public class TermsController {
         try {
             sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("../jfxml/CourseFormView.fxml")));
             sc.activate("CourseForm");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void importCourseClick(ActionEvent event) {
-        Term targetTerm = hmTerm.get(((Node) event.getSource()).getParent().getParent().getId());
-        Course targetCourse = new Course("", "", "");
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Course CSV");
-        File file = fileChooser.showOpenDialog(new Stage());
-
-        try {
-
-        if(file != null)
-        {
-            targetCourse = csvService.ImportCSV(file.getPath());
-            if(targetCourse != null)
-            {
-                md.setSelectedTerm(targetTerm);
-                md.addCourse(targetCourse);
-
-                md.setSelectedCourse(targetCourse);
-
-                //TODO: Fix the database mangling
-                md.addNewObject(targetCourse);
-                for (Student stuStudent:targetCourse.getlStudents()) {
-                    md.addNewObject(stuStudent);
-                    md.setSelectedStudent(stuStudent);
-                    for (Grade g : md.selectedStudent.getGrades()) {
-                        if (!md.getNewObjects().contains(g))
-                            md.addNewObject(g);
-                    }
-                }
-                for (Category cat:targetCourse.getlCategories())
-                {
-                    md.addNewObject(cat);
-                }
-                for (Assignment aAssignment:targetCourse.getlAssignments())
-                {
-                    md.addNewObject(aAssignment);
-                    md.setSelectedAssignment(aAssignment);
-                    for (Grade g : md.selectedAssignment.getGrades()) {
-                        if (!md.getNewObjects().contains(g))
-                            md.addNewObject(g);
-                    }
-                }
-
-
-                Collections.sort(md.getSelectedTerm().getCourses(), Course.nameComparator);
-            }
-        }
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
