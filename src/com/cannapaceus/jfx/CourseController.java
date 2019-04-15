@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.jnlp.FileContents;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -824,6 +825,8 @@ public class CourseController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Course CSV");
+        FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("Exported Course","*.csv");
+        fileChooser.setSelectedExtensionFilter(csvFilter);
         File file = fileChooser.showOpenDialog(new Stage());
 
         try {
@@ -833,11 +836,10 @@ public class CourseController {
                 targetCourse = csvService.ImportCSV(file.getPath());
                 if(targetCourse != null)
                 {
-
                     targetCourse.setDBID(md.selectedCourse.getDBID());
+                    md.selectedCourse = targetCourse;
                     md.addUpdatedObject(targetCourse);
                     md.commitChanges();
-
                 }
             }
 
