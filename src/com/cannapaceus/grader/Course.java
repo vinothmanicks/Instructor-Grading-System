@@ -331,7 +331,7 @@ public class Course {
                         g.setDropped(true);
                     }
                 } else {
-                    Collections.sort(gradesInCat, Grade.scoreComparator);
+                    Collections.sort(gradesInCat, Grade.scorePercentComparator);
                     for (int i = 0; i < numToDrop; ++i) {
                         gradesInCat.get(i).setDropped(true);
 
@@ -382,7 +382,7 @@ public class Course {
                     g.setDropped(true);
                 }
             } else {
-                Collections.sort(gradesInCat, Grade.scoreComparator);
+                Collections.sort(gradesInCat, Grade.scorePercentComparator);
                 for (int i = 0; i < numToDrop; ++i) {
                     gradesInCat.get(i).setDropped(true);
 
