@@ -1,0 +1,105 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+}
+
+.left {
+    width: 25%;
+    background-color: #0077C8;
+    position: fixed;
+}
+
+.right {
+    width: 75%;
+    margin-left: 25%;
+    background-color: #ffffff;
+}
+
+.right h1 {
+    margin: 0px;
+    padding: 0px;
+    font-weight: 900;
+    font-size: 10vw;
+    text-align: justify;
+    line-height: 0.5em;
+    padding-bottom: 0.1em;
+    padding-top: 0.1em;
+}
+
+.right h2 {
+    margin: 0px;
+    font-weight: 600;
+    font-size: 4.4vw;
+    text-transform: uppercase;
+}
+
+.right h3 {
+    margin: 0px;
+    font-weight: 300;
+    font-size: 3vw;
+    text-align: justify;
+    text-transform: uppercase;
+}
+
+.right img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+.right footer {
+    font-size: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.left p {
+    font-weight: 900;
+    font-size: 2em;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+    text-align: center;
+    color: white;
+}
+
+.left ol {
+    font-weight: 600;
+    color: #94930f;
+    line-height: 1.75em;
+}
+
+.left a {
+    text-decoration: none;
+    color: #94930f
+}
+
+.left a:hover {
+    color: white;
+}
+
+@media screen and (min-width: 800px) {
+    .right img {
+        width: 50%;
+    }
+    
+    .right {
+        padding-left: 2.5em;
+        padding-right: 2.5em;
+    }
+    .right h2 {
+        font-size: 3.5vw
+    }
+}

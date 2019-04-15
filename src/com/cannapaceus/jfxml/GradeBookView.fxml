@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.effect.DropShadow?>
+
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.GradeBookController"
+            AnchorPane.topAnchor="0.0"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0">
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-background-color: white;
+            </style>
+
+            <VBox fx:id="vbCourse"
+                  fillWidth="true"
+                  spacing="10"
+                  AnchorPane.topAnchor="0.0"
+                  AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0">
+
+                <style>
+                    -fx-padding: 20, 20, 20, 20;
+                </style>
+                <children>
+                    <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <JFXButton buttonType="FLAT" text="Back" onAction="#backClick">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #0077C8;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                        <Label fx:id="lblGradeBookName"/>
+                    </HBox>
+                    <JFXTreeTableView fx:id="gradeBookTable"/>
+                </children>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <Label fx:id="lblChanges" text="Changes: "/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton text="Commit Changes" > <!--onAction="#commitClick"-->
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton text="Revert Changes" > <!--onAction="#revertClick"-->
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

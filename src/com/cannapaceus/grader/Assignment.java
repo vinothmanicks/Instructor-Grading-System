@@ -1,17 +1,20 @@
 package com.cannapaceus.grader;
 
-import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Comparator;
 
 public class Assignment {
+
+    //Long to hold the ID of the assignment from the database
+    private long lDBID = 0;
 
     //String to hold the name of the assignment
     private String sAssignmentName;
 
     //Date objects to hold the due date and assigned date of the assignment for reference.
-    private Date dtDueDate;
-    private Date dtAssignedDate;
+    private LocalDate dtDueDate;
+    private LocalDate dtAssignedDate;
 
     //boolean to denote if an instructor wants to drop the assignment for the whole class. This is different from the grade bDropped variable
     private boolean bDropped;
@@ -26,7 +29,7 @@ public class Assignment {
     //Category object that this assignment is assigned to. This hold the weight and name that this assignment will be graded under.
     private Category catCategory;
     //float to hold the manual override weight for this assignment
-    private float fWeight;
+    private Float fWeight = null;
 
     /**
      * <h1>Assignment Constructor</h1>
@@ -39,7 +42,7 @@ public class Assignment {
      * @param catCategory Category the assignment is created under
      * @param fWeight Float if manually overriding the category weight
      */
-    public Assignment(String sAssignmentName, Date dtDueDate, Date dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, float fWeight)
+    public Assignment(String sAssignmentName, LocalDate dtDueDate, LocalDate dtAssignedDate, boolean bDropped, float fMaxScore,Category catCategory, Float fWeight)
     {
         this.lGrades = new ArrayList<Grade>();
         this.sAssignmentName = sAssignmentName;
@@ -49,6 +52,8 @@ public class Assignment {
         this.fMaxScore = fMaxScore;
         this.catCategory = catCategory;
         this.fWeight = fWeight;
+
+        this.stAssignmentStats = new Statistics();
     }
 
     /**
@@ -58,19 +63,23 @@ public class Assignment {
      */
     public Assignment(Assignment aAssignment)
     {
+        this.setDBID(aAssignment.getDBID());
         this.lGrades = new ArrayList<Grade>();
         this.setAssignmentName(aAssignment.getAssignmentName());
-        aAssignment.getGrades().forEach(grade-> { this.addGrade(((Grade)grade)); });
+        aAssignment.getGrades().forEach(grade-> this.lGrades.add(grade));
         this.setAssignedDate(aAssignment.getAssignedDate());
-        this.setCategory((aAssignment.getCategory()));
-        this.setDroppedAssignment((aAssignment.getDroppedAssignment()));
+        this.setCategory((aAssignment.getCategoryReference()));
         this.setMaxScore(aAssignment.getMaxScore());
         this.setWeight(aAssignment.getWeight());
 
+        this.stAssignmentStats = new Statistics();
+        this.stAssignmentStats.calculateMean(this.lGrades);
+        this.stAssignmentStats.calculateMedian(this.lGrades);
+        this.stAssignmentStats.calculateMode(this.lGrades);
+        this.stAssignmentStats.calculateStandardDev(this.lGrades);
     }
 
     //Setter functions
-
     /**
      * Function to add a grade to this assignment's list of grades
      * @param grade Grade that is associated with an assignment and student
@@ -78,6 +87,26 @@ public class Assignment {
     public void addGrade(Grade grade)
     {
         this.lGrades.add(grade);
+        this.stAssignmentStats.calculateMean(this.lGrades);
+        this.stAssignmentStats.calculateMedian(this.lGrades);
+        this.stAssignmentStats.calculateMode(this.lGrades);
+        this.stAssignmentStats.calculateStandardDev(this.lGrades);
+    }
+
+    /**
+     * Function to clear the grades from an assignment
+     */
+    public void clearGrades()
+    {
+        lGrades.clear();
+    }
+
+    /**
+     * Setter for the assignment's ID from the database
+     * @param lDBID ID of the assignment from the database
+     */
+    public void setDBID(long lDBID) {
+        this.lDBID = lDBID;
     }
 
     /**
@@ -93,7 +122,7 @@ public class Assignment {
      * Setter for the assignment's due date
      * @param dtDueDate
      */
-    public void setDueDate(Date dtDueDate)
+    public void setDueDate(LocalDate dtDueDate)
     {
         this.dtDueDate = dtDueDate;
     }
@@ -102,7 +131,7 @@ public class Assignment {
      * Setter for the assignment's due date
      * @param dtAssignedDate
      */
-    public void setAssignedDate(Date dtAssignedDate)
+    public void setAssignedDate(LocalDate dtAssignedDate)
     {
         this.dtAssignedDate = dtAssignedDate;
     }
@@ -129,9 +158,13 @@ public class Assignment {
      * Setter for the assignment's manual weight
      * @param fWeight
      */
-    public void setWeight(float fWeight)
+    public void setWeight(Float fWeight)
     {
         this.fWeight = fWeight;
+    }
+
+    public void setStAssignmentStats(Statistics stAssignmentStats) {
+        this.stAssignmentStats = stAssignmentStats;
     }
 
     /**
@@ -140,10 +173,20 @@ public class Assignment {
      */
     public void setDroppedAssignment(boolean bDropped)
     {
+        for (Grade gGrade : lGrades) {
+            gGrade.setDropped(bDropped);
+        }
         this.bDropped = bDropped;
     }
 
     //Getter functions
+    /**
+     * Getter for a copy of the assignment's ID from the database
+     * @return
+     */
+    public long getDBID() {
+        return this.lDBID;
+    }
 
     /**
      * Getter for a copy of the assignment's name
@@ -159,31 +202,27 @@ public class Assignment {
      * Getter for a copy of assignment's grade list
      * @return
      */
-    public ArrayList getGrades()
+    public ArrayList<Grade> getGrades()
     {
-        ArrayList<Grade> lGradesCopy = new ArrayList<>(this.lGrades);
-        return lGradesCopy;
+        return lGrades;
     }
 
     /**
      * Getter for the assignment due date
      * @return
      */
-    public Date getDueDate()
+    public LocalDate getDueDate()
     {
-        //Apparently getTime() is needed to make a copy of a date. Go figure.
-        Date dtDueDateCopy = new Date(this.dtDueDate.getTime());
-        return dtDueDateCopy;
+        return this.dtDueDate;
     }
 
     /**
      * Getter for a copy of the assignment's assigned date
      * @return
      */
-    public Date getAssignedDate()
+    public LocalDate getAssignedDate()
     {
-        Date dtAssignedDateCopy = new Date(this.dtAssignedDate.getTime());
-        return dtAssignedDateCopy;
+        return this.dtAssignedDate;
     }
 
     /**
@@ -199,19 +238,22 @@ public class Assignment {
      * Getter for a copy of the assignment's category
      * @return
      */
-    public Category getCategory()
+    public Category getCategoryReference()
     {
-        Category catCategoryCopy = new Category(this.catCategory);
-        return catCategoryCopy;
+        return this.catCategory;
     }
 
     /**
      * Getter for a copy of the manual assignment weight
      * @return
      */
-    public float getWeight()
+    public Float getWeight()
     {
         return this.fWeight;
+    }
+
+    public Statistics getStAssignmentStats() {
+        return this.stAssignmentStats;
     }
 
     /**
@@ -221,5 +263,23 @@ public class Assignment {
     public boolean getDroppedAssignment()
     {
         return this.bDropped;
+    }
+
+    public int compareTo(Assignment a) {
+        return this.getAssignmentName().compareTo(a.getAssignmentName());
+    }
+
+    public static Comparator<Assignment> nameComparator = new Comparator<Assignment>() {
+        @Override
+        public int compare(Assignment a1, Assignment a2) {
+            return a1.getAssignmentName().toUpperCase().compareTo(a2.getAssignmentName().toUpperCase());
+        }
+    };
+
+    public void calculateStats() {
+        stAssignmentStats.calculateMean(lGrades);
+        stAssignmentStats.calculateMedian(lGrades);
+        stAssignmentStats.calculateMode(lGrades);
+        stAssignmentStats.calculateStandardDev(lGrades);
     }
 }

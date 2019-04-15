@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.validation.IntegerValidator?>
+<?import com.jfoenix.controls.JFXButton?>
+
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.validation.NumberValidator?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.collections.FXCollections?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.QBankAddQuestionController"
+            AnchorPane.topAnchor="0.0"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0">
+
+    <center>
+
+        <ScrollPane fitToWidth="true"
+                    AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
+
+        <style>
+            -fx-background-color: white;
+        </style>
+
+        <VBox fx:id="vbQBankAddQuestion"
+              fillWidth="true"
+              spacing="50.0"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-padding: 20, 20, 20, 20;
+                -fx-background-color: white;
+            </style>
+
+            <children>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <JFXButton buttonType="FLAT" text="Back" onAction="#backClick">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                        </graphic>
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+                    </JFXButton>
+                    <Label text="Add Question"/>
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <JFXTextArea fx:id="taQuestion" promptText="Question" labelFloat="true" prefHeight="100">
+                        <validators>
+                            <RequiredFieldValidator message="Input Required">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </RequiredFieldValidator>
+                        </validators>
+                    </JFXTextArea>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <JFXTextField fx:id="tfTimeToDo" promptText="Time to complete" labelFloat="true">
+                        <tooltip>
+                            <Tooltip text="Estimated time to complete the question in minutes."/>
+                        </tooltip>
+                        <validators>
+                            <RequiredFieldValidator message="Input Required">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </RequiredFieldValidator>
+                            <NumberValidator message="Number Required">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </NumberValidator>
+                        </validators>
+                    </JFXTextField>
+                    <JFXTextField fx:id="tfScore" promptText="Score" labelFloat="true">
+                        <validators>
+                            <RequiredFieldValidator message="Input Required">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </RequiredFieldValidator>
+                            <NumberValidator message="Number Required">
+                                <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </NumberValidator>
+                        </validators>
+                    </JFXTextField>
+                </HBox>
+                <HBox spacing="10">
+                    <JFXComboBox fx:id="cbType" promptText="Question Type"/>
+                    <JFXComboBox fx:id="cbLevel" promptText="Difficulty"/>
+                    <JFXComboBox fx:id="cbAssignType" promptText="Assignment Type"/>
+                </HBox>
+                <Pane VBox.vgrow="ALWAYS"/>
+                <!-- <HBox fillHeight="true" spacing="10.0">
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <JFXButton buttonType="FLAT" text="Save" ><!-onAction="#saveClick"-
+                        <graphic>
+                            <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                        </graphic>
+                        <style>
+                            -fx-background-color: #4CAF50;
+                            -fx-text-fill: white;
+                        </style>
+                    </JFXButton>
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Separator orientation="VERTICAL"/>
+                    <JFXButton buttonType="FLAT" text="Cancel" ><!-onAction="#cancelClick"-
+                        <graphic>
+                            <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                        </graphic>
+                        <style>
+                            -fx-background-color: #e74c3c;
+                            -fx-text-fill: white;
+                        </style>
+                    </JFXButton>
+                </HBox>-->
+
+
+            </children>
+        </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton text="Save" onAction="#saveClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <JFXButton text="Cancel" > <!--onAction="#revertClick"-->
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.effect.DropShadow?>
+<?import com.jfoenix.validation.IntegerValidator?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.validation.NumberValidator?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.AssignmentFormController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox fx:id="vbStudent"
+          fillWidth="true"
+          spacing="50.0"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <style>
+            -fx-padding: 20, 20, 20, 20;
+            -fx-background-color: white;
+        </style>
+        <children>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfAssignmentName" promptText="Assignment Name" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXTextField fx:id="tfMaxScore" promptText="Max Score" labelFloat="true">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                        <NumberValidator message="Number Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </NumberValidator>
+                    </validators>
+                </JFXTextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+            <JFXTextField fx:id="tfCustomWeight" promptText="Custom Weight" labelFloat="true">
+                <validators>
+                    <NumberValidator message="Number Required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </NumberValidator>
+                </validators>
+            </JFXTextField>
+                <JFXCheckBox fx:id="xbUseCustom"/>
+            </HBox>
+            <JFXComboBox fx:id="cbCategory" promptText="Category" labelFloat="true">
+            </JFXComboBox>
+            <HBox alignment="CENTER_LEFT">
+                <JFXDatePicker fx:id="dpDueDate" promptText="Due Date">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                    </validators>
+                </JFXDatePicker>
+                <JFXDatePicker fx:id="dpAssignedDate" promptText="Assigned Date">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required">
+                            <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                        </RequiredFieldValidator>
+                    </validators>
+                </JFXDatePicker>
+            </HBox>
+            <Pane VBox.vgrow="ALWAYS"/>
+            <HBox fillHeight="true" spacing="10.0">
+                <Pane HBox.hgrow="ALWAYS"/>
+                <JFXButton buttonType="FLAT" text="Save" onAction="#saveClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton buttonType="FLAT" text="Cancel" onAction="#cancelClick">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </children>
+    </VBox>
+</AnchorPane>
