@@ -25,43 +25,36 @@ public class DBService {
 
     private DBService() { };
 
-    public boolean loginDB(String username, String password) {
-        boolean connected = false;
+    public String loginDB(String username, String password) {
+        String errMessage = null;
 
         user = username;
         pass = password;
 
-        connected = initConnection();
+        errMessage = initConnection();
 
-        return connected;
+        return errMessage;
     }
 
-    private boolean initConnection() {
+    private String initConnection() {
         Connection con = null;
         try {
             con = DriverManager.getConnection(conString + "IFEXISTS=TRUE", user, pass);
-
-            System.out.println("Database exists");
-            return true;
+            return null;
         } catch (SQLException e) {
             if (e.getErrorCode() == 90013) {
-                System.out.println("Database does not exist");
-                databaseSetup();
-
-                System.out.println("Database created");
-
-                return true;
+                return "Database does not exist";
             } else if (e.getErrorCode() == 28000) {
-                System.out.println("Incorrect username or password");
+                return "Incorrect username or password";
             } else {
                 e.printStackTrace();
             }
 
-            return false;
+            return "Failed to connect to Database";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "Failed to connect to Database";
         }finally {
             if (con != null) {
                 try {
@@ -71,7 +64,7 @@ public class DBService {
         }
     }
 
-    private void databaseSetup() {
+    public void databaseSetup() {
         Connection con = null;
         Statement stm = null;
         try {
