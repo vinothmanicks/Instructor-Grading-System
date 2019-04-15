@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
@@ -51,6 +52,9 @@ public class AssignmentController {
 
     @FXML
     private JFXTreeTableView assignmentGradeTable;
+
+    @FXML
+    private JFXButton btnSubmitAll;
 
     @FXML
     private void initialize()
@@ -169,8 +173,8 @@ public class AssignmentController {
                         param.getSubmittedProperty()};
             }
         });
-        gradeObservableList.addAll(selectedAssignment.getGrades());
-        gradeObservableList.addListener(new ListChangeListener<Grade>() {
+
+        ListChangeListener<Grade> gradeListener = new ListChangeListener<Grade>() {
             @Override
             public void onChanged(Change<? extends Grade> c) {
                 while (c.next()) {
@@ -184,6 +188,15 @@ public class AssignmentController {
                         gradeObservableList.addListener(this);
                     }
                 }
+            }
+        };
+
+        gradeObservableList.addAll(selectedAssignment.getGrades());
+        gradeObservableList.addListener(gradeListener);
+
+        btnSubmitAll.setOnAction(event -> {
+            for (Grade g : gradeObservableList) {
+                g.setSubmitted(true);
             }
         });
 

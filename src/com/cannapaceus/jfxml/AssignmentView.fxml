@@ -52,6 +52,16 @@
                             </style>
                         </JFXButton>
                         <Label fx:id="lblAssignmentName"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <JFXButton fx:id="btnSubmitAll" buttonType="RAISED" text="Submit all grades">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="CHECK_SQUARE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #0077C8;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
                     </HBox>
                     <HBox spacing="10.0" alignment="CENTER_LEFT">
                         <Label fx:id="lblMean"/>
