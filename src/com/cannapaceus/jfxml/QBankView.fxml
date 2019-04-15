@@ -45,7 +45,7 @@
                         <Label text="Question Bank"/>
                         <Pane HBox.hgrow="ALWAYS"/>
                         <JFXComboBox fx:id="cbCourse" promptText="Select Course"/>
-                        <JFXButton fx:id="btnGenerate" disable="true" onAction="#generateAssignment" buttonType="FLAT" text="Generate Assignment" > <!--onAction="#openGradeBook"-->
+                        <JFXButton fx:id="btnGenerate" disable="true" onAction="#generateAssignment" buttonType="FLAT" text="Generate Assignment" >
                             <graphic>
                                 <FontAwesomeIconView glyphName="ENVELOPE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                             </graphic>

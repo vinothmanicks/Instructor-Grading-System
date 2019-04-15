@@ -24,6 +24,8 @@ public class Model {
     Assignment selectedAssignment = null;
     Question selectedQuestion = null;
 
+    ArrayList<Question> lSelectedQuestions = null;
+
     private Model() {
         initModel();
     }
@@ -42,6 +44,7 @@ public class Model {
         updatedObjects = new ArrayList<>();
         newObjects = new ArrayList<>();
         removedObjects = new ArrayList<>();
+        lSelectedQuestions = new ArrayList<>();
     }
 
     public ArrayList<Term> getTerms() {
@@ -404,5 +407,17 @@ public class Model {
 
     public boolean isRemoved(Object o) {
         return (removedObjects.contains(o));
+    }
+
+    public void saveSelectedQuestions(ArrayList<Question> SelectedQuestions){
+        lSelectedQuestions.clear();
+
+        for(Question question : SelectedQuestions) {
+            lSelectedQuestions.add(question);
+        }
+    }
+
+    public ArrayList<Question> getSelectedQuestions() {
+        return lSelectedQuestions;
     }
 }
