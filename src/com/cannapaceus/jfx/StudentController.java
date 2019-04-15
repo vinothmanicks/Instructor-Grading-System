@@ -301,9 +301,23 @@ public class StudentController {
         dialog.setOnDialogOpened(new EventHandler<JFXDialogEvent>() {
             @Override
             public void handle(JFXDialogEvent event) {
-                EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
+                EmailService emailService = EmailService.getInstance();
                 emailService.email(selectedStudent, selectedCourse);
-                dialog.close();
+
+                if (emailService.getErrorMessage() == null)
+                    dialog.close();
+                else {
+                    content.setHeading(new Text("Failure to send!"));
+                    content.setBody(new Text(emailService.getErrorMessage()));
+                    JFXButton button = new JFXButton("Okay");
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                        }
+                    });
+                    content.setActions(button);
+                }
             }
         });
     }

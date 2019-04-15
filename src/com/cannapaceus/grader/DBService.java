@@ -151,6 +151,16 @@ public class DBService {
                     "ICOURSE BIGINT NOT NULL\n" +
                     ");");
 
+            stm.execute("CREATE TABLE SETTINGS (\n" +
+                    "EMAIL VARCHAR(255),\n" +
+                    "EMPASS VARCHAR(255)\n" +
+                    ");");
+
+            stm.execute("INSERT INTO SETTINGS " +
+                    "(EMAIL, EMPASS) " +
+                    "VALUES " +
+                    "('', '')");
+
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -949,6 +959,78 @@ public class DBService {
         return retValue;
     }
 
+    public boolean updateEmail(String s) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            String sql = "UPDATE SETTINGS " +
+                    "SET EMAIL = ? ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, s);
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    public boolean updateEmailPass(String s) {
+        boolean retValue = true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            String sql = "UPDATE SETTINGS " +
+                    "SET EMPASS = ? ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, s);
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
     private boolean deleteTerm(Term t) {
         boolean retValue = true;
 
@@ -1678,6 +1760,90 @@ public class DBService {
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    public String retrieveEmail() {
+        String retValue = "";
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT TOP(1) EMAIL FROM SETTINGS ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+
+            if (rs != null) {
+                rs.next();
+                retValue = rs.getString(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
+    public String retrieveEmailPass() {
+        String retValue = "";
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT TOP(1) EMPASS FROM SETTINGS ";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+
+            if (rs != null) {
+                rs.next();
+                retValue = rs.getString(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
             if (rs != null) {
                 try {
                     rs.close();

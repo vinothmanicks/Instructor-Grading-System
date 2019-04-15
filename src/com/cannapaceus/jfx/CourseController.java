@@ -783,9 +783,21 @@ public class CourseController {
         dialog.setOnDialogOpened(new EventHandler<JFXDialogEvent>() {
             @Override
             public void handle(JFXDialogEvent event) {
-                EmailService emailService = EmailService.getInstance("service.cannapaceus@gmail.com", "bIQ!9C13!6JC#rlA5Dqy");
-                emailService.email(selectedCourse);
-                dialog.close();
+                EmailService emailService = EmailService.getInstance();
+                if (!emailService.email(selectedCourse)) {
+                    content.setHeading(new Text("Failure to send!"));
+                    content.setBody(new Text(emailService.getErrorMessage()));
+                    JFXButton button = new JFXButton("Okay");
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                        }
+                    });
+                    content.setActions(button);
+                } else {
+                    dialog.close();
+                }
             }
         });
     }
