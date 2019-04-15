@@ -273,6 +273,13 @@
                         -fx-text-fill: #0077C8;
                     </style>
                 </JFXButton>
+                <JFXButton fx:id="btnImportCourse" buttonType="FLAT" text="Import from CSV" onAction="#importCourse">
+                    <style>
+                        -fx-cursor: hand;
+                        -fx-background-color: #ffffff;
+                        -fx-text-fill: #0077C8;
+                    </style>
+                </JFXButton>
             </VBox>
         </right>
     </BorderPane>

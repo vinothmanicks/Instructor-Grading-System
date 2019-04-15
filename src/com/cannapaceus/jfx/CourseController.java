@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.services.CSVService;
 import com.cannapaceus.services.EmailService;
 import com.cannapaceus.services.PDFService;
 import com.cannapaceus.services.PrinterService;
@@ -21,7 +22,10 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.HashMap;
 
@@ -30,6 +34,7 @@ public class CourseController {
     Model md = null;
 
     Course selectedCourse;
+    CSVService csvService;
 
     HashMap<String, Student> hmStudent;
     HashMap<String, Assignment> hmAssignment;
@@ -97,6 +102,7 @@ public class CourseController {
         md = Model.getInstance();
 
         selectedCourse = md.getSelectedCourse();
+        csvService = new CSVService();
 
         hmStudent = new HashMap<>();
         hmAssignment = new HashMap<>();
@@ -811,4 +817,35 @@ public class CourseController {
             e.printStackTrace();
         }
     }
+
+    public void importCourse(ActionEvent event) {
+
+        Course targetCourse = new Course("", "", "");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Course CSV");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try {
+
+            if(file != null)
+            {
+                targetCourse = csvService.ImportCSV(file.getPath());
+                if(targetCourse != null)
+                {
+
+                    targetCourse.setDBID(md.selectedCourse.getDBID());
+                    md.addUpdatedObject(targetCourse);
+                    md.commitChanges();
+
+                }
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
