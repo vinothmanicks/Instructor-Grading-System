@@ -100,9 +100,9 @@ public class Course {
     public void calculateStats()
     {
         if (this.lAverageGrades.size() == 0) {
-            this.stCourseStats.setMean(0.0f);
-            this.stCourseStats.setMedian(0.0f);
-            this.stCourseStats.setMode(0.0f);
+            this.stCourseStats.setMean(100.0f);
+            this.stCourseStats.setMedian(100.0f);
+            this.stCourseStats.setMode(100.0f);
             this.stCourseStats.setStandardDev(0.0f);
             return;
         }
@@ -112,57 +112,52 @@ public class Course {
         float mode;
         float standardDev;
 
-        if (this.lAverageGrades.size() == 0) {
-            this.stCourseStats.setMean(0.0f);
-            this.stCourseStats.setMedian(0.0f);
-            this.stCourseStats.setMode(0.0f);
-            this.stCourseStats.setStandardDev(0.0f);
+        ArrayList<Grade> gradeList = new ArrayList<>();
 
-            return;
+        for (Float f :lAverageGrades) {
+            Grade g = new Grade(f, null, null);
+            g.setSubmitted(true);
+            gradeList.add(g);
         }
 
-        float tempSum = 0;
-        for (int a = 0; a < this.lAverageGrades.size(); a++) {
-            tempSum += this.lAverageGrades.get(a);
-        }
-        mean = tempSum / this.lAverageGrades.size();
+//        float tempSum = 0;
+//        for (int a = 0; a < this.lAverageGrades.size(); a++) {
+//            tempSum += this.lAverageGrades.get(a);
+//        }
+//        mean = tempSum / this.lAverageGrades.size();
+//
+//        int medianMarker = Math.round(this.lAverageGrades.size()/2.0f) - 1;
+//        median = this.lAverageGrades.get(medianMarker);
+//
+//        float maxValue = 0;
+//        int maxCount = 0;
+//
+//        for (int i = 0; i < this.lAverageGrades.size(); ++i) {
+//            int count = 0;
+//            for (int j = 0; j < this.lAverageGrades.size(); ++j) {
+//                if (this.lAverageGrades.get(j) == this.lAverageGrades.get(i)) ++count;
+//            }
+//            if (count > maxCount) {
+//                maxCount = count;
+//                maxValue = this.lAverageGrades.get(i);
+//            }
+//        }
+//        mode = maxValue;
+//
+//        float fCalculationValue = 0;
+//        for (Float fAverageGrade:this.lAverageGrades)
+//        {
+//            float theGrade = fAverageGrade;
+//            fCalculationValue += Math.multiplyExact((long)(theGrade - median),(long)(theGrade - median));
+//        }
+//
+//        fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/this.lAverageGrades.size()));
+//        standardDev = fCalculationValue;
 
-        int medianMarker = Math.round(this.lAverageGrades.size()/2.0f) - 1;
-        median = this.lAverageGrades.get(medianMarker);
-
-        float maxValue = 0;
-        int maxCount = 0;
-
-        for (int i = 0; i < this.lAverageGrades.size(); ++i) {
-            int count = 0;
-            for (int j = 0; j < this.lAverageGrades.size(); ++j) {
-                if (this.lAverageGrades.get(j) == this.lAverageGrades.get(i)) ++count;
-            }
-            if (count > maxCount) {
-                maxCount = count;
-                maxValue = this.lAverageGrades.get(i);
-            }
-        }
-        mode = maxValue;
-
-        float fCalculationValue = 0;
-        for (Float fAverageGrade:this.lAverageGrades)
-        {
-            float theGrade = fAverageGrade;
-            fCalculationValue += Math.multiplyExact((long)(theGrade - median),(long)(theGrade - median));
-        }
-
-        fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/this.lAverageGrades.size()));
-        standardDev = fCalculationValue;
-
-        this.stCourseStats.setMean(mean);
-        //System.out.printf("%.1f\n", this.stCourseStats.getMean());
-        this.stCourseStats.setMedian(median);
-        //System.out.printf("%.1f\n", this.stCourseStats.getMedian());
-        this.stCourseStats.setMode(mode);
-        //System.out.printf("%.1f\n", this.stCourseStats.getMode());
-        this.stCourseStats.setStandardDev(standardDev);
-        //System.out.printf("%.3f\n", this.stCourseStats.getStandardDev());
+        this.stCourseStats.calculateMean(gradeList);
+        this.stCourseStats.calculateMedian(gradeList);
+        this.stCourseStats.calculateMode(gradeList);
+        this.stCourseStats.calculateStandardDev(gradeList);
     }
 
     public void scaleFinalAverages(float fScaleBy)
@@ -312,11 +307,10 @@ public class Course {
             for (Student s : this.lStudents) {
                 ArrayList<Grade> gradesInCat = new ArrayList<>();
                 for (Grade g : s.getGrades()) {
-                    if (!g.getSubmitted()) {
-                        continue;
-                    }
                     if (g.getAssignmentReference().getCategoryReference() == cat) {
-                        gradesInCat.add(g);
+                        if (g.getSubmitted()) {
+                            gradesInCat.add(g);
+                        }
                         retVal.add(g);
                         g.setDropped(false);
                     }
@@ -357,17 +351,15 @@ public class Course {
             }
         }
 
-
         numToDrop = this.getDropUncategorized();
 
         for (Student s : this.lStudents) {
             ArrayList<Grade> gradesInCat = new ArrayList<>();
             for (Grade g : s.getGrades()) {
-                if (!g.getSubmitted()) {
-                    continue;
-                }
                 if (g.getAssignmentReference().getCategoryReference() == null) {
-                    gradesInCat.add(g);
+                    if (g.getSubmitted()) {
+                        gradesInCat.add(g);
+                    }
                     retVal.add(g);
                     g.setDropped(false);
                 }

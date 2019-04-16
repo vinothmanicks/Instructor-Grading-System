@@ -89,7 +89,11 @@ public class Statistics {
             scoreSum += g.getGrade();
             ++count;
         }
-        this.fMean = scoreSum / count;
+        if (validGrades.size() == 0) {
+            this.fMean = 100.0f;
+        } else {
+            this.fMean = scoreSum / count;
+        }
     }
 
     public void calculateMedian(ArrayList<Grade> listOfGrades)
@@ -107,7 +111,7 @@ public class Statistics {
         Collections.sort(validGrades, Grade.scoreComparator);
 
         if (validGrades.size() == 0) {
-            this.fMedian = 0.0f;
+            this.fMedian = 100.0f;
         } else {
             int medianMarker = Math.round(validGrades.size()/2.0f - 1);
             this.fMedian = validGrades.get(medianMarker).getGrade();
@@ -142,7 +146,11 @@ public class Statistics {
             }
         }
 
-        this.fMode = maxValue;
+        if (validGrades.size() == 0) {
+            this.fMode = 100.0f;
+        } else {
+            this.fMode = maxValue;
+        }
     }
 
     public void calculateStandardDev(ArrayList<Grade> listOfGrades)
@@ -168,7 +176,7 @@ public class Statistics {
                 fCalculationValue += ((double)(theGrade - this.fMean)) * ((double)(theGrade - this.fMean));
             }
 
-            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/(validGrades.size() - 1)));
+            fCalculationValue = (float)Math.sqrt((double)(fCalculationValue/(validGrades.size())));
             this.fStandardDev = fCalculationValue;
         }
     }

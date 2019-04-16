@@ -141,7 +141,7 @@ public class Student extends RecursiveTreeObject<Student> {
         }
 
         if (fullScoresSum == 0) {
-            this.fAverageGrade.setValue(0);
+            this.fAverageGrade.setValue(100.0f);
         } else {
             this.fAverageGrade.setValue(((scoreSum / fullScoresSum) * 100)+scaleBy);
         }

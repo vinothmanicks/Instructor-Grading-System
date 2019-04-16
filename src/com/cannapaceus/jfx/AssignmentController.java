@@ -212,6 +212,7 @@ public class AssignmentController {
         btnSubmitAll.setOnAction(event -> {
             for (Grade g : gradeObservableList) {
                 g.setSubmitted(true);
+                recalculateStats(g);
             }
         });
 
@@ -249,6 +250,10 @@ public class AssignmentController {
 
     private void recalculateStats(Grade g) {
         Course c = md.getSelectedCourse();
+
+        for (Object o : c.dropGrades()) {
+            md.addUpdatedObject(o);
+        }
 
         Student s = g.getStudentReference();
         s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());
