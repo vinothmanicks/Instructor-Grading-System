@@ -137,9 +137,6 @@ public class CSVService {
 
         for(int i = 0; i < iSize; i++) {
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-            lAssignments.get(i).getDueDate().format(formatter);
-            lAssignments.get(i).getAssignedDate().format(formatter);
             String catName;
             String weightCust;
             if(lAssignments.get(i).getCategoryReference() == null)
@@ -159,8 +156,8 @@ public class CSVService {
             {
                 weightCust = String.valueOf(lAssignments.get(i).getWeight());
             }
-
-            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-", "/"), lAssignments.get(i).getAssignedDate().toString().replace("-", "/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), catName, weightCust};
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().format(formatter).replace("-", "/"), lAssignments.get(i).getAssignedDate().format(formatter).replace("-", "/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), catName, weightCust};
             writer.writeNext(data);
         }
 
@@ -279,10 +276,10 @@ public class CSVService {
                 if(lineElements[0] != null) {
                     switch (lineElements[0]) {
                         case "FileType":
-                            if (lineElements[1] != "Course") {
+                            /*if (lineElements[1] != "Course") {
                                 System.out.println("Invalid file imported");
                                 return null;
-                            }
+                            }*/
                             break;
                         case "CourseName":
                             importedCourse.setCourseName(lineElements[1]);
@@ -319,10 +316,10 @@ public class CSVService {
                                         Assignment addedAssignment = new Assignment("",null,null,false,100,null,new Float(100));
                                         addedAssignment.setAssignmentName(lineElements[0]);
                                         String[] dateSections = lineElements[1].split("/");
-                                        LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));
+                                        LocalDate dueDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[0]));
                                         addedAssignment.setDueDate(dueDate);
                                         dateSections = lineElements[2].split("/");
-                                        LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[0]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[2]));
+                                        LocalDate assignedDate = LocalDate.of(Integer.valueOf(dateSections[2]),Integer.valueOf(dateSections[1]),Integer.valueOf(dateSections[0]));
                                         addedAssignment.setAssignedDate(assignedDate);
                                         addedAssignment.setDroppedAssignment(Boolean.valueOf(lineElements[3]));
                                         addedAssignment.setMaxScore(Float.valueOf(lineElements[4]));
@@ -334,7 +331,7 @@ public class CSVService {
                                                 break;
                                             }
                                         }
-                                        if(lineElements[6].trim().equals(""))
+                                        if(lineElements.length <= 6)
                                         {
                                             addedAssignment.setWeight(null);
                                         }
