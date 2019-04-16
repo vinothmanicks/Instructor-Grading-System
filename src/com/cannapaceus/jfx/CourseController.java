@@ -1,6 +1,7 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
+import com.cannapaceus.services.CSVService;
 import com.cannapaceus.services.EmailService;
 import com.cannapaceus.services.PDFService;
 import com.cannapaceus.services.PrinterService;
@@ -21,7 +22,11 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import javax.jnlp.FileContents;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,6 +37,7 @@ public class CourseController {
     Model md = null;
 
     Course selectedCourse;
+    CSVService csvService;
 
     HashMap<String, Student> hmStudent;
     HashMap<String, Assignment> hmAssignment;
@@ -99,6 +105,7 @@ public class CourseController {
         md = Model.getInstance();
 
         selectedCourse = md.getSelectedCourse();
+        csvService = new CSVService();
 
         hmStudent = new HashMap<>();
         hmAssignment = new HashMap<>();
@@ -941,4 +948,41 @@ public class CourseController {
             e.printStackTrace();
         }
     }
+
+    public void importCourse(ActionEvent event) {
+
+        Course targetCourse = new Course("", "", "");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Course CSV");
+        FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("Exported Course","*.csv");
+        fileChooser.setSelectedExtensionFilter(csvFilter);
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try {
+
+            if(file != null)
+            {
+                targetCourse = csvService.ImportCSV(file.getPath());
+                if(targetCourse != null)
+                {
+                    targetCourse.setDBID(md.selectedCourse.getDBID());
+                    md.selectedCourse = targetCourse;
+                    md.addUpdatedObject(targetCourse);
+                    md.commitChanges();
+                }
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportCourse(ActionEvent event)
+    {
+        csvService.ExportCSV(md.selectedCourse,md.selectedTerm);
+    }
+
 }
