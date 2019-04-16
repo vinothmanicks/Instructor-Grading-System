@@ -53,6 +53,9 @@ public class QBankController {
     private JFXTreeTableView questionTable;
 
     @FXML
+    private JFXButton btnDeleteQuestion;
+
+    @FXML
     private JFXButton btnEditQuestion;
 
     @FXML
@@ -241,11 +244,14 @@ public class QBankController {
                     Question q = selectedItem.getValue();
                     md.setSelectedQuestion(q);
                     if (q == null) {
+                        btnDeleteQuestion.setDisable(true);
                         btnEditQuestion.setDisable(true);
                     } else {
+                        btnDeleteQuestion.setDisable(false);
                         btnEditQuestion.setDisable(false);
                     }
                 } else {
+                    btnDeleteQuestion.setDisable(false);
                     btnEditQuestion.setDisable(false);
                 }
             }
@@ -253,7 +259,9 @@ public class QBankController {
     }
 
     private void populateTable() {
-        questionObservableList.addAll(db.retrieveQuestions(selectedCourse.getDBID()));
+        if (selectedCourse != null) {
+            questionObservableList.addAll(db.retrieveQuestions(selectedCourse.getDBID()));
+        }
     }
 
     public void generateAssignment(ActionEvent event) {
@@ -273,6 +281,15 @@ public class QBankController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void deleteQuestion(ActionEvent event) {
+        db.deleteQuestion(md.getSelectedQuestion());
+        md.setSelectedQuestion(null);
+        questionObservableList.clear();
+        populateTable();
+        btnDeleteQuestion.setDisable(true);
+        btnEditQuestion.setDisable(true);
     }
 
     public void addQuestion(ActionEvent event) {
