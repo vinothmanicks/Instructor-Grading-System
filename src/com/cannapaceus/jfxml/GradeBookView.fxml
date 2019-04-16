@@ -68,9 +68,8 @@
                     -fx-padding: 10,10,10,10;
                     -fx-background-color: white;
                 </style>
-                <Label fx:id="lblChanges" text="Changes: "/>
                 <Pane HBox.hgrow="ALWAYS"/>
-                <JFXButton text="Commit Changes" > <!--onAction="#commitClick"-->
+                <JFXButton text="Commit Changes" onAction="#commitClick">
                     <graphic>
                         <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                     </graphic>
@@ -80,7 +79,7 @@
                     </style>
                 </JFXButton>
                 <Separator orientation="VERTICAL"/>
-                <JFXButton text="Revert Changes" > <!--onAction="#revertClick"-->
+                <JFXButton text="Revert Changes" onAction="#revertClick">
                     <graphic>
                         <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                     </graphic>

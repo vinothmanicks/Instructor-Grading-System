@@ -78,6 +78,7 @@ public class GradeBookController{
     }
 
     private void createTable() {
+        selectedCourse = md.getSelectedCourse();
 
         TreeTableColumn<Student, String> nameColumn = new JFXTreeTableColumn<>("Student");
         nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, String> param) ->
@@ -230,5 +231,17 @@ public class GradeBookController{
         md.addUpdatedObject(s);
         md.addUpdatedObject(c);
         md.addUpdatedObject(g);
+    }
+
+    public void commitClick(ActionEvent event) {
+        md.commitChanges();
+        lAssignmentColumns.clear();
+        createTable();
+    }
+
+    public void revertClick(ActionEvent event) {
+        md.revertChanges();
+        lAssignmentColumns.clear();
+        createTable();
     }
 }
