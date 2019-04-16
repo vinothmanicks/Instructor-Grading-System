@@ -81,3 +81,36 @@
 .jfx-date-picker > .jfx-text-field {
     -jfx-label-float: true;
 }
+.bigicon {
+    -fx-font-size: 15px;
+    -glyph-size: 40px;
+    -fx-fill: #0077C8;
+    -fx-font-family: "FontAwesome"; }
+.label {
+    -fx-font-size: 20;
+}
+.jfx-button {
+    -fx-font-size: 20;
+}
+.jfx-text-area {
+    -fx-font-size: 20;
+}
+.jfx-text-field {
+    -fx-font-size: 20;
+}
+.jfx-password-field {
+    -fx-font-size: 20;
+}
+.jfx-tree-table-view {
+    -fx-font-size: 20;
+}
+.jfx-combo-box {
+    -fx-font-size: 20;
+}
+.jfx-radio-button {
+    -fx-font-size: 20;
+}
+
+/*.root {
+    -fx-font-size: 20;
+}*/

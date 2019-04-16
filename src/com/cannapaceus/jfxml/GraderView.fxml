@@ -24,12 +24,12 @@
                 AnchorPane.rightAnchor="0.0">
 
         <left>
-            <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
                 <style>
                     -fx-background-color: #0077C8;
                 </style>
                 <children>
-                    <JFXButton prefWidth="80.0"
+                    <JFXButton prefWidth="120.0"
                                text="Home"
                                buttonType="FLAT"
                                focusTraversable="false"
@@ -38,7 +38,7 @@
                                onAction="#homeClick">
 
                         <graphic>
-                            <FontAwesomeIconView glyphName="HOME" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                            <FontAwesomeIconView glyphName="HOME" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
                         </graphic>
 
                         <style>
@@ -48,7 +48,7 @@
 
                     </JFXButton>
 
-                    <JFXButton prefWidth="80.0"
+                    <JFXButton prefWidth="120.0"
                                text="QBank"
                                buttonType="FLAT"
                                focusTraversable="false"
@@ -57,7 +57,7 @@
                                onAction="#qBankClick">
 
                         <graphic>
-                            <FontAwesomeIconView glyphName="UNIVERSITY" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                            <FontAwesomeIconView glyphName="UNIVERSITY" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
                         </graphic>
 
                         <style>
@@ -67,7 +67,7 @@
 
                     </JFXButton>
 
-                    <JFXButton prefWidth="80.0"
+                    <JFXButton prefWidth="120.0"
                                text="Settings"
                                buttonType="FLAT"
                                focusTraversable="false"
@@ -76,7 +76,7 @@
                                onAction="#settingsClick">
 
                         <graphic>
-                            <FontAwesomeIconView glyphName="SLIDERS" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                            <FontAwesomeIconView glyphName="SLIDERS" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
                         </graphic>
 
                         <style>
@@ -86,7 +86,7 @@
 
                     </JFXButton>
 
-                    <JFXButton prefWidth="80.0"
+                    <JFXButton prefWidth="120.0"
                                text="Help"
                                buttonType="FLAT"
                                focusTraversable="false"
@@ -95,7 +95,7 @@
                                onAction="#helpClick">
 
                         <graphic>
-                            <FontAwesomeIconView glyphName="QUESTION" glyphSize="40" glyphStyle="-fx-fill: #0077C8;"/>
+                            <FontAwesomeIconView glyphName="QUESTION" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
                         </graphic>
 
                         <style>

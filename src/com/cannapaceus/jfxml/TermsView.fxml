@@ -18,6 +18,7 @@
 
     <center>
         <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
                     AnchorPane.topAnchor="0.0"
                     AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0"
