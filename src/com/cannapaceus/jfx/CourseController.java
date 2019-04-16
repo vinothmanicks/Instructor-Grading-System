@@ -850,4 +850,9 @@ public class CourseController {
         }
     }
 
+    public void exportCourse(ActionEvent event)
+    {
+        csvService.ExportCSV(md.selectedCourse,md.selectedTerm);
+    }
+
 }
