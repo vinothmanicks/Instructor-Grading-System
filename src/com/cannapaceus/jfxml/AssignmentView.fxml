@@ -19,6 +19,7 @@
 
     <center>
         <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
                     AnchorPane.topAnchor="0.0"
                     AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0"
@@ -72,7 +73,8 @@
                         <Pane HBox.hgrow="ALWAYS"/>
                         <Label fx:id="lblStandardDev"/>
                     </HBox>
-                    <JFXTreeTableView fx:id="assignmentGradeTable">
+                    <JFXTreeTableView fx:id="assignmentGradeTable"
+                                      VBox.vgrow="ALWAYS">
 
                     </JFXTreeTableView>
                 </children>

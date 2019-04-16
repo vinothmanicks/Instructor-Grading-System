@@ -212,7 +212,9 @@ public class GradeBookController{
     private void recalculateStats(Grade g) {
         Course c = md.getSelectedCourse();
 
-        c.dropGrades();
+        for (Object o : c.dropGrades()) {
+            md.addUpdatedObject(o);
+        }
 
         Student s = g.getStudentReference();
         s.setAverageGrade(s.getGrades(),md.selectedCourse.getScale());

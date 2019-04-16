@@ -226,7 +226,9 @@ public class StudentController {
     private void recalculateStats(Grade g) {
         Course c = md.getSelectedCourse();
 
-        c.dropGrades();
+        for (Object o : c.dropGrades()) {
+            md.addUpdatedObject(o);
+        }
 
         selectedStudent.setAverageGrade(selectedStudent.getGrades(),md.selectedCourse.getScale());
 

@@ -22,6 +22,7 @@
 
         <center>
             <ScrollPane fitToWidth="true"
+                        fitToHeight="true"
                         AnchorPane.topAnchor="0.0"
                         AnchorPane.bottomAnchor="0.0"
                         AnchorPane.leftAnchor="0.0"
@@ -68,7 +69,8 @@
                                 </style>
                             </JFXButton>
                         </HBox>
-                        <JFXTreeTableView fx:id="studentGradeTable">
+                        <JFXTreeTableView fx:id="studentGradeTable"
+                                          VBox.vgrow="ALWAYS">
 
                         </JFXTreeTableView>
                     </children>

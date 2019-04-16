@@ -21,6 +21,7 @@
 
     <center>
         <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
                     AnchorPane.topAnchor="0.0"
                     AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0"
@@ -54,7 +55,8 @@
                         </JFXButton>
                         <Label fx:id="lblGradeBookName"/>
                     </HBox>
-                    <JFXTreeTableView fx:id="gradeBookTable"/>
+                    <JFXTreeTableView fx:id="gradeBookTable"
+                                      VBox.vgrow="ALWAYS"/>
                 </children>
             </VBox>
         </ScrollPane>
