@@ -84,9 +84,11 @@ public class CSVService {
 
     public void ExportCSV(Course course, Term term){
         try {
+            OSService osService = OSService.getInstance();
+
             // create FileWriter object with file as parameter
             String filename = Today() + "_" + course.getCourseName() + "_" + term.getYear() + term.getSeason() + ".csv";
-            FileWriter outputfile = new FileWriter(filename);
+            FileWriter outputfile = new FileWriter(osService.getDesktopDirectoryPath() + filename);
 
             // create CSVWriter object filewriter object as parameter
             writer = new CSVWriter(outputfile,',',writer.NO_QUOTE_CHARACTER);
@@ -134,15 +136,31 @@ public class CSVService {
         int iSize = lAssignments.size();
 
         for(int i = 0; i < iSize; i++) {
-            //TODO: Make sure category is retrieved from import file.
-            if(lAssignments.get(i).getCategoryReference() == null)
-            {
-                lAssignments.get(i).setCategory(new Category("Uncategorized",0, 0));
-            }
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
             lAssignments.get(i).getDueDate().format(formatter);
             lAssignments.get(i).getAssignedDate().format(formatter);
-            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-","/"), lAssignments.get(i).getAssignedDate().toString().replace("-","/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), lAssignments.get(i).getCategoryReference().getName(), String.valueOf(lAssignments.get(i).getWeight())};
+            String catName;
+            String weightCust;
+            if(lAssignments.get(i).getCategoryReference() == null)
+            {
+                catName = "Uncategorized";
+            }
+            else
+            {
+                catName = lAssignments.get(i).getCategoryReference().getName();
+            }
+
+            if(lAssignments.get(i).getWeight() == null)
+            {
+                weightCust = "";
+            }
+            else
+            {
+                weightCust = String.valueOf(lAssignments.get(i).getWeight());
+            }
+
+            String[] data = {lAssignments.get(i).getAssignmentName(), lAssignments.get(i).getDueDate().toString().replace("-", "/"), lAssignments.get(i).getAssignedDate().toString().replace("-", "/"), String.valueOf(lAssignments.get(i).getDroppedAssignment()), String.valueOf(lAssignments.get(i).getMaxScore()), catName, weightCust};
             writer.writeNext(data);
         }
 
@@ -158,6 +176,9 @@ public class CSVService {
 
         String[] emptyLine = {" "};
         writer.writeNext(emptyLine);
+
+        String[] gradeScale = {"GradeScale",String.valueOf(cCourse.getScale())};
+        writer.writeNext(gradeScale);
 
         ArrayList<String> header = new ArrayList<>();
         header.add("Student ID");
@@ -223,13 +244,13 @@ public class CSVService {
         String[] emptyLine = {" "};
         writer.writeNext(emptyLine);
 
-        String[] header = {"Category Name", "Weight"};
+        String[] header = {"Category Name", "Weight", "Dropped Grades"};
         writer.writeNext(header);
 
         int iSize = coCourse.getlCategories().size();
 
         for(int i = 0; i < iSize; i++) {
-            String[] data = {coCourse.getlCategories().get(i).getName(), String.valueOf(coCourse.getlCategories().get(i).getWeight())};
+            String[] data = {coCourse.getlCategories().get(i).getName(), String.valueOf(coCourse.getlCategories().get(i).getWeight()),String.valueOf(coCourse.getlCategories().get(i).getDropped())};
             writer.writeNext(data);
         }
 
@@ -258,10 +279,10 @@ public class CSVService {
                 if(lineElements[0] != null) {
                     switch (lineElements[0]) {
                         case "FileType":
-                            /*if (lineElements[1] != "Course") {
+                            if (lineElements[1] != "Course") {
                                 System.out.println("Invalid file imported");
                                 return null;
-                            }*/
+                            }
                             break;
                         case "CourseName":
                             importedCourse.setCourseName(lineElements[1]);
@@ -283,7 +304,7 @@ public class CSVService {
                                         {
                                             continue;
                                         }
-                                        Category newCat = new Category(lineElements[0],Float.valueOf(lineElements[1]), 0);
+                                        Category newCat = new Category(lineElements[0],Float.valueOf(lineElements[1]), Integer.valueOf(lineElements[2]));
                                         importedCourse.addCategory(newCat);
                                     }
                                     break;
@@ -313,7 +334,14 @@ public class CSVService {
                                                 break;
                                             }
                                         }
-                                        addedAssignment.setWeight(Float.valueOf(lineElements[6]));
+                                        if(lineElements[6].trim().equals(""))
+                                        {
+                                            addedAssignment.setWeight(null);
+                                        }
+                                        else
+                                        {
+                                            addedAssignment.setWeight(Float.valueOf(lineElements[6]));
+                                        }
                                         importedCourse.addAssignment(addedAssignment);
                                     }
                                     break;
@@ -340,6 +368,10 @@ public class CSVService {
                                         if((lineElements[0].equals(" "))||(lineElements[0].trim().equals("Student ID")))
                                         {
                                             continue;
+                                        }
+                                        if(lineElements[0].equals("GradeScale"))
+                                        {
+                                            importedCourse.setScale(Float.valueOf(lineElements[1]));
                                         }
                                         for (Student stuStudent:importedCourse.getlStudents()) {
                                             if(stuStudent.getStudentID().equals(lineElements[0].trim()))
