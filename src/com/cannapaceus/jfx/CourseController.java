@@ -744,7 +744,7 @@ public class CourseController {
         JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
 
         jfxCombo.getItems().add(new Label("Last Name"));
-        jfxCombo.getItems().add(new Label("Average Grade"));
+        jfxCombo.getItems().add(new Label("Overall Grade"));
         jfxCombo.getItems().add(new Label("Student ID"));
 
         jfxCombo.getSelectionModel().select(0);
@@ -803,7 +803,7 @@ public class CourseController {
         JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
 
         jfxCombo.getItems().add(new Label("Last Name"));
-        jfxCombo.getItems().add(new Label("Average Grade"));
+        jfxCombo.getItems().add(new Label("Overall Grade"));
         jfxCombo.getItems().add(new Label("Student ID"));
 
         jfxCombo.getSelectionModel().select(0);

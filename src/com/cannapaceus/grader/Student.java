@@ -281,18 +281,20 @@ public class Student extends RecursiveTreeObject<Student> {
 
     public String[] GenerateStudentReportArray()
     {
-        int iSize = (lGrades.size()*2) + 5;
+        int iSize = (lGrades.size()*2) + 7;
 
         String[] sReport = new String[iSize];
 
         sReport[0] = "Student Name: " + this.sFirstMIName.getValue() + " " + this.sLastName.getValue();
         sReport[1] = "Student ID: " + this.sStudentID.getValue();
         sReport[2] = "";
-        sReport[3] = "Assignments: ";
+        sReport[3] = "Average Grade: " + this.getAverageGrade();
         sReport[4] = "";
+        sReport[5] = "Assignments: ";
+        sReport[6] = "";
 
         int iPos = 0;
-        for(int i = 5; i < iSize;) {
+        for(int i = 7; i < iSize;) {
             Grade gGrade = lGrades.get(iPos);
             sReport[i] = "    " + gGrade.getAssignmentCopy().getAssignmentName() + ":    " + gGrade.getGrade()+"\\"+ gGrade.getAssignmentCopy().getMaxScore();
             if(gGrade.getMissing() == true)

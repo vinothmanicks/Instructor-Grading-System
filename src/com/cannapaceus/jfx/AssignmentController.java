@@ -36,6 +36,7 @@ public class AssignmentController {
     Model md = null;
 
     Assignment selectedAssignment;
+    Course selectedCourse;
 
     ObservableList<Grade> gradeObservableList;
 
@@ -75,6 +76,7 @@ public class AssignmentController {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
+        selectedCourse = md.getSelectedCourse();
         selectedAssignment = md.getSelectedAssignment();
         Statistics st = selectedAssignment.getStAssignmentStats();
 
@@ -308,7 +310,7 @@ public class AssignmentController {
         JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
 
         jfxCombo.getItems().add(new Label("Last Name"));
-        jfxCombo.getItems().add(new Label("Average Grade"));
+        jfxCombo.getItems().add(new Label("Grade"));
         jfxCombo.getItems().add(new Label("Student ID"));
 
         jfxCombo.getSelectionModel().select(0);
@@ -330,17 +332,17 @@ public class AssignmentController {
                 int index = jfxCombo.getSelectionModel().getSelectedIndex();
                 switch (index) {
                     case 0:
-                        //Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+                        Collections.sort(selectedAssignment.getGrades(), Grade.nameComparator);
                         break;
                     case 1:
-                        //Collections.sort(selectedCourse.getlStudents(), Student.averageComparator.reversed());
+                        Collections.sort(selectedAssignment.getGrades(), Grade.scoreComparator.reversed());
                         break;
                     case 2:
-                        //Collections.sort(selectedCourse.getlStudents(), Student.idComparator);
+                        Collections.sort(selectedAssignment.getGrades(), Grade.idComparator);
                         break;
                 }
 
-                //service.printGradeBook(selectedCourse);
+                service.printGradeBook(selectedAssignment, selectedCourse);
                 dialog.close();
             }
         });
@@ -363,7 +365,7 @@ public class AssignmentController {
         JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
 
         jfxCombo.getItems().add(new Label("Last Name"));
-        jfxCombo.getItems().add(new Label("Average Grade"));
+        jfxCombo.getItems().add(new Label("Grade"));
         jfxCombo.getItems().add(new Label("Student ID"));
 
         jfxCombo.getSelectionModel().select(0);
@@ -385,17 +387,17 @@ public class AssignmentController {
                 int index = jfxCombo.getSelectionModel().getSelectedIndex();
                 switch (index) {
                     case 0:
-                        //Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+                        Collections.sort(selectedAssignment.getGrades(), Grade.nameComparator);
                         break;
                     case 1:
-                        //Collections.sort(selectedCourse.getlStudents(), Student.averageComparator.reversed());
+                        Collections.sort(selectedAssignment.getGrades(), Grade.scoreComparator.reversed());
                         break;
                     case 2:
-                        //Collections.sort(selectedCourse.getlStudents(), Student.idComparator);
+                        Collections.sort(selectedAssignment.getGrades(), Grade.idComparator);
                         break;
                 }
 
-                //service.printGradeBook(selectedCourse, false);
+                service.printGradeBook(selectedAssignment, selectedCourse, false);
                 dialog.close();
             }
         });

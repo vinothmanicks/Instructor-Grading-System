@@ -1,5 +1,6 @@
 package com.cannapaceus.services;
 
+import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
 import com.cannapaceus.grader.Student;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -98,11 +99,29 @@ public class PrinterService {
         osService.delete(filename);
     }
 
+    /**
+     * For printing the overall grade report for a course
+     * @param course
+     */
     public void printGradeBook(Course course) {
         OSService osService = OSService.getInstance();
         PDFService pdfService = PDFService.getInstance();
 
         String filename = pdfService.printGradeBook(course, true);
+        startPrintJob(filename);
+        osService.delete(filename);
+    }
+
+    /**
+     * For printing the grade report for a specific assignment
+     * @param assignment
+     * @param course
+     */
+    public void printGradeBook(Assignment assignment, Course course) {
+        OSService osService = OSService.getInstance();
+        PDFService pdfService = PDFService.getInstance();
+
+        String filename = pdfService.printGradeBook(assignment, course, true);
         startPrintJob(filename);
         osService.delete(filename);
     }
