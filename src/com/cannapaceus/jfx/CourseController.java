@@ -23,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class CourseController {
@@ -746,22 +748,150 @@ public class CourseController {
         }
     }
 
+    public void printGradeBook(ActionEvent event) {
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Select Order of Printing"));
+
+        JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
+
+        jfxCombo.getItems().add(new Label("Last Name"));
+        jfxCombo.getItems().add(new Label("Average Grade"));
+        jfxCombo.getItems().add(new Label("Student ID"));
+
+        jfxCombo.getSelectionModel().select(0);
+
+        content.setBody(jfxCombo);
+
+        JFXButton ok = new JFXButton("Print");
+        ok.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
+        JFXButton cancel = new JFXButton("Cancel");
+        cancel.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+
+        JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
+
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PrinterService service = PrinterService.getInstance();
+                int index = jfxCombo.getSelectionModel().getSelectedIndex();
+                switch (index) {
+                    case 0:
+                        Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+                    case 1:
+                        Collections.sort(selectedCourse.getlStudents(), Student.averageComparator.reversed());
+                    case 2:
+                        Collections.sort(selectedCourse.getlStudents(), Student.idComparator);
+                }
+
+                service.printGradeBook(selectedCourse);
+                dialog.close();
+            }
+        });
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+
+        content.setActions(ok, cancel);
+
+        dialog.show();
+    }
+
+    public void pdfGradeBook(ActionEvent event) {
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Select Order of Printing"));
+
+        JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
+
+        jfxCombo.getItems().add(new Label("Last Name"));
+        jfxCombo.getItems().add(new Label("Average Grade"));
+        jfxCombo.getItems().add(new Label("Student ID"));
+
+        jfxCombo.getSelectionModel().select(0);
+
+        content.setBody(jfxCombo);
+
+        JFXButton ok = new JFXButton("Print");
+        ok.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
+        JFXButton cancel = new JFXButton("Cancel");
+        cancel.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+
+        JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
+
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PDFService service = PDFService.getInstance();
+                int index = jfxCombo.getSelectionModel().getSelectedIndex();
+                switch (index) {
+                    case 0:
+                        Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+                    case 1:
+                        Collections.sort(selectedCourse.getlStudents(), Student.averageComparator);
+                    case 2:
+                        Collections.sort(selectedCourse.getlStudents(), Student.idComparator);
+                }
+
+                service.printGradeBook(selectedCourse, false);
+                dialog.close();
+            }
+        });
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+
+        content.setActions(ok, cancel);
+
+        dialog.show();
+    }
+
     public void printList(ActionEvent event) {
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
         PrinterService service = PrinterService.getInstance();
         service.printList(selectedCourse);
     }
 
     public void pdfList(ActionEvent event) {
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
         PDFService service = PDFService.getInstance();
         service.printList(selectedCourse, false);
     }
 
     public void printGrades(ActionEvent event) {
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
         PrinterService service = PrinterService.getInstance();
         service.printGrades(selectedCourse);
     }
 
     public void pdfGrades(ActionEvent event) {
+        selectedCourse.PopulateAverages(selectedCourse.getlStudents());
+        selectedCourse.calculateStats();
+        selectedCourse.scaleFinalAverages(selectedCourse.getScale());
+
         PDFService service = PDFService.getInstance();
         service.printGrades(selectedCourse, false);
     }

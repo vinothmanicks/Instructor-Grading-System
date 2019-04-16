@@ -97,4 +97,13 @@ public class PrinterService {
         startPrintJob(filename);
         osService.delete(filename);
     }
+
+    public void printGradeBook(Course course) {
+        OSService osService = OSService.getInstance();
+        PDFService pdfService = PDFService.getInstance();
+
+        String filename = pdfService.printGradeBook(course, true);
+        startPrintJob(filename);
+        osService.delete(filename);
+    }
 }

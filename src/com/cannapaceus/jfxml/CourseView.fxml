@@ -222,15 +222,20 @@
                     -fx-padding: 10,10,10,10;
                     -fx-background-color: #ffffff;
                 </style>
-                <!--JFXButton fx:id="btnCloseOptionsMenu" buttonType="FLAT" onAction="#operateMenu">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="TIMES_CIRCLE" glyphSize="30" glyphStyle="-fx-fill: grey;"/>
-                    </graphic>
+                <JFXButton fx:id="btnPrintGradeBook" buttonType="FLAT" text="Print Class Grade Report" onAction="#printGradeBook">
                     <style>
+                        -fx-cursor: hand;
                         -fx-background-color: #ffffff;
-                        -fx-text-fill: white;
+                        -fx-text-fill: #0077C8;
                     </style>
-                </JFXButton-->
+                </JFXButton>
+                <JFXButton fx:id="btnPDFGradeBook" buttonType="FLAT" text="PDF Class Grade Report" onAction="#pdfGradeBook">
+                    <style>
+                        -fx-cursor: hand;
+                        -fx-background-color: #ffffff;
+                        -fx-text-fill: #0077C8;
+                    </style>
+                </JFXButton>
                 <JFXButton fx:id="btnPrintList" buttonType="FLAT" text="Print List of Students" onAction="#printList">
                     <style>
                         -fx-cursor: hand;
@@ -245,14 +250,14 @@
                         -fx-text-fill: #0077C8;
                     </style>
                 </JFXButton>
-                <JFXButton fx:id="btnPrintGrades" buttonType="FLAT" text="Print Grade Reports" onAction="#printGrades">
+                <JFXButton fx:id="btnPrintGrades" buttonType="FLAT" text="Print Indiv. Grade Reports" onAction="#printGrades">
                     <style>
                         -fx-cursor: hand;
                         -fx-background-color: #ffffff;
                         -fx-text-fill: #0077C8;
                     </style>
                 </JFXButton>
-                <JFXButton fx:id="btnPDFGrades" buttonType="FLAT" text="PDF Grade Reports" onAction="#pdfGrades">
+                <JFXButton fx:id="btnPDFGrades" buttonType="FLAT" text="PDF Indiv. Grade Reports" onAction="#pdfGrades">
                     <style>
                         -fx-cursor: hand;
                         -fx-background-color: #ffffff;

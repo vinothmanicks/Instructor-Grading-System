@@ -29,20 +29,24 @@ public class PDFService {
     }
 
     /* Synthesise new page */
-    private void GenerateNewPage() throws IOException {
-        if(contentStream != null) {
-            contentStream.endText();
-            contentStream.close();
+    private void GenerateNewPage() {
+        try {
+            if(contentStream != null) {
+                contentStream.endText();
+                contentStream.close();
+            }
+
+            PDPage page = new PDPage();
+            document.addPage(page);
+            contentStream = new PDPageContentStream(document, page);
+
+            contentStream.beginText();
+            contentStream.setLeading(14.5f);
+            contentStream.newLineAtOffset(25, 730);
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        PDPage page = new PDPage();
-        document.addPage(page);
-        contentStream = new PDPageContentStream(document, page);
-
-        contentStream.beginText();
-        contentStream.setLeading(14.5f);
-        contentStream.newLineAtOffset(25, 730);
-        contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
     }
 
     public String printList(Course course, Boolean bTemp) {
@@ -96,6 +100,8 @@ public class PDFService {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            contentStream = null;
         }
 
         return filename;
@@ -115,9 +121,9 @@ public class PDFService {
         try {
             document = new PDDocument();
 
+
             for(Student student : lStudents) {
                 GenerateNewPage();
-
                 String[] data = student.GenerateStudentReportArray();
 
                 contentStream.showText("Course Name: " + course.getCourseName());
@@ -136,18 +142,18 @@ public class PDFService {
                         iCounter = 0;
                     }
                 }
-
-                contentStream.endText();
-                contentStream.close();
             }
+
+            contentStream.endText();
+            contentStream.close();
 
             document.save(filename);
             document.close();
 
-            contentStream = null;
-
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            contentStream = null;
         }
 
         return filename;
@@ -209,10 +215,68 @@ public class PDFService {
             document.save(filename);
             document.close();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            contentStream = null;
+        }
+
+        return filename;
+    }
+
+    public String printGradeBook(Course course, Boolean bTemp) {
+        OSService osService = OSService.getInstance();
+        ArrayList<Student> lStudents = course.getlStudents();
+        String filename;
+
+        if (bTemp) {
+            filename = osService.getTempDirectoryPath() + course.getCourseName() + "_GradeReport.pdf";
+        }
+        else
+            filename = osService.getDesktopDirectoryPath() + course.getCourseName() + "_GradeReport.pdf";
+
+        try {
+            document = new PDDocument();
+            GenerateNewPage();
+
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
+            contentStream.showText("Name");
+            contentStream.newLineAtOffset(200, 0);
+            contentStream.showText("Student ID");
+            contentStream.newLineAtOffset(160, 0);
+            contentStream.showText("Grade");
+            contentStream.newLineAtOffset(-360, 0);
+            contentStream.newLine();
+
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+            int iCounter = 1;
+            for (Student student : lStudents) {
+                contentStream.showText(student.getFirstMIName() + " " + student.getLastName());
+                contentStream.newLineAtOffset(200, 0);
+                contentStream.showText(student.getStudentID());
+                contentStream.newLineAtOffset(160, 0);
+                contentStream.showText(String.valueOf(student.getAverageGrade()));
+                contentStream.newLineAtOffset(-360, 0);
+                contentStream.newLine();
+                ++iCounter;
+
+                if(iCounter >= 47) {
+                    GenerateNewPage();
+                    iCounter = 0;
+                }
+            }
+            contentStream.endText();
+            contentStream.close();
+
+            document.save(filename);
+            document.close();
+
             contentStream = null;
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            contentStream = null;
         }
 
         return filename;
@@ -369,10 +433,10 @@ public class PDFService {
             document.save(filename);
             document.close();
 
-            contentStream = null;
-
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            contentStream = null;
         }
     }
 }
