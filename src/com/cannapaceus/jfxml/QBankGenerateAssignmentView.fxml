@@ -36,6 +36,15 @@
 
             <HBox spacing="20">
                 <children>
+                    <JFXButton buttonType="FLAT" text="Back" onAction="#cancelClick">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="ARROW_LEFT" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                        </graphic>
+                        <style>
+                            -fx-background-color: #0077C8;
+                            -fx-text-fill: white;
+                        </style>
+                    </JFXButton>
                     <JFXRadioButton fx:id="rbExistingAssignment" text="Use Existing Assignment" onAction="#radioSelect">
                         <toggleGroup>
                             <ToggleGroup fx:id="toggleGroup" />

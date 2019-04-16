@@ -34,6 +34,8 @@ public class QBankGenerateAssignmentController {
     private HashMap<Integer, Category> hmCat;
     private HashMap<String, Assignment> hmAssignments = new HashMap<>();
 
+    private float fMaxScore;
+
     @FXML
     private JFXRadioButton rbExistingAssignment;
 
@@ -79,6 +81,12 @@ public class QBankGenerateAssignmentController {
         md = Model.getInstance();
 
         selectedQuestions = md.getSelectedQuestions();
+
+        fMaxScore = 0;
+
+        for(Question question:selectedQuestions) {
+            fMaxScore += question.getfScore();
+        }
     }
 
     public void radioSelect(ActionEvent event) {
@@ -133,7 +141,7 @@ public class QBankGenerateAssignmentController {
         cbCategory.setItems(cat);
 
         tfAssignmentName.setText(selectedAssignment.getAssignmentName());
-        tfMaxScore.setText(String.valueOf(selectedAssignment.getMaxScore()));
+        tfMaxScore.setText(String.valueOf(fMaxScore));
         if (selectedAssignment.getWeight() == null)
         {
             xbUseCustom.selectedProperty().setValue(false);
