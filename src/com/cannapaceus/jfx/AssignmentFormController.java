@@ -106,7 +106,12 @@ public class AssignmentFormController {
         }
         selectedAssignment.setDueDate(dpDueDate.getValue());
         selectedAssignment.setAssignedDate(dpAssignedDate.getValue());
-        selectedAssignment.setCategory(hmCat.get(cbCategory.getSelectionModel().getSelectedIndex()));
+
+        Category assignCat = hmCat.get(cbCategory.getSelectionModel().getSelectedIndex());
+        if (assignCat != null)
+            assignCat.addAssignment(selectedAssignment);
+
+        selectedAssignment.setCategory(assignCat);
 
         md.setSelectedCategory(null);
         md.setSelectedAssignment(null);

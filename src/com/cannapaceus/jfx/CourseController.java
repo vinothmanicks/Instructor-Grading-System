@@ -122,9 +122,6 @@ public class CourseController {
         hbAssignments.setOnMouseClicked((event) -> expandAssignment.fire());
 
         createStudentList();
-//        if (!selectedCourse.getlStudents().isEmpty()) {
-//            createStatisticsList();
-//        }
         createAssignmentList();
         createStatisticsList();
     }
@@ -172,11 +169,6 @@ public class CourseController {
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
             tempHB.setAlignment(Pos.CENTER_LEFT);
-            if (md.isChanged(s)) {
-                tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
-                        "    -fx-border-insets: 5;\n" +
-                        "    -fx-border-width: 3;\n");
-            }
 
             Label tempLabel = new Label(s.getFirstMIName() + " " + s.getLastName());
             tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -238,11 +230,6 @@ public class CourseController {
 
             HBox catHB = new HBox();
             catHB.setAlignment(Pos.CENTER_LEFT);
-            if (md.isChanged(cat)) {
-                catHB.setStyle("-fx-border-color: #4CAF50;\n" +
-                        "    -fx-border-insets: 5;\n" +
-                        "    -fx-border-width: 3;\n");
-            }
 
             Label catLabel = new Label(cat.getName());
             catLabel.setAlignment(Pos.CENTER_LEFT);
@@ -283,11 +270,6 @@ public class CourseController {
                 HBox tempHB = new HBox();
                 tempHB.setSpacing(10.0);
                 tempHB.setAlignment(Pos.CENTER_LEFT);
-                if (md.isChanged(a)) {
-                    tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
-                            "    -fx-border-insets: 5;\n" +
-                            "    -fx-border-width: 3;\n");
-                }
 
                 Label tempLabel = new Label(a.getAssignmentName());
                 tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -401,11 +383,6 @@ public class CourseController {
             HBox tempHB = new HBox();
             tempHB.setSpacing(10.0);
             tempHB.setAlignment(Pos.CENTER_LEFT);
-            if (md.isChanged(a)) {
-                tempHB.setStyle("-fx-border-color: #4CAF50;\n" +
-                        "    -fx-border-insets: 5;\n" +
-                        "    -fx-border-width: 3;\n");
-            }
 
             Label tempLabel = new Label(a.getAssignmentName());
             tempLabel.setAlignment(Pos.CENTER_LEFT);
@@ -467,7 +444,7 @@ public class CourseController {
 
         catAssignmentVB.getChildren().addAll(tempSep, catAddAssignment);
 
-        catAssignmentVB.setId("0");
+        catAssignmentVB.setId("-1");
 
         tempSep = new Separator();
 
@@ -686,11 +663,11 @@ public class CourseController {
         String id = ((Node) event.getTarget()).getParent().getId();
         Category cat = hmCategory.get(id);
 
-        Assignment a = new Assignment("",lo,lo,false,100,cat, null);
+        Assignment a = new Assignment("",lo,lo,false,100,null, null);
 
-        md.setSelectedCategory(cat);
         md.setSelectedAssignment(a);
         md.addAssignment(a);
+        md.setSelectedCategory(cat);
 
         try {
             sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));

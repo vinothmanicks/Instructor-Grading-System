@@ -78,13 +78,6 @@ public class TermsController {
             HBox tempHB = new HBox();
             tempHB.setAlignment(Pos.CENTER_LEFT);
             tempHB.setStyle("-fx-padding: 10, 10, 10, 10;");
-            if (md.isChanged(t)) {
-                tempHB.setStyle(tempHB.getStyle() + "-fx-background-color: #98FB98;");
-            } else if (md.isRemoved(t)) {
-                tempHB.setStyle(tempHB.getStyle() + "-fx-background-color: red;");
-            } else {
-                tempHB.setStyle(tempHB.getStyle() + "-fx-background-color: white;");
-            }
 
             Label termLabel = new Label(t.getSeason().toString() + " " + t.getYear());
             termLabel.setAlignment(Pos.CENTER_LEFT);
@@ -163,14 +156,6 @@ public class TermsController {
                 HBox hbCourse = new HBox();
                 hbCourse.setSpacing(10.0);
                 hbCourse.setAlignment(Pos.CENTER_LEFT);
-
-                if (md.isChanged(c)) {
-                    hbCourse.setStyle(hbCourse.getStyle() + "-fx-background-color: #98FB98;");
-                } else if (md.isRemoved(c)) {
-                    hbCourse.setStyle(hbCourse.getStyle() + "-fx-background-color: red;");
-                } else {
-                    hbCourse.setStyle(hbCourse.getStyle() + "-fx-background-color: white;");
-                }
 
                 Label lblCourseName = new Label(c.getCourseName());
 
