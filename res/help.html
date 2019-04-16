@@ -36,8 +36,8 @@
             <p>Cannapaceus is a software tool secondary-level professors and professional instructors. It serves as a total digital replacement for a traditional gradebook and a means of consolidating electronic resources pertaining to student grades and other classroom information.</p><p>This help document is broken down into sections pertaining to the functionality of the software and the means by which the user interacts with it. Refer to the table of contents on the left side of the page for help with specific parts of the program.</p></div>
         <div id="login">
             <h3>Login Page</h3>
-            <p>Users will access the Instructor Grading Program through a traditional username/password login interface. When the user first runs the program, he or she will create a database by entering a username and password of their choice. This username and password will serve as their login information for all future usage of the software</p>
-            <p>If you wish to reset your login information, contact your system administrator or contact service.cannapaceus@gmail.com.</p>
+            <p>Users will access the Instructor Grading Program through a traditional username/password login interface. When the user first runs the program, he or she will create a database by entering a username and password of their choice, whereupon they will be asked to confirm these details.</p>
+            <p> This username and password will serve as their login information for all future usage of the software. Passwords must be at least 8 characters in length.</p>
             <a href="01%20-%20Login_annotated.png" data-lightbox="img1"><img src="01%20-%20Login_annotated.png" alt="Login Page"></a>
             <script src="lightbox-plus-jquery.js"></script>
             <br></div>
@@ -100,6 +100,7 @@
                 <li>DROPPED: The assignment was completed, but is not being counted towards the student's average grade.</li>
                 <li>SUBMITTED: The assignment was completed, regardless of timing, and is being counted towards the student's average grades. A grade value will not appear as part of the student's average until an assignment is labeled as SUBMITTED.</li>
             </ul>
+            <p>To create or email a grade report for an individual student, use the additional options on the right side of the view.</p>
             <a href="07%20-%20Student%20View.png" data-lightbox="img10"><img src="07%20-%20Student%20View.png" alt="Student View"></a>
             <script src="lightbox-plus-jquery.js"></script><br></div>
         <div id="assignment">
@@ -111,6 +112,7 @@
             <ul>
                 <li>The name of the category</li>
                 <li>The weight of the category, defined as a percentage of the student's average grade. Weights across all assignment categories <strong>should add up to 1.0</strong> for accurate calculation. Unweighted categories should be given the default value of 1.0.</li>
+                <li>If desired, the program will automatically drop the <i>n</i> lowest grades in a category.</li>
             </ul>
             <a href="09%20-%20Category%20Form_annotated.png" data-lightbox="img12"><img src="09%20-%20Category%20Form_annotated.png" alt="Category Form"></a>
             <script src="lightbox-plus-jquery.js"></script><br>
@@ -129,6 +131,7 @@
             <script src="lightbox-plus-jquery.js"></script><br>
             <p>Assignment View functions similarly to Student View. The table displays a single assignment grade for each student in the course. Grade values and properties can be edited from this view.</p>
             <p>Assigment View also displays statistics for the selected assignment, including mean, median, mode, and standard deviation.</p>
+            <p>Grade values will not be calculated until an assigment is marked as submitted. To mark an assignment as submitted for all students in a course, select the "Submit all Grades" button.</p>
             <a href="10%20-%20Assignment%20View.png" data-lightbox="img14"><img src="10%20-%20Assignment%20View.png" alt="Assignment View"></a>
             <script src="lightbox-plus-jquery.js"></script><br></div>
         <div id="gradebook">
@@ -142,9 +145,10 @@
             <p>By expanding the hamburger menu at the top-right corner of Course View, the user can access additional course functions, including:</p>
             <ul>
                 <li>The ability to download and print a list of students and all student information not related to grades as a .CSV or a .PDF file.</li>
-                <li>The ability to download and print grade reports for the entire course.</li>
+                <li>The ability to download and print grade reports for the entire course as a .CSV or a .PDF file.</li>
                 <li>The ability to email individual academic reports to students in the course.</li>
                 <li>The ability to import a grading scale, category list, or assignment list from a previous course. See the next section for more details on this function.</li>
+                <li>The ability to import course details from a .CSV file.</li>
             </ul>
             <a href="12%20-%20Course%20Options_annotated.png" data-lightbox="img16"><img src="12%20-%20Course%20Options_annotated.png" alt="Additional Course Functions"></a>
             <script src="lightbox-plus-jquery.js"></script><br>
@@ -170,7 +174,8 @@
             <script src="lightbox-plus-jquery.js"></script><br></div>
         <div id="settings">
             <h3>User Settings</h3>
-            <p>As of the most recent version of Cannapaceus, the user settings contains only a field where the user can specify their email address to use the program's email functionality. Future versions of the programs will contain additional personalization options.</p>
+            <p>The user settings menu contains a field where the user can specify their email address to use the program's email functionality. The user may also change their password at any time from this view.</p>
+            <p>Future versions of the programs will contain additional personalization options.</p>
             <a href="16%20-%20Settings%20Form.png" data-lightbox="img20"><img src="16%20-%20Settings%20Form.png" alt="User Settings Form"></a>
             <script src="lightbox-plus-jquery.js"></script><br></div>
         <p>For additional help, contact us at service.cannapaceus@gmail.com</p>

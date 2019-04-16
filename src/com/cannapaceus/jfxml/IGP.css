@@ -75,3 +75,9 @@
 .scroll-pane > .viewport {
    -fx-background-color: transparent;
 }
+
+/* JFXDatePicker Label Float */
+
+.jfx-date-picker > .jfx-text-field {
+    -jfx-label-float: true;
+}

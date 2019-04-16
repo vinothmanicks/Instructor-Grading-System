@@ -70,14 +70,14 @@
             <JFXComboBox fx:id="cbCategory" promptText="Category" labelFloat="true">
             </JFXComboBox>
             <HBox alignment="CENTER_LEFT">
-                <JFXDatePicker fx:id="dpDueDate" promptText="Due Date">
+                <JFXDatePicker fx:id="dpAssignedDate" promptText="Assigned Date">
                     <validators>
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
                         </RequiredFieldValidator>
                     </validators>
                 </JFXDatePicker>
-                <JFXDatePicker fx:id="dpAssignedDate" promptText="Assigned Date">
+                <JFXDatePicker fx:id="dpDueDate" promptText="Due Date">
                     <validators>
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
