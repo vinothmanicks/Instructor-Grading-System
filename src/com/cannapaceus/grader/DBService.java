@@ -578,17 +578,17 @@ public class DBService {
             con = DriverManager.getConnection(conString, user, pass);
             stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            Object[] arr = null;
+            Array arr = null;
 
             if (questionToStore.getAnswers() != null)
-                arr = questionToStore.getAnswers().toArray();
+                arr = con.createArrayOf("VARCHAR", questionToStore.getAnswers().toArray());
 
             stm.setString(1, questionToStore.getQuestion());
             stm.setInt(2, questionToStore.getQuestionType().getInt());
             stm.setInt(3, questionToStore.getQuestionLevel().getInt());
             stm.setInt(4, questionToStore.getQuestionAssignmentType().getInt());
             stm.setFloat(5, questionToStore.getToDoTime());
-            stm.setObject(6, arr);
+            stm.setArray(6, arr);
             stm.setFloat(7, questionToStore.getScore());
             stm.setLong(8, lCourseID);
 
@@ -1327,6 +1327,45 @@ public class DBService {
         return retValue;
     }
 
+    public boolean deleteQuestion(Question q) {
+        boolean retValue = true;
+
+        if (q.getlDBID() == 0)
+            return true;
+
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        try {
+            String sql = "DELETE FROM QUESTIONS " +
+                    "WHERE QUESTIONID = ?";
+
+            con = DriverManager.getConnection(conString, user, pass);
+            stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stm.setLong(1, q.getlDBID());
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            retValue = false;
+        }finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) { /* ignored */}
+            }
+        }
+
+        return retValue;
+    }
+
     public ArrayList<Term> retrieveTerms() {
         ArrayList<Term> retValue = new ArrayList<>();
 
@@ -1739,7 +1778,12 @@ public class DBService {
                 while (rs.next()) {
                     ArrayList<String> lAnswers;
                     if (rs.getArray(7) != null) {
-                        lAnswers = new ArrayList<String>(Arrays.asList((String[])rs.getArray(7).getArray()));
+                        Array arr = rs.getArray(7);
+                        Object[] sArr = (Object[])arr.getArray();
+                        lAnswers = new ArrayList<>();
+                        for (int i = 0; i < sArr.length; ++i) {
+                            lAnswers.add(sArr[i].toString());
+                        }
                     } else {
                         lAnswers = new ArrayList<>();
                     }

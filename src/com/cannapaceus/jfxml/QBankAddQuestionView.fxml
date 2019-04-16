@@ -102,6 +102,36 @@
                     <JFXComboBox fx:id="cbLevel" promptText="Difficulty"/>
                     <JFXComboBox fx:id="cbAssignType" promptText="Assignment Type"/>
                 </HBox>
+                <VBox fx:id="vbAnswers"
+                      fillWidth="true"
+                      spacing="50.0"
+                      AnchorPane.topAnchor="0.0"
+                      AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0">
+
+                    <HBox spacing="10">
+                        <JFXButton fx:id="btnAddAnswer" buttonType="FLAT" text="Add Answer" onAction="#addAnswer">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SAVE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                        <Separator orientation="VERTICAL"/>
+                        <JFXButton fx:id="btnRemoveAnswer" buttonType="FLAT" text="Remove Answer" onAction="#removeAnswer">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #e74c3c;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                    </HBox>
+                </VBox>
                 <Pane VBox.vgrow="ALWAYS"/>
                 <!-- <HBox fillHeight="true" spacing="10.0">
                     <Pane HBox.hgrow="ALWAYS"/>
@@ -152,7 +182,7 @@
                         -fx-text-fill: white;
                     </style>
                 </JFXButton>
-                <JFXButton text="Cancel" > <!--onAction="#revertClick"-->
+                <JFXButton text="Cancel" onAction="#backClick">
                     <graphic>
                         <FontAwesomeIconView glyphName="BAN" glyphSize="20" glyphStyle="-fx-fill: white;"/>
                     </graphic>
