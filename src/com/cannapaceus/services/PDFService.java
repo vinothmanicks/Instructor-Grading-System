@@ -2,6 +2,7 @@ package com.cannapaceus.services;
 
 import com.cannapaceus.grader.Assignment;
 import com.cannapaceus.grader.Course;
+import com.cannapaceus.grader.DBService;
 import com.cannapaceus.grader.Student;
 import com.cannapaceus.qbank.Question;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class PDFService {
 
+    DBService db;
 
     private static PDFService instance = null;
     PDPageContentStream contentStream = null;
@@ -26,6 +28,10 @@ public class PDFService {
             instance = new PDFService();
         }
         return instance;
+    }
+
+    private PDFService() {
+        db = DBService.getInstance();
     }
 
     /* Synthesise new page */
@@ -200,7 +206,7 @@ public class PDFService {
                 AccessPermission ap = new AccessPermission();
 
                 //Creating StandardProtectionPolicy object
-                StandardProtectionPolicy spp = new StandardProtectionPolicy("1234", student.getStudentID(), ap);
+                StandardProtectionPolicy spp = new StandardProtectionPolicy(db.retrieveEmailPass(), student.getStudentID(), ap);
 
                 //Setting the length of the encryption key
                 spp.setEncryptionKeyLength(128);
