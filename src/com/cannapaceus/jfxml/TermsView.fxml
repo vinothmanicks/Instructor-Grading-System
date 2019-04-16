@@ -67,7 +67,6 @@
                     -fx-padding: 10,10,10,10;
                     -fx-background-color: white;
                 </style>
-                <Label fx:id="lblChanges" text="Changes: "/>
                 <Pane HBox.hgrow="ALWAYS"/>
                 <JFXButton text="Commit Changes" onAction="#commitClick">
                     <graphic>
