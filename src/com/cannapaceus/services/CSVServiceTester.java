@@ -87,7 +87,7 @@ public class CSVServiceTester {
 
         CSVService csvService = new CSVService();
         //csvService.ExportCSV(coTest,teTest);
-        Course importedBoi = csvService.ImportCSV("C:\\Users\\Charks\\Desktop\\java-application\\20190409_172439_Test Course_2019Spring.csv");
+        Course importedBoi = csvService.ImportCSV("C:\\Users\\Charks\\Desktop\\java-application\\");
         teTest.addCourse(importedBoi);
         csvService.ExportCSV(importedBoi,teTest);
     }

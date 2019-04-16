@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.bouncycastle.crypto.agreement.kdf.GSKKFDGenerator;
 
 import javax.jnlp.FileContents;
 import java.io.File;
@@ -967,8 +968,25 @@ public class CourseController {
                 if(targetCourse != null)
                 {
                     targetCourse.setDBID(md.selectedCourse.getDBID());
-                    md.selectedCourse = targetCourse;
+                    md.setSelectedCourse(targetCourse);
                     md.addUpdatedObject(targetCourse);
+                    for(Category cat: targetCourse.getlCategories())
+                    {
+                        md.addNewObject(cat);
+                        for(Assignment aAssignment: cat.getAssignments())
+                        {
+                            md.addNewObject(aAssignment);
+                            for(Grade gGrade: aAssignment.getGrades())
+                            {
+                                md.addNewObject(gGrade);
+                            }
+                        }
+                    }
+                    for(Student stuStudent: targetCourse.getlStudents())
+                    {
+                        md.addNewObject(stuStudent);
+                    }
+
                     md.commitChanges();
                 }
             }
