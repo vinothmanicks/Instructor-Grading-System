@@ -789,10 +789,13 @@ public class CourseController {
                 switch (index) {
                     case 0:
                         Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+                        break;
                     case 1:
                         Collections.sort(selectedCourse.getlStudents(), Student.averageComparator.reversed());
+                        break;
                     case 2:
                         Collections.sort(selectedCourse.getlStudents(), Student.idComparator);
+                        break;
                 }
 
                 service.printGradeBook(selectedCourse);
@@ -845,10 +848,13 @@ public class CourseController {
                 switch (index) {
                     case 0:
                         Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
+                        break;
                     case 1:
-                        Collections.sort(selectedCourse.getlStudents(), Student.averageComparator);
+                        Collections.sort(selectedCourse.getlStudents(), Student.averageComparator.reversed());
+                        break;
                     case 2:
                         Collections.sort(selectedCourse.getlStudents(), Student.idComparator);
+                        break;
                 }
 
                 service.printGradeBook(selectedCourse, false);
