@@ -7,6 +7,7 @@ import com.cannapaceus.qbank.QuestionBank;
 import com.cannapaceus.qbank.eQuestionLevel;
 import com.cannapaceus.qbank.eQuestionAssignmentType;
 import com.cannapaceus.qbank.eQuestionType;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -28,10 +29,6 @@ public class QBankAddQuestionController {
     DBService db = null;
 
     private Question selectedQuestion = null;
-
-    private eQuestionType qt = null;
-    private eQuestionAssignmentType qat = null;
-    private eQuestionLevel ql = null;
 
     @FXML
     private VBox vbTerms;
@@ -61,10 +58,23 @@ public class QBankAddQuestionController {
     private JFXComboBox cbAssignType;
 
     @FXML
+    private VBox vbAnswers;
+
+    @FXML
+    private JFXButton btnAddAnswer;
+
+    @FXML
+    private JFXButton btnRemoveAnswer;
+
+    private ArrayList<JFXTextArea> answerAreas;
+
+    @FXML
     private void initialize() {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
         db = DBService.getInstance();
+
+        answerAreas = new ArrayList<>();
 
         selectedQuestion = md.getSelectedQuestion();
 
@@ -99,6 +109,24 @@ public class QBankAddQuestionController {
                 "Homework",
                 "Other"));
 
+        cbType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (observable.getValue().toString() == "Multiple Choice") {
+                for (JFXTextArea ta : answerAreas) {
+                    ta.setDisable(false);
+                }
+                btnAddAnswer.setDisable(false);
+                if (answerAreas.size() != 0) {
+                    btnRemoveAnswer.setDisable(false);
+                }
+            } else {
+                for (JFXTextArea ta : answerAreas) {
+                    ta.setDisable(true);
+                }
+                btnAddAnswer.setDisable(true);
+                btnRemoveAnswer.setDisable(true);
+            }
+        });
+
         if (selectedQuestion != null) {
             taQuestion.setText(selectedQuestion.getQuestion());
             tfTimeToDo.setText("" + selectedQuestion.getToDoTime());
@@ -106,6 +134,25 @@ public class QBankAddQuestionController {
             cbType.getSelectionModel().select(selectedQuestion.getQuestionType().getInt());
             cbLevel.getSelectionModel().select(selectedQuestion.getQuestionLevel().getInt());
             cbAssignType.getSelectionModel().select(selectedQuestion.getQuestionAssignmentType().getInt());
+
+            for (String ans : selectedQuestion.getAnswers()) {
+                JFXTextArea tempTA = new JFXTextArea();
+                answerAreas.add(tempTA);
+                vbAnswers.getChildren().add(tempTA);
+
+                tempTA.setPrefRowCount(3);
+                tempTA.setPromptText("Answer #" + answerAreas.size());
+                tempTA.setText(ans);
+            }
+        } else {
+            cbType.getSelectionModel().select(0);
+
+            JFXTextArea tempTA = new JFXTextArea();
+            answerAreas.add(tempTA);
+            vbAnswers.getChildren().add(tempTA);
+
+            tempTA.setPrefRowCount(3);
+            tempTA.setPromptText("Answer #" + answerAreas.size());
         }
     }
 
@@ -113,17 +160,19 @@ public class QBankAddQuestionController {
         if (!formValidate())
             return;
 
-        if (selectedQuestion != null) {
-            eQuestionType qt = eQuestionType.fromStr(cbType.getSelectionModel().getSelectedItem().toString());
-            eQuestionAssignmentType qat = eQuestionAssignmentType.fromStr(cbAssignType.getSelectionModel().getSelectedItem().toString());
-            eQuestionLevel ql = eQuestionLevel.fromStr(cbLevel.getSelectionModel().getSelectedItem().toString());
+        eQuestionType qt = eQuestionType.fromStr(cbType.getSelectionModel().getSelectedItem().toString());
+        eQuestionAssignmentType qat = eQuestionAssignmentType.fromStr(cbAssignType.getSelectionModel().getSelectedItem().toString());
+        eQuestionLevel ql = eQuestionLevel.fromStr(cbLevel.getSelectionModel().getSelectedItem().toString());
 
-            float fTimeToDo = Float.valueOf(tfTimeToDo.getText());
-
-            ArrayList<String> arrAnswers = new ArrayList<>();
-            if (qt == eQuestionType.MULTIPLECHOICE) {
-
+        ArrayList<String> arrAnswers = new ArrayList<>();
+        if (qt == eQuestionType.MULTIPLECHOICE) {
+            for (JFXTextArea ta : answerAreas) {
+                arrAnswers.add(ta.getText());
             }
+        }
+
+        if (selectedQuestion != null) {
+            float fTimeToDo = Float.valueOf(tfTimeToDo.getText());
 
             selectedQuestion.setQuestion(taQuestion.getText());
             selectedQuestion.setfScore(Float.valueOf(tfScore.getText()).floatValue());
@@ -136,18 +185,8 @@ public class QBankAddQuestionController {
             db.updateQuestion(selectedQuestion);
         } else {
             Course selectedCourse = md.getSelectedCourse();
-            String courseName = selectedCourse.getCourseName();
-
-            eQuestionType qt = eQuestionType.fromStr(cbType.getSelectionModel().getSelectedItem().toString());
-            eQuestionAssignmentType qat = eQuestionAssignmentType.fromStr(cbAssignType.getSelectionModel().getSelectedItem().toString());
-            eQuestionLevel ql = eQuestionLevel.fromStr(cbLevel.getSelectionModel().getSelectedItem().toString());
 
             float fTimeToDo = Float.valueOf(tfTimeToDo.getText());
-
-            ArrayList<String> arrAnswers = new ArrayList<>();
-            if (qt == eQuestionType.MULTIPLECHOICE) {
-
-            }
 
             Question temp = new Question(taQuestion.getText(),
                     Float.valueOf(tfScore.getText()).floatValue(),
@@ -185,5 +224,24 @@ public class QBankAddQuestionController {
         if (!tfScore.validate())
             return false;
         return true;
+    }
+
+    public void addAnswer(ActionEvent event) {
+        JFXTextArea tempTA = new JFXTextArea();
+        answerAreas.add(tempTA);
+        vbAnswers.getChildren().add(tempTA);
+
+        tempTA.setPrefRowCount(3);
+        tempTA.setPromptText("Answer #" + answerAreas.size());
+
+        btnRemoveAnswer.setDisable(false);
+    }
+
+    public void removeAnswer(ActionEvent event) {
+        JFXTextArea tempTA = answerAreas.get(answerAreas.size() - 1);
+        answerAreas.remove(tempTA);
+        vbAnswers.getChildren().remove(tempTA);
+        if (answerAreas.size() == 0)
+            btnRemoveAnswer.setDisable(true);
     }
 }
