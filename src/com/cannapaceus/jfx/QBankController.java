@@ -194,7 +194,7 @@ public class QBankController {
         });
         timeCol.setContextMenu(null);
 
-        TreeTableColumn<Question, Boolean> selectedCol = new JFXTreeTableColumn<>("Submitted");
+        TreeTableColumn<Question, Boolean> selectedCol = new JFXTreeTableColumn<>("Selected");
         selectedCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, Boolean> param) -> {
             BooleanProperty b = new SimpleBooleanProperty();
             b.addListener(((observable, oldValue, newValue) -> {
