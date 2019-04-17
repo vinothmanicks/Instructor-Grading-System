@@ -55,8 +55,6 @@ public class OSService {
         File homeDirectory = new File(sHomeDirectoryName);
         if (! homeDirectory.exists()){
             homeDirectory.mkdir();
-            // If you require it to make the entire directory path including parents,
-            // use directory.mkdirs(); here instead.
         }
 
         /**
@@ -75,8 +73,6 @@ public class OSService {
         File tempDirectory = new File(sTempDirectoryName);
         if (! tempDirectory.exists()){
             tempDirectory.mkdir();
-            // If you require it to make the entire directory path including parents,
-            // use directory.mkdirs(); here instead.
         }
     }
 

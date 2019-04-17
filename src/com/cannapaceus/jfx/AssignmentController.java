@@ -1,14 +1,14 @@
 package com.cannapaceus.jfx;
 
 import com.cannapaceus.grader.*;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.cannapaceus.services.PDFService;
+import com.cannapaceus.services.PrinterService;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.DoubleTextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -23,8 +23,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
+import java.util.Collections;
 import java.util.Comparator;
 
 public class AssignmentController {
@@ -32,8 +36,12 @@ public class AssignmentController {
     Model md = null;
 
     Assignment selectedAssignment;
+    Course selectedCourse;
 
     ObservableList<Grade> gradeObservableList;
+
+    @FXML
+    private StackPane spDialogPane;
 
     @FXML
     private Label lblAssignmentName;
@@ -57,11 +65,18 @@ public class AssignmentController {
     private JFXButton btnSubmitAll;
 
     @FXML
+    private VBox vbOptionsMenuPane;
+
+    @FXML
+    private JFXButton btnOpenOptionsMenu;
+
+    @FXML
     private void initialize()
     {
         sc = ScreenController.getInstance();
         md = Model.getInstance();
 
+        selectedCourse = md.getSelectedCourse();
         selectedAssignment = md.getSelectedAssignment();
         Statistics st = selectedAssignment.getStAssignmentStats();
 
@@ -266,5 +281,140 @@ public class AssignmentController {
 
     private JFXTreeTableView getTableView() {
         return assignmentGradeTable;
+    }
+
+    public void operateMenu(ActionEvent event) {
+        if(vbOptionsMenuPane.isVisible()) {
+            vbOptionsMenuPane.setManaged(false);
+            vbOptionsMenuPane.setVisible(false);
+
+            FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("BARS"); //ELLIPSIS_V
+            tempFA.setGlyphSize(30);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+            btnOpenOptionsMenu.setGraphic(tempFA);
+        }
+
+        else {
+            vbOptionsMenuPane.setManaged(true);
+            vbOptionsMenuPane.setVisible(true);
+
+            FontAwesomeIconView tempFA = new FontAwesomeIconView();
+            tempFA.setGlyphName("TIMES_CIRCLE");
+            tempFA.setGlyphSize(30);
+            tempFA.setGlyphStyle("-fx-fill: grey;");
+            btnOpenOptionsMenu.setGraphic(tempFA);
+        }
+    }
+
+    public void printAssignmentGradeBook(ActionEvent event) {
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Select Order of Printing"));
+
+        JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
+
+        jfxCombo.getItems().add(new Label("Last Name"));
+        jfxCombo.getItems().add(new Label("Grade"));
+        jfxCombo.getItems().add(new Label("Student ID"));
+
+        jfxCombo.getSelectionModel().select(0);
+
+        content.setBody(jfxCombo);
+
+        JFXButton ok = new JFXButton("Print");
+        ok.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
+        JFXButton cancel = new JFXButton("Cancel");
+        cancel.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+
+        JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
+
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PrinterService service = PrinterService.getInstance();
+                int index = jfxCombo.getSelectionModel().getSelectedIndex();
+                switch (index) {
+                    case 0:
+                        Collections.sort(selectedAssignment.getGrades(), Grade.nameComparator);
+                        break;
+                    case 1:
+                        Collections.sort(selectedAssignment.getGrades(), Grade.scoreComparator.reversed());
+                        break;
+                    case 2:
+                        Collections.sort(selectedAssignment.getGrades(), Grade.idComparator);
+                        break;
+                }
+
+                service.printGradeBook(selectedAssignment, selectedCourse);
+                dialog.close();
+            }
+        });
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+
+        content.setActions(ok, cancel);
+
+        dialog.show();
+    }
+
+    public void pdfAssignmentGradeBook(ActionEvent event) {
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Select Order of Printing"));
+
+        JFXComboBox<Label> jfxCombo = new JFXComboBox<Label>();
+
+        jfxCombo.getItems().add(new Label("Last Name"));
+        jfxCombo.getItems().add(new Label("Grade"));
+        jfxCombo.getItems().add(new Label("Student ID"));
+
+        jfxCombo.getSelectionModel().select(0);
+
+        content.setBody(jfxCombo);
+
+        JFXButton ok = new JFXButton("Print");
+        ok.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
+        JFXButton cancel = new JFXButton("Cancel");
+        cancel.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+
+        JFXDialog dialog = new JFXDialog(spDialogPane, content, JFXDialog.DialogTransition.CENTER);
+
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PDFService service = PDFService.getInstance();
+                int index = jfxCombo.getSelectionModel().getSelectedIndex();
+                switch (index) {
+                    case 0:
+                        Collections.sort(selectedAssignment.getGrades(), Grade.nameComparator);
+                        break;
+                    case 1:
+                        Collections.sort(selectedAssignment.getGrades(), Grade.scoreComparator.reversed());
+                        break;
+                    case 2:
+                        Collections.sort(selectedAssignment.getGrades(), Grade.idComparator);
+                        break;
+                }
+
+                service.printGradeBook(selectedAssignment, selectedCourse, false);
+                dialog.close();
+            }
+        });
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+
+        content.setActions(ok, cancel);
+
+        dialog.show();
     }
 }

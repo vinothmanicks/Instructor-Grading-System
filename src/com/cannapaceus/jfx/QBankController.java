@@ -129,9 +129,6 @@ public class QBankController {
                 return o1.toUpperCase().compareTo(o2.toUpperCase());
             }
         });
-        questionCol.setMinWidth(80);
-        questionCol.setMaxWidth(140);
-        questionCol.setPrefWidth(80);
         questionCol.setContextMenu(null);
 
         TreeTableColumn<Question, String> questionTypeCol = new JFXTreeTableColumn<>("Type");
@@ -143,7 +140,6 @@ public class QBankController {
             c.setEditable(false);
             return c;
         });
-        questionTypeCol.setMinWidth(80);
         questionTypeCol.setContextMenu(null);
 
         TreeTableColumn<Question, String> questionLevelCol = new JFXTreeTableColumn<>("Difficulty");
@@ -161,7 +157,6 @@ public class QBankController {
                 return Integer.compare(eQuestionLevel.fromStr(o1).getInt(), eQuestionLevel.fromStr(o2).getInt());
             }
         });
-        questionLevelCol.setMinWidth(80);
         questionLevelCol.setContextMenu(null);
 
         TreeTableColumn<Question, String> questionAssignmentTypeCol = new JFXTreeTableColumn<>("Assignment Type");
@@ -180,7 +175,6 @@ public class QBankController {
                         eQuestionAssignmentType.fromStr(o2).getInt());
             }
         });
-        questionAssignmentTypeCol.setMinWidth(120);
         questionAssignmentTypeCol.setContextMenu(null);
 
         TreeTableColumn<Question, String> timeCol = new JFXTreeTableColumn<>("Time to Complete");
@@ -198,10 +192,9 @@ public class QBankController {
                 return Float.compare(Float.valueOf(o1), Float.valueOf(o2));
             }
         });
-        timeCol.setMinWidth(120);
         timeCol.setContextMenu(null);
 
-        TreeTableColumn<Question, Boolean> selectedCol = new JFXTreeTableColumn<>("Submitted");
+        TreeTableColumn<Question, Boolean> selectedCol = new JFXTreeTableColumn<>("Selected");
         selectedCol.setCellValueFactory((TreeTableColumn.CellDataFeatures<Question, Boolean> param) -> {
             BooleanProperty b = new SimpleBooleanProperty();
             b.addListener(((observable, oldValue, newValue) -> {
@@ -222,7 +215,6 @@ public class QBankController {
             return c;
         });
         selectedCol.setSortable(false);
-        selectedCol.setMinWidth(80);
         selectedCol.setContextMenu(null);
 
         questionObservableList = FXCollections.observableArrayList();

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.effect.DropShadow?>
-<?import com.jfoenix.controls.JFXComboBox?>
 
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
@@ -23,6 +19,7 @@
 
         <center>
             <ScrollPane fitToWidth="true"
+                        fitToHeight="true"
                         AnchorPane.topAnchor="0.0"
                         AnchorPane.bottomAnchor="0.0"
                         AnchorPane.leftAnchor="0.0"
@@ -284,13 +281,13 @@
                         -fx-text-fill: #0077C8;
                     </style>
                 </JFXButton>
-                <JFXButton fx:id="btnImportCourse" buttonType="FLAT" text="Import from CSV" onAction="#importCourse">
+                <!--<JFXButton fx:id="btnImportCourse" buttonType="FLAT" text="Import from CSV" onAction="#importCourse">
                     <style>
                         -fx-cursor: hand;
                         -fx-background-color: #ffffff;
                         -fx-text-fill: #0077C8;
                     </style>
-                </JFXButton>
+                </JFXButton> -->
             </VBox>
         </right>
     </BorderPane>

@@ -281,39 +281,45 @@ public class Student extends RecursiveTreeObject<Student> {
 
     public String[] GenerateStudentReportArray()
     {
-        int iSize = (lGrades.size()*2) + 5;
+        int iSize = 7;
+
+        for (Grade grade : lGrades) {
+            if(grade.getSubmitted())
+                iSize += 2;
+        }
 
         String[] sReport = new String[iSize];
 
         sReport[0] = "Student Name: " + this.sFirstMIName.getValue() + " " + this.sLastName.getValue();
         sReport[1] = "Student ID: " + this.sStudentID.getValue();
         sReport[2] = "";
-        sReport[3] = "Assignments: ";
+        sReport[3] = "Average Grade: " + this.getAverageGrade();
         sReport[4] = "";
+        sReport[5] = "Assignments: ";
+        sReport[6] = "";
 
         int iPos = 0;
-        for(int i = 5; i < iSize;) {
+        for(int i = 7; i < iSize;) {
             Grade gGrade = lGrades.get(iPos);
-            sReport[i] = "    " + gGrade.getAssignmentCopy().getAssignmentName() + ":    " + gGrade.getGrade()+"\\"+ gGrade.getAssignmentCopy().getMaxScore();
-            if(gGrade.getMissing() == true)
-            {
-                String sMissingData = new String("    - Missing");
-                sReport[i] = sReport[i] + sMissingData;
-            }
-            if(gGrade.getOverdue() == true)
-            {
-                String sOverdueData = new String("    - Overdue");
-                sReport[i] = sReport[i] + sOverdueData;
-            }
-            if(gGrade.getDropped() == true)
-            {
-                String sDroppedData = new String("    - Dropped");
-                sReport[i] = sReport[i] + sDroppedData;
-            }
+            if (gGrade.getSubmitted()) {
+                sReport[i] = "    " + gGrade.getAssignmentCopy().getAssignmentName() + ":    " + gGrade.getGrade() + "\\" + gGrade.getAssignmentCopy().getMaxScore();
+                if (gGrade.getMissing() == true) {
+                    String sMissingData = new String("    - Missing");
+                    sReport[i] = sReport[i] + sMissingData;
+                }
+                if (gGrade.getOverdue() == true) {
+                    String sOverdueData = new String("    - Overdue");
+                    sReport[i] = sReport[i] + sOverdueData;
+                }
+                if (gGrade.getDropped() == true) {
+                    String sDroppedData = new String("    - Dropped");
+                    sReport[i] = sReport[i] + sDroppedData;
+                }
 
-            sReport[i+1] = "";
+                sReport[i + 1] = "";
 
-            i += 2;
+                i += 2;
+            }
             ++iPos;
         }
 

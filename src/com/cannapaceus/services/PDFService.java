@@ -1,8 +1,6 @@
 package com.cannapaceus.services;
 
-import com.cannapaceus.grader.Assignment;
-import com.cannapaceus.grader.Course;
-import com.cannapaceus.grader.Student;
+import com.cannapaceus.grader.*;
 import com.cannapaceus.qbank.Question;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -16,6 +14,7 @@ import java.util.ArrayList;
 
 public class PDFService {
 
+    DBService db;
 
     private static PDFService instance = null;
     PDPageContentStream contentStream = null;
@@ -26,6 +25,10 @@ public class PDFService {
             instance = new PDFService();
         }
         return instance;
+    }
+
+    private PDFService() {
+        db = DBService.getInstance();
     }
 
     /* Synthesise new page */
@@ -64,6 +67,12 @@ public class PDFService {
             document = new PDDocument();
             GenerateNewPage();
 
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
+            contentStream.showText("Course Name: " + course.getCourseName());
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+
             contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
             contentStream.showText("Last Name");
             contentStream.newLineAtOffset(160, 0);
@@ -74,7 +83,7 @@ public class PDFService {
             contentStream.newLine();
 
             contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-            int iCounter = 1;
+            int iCounter = 3;
             for (Student student : lStudents) {
                 contentStream.showText(student.getLastName());
                 contentStream.newLineAtOffset(160, 0);
@@ -126,11 +135,13 @@ public class PDFService {
                 GenerateNewPage();
                 String[] data = student.GenerateStudentReportArray();
 
+                contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Course Name: " + course.getCourseName());
                 contentStream.newLine();
                 contentStream.newLine();
+                contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 
-                int iCounter = 3;
+                int iCounter = 2;
                 for (String text : data) {
                     contentStream.showText(text);
                     contentStream.newLine();
@@ -175,9 +186,11 @@ public class PDFService {
 
             String[] data = student.GenerateStudentReportArray();
 
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
             contentStream.showText("Course Name: " + course.getCourseName());
             contentStream.newLine();
             contentStream.newLine();
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 
             int iCounter = 2;
             for (String text : data) {
@@ -200,7 +213,7 @@ public class PDFService {
                 AccessPermission ap = new AccessPermission();
 
                 //Creating StandardProtectionPolicy object
-                StandardProtectionPolicy spp = new StandardProtectionPolicy("1234", student.getStudentID(), ap);
+                StandardProtectionPolicy spp = new StandardProtectionPolicy(db.retrieveEmailPass(), student.getStudentID(), ap);
 
                 //Setting the length of the encryption key
                 spp.setEncryptionKeyLength(128);
@@ -239,17 +252,22 @@ public class PDFService {
             document = new PDDocument();
             GenerateNewPage();
 
+            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 16);
+            contentStream.showText("Course Name: " + course.getCourseName());
+            contentStream.newLine();
+            contentStream.newLine();
+
             contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
             contentStream.showText("Name");
             contentStream.newLineAtOffset(200, 0);
             contentStream.showText("Student ID");
             contentStream.newLineAtOffset(160, 0);
-            contentStream.showText("Grade");
+            contentStream.showText("Overall Grade");
             contentStream.newLineAtOffset(-360, 0);
             contentStream.newLine();
 
             contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-            int iCounter = 1;
+            int iCounter = 3;
             for (Student student : lStudents) {
                 contentStream.showText(student.getFirstMIName() + " " + student.getLastName());
                 contentStream.newLineAtOffset(200, 0);
@@ -282,11 +300,78 @@ public class PDFService {
         return filename;
     }
 
+    public String printGradeBook(Assignment assignment, Course course, Boolean bTemp) {
+        OSService osService = OSService.getInstance();
+        ArrayList<Grade> lGrades = assignment.getGrades();
+        String filename;
+
+        if (bTemp) {
+            filename = osService.getTempDirectoryPath() + course.getCourseName() + "_" + assignment.getAssignmentName() + "_GradeReport.pdf";
+        }
+        else
+            filename = osService.getDesktopDirectoryPath() + course.getCourseName() + "_" + assignment.getAssignmentName() + "_GradeReport.pdf";
+
+        try {
+            document = new PDDocument();
+            GenerateNewPage();
+
+            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 16);
+            contentStream.showText("Course Name: " + course.getCourseName());
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 15);
+            contentStream.showText("Assignment Name: " + assignment.getAssignmentName());
+            contentStream.newLine();
+            contentStream.newLine();
+
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
+            contentStream.showText("Name");
+            contentStream.newLineAtOffset(200, 0);
+            contentStream.showText("Student ID");
+            contentStream.newLineAtOffset(160, 0);
+            contentStream.showText("Grade");
+            contentStream.newLineAtOffset(-360, 0);
+            contentStream.newLine();
+
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+            int iCounter = 5;
+            for (Grade grade : lGrades) {
+                contentStream.showText(grade.getStudentReference().getFirstMIName() + " " + grade.getStudentReference().getLastName());
+                contentStream.newLineAtOffset(200, 0);
+                contentStream.showText(grade.getStudentReference().getStudentID());
+                contentStream.newLineAtOffset(160, 0);
+                contentStream.showText(String.valueOf(grade.getGrade()));
+                contentStream.newLineAtOffset(-360, 0);
+                contentStream.newLine();
+                ++iCounter;
+
+                if(iCounter >= 47) {
+                    GenerateNewPage();
+                    iCounter = 0;
+                }
+            }
+            contentStream.endText();
+            contentStream.close();
+
+            document.save(filename);
+            document.close();
+
+            contentStream = null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            contentStream = null;
+        }
+
+        return filename;
+    }
+
     public void printAssignment(Course course, Assignment assignment, ArrayList<Question> selectedQuestions) {
         OSService osService = OSService.getInstance();
         String filename;
 
-        filename = osService.getDesktopDirectoryPath() + course.getCourseName() + "_" + selectedQuestions.get(0).getQuestionAssignmentType().toString() + "_" + assignment.getAssignmentName() + ".pdf";
+        filename = osService.getDesktopDirectoryPath() + course.getCourseName() + "_AutoGeneratedAssignment_" + assignment.getAssignmentName() + ".pdf";
 
         try {
             document = new PDDocument();
@@ -319,8 +404,8 @@ public class PDFService {
                 int iCharacterCounter = 3;
 
                 for (int j = 0; j < words.length; j++) {
-                    if(words[j].length() <= 120) {
-                        if (iCharacterCounter + words[j].length() > 120) {
+                    if(words[j].length() <= 110) {
+                        if (iCharacterCounter + words[j].length() > 110) {
                             contentStream.newLine();
                             ++iCounter;
                             iCharacterCounter = 0;
@@ -335,15 +420,15 @@ public class PDFService {
                         iCharacterCounter = iCharacterCounter + 1 + words[j].length();
                     }
 
-                    else if (words[j].length() > 120) {
+                    else if (words[j].length() > 110) {
                         contentStream.newLine();
                         int iSplitter = 0;
-                        while (iSplitter < (words[j].length()/120)) {
+                        while (iSplitter < (words[j].length()/110)) {
                             if (iCounter == 47) {
                                 GenerateNewPage();
                                 iCounter = 0;
                             }
-                            contentStream.showText(words[j].substring(iSplitter*120, iSplitter*120 + 119));
+                            contentStream.showText(words[j].substring(iSplitter*110, iSplitter*110 + 109));
                             contentStream.newLine();
                             ++iSplitter;
                             ++iCounter;
@@ -352,7 +437,7 @@ public class PDFService {
                             GenerateNewPage();
                             iCounter = 0;
                         }
-                        contentStream.showText(words[j].substring(iSplitter*120));
+                        contentStream.showText(words[j].substring(iSplitter*110));
 
                         ++iCounter;
                     }
@@ -412,6 +497,50 @@ public class PDFService {
                         break;
 
                     case MULTIPLECHOICE:
+                        contentStream.newLineAtOffset(35, 0);
+                        int iAnswers = 96;
+                        for (String answer : question.getAnswers()) {
+                            ++iCounter;
+                            ++iAnswers;
+                            String[] wordsForAnswer = answer.split(" ");
+                            contentStream.newLineAtOffset(-17, 0);
+                            contentStream.showText((char)iAnswers + ") ");
+                            contentStream.newLineAtOffset(17, 0);
+                            int iCharCounter = 3;
+
+                            for (int j = 0; j < words.length; j++) {
+                                if (words[j].length() <= 100) {
+                                    if (iCharCounter + words[j].length() > 100) {
+                                        contentStream.newLine();
+                                        ++iCounter;
+                                        iCharCounter = 0;
+                                    }
+
+                                    if (iCounter == 47) {
+                                        GenerateNewPage();
+                                        iCounter = 0;
+                                        contentStream.newLineAtOffset(35, 0);
+                                    }
+
+                                    contentStream.showText(wordsForAnswer[j] + " ");
+                                    iCharCounter = iCharCounter + 1 + wordsForAnswer[j].length();
+                                }
+                            }
+
+                            if(iCounter == 47){
+                                GenerateNewPage();
+                                iCounter = 0;
+                                contentStream.newLineAtOffset(35, 0);
+                            }
+                            contentStream.newLine();
+                        }
+                        contentStream.newLineAtOffset(-35, 0);
+                        if(iCounter == 47){
+                            GenerateNewPage();
+                            iCounter = 0;
+                        }
+                        contentStream.newLine();
+                        ++iCounter;
                         break;
 
                     default:
