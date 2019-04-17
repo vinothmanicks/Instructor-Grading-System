@@ -129,6 +129,7 @@ public class QBankController {
                 return o1.toUpperCase().compareTo(o2.toUpperCase());
             }
         });
+        questionCol.setMaxWidth(400);
         questionCol.setContextMenu(null);
 
         TreeTableColumn<Question, String> questionTypeCol = new JFXTreeTableColumn<>("Type");

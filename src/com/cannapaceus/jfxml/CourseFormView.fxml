@@ -58,7 +58,7 @@
                 </JFXTextField>
             </HBox>
             <HBox alignment="CENTER_LEFT">
-                <JFXTextField fx:id="tfCourseDept" promptText="Department ex: Computer Science" prefWidth="200" labelFloat="true">
+                <JFXTextField fx:id="tfCourseDept" promptText="Department" prefWidth="200" labelFloat="true">
                     <validators>
                         <RequiredFieldValidator message="Input Required">
                             <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
