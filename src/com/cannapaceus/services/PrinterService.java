@@ -60,8 +60,8 @@ public class PrinterService {
     }
 
     /**
-     *
-     * @param course
+     * Prints list of students in a course.
+     * @param course Course for which student list is to be printed.
      */
     public void printList(Course course) {
         OSService osService = OSService.getInstance();
