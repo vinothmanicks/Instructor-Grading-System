@@ -77,17 +77,17 @@
 
 .left ol {
     font-weight: 600;
-    color: #94930f;
+    color: #FFFFFF;
     line-height: 1.75em;
 }
 
 .left a {
     text-decoration: none;
-    color: #94930f
+    color: #FFFFFF;
 }
 
 .left a:hover {
-    color: white;
+    color: black;
 }
 
 @media screen and (min-width: 800px) {
