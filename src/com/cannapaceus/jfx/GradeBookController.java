@@ -202,7 +202,7 @@ public class GradeBookController{
 
     public void backClick(ActionEvent actionEvent) {
         try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
             e.printStackTrace();

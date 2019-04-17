@@ -18,17 +18,17 @@ public class IGPApp extends Application {
     public void start(Stage primaryStage) {
         try {
             // Create the FXMLLoader
-            FXMLLoader loader = new FXMLLoader();
+//            FXMLLoader loader = new FXMLLoader();
             // Path to the FXML File
-            String fxmlDocPath = "./src/com/cannapaceus/jfxml/LoginView.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+//            String fxmlDocPath = "./src/com/cannapaceus/jfxml/LoginView.fxml";
+//            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
 
             // Create the Pane and all Details
-            Parent root = loader.load(fxmlStream);
+            Parent root = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
 
             // Create the Scene
             Scene scene = new Scene(root, 800, 600);
-            scene.getStylesheets().add(getClass().getResource("../jfxml/IGP.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/IGP.css").toExternalForm());
             // Set the Scene to the Stage
             primaryStage.setScene(scene);
             // Set the Title to the Stage

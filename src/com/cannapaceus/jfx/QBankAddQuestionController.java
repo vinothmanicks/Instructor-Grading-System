@@ -200,7 +200,7 @@ public class QBankAddQuestionController {
         }
 
         try {
-            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("../jfxml/QBankView.fxml")));
+            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("/QBankView.fxml")));
             sc.activate("QBank");
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,7 +209,7 @@ public class QBankAddQuestionController {
 
     public void backClick(ActionEvent actionEvent) {
         try {
-            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("../jfxml/QBankView.fxml")));
+            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("/QBankView.fxml")));
             sc.activate("QBank");
         } catch (Exception e) {
             e.printStackTrace();

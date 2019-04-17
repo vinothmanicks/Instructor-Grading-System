@@ -163,7 +163,7 @@ public class GradingCopyController {
         }
 
         try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +174,7 @@ public class GradingCopyController {
     public void cancelClick(ActionEvent event) {
 
         try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
             e.printStackTrace();

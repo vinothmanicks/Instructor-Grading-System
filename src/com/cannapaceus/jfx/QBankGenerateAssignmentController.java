@@ -207,7 +207,7 @@ public class QBankGenerateAssignmentController {
         pdfService.printAssignment(selectedCourse, selectedAssignment, selectedQuestions);
 
         try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
             e.printStackTrace();
@@ -260,7 +260,7 @@ public class QBankGenerateAssignmentController {
             cancelGenerateExistingAssignmentClick();
 
         try {
-            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("../jfxml/QBankView.fxml")));
+            sc.addScreen("QBank", FXMLLoader.load(getClass().getResource("/QBankView.fxml")));
             sc.activate("QBank");
         } catch (Exception e) {
             e.printStackTrace();

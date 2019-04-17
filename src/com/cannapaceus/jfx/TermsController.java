@@ -255,7 +255,7 @@ public class TermsController {
         md.setSelectedCourse(targetCourse);
 
         try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,7 +285,7 @@ public class TermsController {
         md.setSelectedTerm(t);
 
         try {
-            sc.addScreen("TermForm", FXMLLoader.load(getClass().getResource("../jfxml/TermFormView.fxml")));
+            sc.addScreen("TermForm", FXMLLoader.load(getClass().getResource("/TermFormView.fxml")));
             sc.activate("TermForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -306,7 +306,7 @@ public class TermsController {
         md.setSelectedCourse(targetCourse);
 
         try {
-            sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("../jfxml/CourseFormView.fxml")));
+            sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("/CourseFormView.fxml")));
             sc.activate("CourseForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -347,7 +347,7 @@ public class TermsController {
         md.setSelectedTerm(targetTerm);
 
         try {
-            sc.addScreen("TermForm", FXMLLoader.load(getClass().getResource("../jfxml/TermFormView.fxml")));
+            sc.addScreen("TermForm", FXMLLoader.load(getClass().getResource("/TermFormView.fxml")));
             sc.activate("TermForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -362,7 +362,7 @@ public class TermsController {
         md.setSelectedCourse(targetCourse);
 
         try {
-            sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("../jfxml/CourseFormView.fxml")));
+            sc.addScreen("CourseForm", FXMLLoader.load(getClass().getResource("/CourseFormView.fxml")));
             sc.activate("CourseForm");
         } catch (Exception e) {
             e.printStackTrace();
