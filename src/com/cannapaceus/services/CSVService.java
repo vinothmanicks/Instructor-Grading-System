@@ -14,6 +14,10 @@ public class CSVService {
 
     private CSVWriter writer;
 
+    /**
+     * Writes a List of Sting into a csv file
+     * @param data A list of Strings
+     */
     public void ExportCSV(List<String[]> data){
         try {
             // create FileWriter object with file as parameter
@@ -35,6 +39,11 @@ public class CSVService {
         }
     }
 
+    /**
+     * Exports all information about a course as a CSV File.
+     * This includes the information about the courses in the terms.
+     * @param term The term being exported
+     */
     public void ExportCSV(Term term){
         try {
             // create FileWriter object with file as parameter
@@ -82,6 +91,12 @@ public class CSVService {
         }
     }
 
+    /**
+     * Exports all information about a course as a CSV File.
+     * This includes all assignment, student and grade information
+     * @param course The course being exported
+     * @param term The term to which the course being exported belongs to
+     */
     public void ExportCSV(Course course, Term term){
         try {
             OSService osService = OSService.getInstance();
@@ -123,6 +138,10 @@ public class CSVService {
         }
     }
 
+    /**
+     * Exports all information about assignments as a CSV File.
+     * @param lAssignments the list of assignments to be exported
+     */
     private void CSVWriter_Assignment(ArrayList<Assignment> lAssignments) {
         String[] dataType = {"DataType", "Assignment"};
         writer.writeNext(dataType);
@@ -166,6 +185,10 @@ public class CSVService {
         writer.writeNext(emptyLine);
     }
 
+    /**
+     * Exports all information about grades as a CSV File.
+     * @param cCourse the course for which the grade information is to be exported
+     */
     private void CSVWriter_Grades(Course cCourse)
     {
         String[] dataType = {"DataType", "Grade"};
@@ -204,14 +227,15 @@ public class CSVService {
             writer.writeNext(data);
         }
 
-
-
-
         String[] footer = {"___END___"};
         writer.writeNext(footer);
         writer.writeNext(emptyLine);
     }
 
+    /**
+     * Exports all information about students as a CSV File.
+     * @param lStudents ArrayList of students to be exported
+     */
     private void CSVWriter_Student(ArrayList<Student> lStudents) {
         String[] dataType = {"DataType", "Student"};
         writer.writeNext(dataType);
@@ -234,6 +258,10 @@ public class CSVService {
         writer.writeNext(emptyLine);
     }
 
+    /**
+     * Exports all information about categories as a CSV File.
+     * @param coCourse the course for which all category information is to be exported
+     */
     private void CSVWriter_Categories(Course coCourse) {
         String[] dataType = {"DataType", "Category"};
         writer.writeNext(dataType);
@@ -256,12 +284,11 @@ public class CSVService {
         writer.writeNext(emptyLine);
     }
 
-    /*
-    public void ExportCSV() {
-        java.sql.ResultSet myResultSet = getResultSetFromSomewhere();
-        writer.writeAll(myResultSet, includeHeaders); //writer is instance of CSVWriter
-    }*/
-
+    /**
+     *
+     * @param csvFilePath
+     * @return
+     */
     public Course ImportCSV(String csvFilePath) {
         String line = "";
         String cvsSplitBy = ",";
@@ -410,6 +437,10 @@ public class CSVService {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String Today() {
         String pattern = "yyyyMMdd_HHmmss";
 

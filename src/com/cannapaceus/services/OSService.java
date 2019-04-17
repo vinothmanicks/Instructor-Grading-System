@@ -76,6 +76,10 @@ public class OSService {
         }
     }
 
+    /**
+     * Returns the path to the Desktop directory based on the OS.
+     * @return String containing the path.
+     */
     public String getDesktopDirectoryPath() {
         if (bWindows) {
             return sHomeDirectoryName.concat("\\");
@@ -84,6 +88,10 @@ public class OSService {
             return sHomeDirectoryName.concat("/");
     }
 
+    /**
+     * Returns the path to the Temp Data directory based on the OS.
+     * @return String containing the path.
+     */
     public String getTempDirectoryPath() {
         if (bWindows) {
             return sTempDirectoryName.concat("\\");
@@ -92,6 +100,11 @@ public class OSService {
             return sTempDirectoryName.concat("/");
     }
 
+    /**
+     * Deletes the file specified
+     * @param sFullPath String with the file path to the file to be deleted.
+     * @return true if file has been successfully deleted and false if the delete failed.
+     */
     public Boolean delete(String sFullPath) {
         File file = new File(sFullPath);
         if (file.delete()){

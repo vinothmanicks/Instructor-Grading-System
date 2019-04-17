@@ -129,9 +129,9 @@ public class EmailService {
     // Methods
 
     /**
-     *
-     * @param student
-     * @param course
+     * Constructs the email with an attachment and sends it to the recipient.
+     * @param student The student to which you want to send the email.
+     * @param course The course in which the student you want to send an email to is in.
      */
     private void SendEmail(Student student, Course course) {
 
@@ -207,8 +207,8 @@ public class EmailService {
     }
 
     /**
-     *
-     * @param course
+     * Sends email to all students in a course.
+     * @param course The course for which you want to email grade reports to
      * @return
      */
     public boolean email(Course course) {
@@ -224,9 +224,9 @@ public class EmailService {
     }
 
     /**
-     *
-     * @param student
-     * @param course
+     * Sends email to a student in a course
+     * @param student The student to which you want to send the email.
+     * @param course The course in which the student you want to send an email to is in.
      * @return
      */
     public boolean email(Student student, Course course) {
