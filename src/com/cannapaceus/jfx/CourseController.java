@@ -131,7 +131,7 @@ public class CourseController {
         md.setSelectedTerm(null);
 
         try {
-            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
+            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("/TermsView.fxml")));
             sc.activate("Terms");
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,7 +142,7 @@ public class CourseController {
         md.setSelectedStudent(hmStudent.get(((Node) event.getSource()).getId()));
 
         try {
-            sc.addScreen("Student", FXMLLoader.load(getClass().getResource("../jfxml/StudentView.fxml")));
+            sc.addScreen("Student", FXMLLoader.load(getClass().getResource("/StudentView.fxml")));
             sc.activate("Student");
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,7 +153,7 @@ public class CourseController {
         md.setSelectedAssignment(hmAssignment.get(((Node) event.getSource()).getId()));
 
         try {
-            sc.addScreen("Assignment", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentView.fxml")));
+            sc.addScreen("Assignment", FXMLLoader.load(getClass().getResource("/AssignmentView.fxml")));
             sc.activate("Assignment");
         } catch (Exception e) {
             e.printStackTrace();
@@ -590,7 +590,7 @@ public class CourseController {
         md.setSelectedCategory(targetCategory);
 
         try {
-            sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("../jfxml/CategoryFormView.fxml")));
+            sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("/CategoryFormView.fxml")));
             sc.activate("CategoryForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -603,7 +603,7 @@ public class CourseController {
         md.setSelectedStudent(targetStudent);
 
         try {
-            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("../jfxml/StudentFormView.fxml")));
+            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("/StudentFormView.fxml")));
             sc.activate("StudentForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -618,7 +618,7 @@ public class CourseController {
         md.setSelectedCategory(targetCategory);
 
         try {
-            sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));
+            sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("/AssignmentFormView.fxml")));
             sc.activate("AssignmentForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -633,7 +633,7 @@ public class CourseController {
         md.setSelectedCategory(c);
 
         try {
-            sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("../jfxml/CategoryFormView.fxml")));
+            sc.addScreen("CategoryForm", FXMLLoader.load(getClass().getResource("/CategoryFormView.fxml")));
             sc.activate("CategoryForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -648,7 +648,7 @@ public class CourseController {
         md.setSelectedStudent(s);
 
         try {
-            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("../jfxml/StudentFormView.fxml")));
+            sc.addScreen("StudentForm", FXMLLoader.load(getClass().getResource("/StudentFormView.fxml")));
             sc.activate("StudentForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -670,7 +670,7 @@ public class CourseController {
         md.setSelectedCategory(cat);
 
         try {
-            sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("../jfxml/AssignmentFormView.fxml")));
+            sc.addScreen("AssignmentForm", FXMLLoader.load(getClass().getResource("/AssignmentFormView.fxml")));
             sc.activate("AssignmentForm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -702,7 +702,7 @@ public class CourseController {
 
     public void openGradeBook(ActionEvent event) {
         try {
-            sc.addScreen("GradeBook", FXMLLoader.load(getClass().getResource("../jfxml/GradeBookView.fxml")));
+            sc.addScreen("GradeBook", FXMLLoader.load(getClass().getResource("/GradeBookView.fxml")));
             sc.activate("GradeBook");
         } catch (Exception e) {
             e.printStackTrace();
@@ -926,7 +926,7 @@ public class CourseController {
     public void copyStuff(ActionEvent event)
     {
         try {
-            sc.addScreen("GradeCopy", FXMLLoader.load(getClass().getResource("../jfxml/GradingCopyView.fxml")));
+            sc.addScreen("GradeCopy", FXMLLoader.load(getClass().getResource("/GradingCopyView.fxml")));
             sc.activate("GradeCopy");
         } catch (Exception e) {
             e.printStackTrace();

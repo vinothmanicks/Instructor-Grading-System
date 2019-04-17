@@ -61,7 +61,7 @@ public class LoginController {
         if (errMessage == null){
             try {
                 EmailService.getInstance(db.retrieveEmail(), db.retrieveEmailPass());
-                sc.setRoot(FXMLLoader.load(getClass().getResource("../jfxml/GraderView.fxml")));
+                sc.setRoot(FXMLLoader.load(getClass().getResource("/GraderView.fxml")));
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -82,7 +82,7 @@ public class LoginController {
             yes.setOnAction(event -> {
                 db.databaseSetup();
                 try {
-                    sc.setRoot(FXMLLoader.load(getClass().getResource("../jfxml/GraderView.fxml")));
+                    sc.setRoot(FXMLLoader.load(getClass().getResource("/GraderView.fxml")));
                 } catch(Exception e) {
                     e.printStackTrace();
                 }

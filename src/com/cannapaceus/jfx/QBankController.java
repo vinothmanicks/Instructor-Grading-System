@@ -261,7 +261,7 @@ public class QBankController {
     public void generateAssignment(ActionEvent event) {
         try {
             md.saveSelectedQuestions(selectedQuestions);
-            sc.addScreen("GenerateAssignment", FXMLLoader.load(getClass().getResource("../jfxml/QBankGenerateAssignmentView.fxml")));
+            sc.addScreen("GenerateAssignment", FXMLLoader.load(getClass().getResource("/QBankGenerateAssignmentView.fxml")));
             sc.activate("GenerateAssignment");
         } catch (Exception e) {
             e.printStackTrace();
@@ -270,7 +270,7 @@ public class QBankController {
 
     public void editQuestion(ActionEvent event) {
         try {
-            sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("../jfxml/QBankAddQuestionView.fxml")));
+            sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("/QBankAddQuestionView.fxml")));
             sc.activate("AddQuestion");
         } catch (Exception e) {
             e.printStackTrace();
@@ -290,7 +290,7 @@ public class QBankController {
         md.setSelectedQuestion(null);
 
         try {
-            sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("../jfxml/QBankAddQuestionView.fxml")));
+            sc.addScreen("AddQuestion", FXMLLoader.load(getClass().getResource("/QBankAddQuestionView.fxml")));
             sc.activate("AddQuestion");
         } catch (Exception e) {
             e.printStackTrace();

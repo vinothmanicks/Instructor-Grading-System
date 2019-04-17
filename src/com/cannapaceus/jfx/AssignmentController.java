@@ -231,7 +231,7 @@ public class AssignmentController {
         md.setSelectedCategory(null);
 
         try {
-            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("../jfxml/CourseView.fxml")));
+            sc.addScreen("Course", FXMLLoader.load(getClass().getResource("/CourseView.fxml")));
             sc.activate("Course");
         } catch (Exception e) {
             e.printStackTrace();

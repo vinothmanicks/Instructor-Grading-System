@@ -50,7 +50,7 @@ public class TermFormController {
         }
 
         try {
-            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
+            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("/TermsView.fxml")));
             sc.activate("Terms");
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class TermFormController {
         Collections.sort(md.getTerms(), Term.termComparator);
 
         try {
-            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("../jfxml/TermsView.fxml")));
+            sc.addScreen("Terms", FXMLLoader.load(getClass().getResource("/TermsView.fxml")));
             sc.activate("Terms");
         } catch (Exception e) {
             e.printStackTrace();
