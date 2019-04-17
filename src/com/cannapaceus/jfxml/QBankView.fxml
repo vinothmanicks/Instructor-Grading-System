@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.QBankController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
+                    AnchorPane.topAnchor="0.0"
+                    AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
+
+            <style>
+                -fx-background-color: white;
+            </style>
+
+            <VBox fx:id="vbCourse"
+                  fillWidth="true"
+                  spacing="10"
+                  AnchorPane.topAnchor="0.0"
+                  AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0">
+
+                <style>
+                    -fx-padding: 20, 20, 20, 20;
+                </style>
+                <children>
+                    <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <Label text="Question Bank"/>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <JFXComboBox fx:id="cbCourse" promptText="Select Course"/>
+                        <JFXButton fx:id="btnGenerate" disable="true" onAction="#generateAssignment" buttonType="FLAT" text="Generate Assignment" >
+                            <graphic>
+                                <FontAwesomeIconView glyphName="ENVELOPE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                            </graphic>
+                            <style>
+                                -fx-background-color: #4CAF50;
+                                -fx-text-fill: white;
+                            </style>
+                        </JFXButton>
+                    </HBox>
+                    <JFXTreeTableView fx:id="questionTable">
+
+                    </JFXTreeTableView>
+                </children>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <VBox fillWidth="true">
+            <Separator></Separator>
+            <HBox spacing="20.0" alignment="CENTER_LEFT">
+                <Pane HBox.hgrow="ALWAYS"/>
+                <style>
+                    -fx-padding: 10,10,10,10;
+                    -fx-background-color: white;
+                </style>
+                <JFXButton fx:id="btnEditQuestion" buttonType="FLAT" text="Edit Question" disable="true" onAction="#editQuestion">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="EDIT" glyphSize="17" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #f7c42a;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton fx:id="btnDeleteQuestion" buttonType="FLAT" text="Delete Question" disable="true" onAction="#deleteQuestion">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="MINUS_CIRCLE" glyphSize="20" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #e74c3c;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+                <Separator orientation="VERTICAL"/>
+                <JFXButton fx:id="btnAddQuestion" disable="true" buttonType="FLAT" text="Add Question" onAction="#addQuestion">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="PLUS" glyphSize="17" glyphStyle="-fx-fill: white;"/>
+                    </graphic>
+                    <style>
+                        -fx-background-color: #4CAF50;
+                        -fx-text-fill: white;
+                    </style>
+                </JFXButton>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

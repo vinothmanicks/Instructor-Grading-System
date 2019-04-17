@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import javafx.scene.effect.DropShadow?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cannapaceus.jfx.GraderController">
+
+    <BorderPane fx:id="bpGraderView"
+                VBox.vgrow="ALWAYS"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0">
+
+        <left>
+            <VBox alignment="CENTER" prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
+                <style>
+                    -fx-background-color: #0077C8;
+                </style>
+                <children>
+                    <JFXButton prefWidth="120.0"
+                               text="Home"
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER"
+                               onAction="#homeClick">
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="HOME" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
+
+                        <style>
+                            -fx-background-color: white;
+                            -fx-text-fill: #0077C8;
+                        </style>
+
+                    </JFXButton>
+
+                    <JFXButton prefWidth="120.0"
+                               text="QBank"
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER"
+                               onAction="#qBankClick">
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="UNIVERSITY" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
+
+                        <style>
+                            -fx-background-color: white;
+                            -fx-text-fill: #0077C8;
+                        </style>
+
+                    </JFXButton>
+
+                    <JFXButton prefWidth="120.0"
+                               text="Settings"
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER"
+                               onAction="#settingsClick">
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="SLIDERS" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
+
+                        <style>
+                            -fx-background-color: white;
+                            -fx-text-fill: #0077C8;
+                        </style>
+
+                    </JFXButton>
+
+                    <JFXButton prefWidth="120.0"
+                               text="Help"
+                               buttonType="FLAT"
+                               focusTraversable="false"
+                               contentDisplay="TOP"
+                               alignment="TOP_CENTER"
+                               onAction="#helpClick">
+
+                        <graphic>
+                            <FontAwesomeIconView glyphName="QUESTION" glyphSize="60" glyphStyle="-fx-fill: #0077C8;"/>
+                        </graphic>
+
+                        <style>
+                            -fx-background-color: white;
+                            -fx-text-fill: #0077C8;
+                        </style>
+
+                    </JFXButton>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" top="5.0" />
+                </padding>
+            </VBox>
+        </left>
+        <center>
+        </center>
+    </BorderPane>
+</AnchorPane>

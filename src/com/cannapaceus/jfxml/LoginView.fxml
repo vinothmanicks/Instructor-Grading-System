@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.validation.RegexValidator?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:id="spDialogPane"
+           fx:controller="com.cannapaceus.jfx.LoginController"
+           prefHeight="400.0" prefWidth="600.0">
+
+    <VBox fx:id="vbLogin" spacing="80" maxWidth="400" maxHeight="200" fillWidth="true">
+        <children>
+            <JFXTextField fx:id="inUsername"
+                          alignment="CENTER_LEFT"
+                          promptText="Username"
+                          onKeyPressed="#handleEnterKey"
+                          labelFloat="true">
+                <validators>
+                    <RequiredFieldValidator message="Input Required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </RequiredFieldValidator>
+                </validators>
+            </JFXTextField>
+
+            <JFXPasswordField fx:id="inPassword"
+                              alignment="CENTER_LEFT"
+                              promptText="Password"
+                              onKeyPressed="#handleEnterKey"
+                              labelFloat="true">
+
+                <validators>
+                    <RequiredFieldValidator message="Input Required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </RequiredFieldValidator>
+                    <RegexValidator regexPattern=".{8,}" message="8 characters required">
+                        <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                    </RegexValidator>
+                </validators>
+            </JFXPasswordField>
+
+            <JFXButton text="Login" alignment="CENTER_LEFT" onAction="#loginClick" buttonType="FLAT">
+                <style>
+                    -fx-background-color: #0077C8;
+                    -fx-text-fill: white;
+                </style>
+            </JFXButton>
+        </children>
+
+        <style>
+            -fx-padding: 40 20 20 20;
+            -fx-background-color: white;
+        </style>
+        <effect>
+            <DropShadow color="GRAY" offsetX="4.0" offsetY="4.0" />
+        </effect>
+    </VBox>
+</StackPane>
