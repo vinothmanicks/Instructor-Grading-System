@@ -146,7 +146,7 @@ public class PDFService {
                     contentStream.showText(text);
                     contentStream.newLine();
 
-                    iCounter += 2;
+                    iCounter += 1;
 
                     if(iCounter>=47) {
                         GenerateNewPage();
@@ -197,7 +197,7 @@ public class PDFService {
                 contentStream.showText(text);
                 contentStream.newLine();
 
-                iCounter += 2;
+                iCounter += 1;
 
                 if(iCounter>=47) {
                     GenerateNewPage();
