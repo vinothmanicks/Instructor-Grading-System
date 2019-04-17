@@ -90,7 +90,7 @@ public class Statistics {
             ++count;
         }
         if (validGrades.size() == 0) {
-            this.fMean = 100.0f;
+            this.fMean = 0;
         } else {
             this.fMean = scoreSum / count;
         }
@@ -111,7 +111,7 @@ public class Statistics {
         Collections.sort(validGrades, Grade.scoreComparator);
 
         if (validGrades.size() == 0) {
-            this.fMedian = 100.0f;
+            this.fMedian = 0;
         } else {
             int medianMarker = Math.round(validGrades.size()/2.0f - 1);
             this.fMedian = validGrades.get(medianMarker).getGrade();
@@ -147,7 +147,7 @@ public class Statistics {
         }
 
         if (validGrades.size() == 0) {
-            this.fMode = 100.0f;
+            this.fMode = 0;
         } else {
             this.fMode = maxValue;
         }

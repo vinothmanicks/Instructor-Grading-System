@@ -777,6 +777,7 @@ public class CourseController {
                 }
 
                 service.printGradeBook(selectedCourse);
+                Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
                 dialog.close();
             }
         });
@@ -836,6 +837,7 @@ public class CourseController {
                 }
 
                 service.printGradeBook(selectedCourse, false);
+                Collections.sort(selectedCourse.getlStudents(), Student.nameComparator);
                 dialog.close();
             }
         });
