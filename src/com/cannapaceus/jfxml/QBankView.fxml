@@ -56,7 +56,7 @@
                             </style>
                         </JFXButton>
                     </HBox>
-                    <JFXTreeTableView fx:id="questionTable">
+                    <JFXTreeTableView fx:id="questionTable" VBox.vgrow="ALWAYS">
 
                     </JFXTreeTableView>
                 </children>

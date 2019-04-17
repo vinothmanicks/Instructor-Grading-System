@@ -123,6 +123,7 @@ public class QBankController {
             c.setEditable(false);
             return c;
         });
+        questionCol.setMinWidth(100);
         questionCol.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
